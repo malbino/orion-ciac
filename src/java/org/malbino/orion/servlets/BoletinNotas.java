@@ -217,13 +217,7 @@ public class BoletinNotas extends HttpServlet {
         cell.setColspan(33);
         table.addCell(cell);
 
-        CarreraEstudianteId carreraEstudianteId = new CarreraEstudianteId(inscrito.getCarrera().getId_carrera(), inscrito.getEstudiante().getId_persona());
-        CarreraEstudiante carreraEstudiante = carreraEstudianteFacade.find(carreraEstudianteId);
-        if (carreraEstudiante != null && carreraEstudiante.getMencion() != null) {
-            cell = new PdfPCell(new Phrase(carreraEstudiante.getMencion().getNombre(), NORMAL));
-        } else {
-            cell = new PdfPCell(new Phrase(" ", NORMAL));
-        }
+        cell = new PdfPCell(new Phrase(" ", NORMAL));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setVerticalAlignment(PdfPCell.ALIGN_TOP);
         cell.setBorder(Rectangle.NO_BORDER);
@@ -461,8 +455,10 @@ public class BoletinNotas extends HttpServlet {
         cell.setBackgroundColor(BaseColor.GRAY);
         table.addCell(cell);
 
+        CarreraEstudianteId carreraEstudianteId = new CarreraEstudianteId(inscrito.getCarrera().getId_carrera(), inscrito.getEstudiante().getId_persona());
+        CarreraEstudiante carreraEstudiante = carreraEstudianteFacade.find(carreraEstudianteId);
         if (carreraEstudiante != null) {
-            Double promedio = notaFacade.promedioBoletinNotas(inscrito.getEstudiante(), inscrito.getCarrera(), carreraEstudiante.getMencion(), inscrito.getGestionAcademica());
+            Double promedio = notaFacade.promedioBoletinNotas(inscrito.getEstudiante(), inscrito.getCarrera(), inscrito.getGestionAcademica());
             int promedioGeneralRedondeado = Redondeo.redondear_HALFUP(promedio, 0).intValue();
             cell = new PdfPCell(new Phrase(String.valueOf(promedioGeneralRedondeado), NORMAL));
         } else {
@@ -548,13 +544,7 @@ public class BoletinNotas extends HttpServlet {
         cell.setColspan(33);
         table.addCell(cell);
 
-        CarreraEstudianteId carreraEstudianteId = new CarreraEstudianteId(inscrito.getCarrera().getId_carrera(), inscrito.getEstudiante().getId_persona());
-        CarreraEstudiante carreraEstudiante = carreraEstudianteFacade.find(carreraEstudianteId);
-        if (carreraEstudiante != null && carreraEstudiante.getMencion() != null) {
-            cell = new PdfPCell(new Phrase(carreraEstudiante.getMencion().getNombre(), NORMAL));
-        } else {
-            cell = new PdfPCell(new Phrase(" ", NORMAL));
-        }
+        cell = new PdfPCell(new Phrase(" ", NORMAL));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setVerticalAlignment(PdfPCell.ALIGN_TOP);
         cell.setBorder(Rectangle.NO_BORDER);
@@ -823,8 +813,10 @@ public class BoletinNotas extends HttpServlet {
         cell.setBackgroundColor(BaseColor.GRAY);
         table.addCell(cell);
 
+        CarreraEstudianteId carreraEstudianteId = new CarreraEstudianteId(inscrito.getCarrera().getId_carrera(), inscrito.getEstudiante().getId_persona());
+        CarreraEstudiante carreraEstudiante = carreraEstudianteFacade.find(carreraEstudianteId);
         if (carreraEstudiante != null) {
-            Double promedio = notaFacade.promedioBoletinNotas(inscrito.getEstudiante(), inscrito.getCarrera(), carreraEstudiante.getMencion(), inscrito.getGestionAcademica());
+            Double promedio = notaFacade.promedioBoletinNotas(inscrito.getEstudiante(), inscrito.getCarrera(), inscrito.getGestionAcademica());
             int promedioGeneralRedondeado = Redondeo.redondear_HALFUP(promedio, 0).intValue();
             cell = new PdfPCell(new Phrase(String.valueOf(promedioGeneralRedondeado), NORMAL));
         } else {
@@ -910,13 +902,7 @@ public class BoletinNotas extends HttpServlet {
         cell.setColspan(33);
         table.addCell(cell);
 
-        CarreraEstudianteId carreraEstudianteId = new CarreraEstudianteId(inscrito.getCarrera().getId_carrera(), inscrito.getEstudiante().getId_persona());
-        CarreraEstudiante carreraEstudiante = carreraEstudianteFacade.find(carreraEstudianteId);
-        if (carreraEstudiante != null && carreraEstudiante.getMencion() != null) {
-            cell = new PdfPCell(new Phrase(carreraEstudiante.getMencion().getNombre(), NORMAL));
-        } else {
-            cell = new PdfPCell(new Phrase(" ", NORMAL));
-        }
+        cell = new PdfPCell(new Phrase(" ", NORMAL));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setVerticalAlignment(PdfPCell.ALIGN_TOP);
         cell.setBorder(Rectangle.NO_BORDER);
@@ -1216,8 +1202,10 @@ public class BoletinNotas extends HttpServlet {
         cell.setBackgroundColor(BaseColor.GRAY);
         table.addCell(cell);
 
+        CarreraEstudianteId carreraEstudianteId = new CarreraEstudianteId(inscrito.getCarrera().getId_carrera(), inscrito.getEstudiante().getId_persona());
+        CarreraEstudiante carreraEstudiante = carreraEstudianteFacade.find(carreraEstudianteId);
         if (carreraEstudiante != null) {
-            Double promedio = notaFacade.promedioBoletinNotas(inscrito.getEstudiante(), inscrito.getCarrera(), carreraEstudiante.getMencion(), inscrito.getGestionAcademica());
+            Double promedio = notaFacade.promedioBoletinNotas(inscrito.getEstudiante(), inscrito.getCarrera(), inscrito.getGestionAcademica());
             int promedioGeneralRedondeado = Redondeo.redondear_HALFUP(promedio, 0).intValue();
             cell = new PdfPCell(new Phrase(String.valueOf(promedioGeneralRedondeado), NORMAL));
         } else {

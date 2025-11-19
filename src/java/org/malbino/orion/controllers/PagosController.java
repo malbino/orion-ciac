@@ -100,8 +100,7 @@ public class PagosController extends AbstractController implements Serializable 
     }
 
     public void imprimirComprobante() throws IOException {
-        if (seleccionComprobante.getInscrito() != null && seleccionComprobante.getPostulante() == null
-                && seleccionComprobante.getEstudiante() == null && seleccionComprobante.getCarrera() == null
+        if (seleccionComprobante.getInscrito() != null && seleccionComprobante.getEstudiante() == null && seleccionComprobante.getCarrera() == null
                 && seleccionComprobante.getGestionAcademica() == null) {
             Estudiante estudiante = seleccionComprobante.getInscrito().getEstudiante();
 
@@ -121,16 +120,14 @@ public class PagosController extends AbstractController implements Serializable 
             } else {
                 this.mensajeDeError("No se puede imprimir el comprobante.");
             }
-        } else if (seleccionComprobante.getInscrito() == null && seleccionComprobante.getPostulante() != null
-                && seleccionComprobante.getEstudiante() == null && seleccionComprobante.getCarrera() == null
+        } else if (seleccionComprobante.getInscrito() == null && seleccionComprobante.getEstudiante() == null && seleccionComprobante.getCarrera() == null
                 && seleccionComprobante.getGestionAcademica() == null) {
             this.insertarParametro("id_comprobante", seleccionComprobante.getId_comprobante());
 
             this.reinit();
 
             this.toComprobantePagoPostulante();
-        } else if (seleccionComprobante.getInscrito() == null && seleccionComprobante.getPostulante() == null
-                && seleccionComprobante.getEstudiante() != null && seleccionComprobante.getCarrera() != null
+        } else if (seleccionComprobante.getInscrito() == null && seleccionComprobante.getEstudiante() != null && seleccionComprobante.getCarrera() != null
                 && seleccionComprobante.getGestionAcademica() != null) {
             this.insertarParametro("id_comprobante", seleccionComprobante.getId_comprobante());
 

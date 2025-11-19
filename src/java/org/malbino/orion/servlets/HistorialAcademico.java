@@ -30,7 +30,6 @@ import org.malbino.orion.entities.CarreraEstudiante;
 import org.malbino.orion.entities.Estudiante;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Inscrito;
-import org.malbino.orion.entities.Mencion;
 import org.malbino.orion.entities.Nota;
 import org.malbino.orion.facades.CarreraFacade;
 import org.malbino.orion.facades.EstudianteFacade;
@@ -92,7 +91,6 @@ public class HistorialAcademico extends HttpServlet {
         if (carreraEstudiante != null && fecha != null) {
             Estudiante estudiante = estudianteFacade.find(carreraEstudiante.getCarreraEstudianteId().getId_persona());
             Carrera carrera = carreraFacade.find(carreraEstudiante.getCarreraEstudianteId().getId_carrera());
-            Mencion mencion = carreraEstudiante.getMencion();
 
             try {
                 response.setContentType(CONTENIDO_PDF);
@@ -102,10 +100,10 @@ public class HistorialAcademico extends HttpServlet {
 
                 document.open();
 
-                document.add(cabecera(estudiante, carrera, mencion));
-                document.add(cuerpo(estudiante, carrera, mencion));
+                document.add(cabecera(estudiante, carrera));
+                document.add(cuerpo(estudiante, carrera));
                 document.add(firmas(estudiante, carrera, fecha));
-                document.add(resumen(estudiante, carrera, mencion));
+                document.add(resumen(estudiante, carrera));
 
                 document.close();
             } catch (IOException | DocumentException ex) {
@@ -114,7 +112,7 @@ public class HistorialAcademico extends HttpServlet {
         }
     }
 
-    public PdfPTable cabecera(Estudiante estudiante, Carrera carrera, Mencion mencion) {
+    public PdfPTable cabecera(Estudiante estudiante, Carrera carrera) {
         PdfPTable table = new PdfPTable(20);
 
         PdfPCell cell = new PdfPCell(new Phrase(" ", NEGRITA));
@@ -125,7 +123,7 @@ public class HistorialAcademico extends HttpServlet {
 
         Phrase phrase = new Phrase();
         phrase.add(new Chunk("Código de registro: ", NEGRITA));
-        GestionAcademica finFormacion = notaFacade.finFormacion(carrera, mencion, estudiante);
+        GestionAcademica finFormacion = notaFacade.finFormacion(carrera, estudiante);
         if (finFormacion != null) {
             Inscrito inscrito = inscritoFacade.buscarInscrito(estudiante.getId_persona(), carrera.getId_carrera(), finFormacion.getId_gestionacademica());
             if (inscrito != null) {
@@ -203,7 +201,7 @@ public class HistorialAcademico extends HttpServlet {
 
         phrase = new Phrase();
         phrase.add(new Chunk("FECHA DE ADMISIÓN: ", NEGRITA));
-        GestionAcademica inicioFormacion = notaFacade.inicioFormacion(carrera, mencion, estudiante);
+        GestionAcademica inicioFormacion = notaFacade.inicioFormacion(carrera, estudiante);
         if (inicioFormacion != null) {
             phrase.add(new Chunk(Fecha.formatearFecha_MMyyyy(inicioFormacion.getInicio()), NORMAL));
         } else {
@@ -241,11 +239,7 @@ public class HistorialAcademico extends HttpServlet {
         //fila 4
         phrase = new Phrase();
         phrase.add(new Chunk("MENCIÓN: ", NEGRITA));
-        if (mencion != null) {
-            phrase.add(new Chunk(mencion.getNombre(), NORMAL));
-        } else {
-            phrase.add(new Chunk(" ", NORMAL));
-        }
+        phrase.add(new Chunk(" ", NORMAL));
         cell = new PdfPCell(phrase);
         cell.setColspan(20);
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
@@ -280,7 +274,7 @@ public class HistorialAcademico extends HttpServlet {
         return table;
     }
 
-    public PdfPTable cuerpo(Estudiante estudiante, Carrera carrera, Mencion mencion) {
+    public PdfPTable cuerpo(Estudiante estudiante, Carrera carrera) {
         PdfPTable table = new PdfPTable(66);
 
         PdfPCell cell = new PdfPCell(new Phrase("Nº", NEGRITA));
@@ -360,7 +354,7 @@ public class HistorialAcademico extends HttpServlet {
         cell.setBackgroundColor(new BaseColor(183, 222, 232));
         table.addCell(cell);
 
-        List<Nota> historialAcademico = notaFacade.reporteHistorialAcademico(estudiante, carrera, mencion);
+        List<Nota> historialAcademico = notaFacade.reporteHistorialAcademico(estudiante, carrera);
         for (int i = 0; i < historialAcademico.size(); i++) {
             Nota nota = historialAcademico.get(i);
 
@@ -559,7 +553,7 @@ public class HistorialAcademico extends HttpServlet {
         return table;
     }
 
-    public PdfPTable resumen(Estudiante estudiante, Carrera carrera, Mencion mencion) {
+    public PdfPTable resumen(Estudiante estudiante, Carrera carrera) {
         PdfPTable table = new PdfPTable(60);
 
         PdfPCell cell = new PdfPCell(new Phrase(" ", ESPACIO));
@@ -610,8 +604,8 @@ public class HistorialAcademico extends HttpServlet {
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         table.addCell(cell);
 
-        int materiasAprobadas = notaFacade.cantidadNotasAprobadas(carrera, mencion, estudiante).intValue();
-        int materiasCarrera = materiaFacade.cantidadMateriasCurriculares(carrera, mencion).intValue();
+        int materiasAprobadas = notaFacade.cantidadNotasAprobadas(carrera, estudiante).intValue();
+        int materiasCarrera = materiaFacade.cantidadMateriasCurriculares(carrera).intValue();
         cell = new PdfPCell(new Phrase(materiasAprobadas + "/" + materiasCarrera, NORMAL));
         cell.setColspan(5);
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
@@ -634,7 +628,7 @@ public class HistorialAcademico extends HttpServlet {
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         table.addCell(cell);
 
-        Double promedioGeneral = notaFacade.promedioReporteHistorialAcademico(estudiante, carrera, mencion);
+        Double promedioGeneral = notaFacade.promedioReporteHistorialAcademico(estudiante, carrera);
         if (promedioGeneral != null) {
             int promedioGeneralRedondeado = Redondeo.redondear_HALFUP(promedioGeneral, 0).intValue();
             cell = new PdfPCell(new Phrase(String.valueOf(promedioGeneralRedondeado), NORMAL));

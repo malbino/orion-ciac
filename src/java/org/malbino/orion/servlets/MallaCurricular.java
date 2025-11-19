@@ -31,7 +31,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.Materia;
-import org.malbino.orion.entities.Mencion;
 import org.malbino.orion.enums.Nivel;
 import org.malbino.orion.facades.MateriaFacade;
 
@@ -69,7 +68,6 @@ public class MallaCurricular extends HttpServlet {
 
     public void generarPDF(HttpServletRequest request, HttpServletResponse response) {
         Carrera carrera = (Carrera) request.getSession().getAttribute("carrera");
-        Mencion mencion = (Mencion) request.getSession().getAttribute("mencion");
 
         if (carrera != null) {
             try {
@@ -80,8 +78,8 @@ public class MallaCurricular extends HttpServlet {
 
                 document.open();
 
-                document.add(titulo(carrera, mencion));
-                document.add(contenido(carrera, mencion));
+                document.add(titulo(carrera));
+                document.add(contenido(carrera));
 
                 document.close();
             } catch (IOException | DocumentException ex) {
@@ -91,7 +89,7 @@ public class MallaCurricular extends HttpServlet {
         }
     }
 
-    public PdfPTable titulo(Carrera carrera, Mencion mencion) throws BadElementException, IOException {
+    public PdfPTable titulo(Carrera carrera) throws BadElementException, IOException {
         PdfPTable table = new PdfPTable(100);
 
         //cabecera
@@ -120,14 +118,6 @@ public class MallaCurricular extends HttpServlet {
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
 
-        if (mencion != null) {
-            cell = new PdfPCell(new Phrase(mencion.toString(), SUBTITULO));
-            cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
-            cell.setColspan(90);
-            cell.setBorder(Rectangle.NO_BORDER);
-            table.addCell(cell);
-        }
-
         cell = new PdfPCell(new Phrase(carrera.getCampus().getInstituto().getNombreRegulador(), SUBTITULO));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setColspan(90);
@@ -137,7 +127,7 @@ public class MallaCurricular extends HttpServlet {
         return table;
     }
 
-    public PdfPTable contenido(Carrera carrera, Mencion mencion) throws BadElementException, IOException {
+    public PdfPTable contenido(Carrera carrera) throws BadElementException, IOException {
         Nivel[] niveles = Nivel.values(carrera.getRegimen());
 
         PdfPTable table = new PdfPTable(niveles.length);
@@ -161,9 +151,9 @@ public class MallaCurricular extends HttpServlet {
             cell.setBorder(Rectangle.NO_BORDER);
             subtable.addCell(cell);
 
-            Long cantidadMaximaMateriasNivel = materiaFacade.cantidadMaximaMateriasNivel(carrera, mencion);
+            Long cantidadMaximaMateriasNivel = materiaFacade.cantidadMaximaMateriasNivel(carrera);
 
-            List<Materia> materias = materiaFacade.listaMaterias(carrera, mencion, nivel);
+            List<Materia> materias = materiaFacade.listaMaterias(carrera, nivel);
             Iterator<Materia> iterator = materias.iterator();
             for (int i = 0; i < cantidadMaximaMateriasNivel; i++) {
                 if (iterator.hasNext()) {

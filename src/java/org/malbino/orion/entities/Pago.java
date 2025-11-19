@@ -25,7 +25,7 @@ import org.malbino.orion.enums.Concepto;
  * @author malbino
  */
 @Entity
-@Table(name = "pago", uniqueConstraints = @UniqueConstraint(columnNames = {"concepto", "id_inscrito", "id_postulante"}))
+@Table(name = "pago", uniqueConstraints = @UniqueConstraint(columnNames = {"concepto", "id_inscrito"}))
 public class Pago implements Serializable {
 
     @Id
@@ -43,21 +43,10 @@ public class Pago implements Serializable {
     @ManyToOne
     private Inscrito inscrito;
 
-    @JoinColumn(name = "id_postulante")
-    @ManyToOne
-    private Postulante postulante;
-
     @OneToMany(mappedBy = "pago", orphanRemoval = true)
     private List<Detalle> detalles;
 
     public Pago() {
-    }
-
-    public Pago(Concepto concepto, Integer monto, Boolean pagado, Postulante postulante) {
-        this.concepto = concepto;
-        this.monto = monto;
-        this.pagado = pagado;
-        this.postulante = postulante;
     }
 
     public Pago(Concepto concepto, Integer monto, Boolean pagado, Inscrito inscrito) {
@@ -192,19 +181,5 @@ public class Pago implements Serializable {
      */
     public void setDetalles(List<Detalle> detalles) {
         this.detalles = detalles;
-    }
-
-    /**
-     * @return the postulante
-     */
-    public Postulante getPostulante() {
-        return postulante;
-    }
-
-    /**
-     * @param postulante the postulante to set
-     */
-    public void setPostulante(Postulante postulante) {
-        this.postulante = postulante;
     }
 }

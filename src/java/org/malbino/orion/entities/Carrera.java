@@ -6,7 +6,6 @@
 package org.malbino.orion.entities;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.malbino.orion.enums.NivelAcademico;
 import org.malbino.orion.enums.Regimen;
@@ -52,9 +50,6 @@ public class Carrera implements Serializable {
     @JoinColumn(name = "id_jefecarrera")
     @ManyToOne
     private Empleado jefeCarrera;
-
-    @OneToMany(mappedBy = "carrera")
-    private List<Mencion> menciones;
 
     public Carrera() {
     }
@@ -243,20 +238,6 @@ public class Carrera implements Serializable {
         this.resolucionMinisterial3 = resolucionMinisterial3;
     }
 
-    /**
-     * @return the menciones
-     */
-    public List<Mencion> getMenciones() {
-        return menciones;
-    }
-
-    /**
-     * @param menciones the menciones to set
-     */
-    public void setMenciones(List<Mencion> menciones) {
-        this.menciones = menciones;
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;
@@ -285,18 +266,6 @@ public class Carrera implements Serializable {
     @Override
     public String toString() {
         return nombre + " [" + resolucionMinisterial1 + "]";
-    }
-
-    public String mencionesToString() {
-        String s = " ";
-        for (Mencion mencion : menciones) {
-            if (s.compareTo(" ") == 0) {
-                s = mencion.getCodigo();
-            } else {
-                s += ", " + mencion.getCodigo();
-            }
-        }
-        return s;
     }
 
     /**

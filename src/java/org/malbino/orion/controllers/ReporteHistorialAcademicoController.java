@@ -159,7 +159,7 @@ public class ReporteHistorialAcademicoController extends AbstractController impl
                         } else if (cell.getStringCellValue().contains("<<ESTUDIANTE>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<ESTUDIANTE>>", seleccionEstudiante.toString()));
                         } else if (cell.getStringCellValue().contains("<<ADMICION>>")) {
-                            GestionAcademica inicioFormacion = notaFacade.inicioFormacion(carrera, seleccionCarreraEstudiante.getMencion(), seleccionEstudiante);
+                            GestionAcademica inicioFormacion = notaFacade.inicioFormacion(carrera, seleccionEstudiante);
                             if (inicioFormacion != null) {
                                 cell.setCellValue(cell.getStringCellValue().replace("<<ADMICION>>", Fecha.formatearFecha_MMyyyy(inicioFormacion.getInicio())));
                             } else {
@@ -168,18 +168,14 @@ public class ReporteHistorialAcademicoController extends AbstractController impl
                         } else if (cell.getStringCellValue().contains("<<CARRERA>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<CARRERA>>", carrera.getNombre()));
                         } else if (cell.getStringCellValue().contains("<<CONCLUSION>>")) {
-                            GestionAcademica finFormacion = notaFacade.finFormacion(carrera, seleccionCarreraEstudiante.getMencion(), seleccionEstudiante);
+                            GestionAcademica finFormacion = notaFacade.finFormacion(carrera, seleccionEstudiante);
                             if (finFormacion != null) {
                                 cell.setCellValue(cell.getStringCellValue().replace("<<CONCLUSION>>", Fecha.formatearFecha_MMyyyy(finFormacion.getInicio())));
                             } else {
                                 cell.setCellValue(cell.getStringCellValue().replace("<<CONCLUSION>>", " "));
                             }
                         } else if (cell.getStringCellValue().contains("<<MENCION>>")) {
-                            if (seleccionCarreraEstudiante.getMencion() != null) {
-                                cell.setCellValue(cell.getStringCellValue().replace("<<MENCION>>", seleccionCarreraEstudiante.getMencion().getNombre()));
-                            } else {
-                                cell.setCellValue(cell.getStringCellValue().replace("<<MENCION>>", " "));
-                            }
+                            cell.setCellValue(cell.getStringCellValue().replace("<<MENCION>>", " "));
                         } else if (cell.getStringCellValue().contains("<<NIVEL_ACADEMICO>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL_ACADEMICO>>", carrera.getNivelAcademico().getNombre()));
                         } else if (cell.getStringCellValue().contains("<<REGIMEN>>")) {
@@ -201,8 +197,8 @@ public class ReporteHistorialAcademicoController extends AbstractController impl
                                 cell.setCellValue(cell.getStringCellValue().replace("<<RM_3>>", " "));
                             }
                         } else if (cell.getStringCellValue().contains("<<MA_MC>>")) {
-                            int materiasAprobadas = notaFacade.cantidadNotasAprobadas(carrera, seleccionCarreraEstudiante.getMencion(), seleccionEstudiante).intValue();
-                            int materiasCarrera = materiaFacade.cantidadMateriasCurriculares(carrera, seleccionCarreraEstudiante.getMencion()).intValue();
+                            int materiasAprobadas = notaFacade.cantidadNotasAprobadas(carrera, seleccionEstudiante).intValue();
+                            int materiasCarrera = materiaFacade.cantidadMateriasCurriculares(carrera).intValue();
 
                             cell.setCellValue(cell.getStringCellValue().replace("<<MA_MC>>", materiasAprobadas + "/" + materiasCarrera));
                         } else if (cell.getStringCellValue().contains("<<GA>>")) {
@@ -210,7 +206,7 @@ public class ReporteHistorialAcademicoController extends AbstractController impl
                         }
                     } else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
                         if (cell.getNumericCellValue() == -1) {
-                            GestionAcademica finFormacion = notaFacade.finFormacion(carrera, seleccionCarreraEstudiante.getMencion(), seleccionEstudiante);
+                            GestionAcademica finFormacion = notaFacade.finFormacion(carrera, seleccionEstudiante);
                             if (finFormacion != null) {
                                 Inscrito inscrito = inscritoFacade.buscarInscrito(seleccionEstudiante.getId_persona(), carrera.getId_carrera(), finFormacion.getId_gestionacademica());
                                 if (inscrito != null) {
@@ -228,7 +224,7 @@ public class ReporteHistorialAcademicoController extends AbstractController impl
                                 cell.setCellValue(" ");
                             }
                         } else if (cell.getNumericCellValue() == -4) {
-                            Double promedioGeneral = notaFacade.promedioReporteHistorialAcademico(seleccionEstudiante, carrera, seleccionCarreraEstudiante.getMencion());
+                            Double promedioGeneral = notaFacade.promedioReporteHistorialAcademico(seleccionEstudiante, carrera);
                             if (promedioGeneral != null) {
                                 int promedioGeneralRedondeado = Redondeo.redondear_HALFUP(promedioGeneral, 0).intValue();
                                 cell.setCellValue(promedioGeneralRedondeado);
@@ -240,7 +236,7 @@ public class ReporteHistorialAcademicoController extends AbstractController impl
                 }
             }
 
-            List<Nota> historialAcademico = notaFacade.reporteHistorialAcademico(seleccionEstudiante, carrera, seleccionCarreraEstudiante.getMencion());
+            List<Nota> historialAcademico = notaFacade.reporteHistorialAcademico(seleccionEstudiante, carrera);
 
             sheet.shiftRows(rowNum + 1, sheet.getLastRowNum(), historialAcademico.size() - 1, true, true);
 

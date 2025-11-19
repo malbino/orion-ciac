@@ -301,7 +301,7 @@ public class FileEstudianteFacade {
             // materias carrera
             List<Materia> listaMateriasCarrera;
             if (carreraEstudiante.getNivelInicio() != null) {
-                List<Materia> listaMaterias = materiaFacade.listaMaterias(carrera, carreraEstudiante.getMencion());
+                List<Materia> listaMaterias = materiaFacade.listaMaterias(carrera);
 
                 listaMateriasCarrera = new ArrayList<>();
                 for (Materia materia : listaMaterias) {
@@ -310,7 +310,7 @@ public class FileEstudianteFacade {
                     }
                 }
             } else {
-                listaMateriasCarrera = materiaFacade.listaMaterias(carrera, carreraEstudiante.getMencion());
+                listaMateriasCarrera = materiaFacade.listaMaterias(carrera);
             }
 
             // quitando materias aprobadas

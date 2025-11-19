@@ -30,14 +30,12 @@ import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Grupo;
 import org.malbino.orion.entities.Log;
-import org.malbino.orion.entities.Mencion;
 import org.malbino.orion.entities.Nota;
 import org.malbino.orion.enums.Condicion;
 import org.malbino.orion.enums.EventoLog;
 import org.malbino.orion.enums.Nivel;
 import org.malbino.orion.enums.Turno;
 import org.malbino.orion.facades.GrupoFacade;
-import org.malbino.orion.facades.MencionFacade;
 import org.malbino.orion.facades.NotaFacade;
 import org.malbino.orion.util.Fecha;
 import org.malbino.orion.util.NumberToLetterConverter;
@@ -60,14 +58,11 @@ public class ReportePlanillaSeguimientoController extends AbstractController imp
     GrupoFacade grupoFacade;
     @EJB
     NotaFacade notaFacade;
-    @EJB
-    MencionFacade mencionFacade;
     @Inject
     LoginController loginController;
 
     private GestionAcademica seleccionGestionAcademica;
     private Carrera seleccionCarrera;
-    private Mencion seleccionMencion;
     private Nivel seleccionNivel;
     private Turno seleccionTurno;
     private Grupo seleccionGrupo;
@@ -78,7 +73,6 @@ public class ReportePlanillaSeguimientoController extends AbstractController imp
     public void init() {
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
-        seleccionMencion = null;
         seleccionNivel = null;
         seleccionTurno = null;
         seleccionGrupo = null;
@@ -87,7 +81,6 @@ public class ReportePlanillaSeguimientoController extends AbstractController imp
     public void reinit() {
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
-        seleccionMencion = null;
         seleccionNivel = null;
         seleccionTurno = null;
         seleccionGrupo = null;
@@ -98,14 +91,6 @@ public class ReportePlanillaSeguimientoController extends AbstractController imp
         List<Carrera> l = new ArrayList();
         if (seleccionGestionAcademica != null) {
             l = carreraFacade.listaCarreras(seleccionGestionAcademica.getRegimen());
-        }
-        return l;
-    }
-
-    public List<Mencion> listaMenciones() {
-        List<Mencion> l = new ArrayList<>();
-        if (seleccionCarrera != null) {
-            l = mencionFacade.listaMenciones(seleccionCarrera.getId_carrera());
         }
         return l;
     }
@@ -130,7 +115,7 @@ public class ReportePlanillaSeguimientoController extends AbstractController imp
     public List<Grupo> listaGrupos() {
         List<Grupo> grupos = new ArrayList<>();
         if (seleccionNivel != null) {
-            grupos = grupoFacade.listaGrupos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionMencion, seleccionNivel, seleccionTurno);
+            grupos = grupoFacade.listaGrupos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionNivel, seleccionTurno);
         }
         return grupos;
     }
@@ -138,7 +123,7 @@ public class ReportePlanillaSeguimientoController extends AbstractController imp
     public XSSFWorkbook leerArchivo(String pathname) {
         XSSFWorkbook workbook = null;
 
-        try (FileInputStream file = new FileInputStream(this.realPath() + pathname)) {
+        try ( FileInputStream file = new FileInputStream(this.realPath() + pathname)) {
             workbook = new XSSFWorkbook(file);
         } catch (IOException e) {
             this.mensajeDeError("Error: No se pudo leer el archivo.");
@@ -448,20 +433,6 @@ public class ReportePlanillaSeguimientoController extends AbstractController imp
      */
     public StreamedContent getDownload() {
         return download;
-    }
-
-    /**
-     * @return the seleccionMencion
-     */
-    public Mencion getSeleccionMencion() {
-        return seleccionMencion;
-    }
-
-    /**
-     * @param seleccionMencion the seleccionMencion to set
-     */
-    public void setSeleccionMencion(Mencion seleccionMencion) {
-        this.seleccionMencion = seleccionMencion;
     }
 
     /**

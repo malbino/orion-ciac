@@ -135,7 +135,7 @@ public class InscripcionManualController extends AbstractController implements S
         if (seleccionInscrito != null) {
             CarreraEstudiante carreraEstudiante = carreraEstudianteFacade.find(seleccionInscrito.carreraEstudianteId());
             if (carreraEstudiante != null) {
-                materias = materiaFacade.listaMaterias(seleccionInscrito.getCarrera(), carreraEstudiante.getMencion());
+                materias = materiaFacade.listaMaterias(seleccionInscrito.getCarrera());
             } else {
                 materias = materiaFacade.listaMaterias(seleccionInscrito.getCarrera(), null);
             }

@@ -34,7 +34,7 @@ public class Campus implements Serializable {
     private String ciudad;
     private String direccion;
     private Integer telefono;
-    private String codigoRITT;
+    private String cciac;
 
     @JoinColumn(name = "id_instituto")
     @ManyToOne
@@ -172,17 +172,17 @@ public class Campus implements Serializable {
     }
 
     /**
-     * @return the codigoRITT
+     * @return the cciac
      */
     public String getCodigoRITT() {
-        return codigoRITT;
+        return cciac;
     }
 
     /**
-     * @param codigoRITT the codigoRITT to set
+     * @param cciac the cciac to set
      */
-    public void setCodigoRITT(String codigoRITT) {
-        this.codigoRITT = codigoRITT;
+    public void setCodigoRITT(String cciac) {
+        this.cciac = cciac;
     }
 
 }

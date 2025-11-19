@@ -67,7 +67,7 @@ public class HistorialAcademicoController extends AbstractController implements 
 
     public void reinit() {
         if (seleccionEstudiante != null && seleccionCarreraEstudiante != null) {
-            historialAcademico = notaFacade.historialAcademico(seleccionEstudiante, seleccionCarreraEstudiante.getCarrera(), seleccionCarreraEstudiante.getMencion());
+            historialAcademico = notaFacade.historialAcademico(seleccionEstudiante, seleccionCarreraEstudiante.getCarrera());
         }
 
         nuevaNota = new Nota();
@@ -164,7 +164,7 @@ public class HistorialAcademicoController extends AbstractController implements 
     }
 
     public void editarRecuperatorio() throws IOException {
-        List<Nota> listaNotasReprobadas = notaFacade.listaNotasReprobadas(seleccionNota.getGestionAcademica(), seleccionNota.getMateria().getCarrera(), seleccionCarreraEstudiante.getMencion(), seleccionNota.getEstudiante());
+        List<Nota> listaNotasReprobadas = notaFacade.listaNotasReprobadas(seleccionNota.getGestionAcademica(), seleccionNota.getMateria().getCarrera(), seleccionNota.getEstudiante());
         if (listaNotasReprobadas.size() <= seleccionNota.getGestionAcademica().getModalidadEvaluacion().getCantidadMaximaReprobaciones()) {
             if (seleccionNota.getNotaFinal() != null
                     && seleccionNota.getNotaFinal() >= seleccionNota.getGestionAcademica().getModalidadEvaluacion().getNotaMinimmaPruebaRecuperacion()

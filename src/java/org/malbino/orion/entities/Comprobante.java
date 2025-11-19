@@ -46,10 +46,6 @@ public class Comprobante implements Serializable {
     @ManyToOne
     private Inscrito inscrito;
 
-    @JoinColumn(name = "id_postulante")
-    @ManyToOne
-    private Postulante postulante;
-
     @JoinColumn(name = "id_estudiante")
     @ManyToOne
     private Estudiante estudiante;
@@ -154,20 +150,6 @@ public class Comprobante implements Serializable {
      */
     public void setDeposito(String deposito) {
         this.deposito = deposito;
-    }
-
-    /**
-     * @return the postulante
-     */
-    public Postulante getPostulante() {
-        return postulante;
-    }
-
-    /**
-     * @param postulante the postulante to set
-     */
-    public void setPostulante(Postulante postulante) {
-        this.postulante = postulante;
     }
 
     /**
@@ -283,9 +265,6 @@ public class Comprobante implements Serializable {
         if (inscrito != null) {
             s = inscrito.getEstudiante().toString();
         }
-        if (postulante != null) {
-            s = postulante.toString();
-        }
         if (estudiante != null && carrera != null && gestionAcademica != null) {
             s = estudiante.toString();
         }
@@ -297,9 +276,6 @@ public class Comprobante implements Serializable {
         if (inscrito != null) {
             s = inscrito.getCarrera().toString();
         }
-        if (postulante != null) {
-            s = postulante.getCarrera().toString();
-        }
         if (estudiante != null && carrera != null && gestionAcademica != null) {
             s = carrera.toString();
         }
@@ -310,9 +286,6 @@ public class Comprobante implements Serializable {
         String s = "";
         if (inscrito != null) {
             s = inscrito.getGestionAcademica().toString();
-        }
-        if (postulante != null) {
-            s = postulante.getGestionAcademica().toString();
         }
         if (estudiante != null && carrera != null && gestionAcademica != null) {
             s = gestionAcademica.toString();

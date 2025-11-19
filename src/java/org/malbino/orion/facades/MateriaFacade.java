@@ -14,7 +14,6 @@ import javax.persistence.Query;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.Estudiante;
 import org.malbino.orion.entities.Materia;
-import org.malbino.orion.entities.Mencion;
 import org.malbino.orion.enums.Condicion;
 import org.malbino.orion.enums.Nivel;
 
@@ -38,14 +37,13 @@ public class MateriaFacade extends AbstractFacade<Materia> {
         return em;
     }
 
-    public List<Materia> buscarPorCodigo(String codigo, Carrera carrera, Mencion mencion) {
+    public List<Materia> buscarPorCodigo(String codigo, Carrera carrera) {
         List<Materia> l = new ArrayList<>();
 
         try {
-            Query q = em.createQuery("SELECT m FROM Materia m WHERE m.codigo=:codigo AND m.carrera=:carrera AND (m.mencion IS NULL OR m.mencion=:mencion)");
+            Query q = em.createQuery("SELECT m FROM Materia m WHERE m.codigo=:codigo AND m.carrera=:carrera");
             q.setParameter("codigo", codigo);
             q.setParameter("carrera", carrera);
-            q.setParameter("mencion", mencion);
 
             l = q.getResultList();
         } catch (Exception e) {
@@ -55,15 +53,14 @@ public class MateriaFacade extends AbstractFacade<Materia> {
         return l;
     }
 
-    public List<Materia> buscarPorCodigo(String codigo, int id_materia, Carrera carrera, Mencion mencion) {
+    public List<Materia> buscarPorCodigo(String codigo, int id_materia, Carrera carrera) {
         List<Materia> l = new ArrayList<>();
 
         try {
-            Query q = em.createQuery("SELECT m FROM Materia m WHERE m.codigo=:codigo AND m.id_materia!=:id_materia AND m.carrera=:carrera AND (m.mencion IS NULL OR m.mencion=:mencion)");
+            Query q = em.createQuery("SELECT m FROM Materia m WHERE m.codigo=:codigo AND m.id_materia!=:id_materia AND m.carrera=:carrera");
             q.setParameter("codigo", codigo);
             q.setParameter("id_materia", id_materia);
             q.setParameter("carrera", carrera);
-            q.setParameter("mencion", mencion);
 
             l = q.getResultList();
         } catch (Exception e) {
@@ -88,29 +85,12 @@ public class MateriaFacade extends AbstractFacade<Materia> {
         return l;
     }
 
-    public List<Materia> listaMaterias(Carrera carrera, Mencion mencion) {
+    public List<Materia> listaMaterias(Carrera carrera, int id_materia) {
         List<Materia> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT m FROM Materia m WHERE m.carrera=:carrera AND (m.mencion IS NULL OR m.mencion=:mencion) ORDER BY m.nivel, m.mencion, m.numero");
+            Query q = em.createQuery("SELECT m FROM Materia m WHERE m.carrera=:carrera AND m.id_materia!=:id_materia ORDER BY m.nivel, m.mencion, m.numero");
             q.setParameter("carrera", carrera);
-            q.setParameter("mencion", mencion);
-
-            l = q.getResultList();
-        } catch (Exception e) {
-
-        }
-
-        return l;
-    }
-
-    public List<Materia> listaMaterias(Carrera carrera, Mencion mencion, int id_materia) {
-        List<Materia> l = new ArrayList();
-
-        try {
-            Query q = em.createQuery("SELECT m FROM Materia m WHERE m.carrera=:carrera AND (m.mencion IS NULL OR m.mencion=:mencion) AND m.id_materia!=:id_materia ORDER BY m.nivel, m.mencion, m.numero");
-            q.setParameter("carrera", carrera);
-            q.setParameter("mencion", mencion);
             q.setParameter("id_materia", id_materia);
 
             l = q.getResultList();
@@ -121,13 +101,12 @@ public class MateriaFacade extends AbstractFacade<Materia> {
         return l;
     }
 
-    public List<Materia> listaMaterias(Carrera carrera, Mencion mencion, Nivel nivel) {
+    public List<Materia> listaMaterias(Carrera carrera, Nivel nivel) {
         List<Materia> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT m FROM Materia m WHERE m.carrera=:carrera AND (m.mencion IS NULL OR m.mencion=:mencion) AND m.nivel=:nivel ORDER BY m.numero");
+            Query q = em.createQuery("SELECT m FROM Materia m WHERE m.carrera=:carrera AND m.nivel=:nivel ORDER BY m.numero");
             q.setParameter("carrera", carrera);
-            q.setParameter("mencion", mencion);
             q.setParameter("nivel", nivel);
 
             l = q.getResultList();
@@ -156,14 +135,13 @@ public class MateriaFacade extends AbstractFacade<Materia> {
         return l;
     }
 
-    public List<Nivel> nivelesPendientes(Estudiante estudiante, Carrera carrera, Mencion mencion) {
+    public List<Nivel> nivelesPendientes(Estudiante estudiante, Carrera carrera) {
         List<Nivel> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT DISTINCT m.nivel FROM Materia m WHERE m.carrera=:carrera AND (m.mencion IS NULL OR m.mencion=:mencion) AND m.id_materia NOT IN (SELECT m.id_materia FROM Nota n JOIN n.materia m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND (m.mencion IS NULL OR m.mencion=:mencion) AND n.condicion=:condicion) ORDER BY m.nivel, m.numero");
+            Query q = em.createQuery("SELECT DISTINCT m.nivel FROM Materia m WHERE m.carrera=:carrera AND m.id_materia NOT IN (SELECT m.id_materia FROM Nota n JOIN n.materia m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND n.condicion=:condicion) ORDER BY m.nivel, m.numero");
             q.setParameter("estudiante", estudiante);
             q.setParameter("carrera", carrera);
-            q.setParameter("mencion", mencion);
             q.setParameter("condicion", Condicion.APROBADO);
 
             l = q.getResultList();
@@ -191,14 +169,13 @@ public class MateriaFacade extends AbstractFacade<Materia> {
         return l;
     }
 
-    public List<Materia> listaMateriaAprobadas(Estudiante estudiante, Carrera carrera, Mencion mencion) {
+    public List<Materia> listaMateriaAprobadas(Estudiante estudiante, Carrera carrera) {
         List<Materia> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT m FROM Nota n JOIN n.materia m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND (m.mencion IS NULL OR m.mencion=:mencion) AND n.condicion=:condicion ORDER BY m.nivel, m.mencion, m.numero");
+            Query q = em.createQuery("SELECT m FROM Nota n JOIN n.materia m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND n.condicion=:condicion ORDER BY m.nivel, m.mencion, m.numero");
             q.setParameter("estudiante", estudiante);
             q.setParameter("carrera", carrera);
-            q.setParameter("mencion", mencion);
             q.setParameter("condicion", Condicion.APROBADO);
 
             l = q.getResultList();
@@ -209,13 +186,12 @@ public class MateriaFacade extends AbstractFacade<Materia> {
         return l;
     }
 
-    public Long cantidadMaximaMateriasNivel(Carrera carrera, Mencion mencion) {
+    public Long cantidadMaximaMateriasNivel(Carrera carrera) {
         Long l = 0l;
 
         try {
-            Query q = em.createQuery("SELECT COUNT(m) AS cantidad FROM Materia m WHERE m.carrera=:carrera AND (m.mencion IS NULL OR m.mencion=:mencion) GROUP BY m.nivel ORDER BY cantidad DESC");
+            Query q = em.createQuery("SELECT COUNT(m) AS cantidad FROM Materia m WHERE m.carrera=:carrera GROUP BY m.nivel ORDER BY cantidad DESC");
             q.setParameter("carrera", carrera);
-            q.setParameter("mencion", mencion);
             q.setMaxResults(1);
 
             l = (Long) q.getSingleResult();
@@ -226,13 +202,12 @@ public class MateriaFacade extends AbstractFacade<Materia> {
         return l;
     }
 
-    public Long cantidadMateriasCurriculares(Carrera carrera, Mencion mencion) {
+    public Long cantidadMateriasCurriculares(Carrera carrera) {
         Long l = 0l;
 
         try {
-            Query q = em.createQuery("SELECT COUNT(m) FROM Materia m WHERE m.carrera=:carrera AND (m.mencion IS NULL OR m.mencion=:mencion) AND m.curricular = TRUE");
+            Query q = em.createQuery("SELECT COUNT(m) FROM Materia m WHERE m.carrera=:carrera AND m.curricular = TRUE");
             q.setParameter("carrera", carrera);
-            q.setParameter("mencion", mencion);
 
             l = (Long) q.getSingleResult();
         } catch (Exception e) {

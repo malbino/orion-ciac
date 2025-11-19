@@ -18,11 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.Empleado;
-import org.malbino.orion.entities.Empresa;
 import org.malbino.orion.entities.Estudiante;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Nota;
-import org.malbino.orion.entities.Postulante;
 import org.malbino.orion.entities.Usuario;
 import org.malbino.orion.enums.Caracter;
 import org.malbino.orion.enums.Concepto;
@@ -30,7 +28,6 @@ import org.malbino.orion.enums.Condicion;
 import org.malbino.orion.enums.Departamento;
 import org.malbino.orion.enums.Dia;
 import org.malbino.orion.enums.EntidadLog;
-import org.malbino.orion.enums.Evaluacion;
 import org.malbino.orion.enums.EventoLog;
 import org.malbino.orion.enums.Funcionalidad;
 import org.malbino.orion.enums.LugarExpedicion;
@@ -40,16 +37,13 @@ import org.malbino.orion.enums.NivelAcademico;
 import org.malbino.orion.enums.Periodo;
 import org.malbino.orion.enums.Regimen;
 import org.malbino.orion.enums.Sexo;
-import org.malbino.orion.enums.TipoEmpresa;
 import org.malbino.orion.enums.Turno;
 import org.malbino.orion.facades.CampusFacade;
 import org.malbino.orion.facades.CarreraFacade;
 import org.malbino.orion.facades.EmpleadoFacade;
-import org.malbino.orion.facades.EmpresaFacade;
 import org.malbino.orion.facades.EstudianteFacade;
 import org.malbino.orion.facades.GestionAcademicaFacade;
 import org.malbino.orion.facades.LogFacade;
-import org.malbino.orion.facades.PostulanteFacade;
 import org.malbino.orion.facades.UsuarioFacade;
 import org.malbino.orion.util.Redondeo;
 import org.primefaces.PrimeFaces;
@@ -71,11 +65,7 @@ public abstract class AbstractController implements Serializable {
     @EJB
     GestionAcademicaFacade gestionAcademicaFacade;
     @EJB
-    PostulanteFacade postulanteFacade;
-    @EJB
     UsuarioFacade usuarioFacade;
-    @EJB
-    EmpresaFacade empresaFacade;
 
     @EJB
     LogFacade logFacade;
@@ -175,19 +165,6 @@ public abstract class AbstractController implements Serializable {
         return estudiantesFiltrados;
     }
 
-    public List<Postulante> completarPostulante(String consulta) {
-        List<Postulante> postulantes = postulanteFacade.findAll();
-        List<Postulante> postulantesFiltrados = new ArrayList();
-
-        for (Postulante p : postulantes) {
-            if (p.toString().toLowerCase().contains(consulta.toLowerCase())) {
-                postulantesFiltrados.add(p);
-            }
-        }
-
-        return postulantesFiltrados;
-    }
-
     public List<Usuario> completarUsuario(String consulta) {
         List<Usuario> usuarios = usuarioFacade.findAll();
         List<Usuario> usuariosFiltrados = new ArrayList();
@@ -253,20 +230,8 @@ public abstract class AbstractController implements Serializable {
         return Concepto.values();
     }
 
-    public TipoEmpresa[] listaTiposEmpresa() {
-        return TipoEmpresa.values();
-    }
-
     public Departamento[] listaDepartamentos() {
         return Departamento.values();
-    }
-
-    public List<Empresa> listaEmpresas() {
-        return empresaFacade.listaEmpresas();
-    }
-
-    public Evaluacion[] listaEvaluaciones() {
-        return Evaluacion.values();
     }
 
     public EventoLog[] listaEventosLog() {

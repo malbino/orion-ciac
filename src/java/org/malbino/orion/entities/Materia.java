@@ -8,7 +8,6 @@ package org.malbino.orion.entities;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,7 +27,7 @@ import org.malbino.orion.enums.Nivel;
  * @author malbino
  */
 @Entity
-@Table(name = "materia", uniqueConstraints = @UniqueConstraint(columnNames = {"codigo", "id_carrera", "id_mencion"}))
+@Table(name = "materia", uniqueConstraints = @UniqueConstraint(columnNames = {"codigo", "id_carrera"}))
 public class Materia implements Serializable {
 
     @Id
@@ -52,10 +51,6 @@ public class Materia implements Serializable {
     @JoinColumn(name = "id_carrera")
     @ManyToOne
     private Carrera carrera;
-
-    @JoinColumn(name = "id_mencion")
-    @ManyToOne
-    private Mencion mencion;
 
     @OneToMany(mappedBy = "materia", orphanRemoval = true)
     private List<Grupo> grupos;
@@ -267,20 +262,6 @@ public class Materia implements Serializable {
     @Override
     public String toString() {
         return nombre + " [" + codigo + "]";
-    }
-
-    /**
-     * @return the mencion
-     */
-    public Mencion getMencion() {
-        return mencion;
-    }
-
-    /**
-     * @param mencion the mencion to set
-     */
-    public void setMencion(Mencion mencion) {
-        this.mencion = mencion;
     }
 
     /**

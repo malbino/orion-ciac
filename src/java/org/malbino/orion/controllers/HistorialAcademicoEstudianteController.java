@@ -49,7 +49,7 @@ public class HistorialAcademicoEstudianteController extends AbstractController i
         if (seleccionCarreraEstudiante != null) {
             Estudiante estudiante = estudianteFacade.find(loginController.getUsr().getId_persona());
             if (estudiante != null) {
-                historialAcademico = notaFacade.historialAcademico(estudiante, seleccionCarreraEstudiante.getCarrera(), seleccionCarreraEstudiante.getMencion());
+                historialAcademico = notaFacade.historialAcademico(estudiante, seleccionCarreraEstudiante.getCarrera());
 
                 //log
                 logFacade.create(new Log(Fecha.getDate(), EventoLog.READ, EntidadLog.ESTUDIANTE, estudiante.getId_persona(), "Visualización Historial Académico", loginController.getUsr().toString()));

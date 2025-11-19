@@ -24,7 +24,6 @@ import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Grupo;
 import org.malbino.orion.entities.Inscrito;
 import org.malbino.orion.entities.Materia;
-import org.malbino.orion.entities.Mencion;
 import org.malbino.orion.entities.Nota;
 import org.malbino.orion.entities.Pago;
 import org.malbino.orion.entities.Rol;
@@ -332,7 +331,7 @@ public class InscripcionesFacade {
         CarreraEstudiante carreraEstudiante = carreraEstudianteFacade.find(inscrito.carreraEstudianteId());
         List<Materia> oferta;
         if (carreraEstudiante != null) {
-            oferta = oferta(inscrito, carreraEstudiante.getMencion());
+            oferta = oferta(inscrito);
         } else {
             oferta = oferta(inscrito, null);
         }
@@ -344,16 +343,16 @@ public class InscripcionesFacade {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public List<Materia> oferta(Inscrito inscrito, Mencion mencion) {
+    public List<Materia> oferta(Inscrito inscrito) {
         List<Materia> oferta = new ArrayList();
 
         List<Materia> listaMateriaAprobadas = materiaFacade.listaMateriaAprobadas(inscrito.getEstudiante().getId_persona(), inscrito.getCarrera().getId_carrera());
-        List<Nivel> nivelesPendientes = materiaFacade.nivelesPendientes(inscrito.getEstudiante(), inscrito.getCarrera(), mencion);
+        List<Nivel> nivelesPendientes = materiaFacade.nivelesPendientes(inscrito.getEstudiante(), inscrito.getCarrera());
 
         ListIterator<Nivel> listIterator = nivelesPendientes.listIterator();
         List<Materia> listaMaterias;
         if (listIterator.hasNext()) {
-            listaMaterias = materiaFacade.listaMaterias(inscrito.getCarrera(), mencion, listIterator.next());
+            listaMaterias = materiaFacade.listaMaterias(inscrito.getCarrera(), listIterator.next());
             listaMaterias.removeAll(listaMateriaAprobadas);
 
             for (Materia materia : listaMaterias) {
@@ -364,7 +363,7 @@ public class InscripcionesFacade {
             }
         }
         if (inscrito.getTipo().equals(Tipo.REGULAR) && listIterator.hasNext() && oferta.size() <= inscrito.getGestionAcademica().getModalidadEvaluacion().getCantidadMaximaReprobaciones()) {
-            listaMaterias = materiaFacade.listaMaterias(inscrito.getCarrera(), mencion, listIterator.next());
+            listaMaterias = materiaFacade.listaMaterias(inscrito.getCarrera(), listIterator.next());
             listaMaterias.removeAll(listaMateriaAprobadas);
 
             for (Materia materia : listaMaterias) {
@@ -378,11 +377,11 @@ public class InscripcionesFacade {
         return oferta;
     }
 
-    public List<Materia> oferta(Inscrito inscrito, Mencion mencion, Nivel nivelInicio) {
+    public List<Materia> oferta(Inscrito inscrito, Nivel nivelInicio) {
         List<Materia> oferta = new ArrayList();
 
         List<Materia> listaMateriaAprobadas = materiaFacade.listaMateriaAprobadas(inscrito.getEstudiante().getId_persona(), inscrito.getCarrera().getId_carrera());
-        List<Nivel> nivelesPendientes = materiaFacade.nivelesPendientes(inscrito.getEstudiante(), inscrito.getCarrera(), mencion);
+        List<Nivel> nivelesPendientes = materiaFacade.nivelesPendientes(inscrito.getEstudiante(), inscrito.getCarrera());
 
         List<Nivel> nivelesPendientesNivelInicio = new ArrayList<>();
         for (Nivel nivelPendiente : nivelesPendientes) {
@@ -394,7 +393,7 @@ public class InscripcionesFacade {
         ListIterator<Nivel> listIterator = nivelesPendientesNivelInicio.listIterator();
         List<Materia> listaMaterias;
         if (listIterator.hasNext()) {
-            listaMaterias = materiaFacade.listaMaterias(inscrito.getCarrera(), mencion, listIterator.next());
+            listaMaterias = materiaFacade.listaMaterias(inscrito.getCarrera(), listIterator.next());
             listaMaterias.removeAll(listaMateriaAprobadas);
 
             for (Materia materia : listaMaterias) {
@@ -413,7 +412,7 @@ public class InscripcionesFacade {
             }
         }
         if (inscrito.getTipo().equals(Tipo.REGULAR) && listIterator.hasNext() && oferta.size() <= inscrito.getGestionAcademica().getModalidadEvaluacion().getCantidadMaximaReprobaciones()) {
-            listaMaterias = materiaFacade.listaMaterias(inscrito.getCarrera(), mencion, listIterator.next());
+            listaMaterias = materiaFacade.listaMaterias(inscrito.getCarrera(), listIterator.next());
             listaMaterias.removeAll(listaMateriaAprobadas);
 
             for (Materia materia : listaMaterias) {
@@ -478,9 +477,9 @@ public class InscripcionesFacade {
         List<Materia> ofertaTomaMaterias;
         if (carreraEstudiante != null) {
             if (carreraEstudiante.getNivelInicio() != null) {
-                ofertaTomaMaterias = oferta(inscrito, carreraEstudiante.getMencion(), carreraEstudiante.getNivelInicio());
+                ofertaTomaMaterias = oferta(inscrito, carreraEstudiante.getNivelInicio());
             } else {
-                ofertaTomaMaterias = oferta(inscrito, carreraEstudiante.getMencion());
+                ofertaTomaMaterias = oferta(inscrito);
             }
         } else {
             ofertaTomaMaterias = oferta(inscrito, null);
@@ -501,9 +500,9 @@ public class InscripcionesFacade {
         List<Materia> ofertaTomaMaterias;
         if (carreraEstudiante != null) {
             if (carreraEstudiante.getNivelInicio() != null) {
-                ofertaTomaMaterias = oferta(inscrito, carreraEstudiante.getMencion(), carreraEstudiante.getNivelInicio());
+                ofertaTomaMaterias = oferta(inscrito, carreraEstudiante.getNivelInicio());
             } else {
-                ofertaTomaMaterias = oferta(inscrito, carreraEstudiante.getMencion());
+                ofertaTomaMaterias = oferta(inscrito);
             }
         } else {
             ofertaTomaMaterias = oferta(inscrito, null);

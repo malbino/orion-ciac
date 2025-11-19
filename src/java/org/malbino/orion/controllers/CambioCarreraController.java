@@ -19,7 +19,6 @@ import org.malbino.orion.entities.Comprobante;
 import org.malbino.orion.entities.Estudiante;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Log;
-import org.malbino.orion.entities.Mencion;
 import org.malbino.orion.entities.Usuario;
 import org.malbino.orion.enums.EntidadLog;
 import org.malbino.orion.enums.EventoLog;
@@ -27,7 +26,6 @@ import org.malbino.orion.enums.Funcionalidad;
 import org.malbino.orion.enums.Nivel;
 import org.malbino.orion.facades.ActividadFacade;
 import org.malbino.orion.facades.InscritoFacade;
-import org.malbino.orion.facades.MencionFacade;
 import org.malbino.orion.facades.negocio.InscripcionesFacade;
 import org.malbino.orion.util.Encriptador;
 import org.malbino.orion.util.Fecha;
@@ -49,8 +47,6 @@ public class CambioCarreraController extends AbstractController implements Seria
     InscripcionesFacade inscripcionesFacade;
     @EJB
     ActividadFacade actividadFacade;
-    @EJB
-    MencionFacade mencionFacade;
     @Inject
     LoginController loginController;
 
@@ -85,63 +81,29 @@ public class CambioCarreraController extends AbstractController implements Seria
 
         List<Carrera> carreras = carreraFacade.listaCarreras();
         for (Carrera carrera : carreras) {
-            List<Mencion> menciones = mencionFacade.listaMenciones(carrera.getId_carrera());
-            if (menciones.isEmpty()) {
-                if (!traspasoConvalidacion) {
+            if (!traspasoConvalidacion) {
+                CarreraEstudiante.CarreraEstudianteId carreraEstudianteId = new CarreraEstudiante.CarreraEstudianteId();
+                carreraEstudianteId.setId_carrera(carrera.getId_carrera());
+                carreraEstudianteId.setId_persona(0);
+                CarreraEstudiante carreraEstudiante = new CarreraEstudiante();
+                carreraEstudiante.setCarreraEstudianteId(carreraEstudianteId);
+                carreraEstudiante.setCarrera(carrera);
+
+                l.add(carreraEstudiante);
+            } else {
+                Nivel[] niveles = Nivel.values(carrera.getRegimen());
+                for (int i = 1; i < niveles.length; i++) {
+                    Nivel nivel = niveles[i];
+
                     CarreraEstudiante.CarreraEstudianteId carreraEstudianteId = new CarreraEstudiante.CarreraEstudianteId();
                     carreraEstudianteId.setId_carrera(carrera.getId_carrera());
                     carreraEstudianteId.setId_persona(0);
                     CarreraEstudiante carreraEstudiante = new CarreraEstudiante();
                     carreraEstudiante.setCarreraEstudianteId(carreraEstudianteId);
                     carreraEstudiante.setCarrera(carrera);
+                    carreraEstudiante.setNivelInicio(nivel);
 
                     l.add(carreraEstudiante);
-                } else {
-                    Nivel[] niveles = Nivel.values(carrera.getRegimen());
-                    for (int i = 1; i < niveles.length; i++) {
-                        Nivel nivel = niveles[i];
-
-                        CarreraEstudiante.CarreraEstudianteId carreraEstudianteId = new CarreraEstudiante.CarreraEstudianteId();
-                        carreraEstudianteId.setId_carrera(carrera.getId_carrera());
-                        carreraEstudianteId.setId_persona(0);
-                        CarreraEstudiante carreraEstudiante = new CarreraEstudiante();
-                        carreraEstudiante.setCarreraEstudianteId(carreraEstudianteId);
-                        carreraEstudiante.setCarrera(carrera);
-                        carreraEstudiante.setNivelInicio(nivel);
-
-                        l.add(carreraEstudiante);
-                    }
-                }
-            } else {
-                for (Mencion mencion : menciones) {
-                    if (!traspasoConvalidacion) {
-                        CarreraEstudiante.CarreraEstudianteId carreraEstudianteId = new CarreraEstudiante.CarreraEstudianteId();
-                        carreraEstudianteId.setId_carrera(carrera.getId_carrera());
-                        carreraEstudianteId.setId_persona(0);
-                        CarreraEstudiante carreraEstudiante = new CarreraEstudiante();
-                        carreraEstudiante.setCarreraEstudianteId(carreraEstudianteId);
-                        carreraEstudiante.setMencion(mencion);
-                        carreraEstudiante.setCarrera(carrera);
-
-                        l.add(carreraEstudiante);
-                    } else {
-                        Nivel[] niveles = Nivel.values(carrera.getRegimen());
-                        for (int i = 1; i < niveles.length; i++) {
-                            Nivel nivel = niveles[i];
-
-                            CarreraEstudiante.CarreraEstudianteId carreraEstudianteId = new CarreraEstudiante.CarreraEstudianteId();
-                            carreraEstudianteId.setId_carrera(carrera.getId_carrera());
-                            carreraEstudianteId.setId_persona(0);
-                            CarreraEstudiante carreraEstudiante = new CarreraEstudiante();
-                            carreraEstudiante.setCarreraEstudianteId(carreraEstudianteId);
-                            carreraEstudiante.setMencion(mencion);
-                            carreraEstudiante.setCarrera(carrera);
-                            carreraEstudiante.setNivelInicio(nivel);
-
-                            l.add(carreraEstudiante);
-                        }
-                    }
-
                 }
             }
         }

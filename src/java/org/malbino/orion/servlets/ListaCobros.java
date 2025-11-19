@@ -223,9 +223,7 @@ public class ListaCobros extends HttpServlet {
             cell.setColspan(10);
             table.addCell(cell);
 
-            if (detalle.getConcepto().equals(Concepto.ADMISION)) {
-                cell = new PdfPCell(new Phrase(detalle.getComprobante().getPostulante().toString(), NORMAL));
-            } else if (concepto.equals(Concepto.MATRICULA)) {
+            if (concepto.equals(Concepto.MATRICULA)) {
                 cell = new PdfPCell(new Phrase(detalle.getComprobante().getInscrito().getEstudiante().toString(), NORMAL));
             } else {
                 cell = new PdfPCell(new Phrase(detalle.getComprobante().getEstudiante().toString(), NORMAL));

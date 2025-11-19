@@ -16,7 +16,6 @@ import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.Estudiante;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Inscrito;
-import org.malbino.orion.entities.Mencion;
 import org.malbino.orion.entities.Nota;
 import org.malbino.orion.enums.Condicion;
 import org.malbino.orion.enums.Modalidad;
@@ -57,14 +56,13 @@ public class NotaFacade extends AbstractFacade<Nota> {
         return l;
     }
 
-    public List<Nota> historialAcademico(Estudiante estudiante, Carrera carrera, Mencion mencion) {
+    public List<Nota> historialAcademico(Estudiante estudiante, Carrera carrera) {
         List<Nota> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.gestionAcademica ga JOIN n.materia m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND (m.mencion IS NULL OR m.mencion=:mencion) ORDER BY ga.gestion, ga.periodo, m.nivel, m.numero");
+            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.gestionAcademica ga JOIN n.materia m WHERE n.estudiante=:estudiante AND m.carrera=:carrera ORDER BY ga.gestion, ga.periodo, m.nivel, m.numero");
             q.setParameter("estudiante", estudiante);
             q.setParameter("carrera", carrera);
-            q.setParameter("mencion", mencion);
 
             l = q.getResultList();
         } catch (Exception e) {
@@ -73,7 +71,7 @@ public class NotaFacade extends AbstractFacade<Nota> {
 
         return l;
     }
-    
+
     public List<Nota> listaNotasGrupo(int id_grupo) {
         List<Nota> l = new ArrayList();
 
@@ -144,14 +142,13 @@ public class NotaFacade extends AbstractFacade<Nota> {
         return l;
     }
 
-    public List<Nota> listaNotasReprobadas(GestionAcademica gestionAcademica, Carrera carrera, Mencion mencion, Estudiante estudiante) {
+    public List<Nota> listaNotasReprobadas(GestionAcademica gestionAcademica, Carrera carrera, Estudiante estudiante) {
         List<Nota> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.materia m WHERE n.gestionAcademica=:gestionAcademica AND m.carrera=:carrera AND (m.mencion IS NULL OR m.mencion=:mencion) AND n.estudiante=:estudiante AND n.condicion=:condicion ORDER BY m.numero");
+            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.materia m WHERE n.gestionAcademica=:gestionAcademica AND m.carrera=:carrera AND n.estudiante=:estudiante AND n.condicion=:condicion ORDER BY m.numero");
             q.setParameter("gestionAcademica", gestionAcademica);
             q.setParameter("carrera", carrera);
-            q.setParameter("mencion", mencion);
             q.setParameter("estudiante", estudiante);
             q.setParameter("condicion", Condicion.REPROBADO);
 
@@ -180,14 +177,13 @@ public class NotaFacade extends AbstractFacade<Nota> {
         return l;
     }
 
-    public List<Nota> reporteHistorialAcademico(Estudiante estudiante, Carrera carrera, Mencion mencion) {
+    public List<Nota> reporteHistorialAcademico(Estudiante estudiante, Carrera carrera) {
         List<Nota> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.gestionAcademica ga JOIN n.materia m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND (m.mencion IS NULL OR m.mencion=:mencion) AND m.curricular=TRUE AND n.condicion=:condicion ORDER BY ga.gestion, ga.periodo, m.nivel, m.numero");
+            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.gestionAcademica ga JOIN n.materia m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND m.curricular=TRUE AND n.condicion=:condicion ORDER BY ga.gestion, ga.periodo, m.nivel, m.numero");
             q.setParameter("estudiante", estudiante);
             q.setParameter("carrera", carrera);
-            q.setParameter("mencion", mencion);
             q.setParameter("condicion", Condicion.APROBADO);
 
             l = q.getResultList();
@@ -197,34 +193,14 @@ public class NotaFacade extends AbstractFacade<Nota> {
 
         return l;
     }
-    
-    public List<Nota> reporteHistorialAcademico(Estudiante estudiante, Carrera carrera, Mencion mencion, Nivel nivel) {
+
+    public List<Nota> reporteHistorialAcademico(Estudiante estudiante, Carrera carrera, Nivel nivel) {
         List<Nota> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.materia m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND (m.mencion IS NULL OR m.mencion=:mencion) AND m.nivel=:nivel AND m.curricular=TRUE AND n.condicion=:condicion ORDER BY m.numero");
+            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.materia m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND m.nivel=:nivel AND m.curricular=TRUE AND n.condicion=:condicion ORDER BY m.numero");
             q.setParameter("estudiante", estudiante);
             q.setParameter("carrera", carrera);
-            q.setParameter("mencion", mencion);
-            q.setParameter("nivel", nivel);
-            q.setParameter("condicion", Condicion.APROBADO);
-
-            l = q.getResultList();
-        } catch (Exception e) {
-
-        }
-
-        return l;
-    }
-    
-    public List<Nota> reporteHistorialAcademicoRecuperatorio(Estudiante estudiante, Carrera carrera, Mencion mencion, Nivel nivel) {
-        List<Nota> l = new ArrayList();
-
-        try {
-            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.materia m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND (m.mencion IS NULL OR m.mencion=:mencion) AND m.nivel=:nivel AND m.curricular=TRUE AND n.condicion=:condicion AND n.recuperatorio IS NOT NULL ORDER BY m.numero");
-            q.setParameter("estudiante", estudiante);
-            q.setParameter("carrera", carrera);
-            q.setParameter("mencion", mencion);
             q.setParameter("nivel", nivel);
             q.setParameter("condicion", Condicion.APROBADO);
 
@@ -236,13 +212,30 @@ public class NotaFacade extends AbstractFacade<Nota> {
         return l;
     }
 
-    public GestionAcademica inicioFormacion(Carrera carrera, Mencion mencion, Estudiante estudiante) {
+    public List<Nota> reporteHistorialAcademicoRecuperatorio(Estudiante estudiante, Carrera carrera, Nivel nivel) {
+        List<Nota> l = new ArrayList();
+
+        try {
+            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.materia m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND m.nivel=:nivel AND m.curricular=TRUE AND n.condicion=:condicion AND n.recuperatorio IS NOT NULL ORDER BY m.numero");
+            q.setParameter("estudiante", estudiante);
+            q.setParameter("carrera", carrera);
+            q.setParameter("nivel", nivel);
+            q.setParameter("condicion", Condicion.APROBADO);
+
+            l = q.getResultList();
+        } catch (Exception e) {
+
+        }
+
+        return l;
+    }
+
+    public GestionAcademica inicioFormacion(Carrera carrera, Estudiante estudiante) {
         GestionAcademica ga = null;
 
         try {
-            Query q = em.createQuery("SELECT DISTINCT ga FROM Nota n JOIN n.gestionAcademica ga JOIN n.materia m WHERE m.carrera=:carrera AND (m.mencion IS NULL OR m.mencion=:mencion) AND n.estudiante=:estudiante AND m.curricular=TRUE AND n.condicion=:condicion ORDER BY ga.gestion, ga.periodo");
+            Query q = em.createQuery("SELECT DISTINCT ga FROM Nota n JOIN n.gestionAcademica ga JOIN n.materia m WHERE m.carrera=:carrera AND n.estudiante=:estudiante AND m.curricular=TRUE AND n.condicion=:condicion ORDER BY ga.gestion, ga.periodo");
             q.setParameter("carrera", carrera);
-            q.setParameter("mencion", mencion);
             q.setParameter("estudiante", estudiante);
             q.setParameter("condicion", Condicion.APROBADO);
             q.setMaxResults(1);
@@ -255,13 +248,12 @@ public class NotaFacade extends AbstractFacade<Nota> {
         return ga;
     }
 
-    public GestionAcademica finFormacion(Carrera carrera, Mencion mencion, Estudiante estudiante) {
+    public GestionAcademica finFormacion(Carrera carrera, Estudiante estudiante) {
         GestionAcademica ga = null;
 
         try {
-            Query q = em.createQuery("SELECT DISTINCT ga FROM Nota n JOIN n.gestionAcademica ga JOIN n.materia m WHERE m.carrera=:carrera AND (m.mencion IS NULL OR m.mencion=:mencion) AND n.estudiante=:estudiante AND m.curricular=TRUE AND n.condicion=:condicion ORDER BY ga.gestion DESC, ga.periodo DESC");
+            Query q = em.createQuery("SELECT DISTINCT ga FROM Nota n JOIN n.gestionAcademica ga JOIN n.materia m WHERE m.carrera=:carrera AND n.estudiante=:estudiante AND m.curricular=TRUE AND n.condicion=:condicion ORDER BY ga.gestion DESC, ga.periodo DESC");
             q.setParameter("carrera", carrera);
-            q.setParameter("mencion", mencion);
             q.setParameter("estudiante", estudiante);
             q.setParameter("condicion", Condicion.APROBADO);
             q.setMaxResults(1);
@@ -274,13 +266,12 @@ public class NotaFacade extends AbstractFacade<Nota> {
         return ga;
     }
 
-    public Long cantidadNotasAprobadas(Carrera carrera, Mencion mencion, Estudiante estudiante) {
+    public Long cantidadNotasAprobadas(Carrera carrera, Estudiante estudiante) {
         Long l = 0l;
 
         try {
-            Query q = em.createQuery("SELECT COUNT(n) FROM Nota n JOIN n.materia m WHERE m.carrera=:carrera AND (m.mencion IS NULL OR m.mencion=:mencion) AND n.estudiante=:estudiante AND m.curricular=TRUE AND n.condicion=:condicion");
+            Query q = em.createQuery("SELECT COUNT(n) FROM Nota n JOIN n.materia m WHERE m.carrera=:carrera AND n.estudiante=:estudiante AND m.curricular=TRUE AND n.condicion=:condicion");
             q.setParameter("carrera", carrera);
-            q.setParameter("mencion", mencion);
             q.setParameter("estudiante", estudiante);
             q.setParameter("condicion", Condicion.APROBADO);
 
@@ -292,14 +283,13 @@ public class NotaFacade extends AbstractFacade<Nota> {
         return l;
     }
 
-    public double promedioReporteHistorialAcademico(Estudiante estudiante, Carrera carrera, Mencion mencion) {
+    public double promedioReporteHistorialAcademico(Estudiante estudiante, Carrera carrera) {
         double d = 0.0;
 
         try {
-            Query q = em.createQuery("SELECT AVG(COALESCE(n.recuperatorio, n.notaFinal)) FROM Nota n JOIN n.materia m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND (m.mencion IS NULL OR m.mencion=:mencion) AND m.curricular=TRUE AND n.condicion=:condicion");
+            Query q = em.createQuery("SELECT AVG(COALESCE(n.recuperatorio, n.notaFinal)) FROM Nota n JOIN n.materia m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND m.curricular=TRUE AND n.condicion=:condicion");
             q.setParameter("estudiante", estudiante);
             q.setParameter("carrera", carrera);
-            q.setParameter("mencion", mencion);
             q.setParameter("condicion", Condicion.APROBADO);
 
             d = (double) q.getSingleResult();
@@ -310,14 +300,13 @@ public class NotaFacade extends AbstractFacade<Nota> {
         return d;
     }
 
-    public double promedioBoletinNotas(Estudiante estudiante, Carrera carrera, Mencion mencion, GestionAcademica gestionAcademica) {
+    public double promedioBoletinNotas(Estudiante estudiante, Carrera carrera, GestionAcademica gestionAcademica) {
         double d = 0.0;
 
         try {
-            Query q = em.createQuery("SELECT AVG(COALESCE(n.recuperatorio, n.notaFinal)) FROM Nota n JOIN n.materia m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND (m.mencion IS NULL OR m.mencion=:mencion) AND n.gestionAcademica=:gestionAcademica AND m.curricular=TRUE AND n.condicion=:condicion");
+            Query q = em.createQuery("SELECT AVG(COALESCE(n.recuperatorio, n.notaFinal)) FROM Nota n JOIN n.materia m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND n.gestionAcademica=:gestionAcademica AND m.curricular=TRUE AND n.condicion=:condicion");
             q.setParameter("estudiante", estudiante);
             q.setParameter("carrera", carrera);
-            q.setParameter("mencion", mencion);
             q.setParameter("gestionAcademica", gestionAcademica);
             q.setParameter("condicion", Condicion.APROBADO);
 

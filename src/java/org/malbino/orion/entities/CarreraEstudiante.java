@@ -10,8 +10,6 @@ import java.util.Objects;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.malbino.orion.enums.Nivel;
@@ -27,10 +25,6 @@ public class CarreraEstudiante implements Serializable {
     @EmbeddedId
     private CarreraEstudianteId carreraEstudianteId;
 
-    @JoinColumn(name = "id_mencion")
-    @ManyToOne
-    private Mencion mencion;
-
     private Nivel nivelInicio;
 
     @Transient
@@ -39,9 +33,8 @@ public class CarreraEstudiante implements Serializable {
     public CarreraEstudiante() {
     }
 
-    public CarreraEstudiante(CarreraEstudianteId carreraEstudianteId, Mencion mencion) {
+    public CarreraEstudiante(CarreraEstudianteId carreraEstudianteId) {
         this.carreraEstudianteId = carreraEstudianteId;
-        this.mencion = mencion;
     }
 
     /**
@@ -56,20 +49,6 @@ public class CarreraEstudiante implements Serializable {
      */
     public void setCarreraEstudianteId(CarreraEstudianteId carreraEstudianteId) {
         this.carreraEstudianteId = carreraEstudianteId;
-    }
-
-    /**
-     * @return the mencion
-     */
-    public Mencion getMencion() {
-        return mencion;
-    }
-
-    /**
-     * @param mencion the mencion to set
-     */
-    public void setMencion(Mencion mencion) {
-        this.mencion = mencion;
     }
 
     /**
@@ -90,7 +69,6 @@ public class CarreraEstudiante implements Serializable {
     public int hashCode() {
         int hash = 7;
         hash = 89 * hash + Objects.hashCode(this.carreraEstudianteId);
-        hash = 89 * hash + Objects.hashCode(this.mencion);
         hash = 89 * hash + Objects.hashCode(this.nivelInicio);
         return hash;
     }
@@ -110,9 +88,6 @@ public class CarreraEstudiante implements Serializable {
         if (!Objects.equals(this.carreraEstudianteId, other.carreraEstudianteId)) {
             return false;
         }
-        if (!Objects.equals(this.mencion, other.mencion)) {
-            return false;
-        }
         if (this.nivelInicio != other.nivelInicio) {
             return false;
         }
@@ -122,9 +97,6 @@ public class CarreraEstudiante implements Serializable {
     @Override
     public String toString() {
         String s = carrera.toString();
-        if (mencion != null) {
-            s += " [" + mencion.getNombre() + "]";
-        }
         if (nivelInicio != null) {
             s += " -> " + nivelInicio.getAbreviatura();
         }
