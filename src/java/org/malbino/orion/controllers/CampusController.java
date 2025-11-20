@@ -65,7 +65,7 @@ public class CampusController extends AbstractController implements Serializable
 
     public void crearCampus() throws IOException {
         nuevoCampus.setInstituto(instituto);
-        if (campusFacade.buscarPorSucursal(nuevoCampus.getSucursal()) == null) {
+        if (campusFacade.buscarPorSucursal(nuevoCampus.getCiudad()) == null) {
             if (campusFacade.create(nuevoCampus)) {
                 //log
                 logFacade.create(new Log(Fecha.getDate(), EventoLog.CREATE, EntidadLog.CAMPUS, nuevoCampus.getId_campus(), "Creación campus", loginController.getUsr().toString()));
@@ -78,7 +78,7 @@ public class CampusController extends AbstractController implements Serializable
     }
 
     public void editarCampus() throws IOException {
-        if (campusFacade.buscarPorSucursal(seleccionCampus.getSucursal(), seleccionCampus.getId_campus()) == null) {
+        if (campusFacade.buscarPorSucursal(seleccionCampus.getCiudad(), seleccionCampus.getId_campus()) == null) {
             if (campusFacade.edit(seleccionCampus)) {
                 //log
                 logFacade.create(new Log(Fecha.getDate(), EventoLog.UPDATE, EntidadLog.CAMPUS, seleccionCampus.getId_campus(), "Actualización campus", loginController.getUsr().toString()));

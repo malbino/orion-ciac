@@ -173,7 +173,7 @@ public class ComprobantePagoEstudiante extends HttpServlet {
         table.addCell(cell);
 
         //fila 3
-        cell = new PdfPCell(new Phrase(comprobante.getInscrito().getCarrera().getCampus().getSucursal(), NORMAL));
+        cell = new PdfPCell(new Phrase(comprobante.getInscrito().getCarrera().getCampus().getCiudad(), NORMAL));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setColspan(50);
         cell.setBorder(Rectangle.LEFT | Rectangle.RIGHT);

@@ -28,103 +28,17 @@ public class Campus implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_campus;
 
-    private String nombre;
     @Column(unique = true)
-    private String sucursal;
     private String ciudad;
     private String direccion;
     private Integer telefono;
-    private String cciac;
+    private Integer celular;
 
     @JoinColumn(name = "id_instituto")
     @ManyToOne
     private Instituto instituto;
 
     public Campus() {
-    }
-
-    /**
-     * @return the id_campus
-     */
-    public Integer getId_campus() {
-        return id_campus;
-    }
-
-    /**
-     * @param id_campus the id_campus to set
-     */
-    public void setId_campus(Integer id_campus) {
-        this.id_campus = id_campus;
-    }
-
-    /**
-     * @return the nombre
-     */
-    public String getNombre() {
-        return nombre;
-    }
-
-    /**
-     * @param nombre the nombre to set
-     */
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    /**
-     * @return the sucursal
-     */
-    public String getSucursal() {
-        return sucursal;
-    }
-
-    /**
-     * @param sucursal the sucursal to set
-     */
-    public void setSucursal(String sucursal) {
-        this.sucursal = sucursal;
-    }
-
-    /**
-     * @return the direccion
-     */
-    public String getDireccion() {
-        return direccion;
-    }
-
-    /**
-     * @param direccion the direccion to set
-     */
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    /**
-     * @return the telefono
-     */
-    public Integer getTelefono() {
-        return telefono;
-    }
-
-    /**
-     * @param telefono the telefono to set
-     */
-    public void setTelefono(Integer telefono) {
-        this.telefono = telefono;
-    }
-
-    /**
-     * @return the instituto
-     */
-    public Instituto getInstituto() {
-        return instituto;
-    }
-
-    /**
-     * @param instituto the instituto to set
-     */
-    public void setInstituto(Instituto instituto) {
-        this.instituto = instituto;
     }
 
     @Override
@@ -154,7 +68,21 @@ public class Campus implements Serializable {
 
     @Override
     public String toString() {
-        return nombre;
+        return ciudad;
+    }
+
+    /**
+     * @return the id_campus
+     */
+    public Integer getId_campus() {
+        return id_campus;
+    }
+
+    /**
+     * @param id_campus the id_campus to set
+     */
+    public void setId_campus(Integer id_campus) {
+        this.id_campus = id_campus;
     }
 
     /**
@@ -168,21 +96,63 @@ public class Campus implements Serializable {
      * @param ciudad the ciudad to set
      */
     public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
+        this.ciudad = ciudad.toUpperCase();
     }
 
     /**
-     * @return the cciac
+     * @return the direccion
      */
-    public String getCodigoRITT() {
-        return cciac;
+    public String getDireccion() {
+        return direccion;
     }
 
     /**
-     * @param cciac the cciac to set
+     * @param direccion the direccion to set
      */
-    public void setCodigoRITT(String cciac) {
-        this.cciac = cciac;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion.toUpperCase();
+    }
+
+    /**
+     * @return the telefono
+     */
+    public Integer getTelefono() {
+        return telefono;
+    }
+
+    /**
+     * @param telefono the telefono to set
+     */
+    public void setTelefono(Integer telefono) {
+        this.telefono = telefono;
+    }
+
+    /**
+     * @return the celular
+     */
+    public Integer getCelular() {
+        return celular;
+    }
+
+    /**
+     * @param celular the celular to set
+     */
+    public void setCelular(Integer celular) {
+        this.celular = celular;
+    }
+
+    /**
+     * @return the instituto
+     */
+    public Instituto getInstituto() {
+        return instituto;
+    }
+
+    /**
+     * @param instituto the instituto to set
+     */
+    public void setInstituto(Instituto instituto) {
+        this.instituto = instituto;
     }
 
 }

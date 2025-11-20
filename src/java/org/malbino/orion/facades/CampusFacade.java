@@ -33,12 +33,12 @@ public class CampusFacade extends AbstractFacade<Campus> {
         return em;
     }
 
-    public Campus buscarPorSucursal(String sucursal) {
+    public Campus buscarPorSucursal(String ciudad) {
         Campus c = null;
 
         try {
-            Query q = em.createQuery("SELECT c FROM Campus c WHERE c.sucursal=:sucursal");
-            q.setParameter("sucursal", sucursal);
+            Query q = em.createQuery("SELECT c FROM Campus c WHERE c.ciudad=:ciudad");
+            q.setParameter("ciudad", ciudad);
 
             c = (Campus) q.getSingleResult();
         } catch (Exception e) {
@@ -48,12 +48,12 @@ public class CampusFacade extends AbstractFacade<Campus> {
         return c;
     }
 
-    public Campus buscarPorSucursal(String sucursal, int id_campus) {
+    public Campus buscarPorSucursal(String ciudad, int id_campus) {
         Campus c = null;
 
         try {
-            Query q = em.createQuery("SELECT c FROM Campus c WHERE c.sucursal=:sucursal AND c.id_campus!=:id_campus");
-            q.setParameter("sucursal", sucursal);
+            Query q = em.createQuery("SELECT c FROM Campus c WHERE c.ciudad=:ciudad AND c.id_campus!=:id_campus");
+            q.setParameter("ciudad", ciudad);
             q.setParameter("id_campus", id_campus);
 
             c = (Campus) q.getSingleResult();
@@ -68,7 +68,7 @@ public class CampusFacade extends AbstractFacade<Campus> {
         List<Campus> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT c FROM Campus c ORDER BY c.nombre");
+            Query q = em.createQuery("SELECT c FROM Campus c ORDER BY c.ciudad");
 
             l = q.getResultList();
         } catch (Exception e) {
@@ -83,10 +83,9 @@ public class CampusFacade extends AbstractFacade<Campus> {
 
         try {
             Query q = em.createQuery("SELECT c FROM Campus c WHERE "
-                    + "LOWER(c.nombre) LIKE LOWER(:keyword) OR "
-                    + "LOWER(c.sucursal) LIKE LOWER(:keyword) OR "
+                    + "LOWER(c.ciudad) LIKE LOWER(:keyword) OR "
                     + "LOWER(c.direccion) LIKE LOWER(:keyword) "
-                    + "ORDER BY c.nombre");
+                    + "ORDER BY c.ciudad");
             q.setParameter("keyword", "%" + keyword + "%");
 
             l = q.getResultList();

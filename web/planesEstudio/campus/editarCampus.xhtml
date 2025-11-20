@@ -25,16 +25,6 @@
 
                                     <div class="ui-g ui-fluid">
                                         <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="nombre" value="Nombre:" style="font-size: small"/>
-                                            <p:inputText id="nombre" value="#{CampusController.seleccionCampus.nombre}" required="true" requiredMessage="* Nombre requerido." />
-                                        </div>
-
-                                        <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="sucursal" value="Sucursal:" style="font-size: small"/>
-                                            <p:inputText id="sucursal" value="#{CampusController.seleccionCampus.sucursal}" required="true" requiredMessage="* Sucursal requerida." />
-                                        </div>
-
-                                        <div class="ui-g-12 ui-md-4">
                                             <p:outputLabel for="ciudad" value="Ciudad:" style="font-size: small"/>
                                             <p:inputText id="ciudad" value="#{CampusController.seleccionCampus.ciudad}" required="true" requiredMessage="* Ciudad requerida." />
                                         </div>
@@ -50,8 +40,8 @@
                                         </div>
 
                                         <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="codigoRITT" value="Codigo RITT:" style="font-size: small"/>
-                                            <p:inputText id="codigoRITT" value="#{CampusController.seleccionCampus.codigoRITT}" required="true" requiredMessage="* Codigo RITT requerido." />
+                                            <p:outputLabel for="celular" value="Celular:"/> 
+                                            <p:inputMask id="celular" value="#{CampusController.seleccionCampus.celular}" mask="99999999" required="false"/>
                                         </div>
                                     </div>
 

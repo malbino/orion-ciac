@@ -25,16 +25,6 @@
 
                                     <div class="ui-g ui-fluid">
                                         <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="nombre" value="Nombre:" style="font-size: small"/>
-                                            <p:inputText id="nombre" value="#{CampusController.nuevoCampus.nombre}" required="true" requiredMessage="* Nombre requerido." />
-                                        </div>
-
-                                        <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="sucursal" value="Sucursal:" style="font-size: small"/>
-                                            <p:inputText id="sucursal" value="#{CampusController.nuevoCampus.sucursal}" required="true" requiredMessage="* Sucursal requerida." />
-                                        </div>
-
-                                        <div class="ui-g-12 ui-md-4">
                                             <p:outputLabel for="ciudad" value="Ciudad:" style="font-size: small"/>
                                             <p:inputText id="ciudad" value="#{CampusController.nuevoCampus.ciudad}" required="true" requiredMessage="* Ciudad requerida." />
                                         </div>
@@ -48,10 +38,10 @@
                                             <p:outputLabel for="telefono" value="Teléfono:"/> 
                                             <p:inputMask id="telefono" value="#{CampusController.nuevoCampus.telefono}" mask="9999999" required="false"/>
                                         </div>
-
+                                        
                                         <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="codigoRITT" value="Codigo RITT:" style="font-size: small"/>
-                                            <p:inputText id="codigoRITT" value="#{CampusController.nuevoCampus.codigoRITT}" required="true" requiredMessage="* Codigo RITT requerido." />
+                                            <p:outputLabel for="celular" value="Celular:"/> 
+                                            <p:inputMask id="celular" value="#{CampusController.nuevoCampus.celular}" mask="99999999" required="false"/>
                                         </div>
                                     </div>
 
