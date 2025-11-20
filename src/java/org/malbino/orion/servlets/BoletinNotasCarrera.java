@@ -168,7 +168,7 @@ public class BoletinNotasCarrera extends HttpServlet {
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase(inscrito.getCarrera().getCampus().getInstituto().getNombreRegulador(), NORMAL));
+        cell = new PdfPCell(new Phrase(inscrito.getCarrera().getCampus().getInstituto().getNombre(), NORMAL));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         cell.setBorder(Rectangle.NO_BORDER);

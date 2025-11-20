@@ -33,13 +33,25 @@
 
                                     <div class="ui-g ui-fluid">
                                         <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="nombreRegulador" value="Nombre regulador:" style="font-size: small"/>
-                                            <p:inputText id="nombreRegulador" value="#{InstitutoController.instituto.nombreRegulador}" required="true" requiredMessage="* Nombre regulador requerido." />
+                                            <p:outputLabel for="codigo" value="Codigo:" style="font-size: small"/>
+                                            <p:inputText id="codigo" value="#{InstitutoController.instituto.codigo}" required="true" requiredMessage="* Codigo requerido." />
                                         </div>
 
                                         <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="ubicacion" value="Ubicacion:" style="font-size: small"/>
-                                            <p:inputText id="ubicacion" value="#{InstitutoController.instituto.ubicacion}" required="true" requiredMessage="* Ubicación requerida." />
+                                            <p:outputLabel for="nombre" value="Nombre:" style="font-size: small"/>
+                                            <p:inputText id="nombre" value="#{InstitutoController.instituto.nombre}" required="true" requiredMessage="* Nombre requerido." />
+                                        </div>
+
+                                        <div class="ui-g-12 ui-md-4">
+                                            <p:outputLabel for="abreviatura" value="Abreviatura:" style="font-size: small"/>
+                                            <p:inputText id="abreviatura" value="#{InstitutoController.instituto.abreviatura}" />
+                                        </div>
+
+                                        <div class="ui-g-12 ui-md-4">
+                                            <p:outputLabel for="email" value="Email:" style="font-size: small"/> 
+                                            <p:inputText id="email" value="#{InstitutoController.instituto.email}" required="true" requiredMessage="* Email requerido.">
+                                                <f:validator validatorId="validators.emailValidator" />
+                                            </p:inputText>
                                         </div>
 
                                         <div class="ui-g-12 ui-md-4">
@@ -51,33 +63,8 @@
                                         </div>
 
                                         <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="nombreImpuestos" value="Nombre impuestos:" style="font-size: small"/>
-                                            <p:inputText id="nombreImpuestos" value="#{InstitutoController.instituto.nombreImpuestos}" />
-                                        </div>
-
-                                        <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="nit" value="NIT:" style="font-size: small"/>
-                                            <p:inputText id="nit" value="#{InstitutoController.instituto.nit}" />
-                                        </div>
-
-                                        <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="actividadEconomoca" value="Actividad economica:" style="font-size: small"/>
-                                            <p:inputText id="actividadEconomoca" value="#{InstitutoController.instituto.actividadEconomica}" />
-                                        </div>
-                                        
-                                        <div class="ui-g-12 ui-md-4">
                                             <p:outputLabel for="precioCredito" value="Precio credito:" style="font-size: small"/>
                                             <p:inputText id="precioCredito" value="#{InstitutoController.instituto.precioCredito}" required="true" requiredMessage="* Precio credito requerido."/>
-                                        </div>
-
-                                        <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="resolucionMinisterial" value="Resolución ministerial:" style="font-size: small"/>
-                                            <p:inputText id="resolucionMinisterial" value="#{InstitutoController.instituto.resolucionMinisterial}" required="true" requiredMessage="* Resolución ministerial requerida."/>
-                                        </div>
-                                        
-                                        <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="abreviatura" value="Abreviatura:" style="font-size: small"/>
-                                            <p:inputText id="abreviatura" value="#{InstitutoController.instituto.abreviatura}" />
                                         </div>
 
                                         <div class="ui-g-12 ui-md-4">

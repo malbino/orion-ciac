@@ -118,7 +118,7 @@ public class LibroInscripciones extends HttpServlet {
         cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase(instituto.getNombreRegulador(), SUBTITULO));
+        cell = new PdfPCell(new Phrase(instituto.getNombre(), SUBTITULO));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setColspan(80);
         cell.setBorder(Rectangle.NO_BORDER);

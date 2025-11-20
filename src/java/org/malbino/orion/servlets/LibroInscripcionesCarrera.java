@@ -120,7 +120,7 @@ public class LibroInscripcionesCarrera extends HttpServlet {
         cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
         table.addCell(cell);
         
-        cell = new PdfPCell(new Phrase(carrera.getCampus().getInstituto().getNombreRegulador(), SUBTITULO));
+        cell = new PdfPCell(new Phrase(carrera.getCampus().getInstituto().getNombre(), SUBTITULO));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setColspan(80);
         cell.setBorder(Rectangle.NO_BORDER);

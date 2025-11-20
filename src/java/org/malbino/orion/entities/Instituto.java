@@ -28,16 +28,13 @@ public class Instituto implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_instituto;
 
-    private String nombreRegulador;
-    private String ubicacion;
-    private Caracter caracter;
-    private String nombreImpuestos;
-    private String nit;
-    private String actividadEconomica;
-    private Integer precioCredito;
-    private String resolucionMinisterial;
     private String logo;
+    private String codigo;
+    private String nombre;
     private String abreviatura;
+    private String email;
+    private Caracter caracter;
+    private Integer precioCredito;
 
     @JoinColumn(name = "id_rector")
     @ManyToOne
@@ -48,6 +45,36 @@ public class Instituto implements Serializable {
     private Empleado directorAcademico;
 
     public Instituto() {
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.id_instituto);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Instituto other = (Instituto) obj;
+        if (!Objects.equals(this.id_instituto, other.id_instituto)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return nombre;
     }
 
     /**
@@ -65,31 +92,73 @@ public class Instituto implements Serializable {
     }
 
     /**
-     * @return the nombreRegulador
+     * @return the logo
      */
-    public String getNombreRegulador() {
-        return nombreRegulador;
+    public String getLogo() {
+        return logo;
     }
 
     /**
-     * @param nombreRegulador the nombreRegulador to set
+     * @param logo the logo to set
      */
-    public void setNombreRegulador(String nombreRegulador) {
-        this.nombreRegulador = nombreRegulador;
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
     /**
-     * @return the ubicacion
+     * @return the codigo
      */
-    public String getUbicacion() {
-        return ubicacion;
+    public String getCodigo() {
+        return codigo;
     }
 
     /**
-     * @param ubicacion the ubicacion to set
+     * @param codigo the codigo to set
      */
-    public void setUbicacion(String ubicacion) {
-        this.ubicacion = ubicacion;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    /**
+     * @return the nombre
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * @param nombre the nombre to set
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    /**
+     * @return the abreviatura
+     */
+    public String getAbreviatura() {
+        return abreviatura;
+    }
+
+    /**
+     * @param abreviatura the abreviatura to set
+     */
+    public void setAbreviatura(String abreviatura) {
+        this.abreviatura = abreviatura;
+    }
+
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     /**
@@ -107,48 +176,6 @@ public class Instituto implements Serializable {
     }
 
     /**
-     * @return the nombreImpuestos
-     */
-    public String getNombreImpuestos() {
-        return nombreImpuestos;
-    }
-
-    /**
-     * @param nombreImpuestos the nombreImpuestos to set
-     */
-    public void setNombreImpuestos(String nombreImpuestos) {
-        this.nombreImpuestos = nombreImpuestos;
-    }
-
-    /**
-     * @return the nit
-     */
-    public String getNit() {
-        return nit;
-    }
-
-    /**
-     * @param nit the nit to set
-     */
-    public void setNit(String nit) {
-        this.nit = nit;
-    }
-
-    /**
-     * @return the actividadEconomica
-     */
-    public String getActividadEconomica() {
-        return actividadEconomica;
-    }
-
-    /**
-     * @param actividadEconomica the actividadEconomica to set
-     */
-    public void setActividadEconomica(String actividadEconomica) {
-        this.actividadEconomica = actividadEconomica;
-    }
-
-    /**
      * @return the precioCredito
      */
     public Integer getPrecioCredito() {
@@ -160,34 +187,6 @@ public class Instituto implements Serializable {
      */
     public void setPrecioCredito(Integer precioCredito) {
         this.precioCredito = precioCredito;
-    }
-
-    /**
-     * @return the resolucionMinisterial
-     */
-    public String getResolucionMinisterial() {
-        return resolucionMinisterial;
-    }
-
-    /**
-     * @param resolucionMinisterial the resolucionMinisterial to set
-     */
-    public void setResolucionMinisterial(String resolucionMinisterial) {
-        this.resolucionMinisterial = resolucionMinisterial;
-    }
-
-    /**
-     * @return the logo
-     */
-    public String getLogo() {
-        return logo;
-    }
-
-    /**
-     * @param logo the logo to set
-     */
-    public void setLogo(String logo) {
-        this.logo = logo;
     }
 
     /**
@@ -218,47 +217,5 @@ public class Instituto implements Serializable {
         this.directorAcademico = directorAcademico;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + Objects.hashCode(this.id_instituto);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Instituto other = (Instituto) obj;
-        if (!Objects.equals(this.id_instituto, other.id_instituto)) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return nombreRegulador;
-    }
-
-    /**
-     * @return the abreviatura
-     */
-    public String getAbreviatura() {
-        return abreviatura;
-    }
-
-    /**
-     * @param abreviatura the abreviatura to set
-     */
-    public void setAbreviatura(String abreviatura) {
-        this.abreviatura = abreviatura;
-    }
+   
 }

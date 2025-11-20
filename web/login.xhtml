@@ -12,7 +12,7 @@
             <ui:define name="content">
                 <h:form id="form">
                     <h1>Iniciar sesión</h1>
-                    
+
                     <div>
                         <p:graphicImage id="logo" title="Logo instituto" value="/resources/uploads/#{InstitutoController.instituto.logo}" class="img-fluid"/>
                     </div>
@@ -35,14 +35,14 @@
 
                     <div class="separator">
                         <p class="change_link">¿Olvidaste tu contraseña?
-                                    <p:link value="Restaura tu contraseña" outcome="/restore/pin"/>
+                            <p:link value="Restaura tu contraseña" outcome="/restore/pin"/>
                         </p>
 
                         <br />
 
                         <div>
                             <h1><i class="fa fa-star"></i> Orion</h1>
-                            <p>Sistema de información del #{InstitutoController.instituto.nombreRegulador} ubicado en #{InstitutoController.instituto.ubicacion}.</p>
+                            <p>Sistema académico del centro de instrucción de aeronautica civil ó#{InstitutoController.instituto.nombre}.</p>
                         </div>
                     </div>
                 </h:form>

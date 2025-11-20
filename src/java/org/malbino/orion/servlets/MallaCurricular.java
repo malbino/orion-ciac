@@ -118,7 +118,7 @@ public class MallaCurricular extends HttpServlet {
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase(carrera.getCampus().getInstituto().getNombreRegulador(), SUBTITULO));
+        cell = new PdfPCell(new Phrase(carrera.getCampus().getInstituto().getNombre(), SUBTITULO));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setColspan(90);
         cell.setBorder(Rectangle.NO_BORDER);

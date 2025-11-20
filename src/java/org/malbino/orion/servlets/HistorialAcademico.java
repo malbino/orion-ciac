@@ -159,7 +159,7 @@ public class HistorialAcademico extends HttpServlet {
         //fila 0
         phrase = new Phrase();
         phrase.add(new Chunk("INSTITUTO: ", NEGRITA));
-        phrase.add(new Chunk(carrera.getCampus().getInstituto().getNombreRegulador(), NORMAL));
+        phrase.add(new Chunk(carrera.getCampus().getInstituto().getNombre(), NORMAL));
         cell = new PdfPCell(phrase);
         cell.setColspan(20);
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
