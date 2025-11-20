@@ -12,6 +12,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.malbino.orion.entities.Usuario;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -20,6 +22,8 @@ import org.malbino.orion.entities.Usuario;
 @Stateless
 @LocalBean
 public class UsuarioFacade extends AbstractFacade<Usuario> {
+
+    private static final Logger log = LoggerFactory.getLogger(UsuarioFacade.class);
 
     @PersistenceContext(unitName = "orionPU")
     private EntityManager em;
@@ -42,7 +46,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
 
             usr = (Usuario) q.getSingleResult();
         } catch (Exception e) {
-
+            log.error(e.toString());
         }
 
         return usr;

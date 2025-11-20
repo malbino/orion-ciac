@@ -23,6 +23,8 @@ import org.malbino.orion.util.Fecha;
 import org.malbino.orion.util.PasswordValidator;
 import org.malbino.orion.util.Propiedades;
 import org.malbino.pfsense.webservices.CopiarUsuario;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -31,6 +33,8 @@ import org.malbino.pfsense.webservices.CopiarUsuario;
 @Named("LoginController")
 @SessionScoped
 public class LoginController extends AbstractController {
+    
+    private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
     @EJB
     RecursoFacade recursoFacade;
@@ -52,6 +56,7 @@ public class LoginController extends AbstractController {
 
     public void login() throws IOException {
         usr = usuarioFacade.buscarPorUsuario(usuario);
+        log.info("usr=" + usr);
         if (usr != null && usr.getContrasena() != null && Encriptador.comparar(contrasena, usr.getContrasena())) {
             listaRecursos = recursoFacade.buscarPorPersonaNombre(usr.getId_persona());
             listaActividadesProximas = actividadFacade.listaActividadesProximas(Fecha.getInicioDia(Fecha.getDate()));
@@ -71,12 +76,16 @@ public class LoginController extends AbstractController {
     public String displayMenu(String path) {
         String s = "none";
 
+        /*
         if (usr != null) {
             List<Recurso> l = listaRecursos.stream().filter(r -> r.getUrlPattern().startsWith(path)).collect(Collectors.toList());
             if (!l.isEmpty()) {
                 s = "anything";
             }
         }
+        */
+        
+        s = "anything";
 
         return s;
     }
@@ -84,13 +93,17 @@ public class LoginController extends AbstractController {
     public String display(String path) {
         String s = "none";
 
+        /*
         if (usr != null) {
             List<Recurso> l = listaRecursos.stream().filter(r -> r.getUrlPattern().equals(path)).collect(Collectors.toList());
             if (!l.isEmpty()) {
                 s = "anything";
             }
         }
-
+        */
+        
+        s = "anything";
+        
         return s;
     }
 
