@@ -20,7 +20,7 @@ import org.malbino.orion.facades.ActividadFacade;
 import org.malbino.orion.facades.RecursoFacade;
 import org.malbino.orion.util.Encriptador;
 import org.malbino.orion.util.Fecha;
-import org.malbino.orion.util.PasswordValidator;
+import org.malbino.orion.validators.PasswordValidator;
 import org.malbino.orion.util.Propiedades;
 import org.malbino.pfsense.webservices.CopiarUsuario;
 import org.slf4j.Logger;

@@ -26,7 +26,7 @@ import org.malbino.orion.util.Encriptador;
 import org.malbino.orion.util.Fecha;
 import org.malbino.orion.util.Generador;
 import org.malbino.orion.util.JavaMail;
-import org.malbino.orion.util.PasswordValidator;
+import org.malbino.orion.validators.PasswordValidator;
 import org.malbino.orion.util.Propiedades;
 import org.malbino.pfsense.webservices.CopiarUsuario;
 
