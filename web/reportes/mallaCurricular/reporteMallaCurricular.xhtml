@@ -38,14 +38,6 @@
                                                 <p:ajax update="mencion"/>
                                             </p:selectOneMenu>
                                         </div>
-                                        
-                                        <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="mencion" value="Menciones: " style="font-size: small"/>
-                                            <p:selectOneMenu id="mencion" value="#{ReporteMallaCurricularController.seleccionMencion}" converter="#{MencionConverter}" autoWidth="false">
-                                                <f:selectItem itemLabel="" itemValue=""/>
-                                                <f:selectItems value="#{ReporteMallaCurricularController.listaMenciones()}" var="mencion" itemLabel="#{mencion.toString()}" itemValue="#{mencion}"/>
-                                            </p:selectOneMenu>
-                                        </div>
                                     </div>
                                     
                                     <div class="ui-g ui-fluid">
