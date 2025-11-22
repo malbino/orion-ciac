@@ -10,6 +10,7 @@ package org.malbino.orion.enums;
  * @author Martin
  */
 public enum ModalidadEvaluacion {
+    MODULAR_2P(Regimen.MODULAR, 1, 2, 80, 40),
     SEMESTRAL_2P(Regimen.SEMESTRAL, 2, 2, 61, 40),
     SEMESTRAL_3P(Regimen.SEMESTRAL, 2, 3, 61, 40),
     ANUAL_4P(Regimen.ANUAL, 3, 4, 61, 40);
