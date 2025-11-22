@@ -260,7 +260,7 @@ public class Grupo implements Serializable {
         String s = "<br/>";
 
         s += materia.getCodigo() + " [" + codigo + ", " + turno.getNombre() + "]" + "<br/>";
-        s += materia.getCarrera().getCodigo() + " [" + materia.getCarrera().getResolucionMinisterial1() + "]" + "<br/>";
+        s += materia.getCarrera().getCodigo() + "<br/>";
         String e = "Por designar";
         if (empleado != null) {
             e = empleado.getPrimerApellido();

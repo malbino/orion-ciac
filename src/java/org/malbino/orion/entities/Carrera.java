@@ -33,14 +33,9 @@ public class Carrera implements Serializable {
     @Column(unique = true)
     private String codigo;
     private String nombre;
-    private String area;
     private Regimen regimen;
     private NivelAcademico nivelAcademico;
     private Integer version;
-    private String resolucionMinisterial1;
-    private String resolucionMinisterial2;
-    private String resolucionMinisterial3;
-    private Integer creditajeAdmision;
     private Integer creditajeMatricula;
 
     @JoinColumn(name = "id_campus")
@@ -155,20 +150,6 @@ public class Carrera implements Serializable {
     }
 
     /**
-     * @return the resolucionMinisterial1
-     */
-    public String getResolucionMinisterial1() {
-        return resolucionMinisterial1;
-    }
-
-    /**
-     * @param resolucionMinisterial1 the resolucionMinisterial1 to set
-     */
-    public void setResolucionMinisterial1(String resolucionMinisterial1) {
-        this.resolucionMinisterial1 = resolucionMinisterial1;
-    }
-
-    /**
      * @return the creditajeMatricula
      */
     public Integer getCreditajeMatricula() {
@@ -210,34 +191,6 @@ public class Carrera implements Serializable {
         this.jefeCarrera = jefeCarrera;
     }
 
-    /**
-     * @return the resolucionMinisterial2
-     */
-    public String getResolucionMinisterial2() {
-        return resolucionMinisterial2;
-    }
-
-    /**
-     * @param resolucionMinisterial2 the resolucionMinisterial2 to set
-     */
-    public void setResolucionMinisterial2(String resolucionMinisterial2) {
-        this.resolucionMinisterial2 = resolucionMinisterial2;
-    }
-
-    /**
-     * @return the resolucionMinisterial3
-     */
-    public String getResolucionMinisterial3() {
-        return resolucionMinisterial3;
-    }
-
-    /**
-     * @param resolucionMinisterial3 the resolucionMinisterial3 to set
-     */
-    public void setResolucionMinisterial3(String resolucionMinisterial3) {
-        this.resolucionMinisterial3 = resolucionMinisterial3;
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;
@@ -265,34 +218,6 @@ public class Carrera implements Serializable {
 
     @Override
     public String toString() {
-        return nombre + " [" + resolucionMinisterial1 + "]";
-    }
-
-    /**
-     * @return the creditajeAdmision
-     */
-    public Integer getCreditajeAdmision() {
-        return creditajeAdmision;
-    }
-
-    /**
-     * @param creditajeAdmision the creditajeAdmision to set
-     */
-    public void setCreditajeAdmision(Integer creditajeAdmision) {
-        this.creditajeAdmision = creditajeAdmision;
-    }
-
-    /**
-     * @return the area
-     */
-    public String getArea() {
-        return area;
-    }
-
-    /**
-     * @param area the area to set
-     */
-    public void setArea(String area) {
-        this.area = area;
+        return nombre;
     }
 }

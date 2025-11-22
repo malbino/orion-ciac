@@ -10,8 +10,9 @@ package org.malbino.orion.enums;
  * @author Martin
  */
 public enum NivelAcademico {
-    TECNICO_MEDIO("TÉCNICO MEDIO", "TM"),
-    TECNICO_SUPERIOR("TÉCNICO SUPERIOR", "TS");
+    CAPACITACION_TECNICA("CAPACITACIÓN TÉCNICA", "CT"),
+    TECNICO_BASICO("TÉCNICO BASICO", "TB"),
+    TECNICO_AUXILIAR("TÉCNICO AUXILIAR", "TA");
 
     private String nombre;
     private String abreviatura;

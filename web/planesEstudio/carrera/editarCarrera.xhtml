@@ -36,11 +36,6 @@
                                         </div>
 
                                         <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="area" value="Area:" style="font-size: small"/>
-                                            <p:inputText id="area" value="#{CarreraController.seleccionCarrera.area}" required="true" requiredMessage="* Area requerida." />
-                                        </div>
-
-                                        <div class="ui-g-12 ui-md-4">
                                             <p:outputLabel for="regimen" value="Régimen:" style="font-size: small"/>
                                             <p:selectOneMenu id="regimen" value="#{CarreraController.seleccionCarrera.regimen}" converter="#{RegimenConverter}" autoWidth="false" required="true" requiredMessage="* Regimen requerido."> 
                                                 <f:selectItem itemLabel="" itemValue="" />
@@ -59,26 +54,6 @@
                                         <div class="ui-g-12 ui-md-4">
                                             <p:outputLabel for="version" value="Versión:" style="font-size: small"/>
                                             <p:inputText id="version" value="#{CarreraController.seleccionCarrera.version}" required="true" requiredMessage="* Versión requerida." />
-                                        </div>
-
-                                        <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="resolucionMinisterial1" value="Resolución ministerial 1:" style="font-size: small"/>
-                                            <p:inputText id="resolucionMinisterial1" value="#{CarreraController.seleccionCarrera.resolucionMinisterial1}" required="true" requiredMessage="* Resolucion ministerial 1 requerida." />
-                                        </div>
-
-                                        <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="resolucionMinisterial2" value="Resolución ministerial 2:" style="font-size: small"/>
-                                            <p:inputText id="resolucionMinisterial2" value="#{CarreraController.seleccionCarrera.resolucionMinisterial2}"/>
-                                        </div>
-
-                                        <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="resolucionMinisterial3" value="Resolución ministerial 3:" style="font-size: small"/>
-                                            <p:inputText id="resolucionMinisterial3" value="#{CarreraController.seleccionCarrera.resolucionMinisterial3}"/>
-                                        </div>
-
-                                        <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="creditajeAdmision" value="Creditaje admisión:" style="font-size: small"/>
-                                            <p:inputText id="creditajeAdmision" value="#{CarreraController.seleccionCarrera.creditajeAdmision}" required="true" requiredMessage="* Creditaje admisión requerido." />
                                         </div>
 
                                         <div class="ui-g-12 ui-md-4">

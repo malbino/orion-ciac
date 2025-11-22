@@ -503,34 +503,12 @@ public class HistorialAcademico extends HttpServlet {
 
         phrase = new Phrase();
         phrase.add(new Chunk("* PLAN DE ESTUDIOS SEGÚN R.M. ", NEGRITA));
-        phrase.add(new Chunk(carrera.getResolucionMinisterial1(), NORMAL));
+        phrase.add(new Chunk("", NORMAL));
         cell = new PdfPCell(phrase);
         cell.setColspan(60);
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
-
-        if (carrera.getResolucionMinisterial2() != null && !carrera.getResolucionMinisterial2().isEmpty()) {
-            phrase = new Phrase();
-            phrase.add(new Chunk("* PLAN DE ESTUDIOS SEGÚN R.M. ", NEGRITA));
-            phrase.add(new Chunk(carrera.getResolucionMinisterial2(), NORMAL));
-            cell = new PdfPCell(phrase);
-            cell.setColspan(60);
-            cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
-            cell.setBorder(Rectangle.NO_BORDER);
-            table.addCell(cell);
-        }
-
-        if (carrera.getResolucionMinisterial3() != null && !carrera.getResolucionMinisterial3().isEmpty()) {
-            phrase = new Phrase();
-            phrase.add(new Chunk("* PLAN DE ESTUDIOS SEGÚN R.M. ", NEGRITA));
-            phrase.add(new Chunk(carrera.getResolucionMinisterial3(), NORMAL));
-            cell = new PdfPCell(phrase);
-            cell.setColspan(60);
-            cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
-            cell.setBorder(Rectangle.NO_BORDER);
-            table.addCell(cell);
-        }
 
         cell = new PdfPCell(new Phrase(" ", NEGRITA));
         cell.setColspan(20);

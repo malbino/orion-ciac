@@ -10,6 +10,7 @@ package org.malbino.orion.enums;
  * @author Martin
  */
 public enum Regimen {
+    MODULAR("MODULAR", "M", 1),
     SEMESTRAL("SEMESTRAL", "S", 5),
     ANUAL("ANUAL", "A", 10);
 

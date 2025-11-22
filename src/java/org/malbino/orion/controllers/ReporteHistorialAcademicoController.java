@@ -183,19 +183,11 @@ public class ReporteHistorialAcademicoController extends AbstractController impl
                         } else if (cell.getStringCellValue().contains("<<LUGAR_FECHA>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<LUGAR_FECHA>>", "Cochabamba, " + Fecha.formatearFecha_ddMMMMyyyy(fecha)));
                         } else if (cell.getStringCellValue().contains("<<RM_1>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<RM_1>>", "* PLAN DE ESTUDIOS SEGÚN R.M. " + carrera.getResolucionMinisterial1()));
+                            cell.setCellValue(cell.getStringCellValue().replace("<<RM_1>>", " "));
                         } else if (cell.getStringCellValue().contains("<<RM_2>>")) {
-                            if (carrera.getResolucionMinisterial2() != null && !carrera.getResolucionMinisterial2().isEmpty()) {
-                                cell.setCellValue(cell.getStringCellValue().replace("<<RM_2>>", "* PLAN DE ESTUDIOS SEGÚN R.M. " + carrera.getResolucionMinisterial2()));
-                            } else {
-                                cell.setCellValue(cell.getStringCellValue().replace("<<RM_2>>", " "));
-                            }
+                            cell.setCellValue(cell.getStringCellValue().replace("<<RM_2>>", " "));
                         } else if (cell.getStringCellValue().contains("<<RM_3>>")) {
-                            if (carrera.getResolucionMinisterial3() != null && !carrera.getResolucionMinisterial3().isEmpty()) {
-                                cell.setCellValue(cell.getStringCellValue().replace("<<RM_3>>", "* PLAN DE ESTUDIOS SEGÚN R.M. " + carrera.getResolucionMinisterial3()));
-                            } else {
-                                cell.setCellValue(cell.getStringCellValue().replace("<<RM_3>>", " "));
-                            }
+                            cell.setCellValue(cell.getStringCellValue().replace("<<RM_3>>", " "));
                         } else if (cell.getStringCellValue().contains("<<MA_MC>>")) {
                             int materiasAprobadas = notaFacade.cantidadNotasAprobadas(carrera, seleccionEstudiante).intValue();
                             int materiasCarrera = materiaFacade.cantidadMateriasCurriculares(carrera).intValue();
