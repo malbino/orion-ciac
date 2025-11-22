@@ -74,7 +74,7 @@ public class MateriaFacade extends AbstractFacade<Materia> {
         List<Materia> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT m FROM Materia m WHERE m.carrera=:carrera ORDER BY m.nivel, m.mencion, m.numero");
+            Query q = em.createQuery("SELECT m FROM Materia m WHERE m.carrera=:carrera ORDER BY m.nivel, m.numero");
             q.setParameter("carrera", carrera);
 
             l = q.getResultList();
@@ -89,7 +89,7 @@ public class MateriaFacade extends AbstractFacade<Materia> {
         List<Materia> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT m FROM Materia m WHERE m.carrera=:carrera AND m.id_materia!=:id_materia ORDER BY m.nivel, m.mencion, m.numero");
+            Query q = em.createQuery("SELECT m FROM Materia m WHERE m.carrera=:carrera AND m.id_materia!=:id_materia ORDER BY m.nivel, m.numero");
             q.setParameter("carrera", carrera);
             q.setParameter("id_materia", id_materia);
 
@@ -124,7 +124,7 @@ public class MateriaFacade extends AbstractFacade<Materia> {
             Query q = em.createQuery("SELECT m FROM Materia m JOIN m.carrera c WHERE c.id_carrera=:id_carrera AND "
                     + "(LOWER(m.codigo) LIKE LOWER(:keyword) OR "
                     + "LOWER(m.nombre) LIKE LOWER(:keyword)) "
-                    + "ORDER BY m.nivel, m.mencion, m.numero");
+                    + "ORDER BY m.nivel, m.numero");
             q.setParameter("id_carrera", id_carrera);
             q.setParameter("keyword", "%" + keyword + "%");
 
@@ -173,7 +173,7 @@ public class MateriaFacade extends AbstractFacade<Materia> {
         List<Materia> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT m FROM Nota n JOIN n.materia m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND n.condicion=:condicion ORDER BY m.nivel, m.mencion, m.numero");
+            Query q = em.createQuery("SELECT m FROM Nota n JOIN n.materia m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND n.condicion=:condicion ORDER BY m.nivel, m.numero");
             q.setParameter("estudiante", estudiante);
             q.setParameter("carrera", carrera);
             q.setParameter("condicion", Condicion.APROBADO);
