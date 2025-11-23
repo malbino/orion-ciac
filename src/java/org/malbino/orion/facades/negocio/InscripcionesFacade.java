@@ -113,7 +113,8 @@ public class InscripcionesFacade {
     }
 
     @Transactional(Transactional.TxType.REQUIRES_NEW)
-    public boolean registrarEstudianteRegular(Estudiante estudiante, Carrera carrera, GestionAcademica gestionAcademica, Comprobante comprobante) {
+    public boolean registrarEstudianteRegular(Estudiante estudiante, Carrera carrera, GestionAcademica gestionAcademica) {
+        // estudiante
         if (estudiante.getMatricula() == null && estudiante.getUsuario() == null) {
             Date fecha = notaFacade.fechaInicio(estudiante.getId_persona());
             if (fecha == null) {
@@ -132,16 +133,16 @@ public class InscripcionesFacade {
             estudiante.setMatricula(matricula);
             estudiante.setUsuario(String.valueOf(matricula));
         }
-
         em.merge(estudiante);
 
+        // inscrito
         Date fecha = estudiante.getFechaInscripcion(); //fecha de inscripcion
         Integer maximoNumero = inscritoFacade.maximoNumero(gestionAcademica.getId_gestionacademica(), carrera.getId_carrera());
         Long maximoCodigo = inscritoFacade.maximoCodigo(gestionAcademica.getId_gestionacademica(), carrera.getId_carrera());
         Long codigo;
         Integer numero;
         if (maximoNumero == null && maximoCodigo == null) {
-            codigo = (Long.valueOf(gestionAcademica.getGestion().toString() + gestionAcademica.getPeriodo().getPeriodoEntero().toString() + carrera.getId_carrera().toString()) * 10000) + 1;
+            codigo = (Long.parseLong(gestionAcademica.getGestion().toString() + gestionAcademica.getPeriodo().getPeriodoEntero().toString() + carrera.getId_carrera().toString()) * 10000) + 1;
             numero = 1;
         } else {
             codigo = maximoCodigo + 1;
@@ -149,44 +150,6 @@ public class InscripcionesFacade {
         }
         Inscrito inscrito = new Inscrito(fecha, Tipo.REGULAR, codigo, numero, estudiante, carrera, gestionAcademica);
         em.persist(inscrito);
-
-        if (carrera.getCampus().getInstituto().getCaracter().equals(Caracter.CONVENIO) || carrera.getCampus().getInstituto().getCaracter().equals(Caracter.FISCAL)) {
-            Integer monto = carrera.getCreditajeMatricula() * carrera.getCampus().getInstituto().getPrecioCredito();
-
-            Pago pago = new Pago(Concepto.MATRICULA, monto, true, inscrito);
-            em.persist(pago);
-
-            //comprobante
-            Integer maximoCodigoComprobante = comprobanteFacade.maximoCodigo(comprobante.getFecha());
-            Integer codigoComprobante;
-            if (maximoCodigoComprobante == null) {
-                codigoComprobante = (Fecha.extrarAño(comprobante.getFecha()) * 100000) + 1;
-            } else {
-                codigoComprobante = maximoCodigoComprobante + 1;
-            }
-            comprobante.setCodigo(codigoComprobante);
-            comprobante.setInscrito(inscrito);
-            em.persist(comprobante);
-
-            Detalle detalle = new Detalle(pago.getConcepto(), pago.getMonto(), comprobante, pago);
-            em.persist(detalle);
-        } else {
-            Long creditajeMaterias = creditajeOferta(inscrito);
-
-            Integer monto = creditajeMaterias.intValue() * carrera.getCampus().getInstituto().getPrecioCredito();
-
-            Integer cuotas = carrera.getRegimen().getCuotas();
-            for (Concepto concepto : Concepto.values(carrera.getRegimen())) {
-                Double montoCuotaSinRedondear = monto.doubleValue() / cuotas.doubleValue();
-                Integer montoCuotaRedondeado = Redondeo.redondear_UP(montoCuotaSinRedondear, 0).intValue();
-
-                Pago pago = new Pago(concepto, montoCuotaRedondeado, false, inscrito);
-                em.persist(pago);
-
-                monto -= montoCuotaRedondeado;
-                cuotas--;
-            }
-        }
 
         return true;
     }

@@ -14,7 +14,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.malbino.orion.entities.CarreraEstudiante;
-import org.malbino.orion.entities.Comprobante;
 import org.malbino.orion.entities.Estudiante;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Log;
@@ -55,21 +54,17 @@ public class EstudianteRegularController extends AbstractController implements S
     private CarreraEstudiante seleccionCarreraEstudiante;
     private GestionAcademica seleccionGestionAcademica;
 
-    private Comprobante nuevoComprobante;
-
     @PostConstruct
     public void init() {
         seleccionEstudiante = null;
         seleccionCarreraEstudiante = null;
         seleccionGestionAcademica = null;
-        nuevoComprobante = new Comprobante();
     }
 
     public void reinit() {
         seleccionEstudiante = null;
         seleccionCarreraEstudiante = null;
         seleccionGestionAcademica = null;
-        nuevoComprobante = new Comprobante();
     }
 
     public List<CarreraEstudiante> listaCarrerasEstudiante() {
@@ -109,22 +104,18 @@ public class EstudianteRegularController extends AbstractController implements S
         if (!actividadFacade.listaActividades(Fecha.getDate(), Funcionalidad.INSCRIPCION, seleccionGestionAcademica.getId_gestionacademica()).isEmpty()) {
             if (inscritoFacade.buscarInscrito(seleccionEstudiante.getId_persona(), seleccionCarreraEstudiante.getCarrera().getId_carrera(), seleccionGestionAcademica.getId_gestionacademica()) == null) {
                 if (seleccionEstudiante.getDiplomaBachiller()) {
-                    nuevoComprobante.setFecha(Fecha.getDate());
-                    nuevoComprobante.setValido(true);
-                    nuevoComprobante.setUsuario(loginController.getUsr());
-
                     String contrasena = Generador.generarContrasena();
                     seleccionEstudiante.setContrasena(Encriptador.encriptar(contrasena));
                     seleccionEstudiante.setContrasenaSinEncriptar(contrasena);
 
-                    if (inscripcionesFacade.registrarEstudianteRegular(seleccionEstudiante, seleccionCarreraEstudiante.getCarrera(), seleccionGestionAcademica, nuevoComprobante)) {
+                    if (inscripcionesFacade.registrarEstudianteRegular(seleccionEstudiante, seleccionCarreraEstudiante.getCarrera(), seleccionGestionAcademica)) {
                         copiarUsuario(seleccionEstudiante);
 
                         //log
                         logFacade.create(new Log(Fecha.getDate(), EventoLog.UPDATE, EntidadLog.ESTUDIANTE, seleccionEstudiante.getId_persona(), "Inscripción estudiante regular", loginController.getUsr().toString()));
 
-                        this.insertarParametro("id_comprobante", nuevoComprobante.getId_comprobante());
                         this.insertarParametro("est", seleccionEstudiante);
+                        this.insertarParametro("car", seleccionCarreraEstudiante.getCarrera());
 
                         reinit();
 
@@ -191,20 +182,6 @@ public class EstudianteRegularController extends AbstractController implements S
      */
     public void setSeleccionGestionAcademica(GestionAcademica seleccionGestionAcademica) {
         this.seleccionGestionAcademica = seleccionGestionAcademica;
-    }
-
-    /**
-     * @return the nuevoComprobante
-     */
-    public Comprobante getNuevoComprobante() {
-        return nuevoComprobante;
-    }
-
-    /**
-     * @param nuevoComprobante the nuevoComprobante to set
-     */
-    public void setNuevoComprobante(Comprobante nuevoComprobante) {
-        this.nuevoComprobante = nuevoComprobante;
     }
 
 }
