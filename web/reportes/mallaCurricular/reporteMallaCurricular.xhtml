@@ -34,8 +34,6 @@
                                             <p:selectOneMenu id="carrera" value="#{ReporteMallaCurricularController.seleccionCarrera}" converter="#{CarreraConverter}" autoWidth="false" required="true" requiredMessage="* Carrera requerida.">
                                                 <f:selectItem itemLabel="" itemValue=""/>
                                                 <f:selectItems value="#{ReporteMallaCurricularController.listaCarreras()}" var="carrera" itemLabel="#{carrera.toString()}" itemValue="#{carrera}"/>
-                                                
-                                                <p:ajax update="mencion"/>
                                             </p:selectOneMenu>
                                         </div>
                                     </div>

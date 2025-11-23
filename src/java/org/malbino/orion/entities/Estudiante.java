@@ -17,7 +17,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import org.malbino.orion.enums.Caracter;
 import org.malbino.orion.util.Fecha;
 
 /**
@@ -35,14 +34,13 @@ public class Estudiante extends Usuario implements Serializable {
     private Integer matricula;
     @Temporal(TemporalType.DATE)
     private Date fecha;
+
     private Boolean diplomaBachiller;
-    
-    private String nombreContacto;
-    private Integer celularContacto;
-    private String parentescoContacto;
-    private String nombreColegio;
-    private Caracter caracterColegio;
-    private Integer egresoColegio;
+    private Boolean certificadoNacimiento;
+    private Boolean cedulaIdentidad;
+    private Boolean fotografias3X3;
+    private Boolean certificadoFELCC;
+    private Boolean certificadoFELCN;
 
     @OneToMany(mappedBy = "estudiante", orphanRemoval = true)
     private List<Nota> notas;
@@ -52,10 +50,72 @@ public class Estudiante extends Usuario implements Serializable {
 
     @Transient
     private Date fechaInscripcion;
-    @Transient
-    private Boolean becado;
 
     public Estudiante() {
+    }
+
+    public String fecha_ddMMyyyy() {
+        return Fecha.formatearFecha_ddMMyyyy(fecha);
+    }
+
+    public String diplomaBachiller_siNo() {
+        String s = "";
+        if (diplomaBachiller) {
+            s = "Sí";
+        } else {
+            s = "No";
+        }
+        return s;
+    }
+
+    public String certificadoNacimiento_siNo() {
+        String s = "";
+        if (certificadoNacimiento) {
+            s = "Sí";
+        } else {
+            s = "No";
+        }
+        return s;
+    }
+
+    public String cedulaIdentidad_siNo() {
+        String s = "";
+        if (cedulaIdentidad) {
+            s = "Sí";
+        } else {
+            s = "No";
+        }
+        return s;
+    }
+
+    public String fotografias3X3_siNo() {
+        String s = "";
+        if (fotografias3X3) {
+            s = "Sí";
+        } else {
+            s = "No";
+        }
+        return s;
+    }
+
+    public String certificadoFELCC_siNo() {
+        String s = "";
+        if (certificadoFELCC) {
+            s = "Sí";
+        } else {
+            s = "No";
+        }
+        return s;
+    }
+
+    public String certificadoFELCN_siNo() {
+        String s = "";
+        if (certificadoFELCN) {
+            s = "Sí";
+        } else {
+            s = "No";
+        }
+        return s;
     }
 
     /**
@@ -101,6 +161,76 @@ public class Estudiante extends Usuario implements Serializable {
     }
 
     /**
+     * @return the certificadoNacimiento
+     */
+    public Boolean getCertificadoNacimiento() {
+        return certificadoNacimiento;
+    }
+
+    /**
+     * @param certificadoNacimiento the certificadoNacimiento to set
+     */
+    public void setCertificadoNacimiento(Boolean certificadoNacimiento) {
+        this.certificadoNacimiento = certificadoNacimiento;
+    }
+
+    /**
+     * @return the cedulaIdentidad
+     */
+    public Boolean getCedulaIdentidad() {
+        return cedulaIdentidad;
+    }
+
+    /**
+     * @param cedulaIdentidad the cedulaIdentidad to set
+     */
+    public void setCedulaIdentidad(Boolean cedulaIdentidad) {
+        this.cedulaIdentidad = cedulaIdentidad;
+    }
+
+    /**
+     * @return the fotografias3X3
+     */
+    public Boolean getFotografias3X3() {
+        return fotografias3X3;
+    }
+
+    /**
+     * @param fotografias3X3 the fotografias3X3 to set
+     */
+    public void setFotografias3X3(Boolean fotografias3X3) {
+        this.fotografias3X3 = fotografias3X3;
+    }
+
+    /**
+     * @return the certificadoFELCC
+     */
+    public Boolean getCertificadoFELCC() {
+        return certificadoFELCC;
+    }
+
+    /**
+     * @param certificadoFELCC the certificadoFELCC to set
+     */
+    public void setCertificadoFELCC(Boolean certificadoFELCC) {
+        this.certificadoFELCC = certificadoFELCC;
+    }
+
+    /**
+     * @return the certificadoFELCN
+     */
+    public Boolean getCertificadoFELCN() {
+        return certificadoFELCN;
+    }
+
+    /**
+     * @param certificadoFELCN the certificadoFELCN to set
+     */
+    public void setCertificadoFELCN(Boolean certificadoFELCN) {
+        this.certificadoFELCN = certificadoFELCN;
+    }
+
+    /**
      * @return the notas
      */
     public List<Nota> getNotas() {
@@ -142,115 +272,4 @@ public class Estudiante extends Usuario implements Serializable {
         this.fechaInscripcion = fechaInscripcion;
     }
 
-    public String fecha_ddMMyyyy() {
-        return Fecha.formatearFecha_ddMMyyyy(fecha);
-    }
-
-    public String diplomaBachiller_siNo() {
-        String s = "";
-        if (diplomaBachiller) {
-            s = "Sí";
-        } else {
-            s = "No";
-        }
-        return s;
-    }
-
-    /**
-     * @return the nombreContacto
-     */
-    public String getNombreContacto() {
-        return nombreContacto;
-    }
-
-    /**
-     * @param nombreContacto the nombreContacto to set
-     */
-    public void setNombreContacto(String nombreContacto) {
-        this.nombreContacto = nombreContacto.trim().toUpperCase();
-    }
-
-    /**
-     * @return the celularContacto
-     */
-    public Integer getCelularContacto() {
-        return celularContacto;
-    }
-
-    /**
-     * @param celularContacto the celularContacto to set
-     */
-    public void setCelularContacto(Integer celularContacto) {
-        this.celularContacto = celularContacto;
-    }
-
-    /**
-     * @return the parentescoContacto
-     */
-    public String getParentescoContacto() {
-        return parentescoContacto;
-    }
-
-    /**
-     * @param parentescoContacto the parentescoContacto to set
-     */
-    public void setParentescoContacto(String parentescoContacto) {
-        this.parentescoContacto = parentescoContacto.trim().toUpperCase();
-    }
-
-    /**
-     * @return the nombreColegio
-     */
-    public String getNombreColegio() {
-        return nombreColegio;
-    }
-
-    /**
-     * @param nombreColegio the nombreColegio to set
-     */
-    public void setNombreColegio(String nombreColegio) {
-        this.nombreColegio = nombreColegio.trim().toUpperCase();
-    }
-
-    /**
-     * @return the caracterColegio
-     */
-    public Caracter getCaracterColegio() {
-        return caracterColegio;
-    }
-
-    /**
-     * @param caracterColegio the caracterColegio to set
-     */
-    public void setCaracterColegio(Caracter caracterColegio) {
-        this.caracterColegio = caracterColegio;
-    }
-
-    /**
-     * @return the egresoColegio
-     */
-    public Integer getEgresoColegio() {
-        return egresoColegio;
-    }
-
-    /**
-     * @param egresoColegio the egresoColegio to set
-     */
-    public void setEgresoColegio(Integer egresoColegio) {
-        this.egresoColegio = egresoColegio;
-    }
-
-    /**
-     * @return the becado
-     */
-    public Boolean getBecado() {
-        return becado;
-    }
-
-    /**
-     * @param becado the becado to set
-     */
-    public void setBecado(Boolean becado) {
-        this.becado = becado;
-    }
 }

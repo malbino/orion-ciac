@@ -69,12 +69,11 @@ public class Inscrito implements Serializable {
     public Inscrito() {
     }
 
-    public Inscrito(Date fecha, Tipo tipo, Long codigo, Integer numero, Boolean becado, Estudiante estudiante, Carrera carrera, GestionAcademica gestionAcademica) {
+    public Inscrito(Date fecha, Tipo tipo, Long codigo, Integer numero, Estudiante estudiante, Carrera carrera, GestionAcademica gestionAcademica) {
         this.fecha = fecha;
         this.tipo = tipo;
         this.codigo = codigo;
         this.numero = numero;
-        this.becado = becado;
         this.estudiante = estudiante;
         this.carrera = carrera;
         this.gestionAcademica = gestionAcademica;
@@ -322,14 +321,6 @@ public class Inscrito implements Serializable {
                 s += "CON ARRASTRE";
             } else {
                 s += ", CON ARRASTRE";
-            }
-        }
-
-        if (becado) {
-            if (s.isEmpty()) {
-                s += "CON BECA";
-            } else {
-                s += ", CON BECA";
             }
         }
 

@@ -15,7 +15,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.CarreraEstudiante;
-import org.malbino.orion.entities.Comprobante;
 import org.malbino.orion.entities.Estudiante;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Log;
@@ -52,16 +51,12 @@ public class EstudianteNuevoController extends AbstractController implements Ser
     private Boolean traspasoConvalidacion;
     private CarreraEstudiante seleccionCarreraEstudiante;
 
-    private Comprobante nuevoComprobante;
-
     @PostConstruct
     public void init() {
         nuevoEstudiante = new Estudiante();
         seleccionGestionAcademica = null;
         traspasoConvalidacion = Boolean.FALSE;
         seleccionCarreraEstudiante = null;
-
-        nuevoComprobante = new Comprobante();
     }
 
     public void reinit() {
@@ -69,8 +64,6 @@ public class EstudianteNuevoController extends AbstractController implements Ser
         seleccionGestionAcademica = null;
         traspasoConvalidacion = Boolean.FALSE;
         seleccionCarreraEstudiante = null;
-
-        nuevoComprobante = new Comprobante();
     }
 
     public List<CarreraEstudiante> listaCarrerasEstudiante() {
@@ -127,22 +120,18 @@ public class EstudianteNuevoController extends AbstractController implements Ser
     public void registrarEstudiante() throws IOException {
         if (!actividadFacade.listaActividades(Fecha.getDate(), Funcionalidad.INSCRIPCION, seleccionGestionAcademica.getId_gestionacademica()).isEmpty()) {
             if (estudianteFacade.buscarPorDni(nuevoEstudiante.getDni()) == null) {
-                nuevoComprobante.setFecha(Fecha.getDate());
-                nuevoComprobante.setValido(true);
-                nuevoComprobante.setUsuario(loginController.getUsr());
-
                 String contrasena = Generador.generarContrasena();
                 nuevoEstudiante.setContrasena(Encriptador.encriptar(contrasena));
                 nuevoEstudiante.setContrasenaSinEncriptar(contrasena);
 
-                if (inscripcionesFacade.registrarEstudianteNuevo(nuevoEstudiante, seleccionCarreraEstudiante, seleccionGestionAcademica, nuevoComprobante)) {
+                if (inscripcionesFacade.registrarEstudianteNuevo(nuevoEstudiante, seleccionCarreraEstudiante, seleccionGestionAcademica)) {
                     copiarUsuario(nuevoEstudiante);
 
                     //logF
                     logFacade.create(new Log(Fecha.getDate(), EventoLog.CREATE, EntidadLog.ESTUDIANTE, nuevoEstudiante.getId_persona(), "Inscripción estudiante nuevo", loginController.getUsr().toString()));
 
-                    this.insertarParametro("id_comprobante", nuevoComprobante.getId_comprobante());
                     this.insertarParametro("est", nuevoEstudiante);
+                    this.insertarParametro("car", seleccionCarreraEstudiante.getCarrera());
 
                     reinit();
 
@@ -206,20 +195,6 @@ public class EstudianteNuevoController extends AbstractController implements Ser
      */
     public void setSeleccionCarreraEstudiante(CarreraEstudiante seleccionCarreraEstudiante) {
         this.seleccionCarreraEstudiante = seleccionCarreraEstudiante;
-    }
-
-    /**
-     * @return the nuevoComprobante
-     */
-    public Comprobante getNuevoComprobante() {
-        return nuevoComprobante;
-    }
-
-    /**
-     * @param nuevoComprobante the nuevoComprobante to set
-     */
-    public void setNuevoComprobante(Comprobante nuevoComprobante) {
-        this.nuevoComprobante = nuevoComprobante;
     }
 
     /**
