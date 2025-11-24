@@ -46,8 +46,6 @@ public class Inscrito implements Serializable {
     private Long codigo;
     private Integer numero;
 
-    private Boolean becado;
-
     @JoinColumn(name = "id_persona")
     @ManyToOne
     private Estudiante estudiante;
@@ -219,20 +217,6 @@ public class Inscrito implements Serializable {
         this.pagos = pagos;
     }
 
-    /**
-     * @return the becado
-     */
-    public Boolean getBecado() {
-        return becado;
-    }
-
-    /**
-     * @param becado the becado to set
-     */
-    public void setBecado(Boolean becado) {
-        this.becado = becado;
-    }
-
     @Override
     public int hashCode() {
         int hash = 5;
@@ -262,10 +246,6 @@ public class Inscrito implements Serializable {
     public String toString() {
         String s = carrera.toString() + " - " + gestionAcademica.toString();
 
-        if (becado) {
-            s += " - BECADO";
-        }
-
         return s;
     }
 
@@ -279,16 +259,6 @@ public class Inscrito implements Serializable {
         carreraEstudianteId.setId_persona(estudiante.getId_persona());
 
         return carreraEstudianteId;
-    }
-
-    public String becado_siNo() {
-        String s = "";
-        if (becado) {
-            s = "Sí";
-        } else {
-            s = "No";
-        }
-        return s;
     }
 
     public Boolean conArrastre() {

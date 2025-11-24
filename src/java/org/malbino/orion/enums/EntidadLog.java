@@ -12,35 +12,27 @@ package org.malbino.orion.enums;
 public enum EntidadLog {
 
     ACTIVIDAD("Actividad"),
-    ASISTENCIA("Asistencia"),
     CAMPUS("Campus"),
     CARRERA("Carrera"),
     CARRERA_ESTUDIANTE("Carrera Estudiante"),
     COMPROBANTE("Comprobante"),
     DETALLE("Detalle"),
     EMPLEADO("Empleado"),
-    EMPRESA("Empresa"),
     ESTUDIANTE("Estudiante"),
     GESTION_ACADEMICA("Gestión Académica"),
     GRUPO("Grupo"),
-    GRUPO_PASANTIA("Grupo Pasantía"),
-    INDICADOR_PASANTIA("Indicador Pasantía"),
     INSCRITO("Inscrito"),
     INSTITUTO("Instituto"),
     MATERIA("Materia"),
-    MENCION("Mención"),
     NOTA("Nota"),
-    NOTA_PASANTIA("Nota Pasantía"),
     PAGO("Pago"),
-    PASANTIA("Pasantía"),
-    POSTULANTE("Postulante"),
     RECURSO("Recurso"),
     ROL("Rol"),
     USUARIO("Usuario"),
-    EGRESADO("Egresado"),
     AULA("Aula"),
     PERIODO("Periodo"),
-    CLASE("Clase");
+    CLASE("Clase"),
+    CONCEPTO_PAGO("Concepto de Pago");
 
     private String nombre;
 
