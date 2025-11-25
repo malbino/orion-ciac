@@ -106,7 +106,7 @@ public class PlanillaSeguimiento extends HttpServlet {
     public PdfPTable cabecera(Grupo grupo) throws BadElementException, IOException {
         PdfPTable table = new PdfPTable(100);
 
-        PdfPCell cell = new PdfPCell(new Phrase(grupo.getMateria().getCarrera().getCampus().getInstituto().getNombre(), TITULO));
+        PdfPCell cell = new PdfPCell(new Phrase(grupo.getMateria().getCarrera().getInstituto().getNombre(), TITULO));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         cell.setColspan(100);

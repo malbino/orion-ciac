@@ -103,7 +103,7 @@ public class ListaCobros extends HttpServlet {
         PdfPTable table = new PdfPTable(100);
 
         //cabecera
-        String realPath = getServletContext().getRealPath("/resources/uploads/" + carrera.getCampus().getInstituto().getLogo());
+        String realPath = getServletContext().getRealPath("/resources/uploads/" + carrera.getInstituto().getLogo());
         Image image = Image.getInstance(realPath);
         image.scaleToFit(70, 70);
         image.setAlignment(Image.ALIGN_CENTER);

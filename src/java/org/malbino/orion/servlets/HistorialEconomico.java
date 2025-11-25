@@ -105,7 +105,7 @@ public class HistorialEconomico extends HttpServlet {
         PdfPTable table = new PdfPTable(100);
 
         //cabecera
-        String realPath = getServletContext().getRealPath("/resources/uploads/" + carrera.getCampus().getInstituto().getLogo());
+        String realPath = getServletContext().getRealPath("/resources/uploads/" + carrera.getInstituto().getLogo());
         Image image = Image.getInstance(realPath);
         image.scaleToFit(60, 60);
         image.setAlignment(Image.ALIGN_CENTER);
@@ -136,7 +136,7 @@ public class HistorialEconomico extends HttpServlet {
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase(carrera.getCampus().getInstituto().getNombre(), SUBTITULO));
+        cell = new PdfPCell(new Phrase(carrera.getInstituto().getNombre(), SUBTITULO));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setColspan(90);
         cell.setBorder(Rectangle.NO_BORDER);

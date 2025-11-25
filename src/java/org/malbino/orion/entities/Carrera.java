@@ -36,9 +36,9 @@ public class Carrera implements Serializable {
     private Integer version;
     private Integer creditajeMatricula;
 
-    @JoinColumn(name = "id_campus")
+    @JoinColumn(name = "id_instituto")
     @ManyToOne
-    private Campus campus;
+    private Instituto instituto;
 
     @JoinColumn(name = "id_jefecarrera")
     @ManyToOne
@@ -148,17 +148,17 @@ public class Carrera implements Serializable {
     }
 
     /**
-     * @return the campus
+     * @return the instituto
      */
-    public Campus getCampus() {
-        return campus;
+    public Instituto getInstituto() {
+        return instituto;
     }
 
     /**
-     * @param campus the campus to set
+     * @param instituto the instituto to set
      */
-    public void setCampus(Campus campus) {
-        this.campus = campus;
+    public void setInstituto(Instituto instituto) {
+        this.instituto = instituto;
     }
 
     /**

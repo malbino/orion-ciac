@@ -184,7 +184,7 @@ public class RegistroNotasTercerParcialController extends AbstractController imp
 
                     if (cell.getCellTypeEnum() == CellType.STRING) {
                         if (cell.getStringCellValue().contains("<<INSTITUTO>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<INSTITUTO>>", seleccionGrupo.getMateria().getCarrera().getCampus().getInstituto().getNombre()));
+                            cell.setCellValue(cell.getStringCellValue().replace("<<INSTITUTO>>", seleccionGrupo.getMateria().getCarrera().getInstituto().getNombre()));
                         } else if (cell.getStringCellValue().contains("<<MATERIA>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<MATERIA>>", seleccionGrupo.getMateria().toString()));
                         } else if (cell.getStringCellValue().contains("<<CARRERA>>")) {
@@ -354,7 +354,7 @@ public class RegistroNotasTercerParcialController extends AbstractController imp
                         } else if (cell.getStringCellValue().contains("<<COD_MAT>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<COD_MAT>>", seleccionGrupo.getMateria().getCodigo()));
                         } else if (cell.getStringCellValue().contains("<<INSTITUTO>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<INSTITUTO>>", seleccionGrupo.getMateria().getCarrera().getCampus().getInstituto().getNombre()));
+                            cell.setCellValue(cell.getStringCellValue().replace("<<INSTITUTO>>", seleccionGrupo.getMateria().getCarrera().getInstituto().getNombre()));
                         } else if (cell.getStringCellValue().contains("<<NIVEL_ACADEMICO>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL_ACADEMICO>>", seleccionGrupo.getMateria().getCarrera().getNivelAcademico().getNombre()));
                         } else if (cell.getStringCellValue().contains("<<NIVEL>>")) {

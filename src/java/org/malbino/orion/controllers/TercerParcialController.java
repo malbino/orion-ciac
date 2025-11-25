@@ -190,7 +190,7 @@ public class TercerParcialController extends AbstractController implements Seria
 
                     if (cell.getCellTypeEnum() == CellType.STRING) {
                         if (cell.getStringCellValue().contains("<<INSTITUTO>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<INSTITUTO>>", seleccionGrupo.getMateria().getCarrera().getCampus().getInstituto().getNombre()));
+                            cell.setCellValue(cell.getStringCellValue().replace("<<INSTITUTO>>", seleccionGrupo.getMateria().getCarrera().getInstituto().getNombre()));
                         } else if (cell.getStringCellValue().contains("<<MATERIA>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<MATERIA>>", seleccionGrupo.getMateria().toString()));
                         } else if (cell.getStringCellValue().contains("<<CARRERA>>")) {

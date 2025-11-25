@@ -600,11 +600,11 @@ public class CopiarGrupo implements Runnable {
             System.out.println("editing supervisor enrol -> ");
 
             //director academico
-            if (grupo.getMateria().getCarrera().getCampus().getInstituto().getDirectorAcademico() != null) {
-                JSONArray supervisors = getUser(token, grupo.getMateria().getCarrera().getCampus().getInstituto().getDirectorAcademico());
+            if (grupo.getMateria().getCarrera().getInstituto().getDirectorAcademico() != null) {
+                JSONArray supervisors = getUser(token, grupo.getMateria().getCarrera().getInstituto().getDirectorAcademico());
                 System.out.println("get supervisors -> " + supervisors.length());
                 if (supervisors.isEmpty()) {
-                    supervisors = createUser(token, grupo.getMateria().getCarrera().getCampus().getInstituto().getDirectorAcademico());
+                    supervisors = createUser(token, grupo.getMateria().getCarrera().getInstituto().getDirectorAcademico());
                     System.out.println("create supervisor -> ");
                 }
 

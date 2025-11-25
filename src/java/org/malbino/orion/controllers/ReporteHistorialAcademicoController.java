@@ -153,7 +153,7 @@ public class ReporteHistorialAcademicoController extends AbstractController impl
 
                     if (cell.getCellTypeEnum() == CellType.STRING) {
                         if (cell.getStringCellValue().contains("<<INSTITUTO>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<INSTITUTO>>", carrera.getCampus().getInstituto().getNombre()));
+                            cell.setCellValue(cell.getStringCellValue().replace("<<INSTITUTO>>", carrera.getInstituto().getNombre()));
                         } else if (cell.getStringCellValue().contains("<<CI>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<CI>>", seleccionEstudiante.dniLugar()));
                         } else if (cell.getStringCellValue().contains("<<ESTUDIANTE>>")) {

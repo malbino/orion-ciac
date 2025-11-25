@@ -117,7 +117,7 @@ public class HorarioParaleloController extends AbstractController implements Ser
     public List<Aula> listaAulas() {
         List<Aula> aulas = new ArrayList<>();
         if (seleccionGestionAcademica != null && seleccionCarrera != null) {
-            aulas = aulaFacade.listaAulas(seleccionCarrera.getCampus().getId_campus());
+            aulas = aulaFacade.listaAulas(0);
         }
         return aulas;
     }

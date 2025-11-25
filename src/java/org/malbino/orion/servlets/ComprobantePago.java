@@ -112,7 +112,7 @@ public class ComprobantePago extends HttpServlet {
         PdfPTable table = new PdfPTable(100);
 
         //cabecera
-        String realPath = getServletContext().getRealPath("/resources/uploads/" + comprobante.getCarrera().getCampus().getInstituto().getLogo());
+        String realPath = getServletContext().getRealPath("/resources/uploads/" + comprobante.getCarrera().getInstituto().getLogo());
         Image image = Image.getInstance(realPath);
         image.scaleToFit(160, 80);
         image.setAlignment(Image.ALIGN_CENTER);
@@ -164,7 +164,7 @@ public class ComprobantePago extends HttpServlet {
         table.addCell(cell);
 
         //fila 3
-        cell = new PdfPCell(new Phrase(comprobante.getCarrera().getCampus().getCiudad(), NORMAL));
+        cell = new PdfPCell(new Phrase("", NORMAL));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setColspan(50);
         cell.setBorder(Rectangle.LEFT | Rectangle.RIGHT);
@@ -183,7 +183,7 @@ public class ComprobantePago extends HttpServlet {
         table.addCell(cell);
 
         //fila 4
-        cell = new PdfPCell(new Phrase(comprobante.getCarrera().getCampus().getDireccion(), NORMAL));
+        cell = new PdfPCell(new Phrase("", NORMAL));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setColspan(50);
         cell.setBorder(Rectangle.LEFT | Rectangle.RIGHT);
@@ -202,11 +202,11 @@ public class ComprobantePago extends HttpServlet {
         table.addCell(cell);
 
         //fial 5
-        if (comprobante.getCarrera().getCampus().getTelefono() != null) {
-            cell = new PdfPCell(new Phrase(comprobante.getCarrera().getCampus().getTelefono().toString(), NORMAL));
-        } else {
+        //if (comprobante.getCarrera().getInstituto().getTelefono() != null) {
+            //cell = new PdfPCell(new Phrase(comprobante.getCarrera().getInstituto().getTelefono().toString(), NORMAL));
+        //} else {
             cell = new PdfPCell(new Phrase(" ", NORMAL));
-        }
+        //}
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setColspan(50);
         cell.setBorder(Rectangle.LEFT | Rectangle.RIGHT);
@@ -225,7 +225,7 @@ public class ComprobantePago extends HttpServlet {
         table.addCell(cell);
 
         //fila 6
-        cell = new PdfPCell(new Phrase(comprobante.getCarrera().getCampus().getCiudad(), NORMAL));
+        cell = new PdfPCell(new Phrase("", NORMAL));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setColspan(50);
         cell.setBorder(Rectangle.LEFT | Rectangle.BOTTOM | Rectangle.RIGHT);

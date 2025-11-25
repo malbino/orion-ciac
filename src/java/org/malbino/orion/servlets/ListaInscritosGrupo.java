@@ -95,7 +95,7 @@ public class ListaInscritosGrupo extends HttpServlet {
         PdfPTable table = new PdfPTable(100);
 
         //cabecera
-        String realPath = getServletContext().getRealPath("/resources/uploads/" + grupo.getMateria().getCarrera().getCampus().getInstituto().getLogo());
+        String realPath = getServletContext().getRealPath("/resources/uploads/" + grupo.getMateria().getCarrera().getInstituto().getLogo());
         Image image = Image.getInstance(realPath);
         image.scaleToFit(70, 70);
         image.setAlignment(Image.ALIGN_CENTER);

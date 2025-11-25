@@ -126,7 +126,7 @@ public class BoletinNotas extends HttpServlet {
         cell.setColspan(80);
         table.addCell(cell);
 
-        String realPath = getServletContext().getRealPath("/resources/uploads/" + inscrito.getCarrera().getCampus().getInstituto().getLogo());
+        String realPath = getServletContext().getRealPath("/resources/uploads/" + inscrito.getCarrera().getInstituto().getLogo());
         Image image = Image.getInstance(realPath);
         image.scaleToFit(40, 40);
         image.setAlignment(Image.ALIGN_CENTER);
@@ -138,7 +138,7 @@ public class BoletinNotas extends HttpServlet {
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase(inscrito.getCarrera().getCampus().getInstituto().getNombre(), NORMAL));
+        cell = new PdfPCell(new Phrase(inscrito.getCarrera().getInstituto().getNombre(), NORMAL));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         cell.setBorder(Rectangle.NO_BORDER);
