@@ -22,18 +22,6 @@
                                 </div>
 
                                 <div class="x_content">
-                                    <div class="ui-g ui-fluid">
-                                        <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="campus" value="Campus: " style="font-size: small"/>
-                                            <p:selectOneMenu id="campus" value="#{CarreraController.seleccionCampus}" converter="#{CampusConverter}" autoWidth="false">
-                                                <f:selectItem itemLabel="" itemValue=""/>
-                                                <f:selectItems value="#{CarreraController.listaCampus()}" var="campus" itemLabel="#{campus.toString()}" itemValue="#{campus}"/>
-
-                                                <p:ajax listener="#{CarreraController.reinit()}" update="carreras"/>
-                                            </p:selectOneMenu>
-                                        </div>
-                                    </div>
-
                                     <p:toolbar>
                                         <f:facet name="left">
                                             <p:button icon="fa fa-plus" value="Nuevo" outcome="/planesEstudio/carrera/nuevoCarrera"/>
@@ -77,10 +65,6 @@
                                             <h:outputText value="#{carrera.nombre}"/>
                                         </p:column>
 
-                                        <p:column headerText="Regimen" >  
-                                            <h:outputText value="#{carrera.regimen.toString()}"/>
-                                        </p:column>
-
                                         <p:column headerText="Nivel Académico" >  
                                             <h:outputText value="#{carrera.nivelAcademico.toString()}"/>
                                         </p:column>
@@ -91,10 +75,6 @@
 
                                         <p:column headerText="Creditaje matricula" >  
                                             <h:outputText value="#{carrera.creditajeMatricula}"/> 
-                                        </p:column>
-
-                                        <p:column headerText="Campus" >  
-                                            <h:outputText value="#{carrera.instituto}"/> 
                                         </p:column>
 
                                         <p:column headerText="Jefe de Carrera" >  

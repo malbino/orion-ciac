@@ -49,13 +49,13 @@ public class Grupo implements Serializable {
     public Grupo() {
     }
 
-    public Grupo(String codigo, Integer capacidad, Turno turno, Boolean abierto, GestionAcademica gestionAcademica, Modulo materia) {
+    public Grupo(String codigo, Integer capacidad, Turno turno, Boolean abierto, GestionAcademica gestionAcademica, Modulo modulo) {
         this.codigo = codigo;
         this.capacidad = capacidad;
         this.turno = turno;
         this.abierto = abierto;
         this.gestionAcademica = gestionAcademica;
-        this.modulo = materia;
+        this.modulo = modulo;
     }
 
     public String idnumberMoodle() {

@@ -53,7 +53,7 @@ public class MallaCurricular extends HttpServlet {
     private static final int MARGEN_INFERIOR = 30;
 
     @EJB
-    ModuloFacade materiaFacade;
+    ModuloFacade moduloFacade;
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -147,26 +147,26 @@ public class MallaCurricular extends HttpServlet {
         cell.setBorder(Rectangle.NO_BORDER);
         subtable.addCell(cell);
 
-        Long cantidadMaximaModulosNivel = materiaFacade.cantidadMaximaModulosNivel(carrera);
+        Long cantidadMaximaModulosNivel = moduloFacade.cantidadMaximaModulosNivel(carrera);
 
-        List<Modulo> materias = materiaFacade.listaModulos(carrera);
-        Iterator<Modulo> iterator = materias.iterator();
+        List<Modulo> modulos = moduloFacade.listaModulos(carrera);
+        Iterator<Modulo> iterator = modulos.iterator();
         for (int i = 0; i < cantidadMaximaModulosNivel; i++) {
             if (iterator.hasNext()) {
-                Modulo materia = iterator.next();
+                Modulo modulo = iterator.next();
 
-                cell = new PdfPCell(new Phrase(materia.getCodigo(), NEGRITA));
+                cell = new PdfPCell(new Phrase(modulo.getCodigo(), NEGRITA));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
                 cell.setBorder(Rectangle.LEFT | Rectangle.TOP | Rectangle.RIGHT);
                 subtable.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(materia.getNombre(), NORMAL));
+                cell = new PdfPCell(new Phrase(modulo.getNombre(), NORMAL));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
                 cell.setBorder(Rectangle.LEFT | Rectangle.RIGHT);
                 cell.setFixedHeight(25);
                 subtable.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(materia.prerequisitosToString(), NEGRITA));
+                cell = new PdfPCell(new Phrase(modulo.prerequisitosToString(), NEGRITA));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT);
                 cell.setBorder(Rectangle.LEFT | Rectangle.BOTTOM | Rectangle.RIGHT);
                 subtable.addCell(cell);

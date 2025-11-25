@@ -44,7 +44,7 @@ public class FileEstudianteFacade {
     @EJB
     RolFacade rolFacade;
     @EJB
-    ModuloFacade materiaFacade;
+    ModuloFacade moduloFacade;
     @EJB
     CarreraEstudianteFacade carreraEstudianteFacade;
 
@@ -298,18 +298,18 @@ public class FileEstudianteFacade {
         carreraEstudianteId.setId_persona(estudiante.getId_persona());
         CarreraEstudiante carreraEstudiante = carreraEstudianteFacade.find(carreraEstudianteId);
         if (carreraEstudiante != null) {
-            // materias carrera
-            List<Modulo> listaModulosCarrera = materiaFacade.listaModulos(carrera);
+            // modulos carrera
+            List<Modulo> listaModulosCarrera = moduloFacade.listaModulos(carrera);
 
-            // quitando materias aprobadas
-            List<Modulo> listaModuloAprobadas = materiaFacade.listaModuloAprobadas(estudiante.getId_persona(), carrera.getId_carrera());
+            // quitando modulos aprobadas
+            List<Modulo> listaModuloAprobadas = moduloFacade.listaModuloAprobadas(estudiante.getId_persona(), carrera.getId_carrera());
             listaModulosCarrera.removeAll(listaModuloAprobadas);
 
             // control de prerequisitos
-            for (Modulo materia : listaModulosCarrera) {
-                List<Modulo> prerequisitos = materia.getPrerequisitos();
+            for (Modulo modulo : listaModulosCarrera) {
+                List<Modulo> prerequisitos = modulo.getPrerequisitos();
                 if (listaModuloAprobadas.containsAll(prerequisitos)) {
-                    oferta.add(materia);
+                    oferta.add(modulo);
                 }
             }
         }

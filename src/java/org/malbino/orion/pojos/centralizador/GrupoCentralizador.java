@@ -12,11 +12,11 @@ package org.malbino.orion.pojos.centralizador;
 public class GrupoCentralizador {
 
     private String docente;
-    private String materia;
+    private String modulo;
 
-    public GrupoCentralizador(String docente, String materia) {
+    public GrupoCentralizador(String docente, String modulo) {
         this.docente = docente;
-        this.materia = materia;
+        this.modulo = modulo;
     }
 
     /**
@@ -34,17 +34,17 @@ public class GrupoCentralizador {
     }
 
     /**
-     * @return the materia
+     * @return the modulo
      */
     public String getModulo() {
-        return materia;
+        return modulo;
     }
 
     /**
-     * @param materia the materia to set
+     * @param modulo the modulo to set
      */
-    public void setModulo(String materia) {
-        this.materia = materia;
+    public void setModulo(String modulo) {
+        this.modulo = modulo;
     }
 
 }

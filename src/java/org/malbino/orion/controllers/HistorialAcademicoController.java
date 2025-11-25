@@ -179,7 +179,7 @@ public class HistorialAcademicoController extends AbstractController implements 
                 this.mensajeDeError("La nota final esta fuera del rango permitido.");
             }
         } else {
-            this.mensajeDeError("Las materias reprobadas exceden el maximo permitido.");
+            this.mensajeDeError("Las modulos reprobadas exceden el maximo permitido.");
         }
     }
 

@@ -50,7 +50,7 @@ public class InscripcionesFacade {
     @EJB
     InscritoFacade inscritoFacade;
     @EJB
-    ModuloFacade materiaFacade;
+    ModuloFacade moduloFacade;
     @EJB
     RolFacade rolFacade;
     @EJB
@@ -198,8 +198,8 @@ public class InscripcionesFacade {
         Long l = 0L;
 
         List<Modulo> oferta = oferta(inscrito);
-        for (Modulo materia : oferta) {
-            l += materia.getCreditajeModulo();
+        for (Modulo modulo : oferta) {
+            l += modulo.getCreditajeModulo();
         }
 
         return l;
@@ -209,15 +209,15 @@ public class InscripcionesFacade {
     public List<Modulo> oferta(Inscrito inscrito) {
         List<Modulo> oferta = new ArrayList();
 
-        List<Modulo> listaModuloAprobadas = materiaFacade.listaModuloAprobadas(inscrito.getEstudiante().getId_persona(), inscrito.getCarrera().getId_carrera());
+        List<Modulo> listaModuloAprobadas = moduloFacade.listaModuloAprobadas(inscrito.getEstudiante().getId_persona(), inscrito.getCarrera().getId_carrera());
 
-        List<Modulo> listaModulos = materiaFacade.listaModulos(inscrito.getCarrera());
+        List<Modulo> listaModulos = moduloFacade.listaModulos(inscrito.getCarrera());
         listaModulos.removeAll(listaModuloAprobadas);
 
-        for (Modulo materia : listaModulos) {
-            List<Modulo> prerequisitos = materia.getPrerequisitos();
+        for (Modulo modulo : listaModulos) {
+            List<Modulo> prerequisitos = modulo.getPrerequisitos();
             if (listaModuloAprobadas.containsAll(prerequisitos)) {
-                oferta.add(materia);
+                oferta.add(modulo);
             }
         }
 

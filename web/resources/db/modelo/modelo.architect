@@ -859,7 +859,7 @@
       </index>
      </folder>
     </table>
-    <table id="TAB302" populated="true" UUID="622a872a-e10c-4aa2-ba0f-c65f3154bb57" name="materia" objectType="TABLE" physicalName="materia" >
+    <table id="TAB302" populated="true" UUID="622a872a-e10c-4aa2-ba0f-c65f3154bb57" name="modulo" objectType="TABLE" physicalName="modulo" >
      <remarks></remarks>
      <folder id="FOLTAB3021" populated="true" name="Columns" physicalName="Columns" type="1">
       <column id="COL303" populated="true" UUID="c9230ae1-24d5-4024-99d0-f36dcf015eb1" autoIncrement="true" defaultValue="" name="id_modulo" nullable="0" physicalName="id_modulo" precision="10" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="INT" type="4" >
@@ -901,11 +901,11 @@
       <index id="IDX313" populated="true" UUID="923c0f8c-0d27-4bf9-a0a7-d5680b273319" clustered="false" name="PRIMARY" physicalName="PRIMARY" primaryKeyIndex="true" qualifier="orion" unique="true" >
        <index-column id="IDC314" populated="true" UUID="33ae86e1-2117-45cb-be20-d1ec451b44f9" ascendingOrDescending="UNSPECIFIED" column-ref="COL303" name="id_modulo" physicalName="id_modulo" />
       </index>
-      <index id="IDX315" populated="true" UUID="6d7de89b-707d-4cfd-9129-942fdfe313ac" clustered="false" name="UNQ_materia_0" physicalName="UNQ_materia_0" primaryKeyIndex="false" qualifier="orion" unique="true" >
+      <index id="IDX315" populated="true" UUID="6d7de89b-707d-4cfd-9129-942fdfe313ac" clustered="false" name="UNQ_modulo_0" physicalName="UNQ_modulo_0" primaryKeyIndex="false" qualifier="orion" unique="true" >
        <index-column id="IDC316" populated="true" UUID="1672ec6c-874e-4e81-8a91-87fd48d5cb4c" ascendingOrDescending="ASCENDING" column-ref="COL304" name="CODIGO" physicalName="CODIGO" />
        <index-column id="IDC317" populated="true" UUID="606826b9-4d7d-4ce0-8c24-b7273fe6a2a9" ascendingOrDescending="ASCENDING" column-ref="COL311" name="id_carrera" physicalName="id_carrera" />
       </index>
-      <index id="IDX318" populated="true" UUID="34e14b32-27ce-45a8-9618-94fc9c9032c1" clustered="false" name="FK_materia_id_carrera" physicalName="FK_materia_id_carrera" primaryKeyIndex="false" qualifier="orion" unique="false" >
+      <index id="IDX318" populated="true" UUID="34e14b32-27ce-45a8-9618-94fc9c9032c1" clustered="false" name="FK_modulo_id_carrera" physicalName="FK_modulo_id_carrera" primaryKeyIndex="false" qualifier="orion" unique="false" >
        <index-column id="IDC319" populated="true" UUID="b18bc9c5-587c-46ce-89c9-c35201f764ca" ascendingOrDescending="ASCENDING" column-ref="COL311" name="id_carrera" physicalName="id_carrera" />
       </index>
       <index id="IDX320" populated="true" UUID="6c29d682-5933-4bf2-ab7b-d943727d873a" clustered="false" name="id_mencion" physicalName="id_mencion" primaryKeyIndex="false" qualifier="orion" unique="false" >
@@ -1514,7 +1514,7 @@
     <relationship id="REL535" populated="true" UUID="5abcafa0-a7f2-48ca-ab5a-fc4c75393949" deferrability="7" deleteRule="1" fk-table-ref="TAB247" fkCardinality="7" identifying="false" name="FK_inscrito_id_carrera" physicalName="FK_inscrito_id_carrera" pk-table-ref="TAB52" pkCardinality="2" updateRule="1" >
      <column-mapping id="CMP536" populated="true" UUID="c6a0f932-4e12-4a92-a39e-832d2b9eeac7" fk-column-ref="COL253" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL53" />
     </relationship>
-    <relationship id="REL537" populated="true" UUID="37292c2c-178b-44c4-a837-1dd0cb456948" deferrability="7" deleteRule="1" fk-table-ref="TAB302" fkCardinality="7" identifying="false" name="FK_materia_id_carrera" physicalName="FK_materia_id_carrera" pk-table-ref="TAB52" pkCardinality="2" updateRule="1" >
+    <relationship id="REL537" populated="true" UUID="37292c2c-178b-44c4-a837-1dd0cb456948" deferrability="7" deleteRule="1" fk-table-ref="TAB302" fkCardinality="7" identifying="false" name="FK_modulo_id_carrera" physicalName="FK_modulo_id_carrera" pk-table-ref="TAB52" pkCardinality="2" updateRule="1" >
      <column-mapping id="CMP538" populated="true" UUID="16f41a6b-1b01-48fb-aadd-c2fd86f6f8fc" fk-column-ref="COL311" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL53" />
     </relationship>
     <relationship id="REL539" populated="true" UUID="50b24e49-7d75-4f35-ba75-8f030789505e" deferrability="7" deleteRule="1" fk-table-ref="TAB322" fkCardinality="7" identifying="false" name="FK_mencion_id_carrera" physicalName="FK_mencion_id_carrera" pk-table-ref="TAB52" pkCardinality="2" updateRule="1" >
@@ -1586,7 +1586,7 @@
     <relationship id="REL583" populated="true" UUID="7cb73d97-f678-47c2-9b3a-5c2ce2727d1c" deferrability="7" deleteRule="1" fk-table-ref="TAB110" fkCardinality="7" identifying="false" name="FK_cursa_id_mencion" physicalName="FK_cursa_id_mencion" pk-table-ref="TAB322" pkCardinality="2" updateRule="1" >
      <column-mapping id="CMP584" populated="true" UUID="7f9c54dc-8923-4063-87a8-470bf97fe36d" fk-column-ref="COL113" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL323" />
     </relationship>
-    <relationship id="REL585" populated="true" UUID="32637962-98c6-4bda-9338-dba2e7f75f25" deferrability="7" deleteRule="1" fk-table-ref="TAB302" fkCardinality="7" identifying="false" name="FK_materia_id_mencion" physicalName="FK_materia_id_mencion" pk-table-ref="TAB322" pkCardinality="2" updateRule="1" >
+    <relationship id="REL585" populated="true" UUID="32637962-98c6-4bda-9338-dba2e7f75f25" deferrability="7" deleteRule="1" fk-table-ref="TAB302" fkCardinality="7" identifying="false" name="FK_modulo_id_mencion" physicalName="FK_modulo_id_mencion" pk-table-ref="TAB322" pkCardinality="2" updateRule="1" >
      <column-mapping id="CMP586" populated="true" UUID="84a919da-a0c5-4ed5-a40d-23f9100a39fc" fk-column-ref="COL312" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL323" />
     </relationship>
     <relationship id="REL587" populated="true" UUID="3cbbe4a8-6b61-450e-a6c4-b5ae73969849" deferrability="7" deleteRule="1" fk-table-ref="TAB417" fkCardinality="7" identifying="false" name="FK_pasantia_id_mencion" physicalName="FK_pasantia_id_mencion" pk-table-ref="TAB322" pkCardinality="2" updateRule="1" >
@@ -2257,7 +2257,7 @@
     </index>
    </folder>
   </table>
-  <table id="TAB845" populated="true" UUID="eeb8f0c8-1b2a-4260-83e7-a9aae5d5f985" name="materia" objectType="TABLE" physicalName="materia" >
+  <table id="TAB845" populated="true" UUID="eeb8f0c8-1b2a-4260-83e7-a9aae5d5f985" name="modulo" objectType="TABLE" physicalName="modulo" >
    <remarks></remarks>
    <folder id="FOLTAB8451" populated="true" name="Columns" physicalName="Columns" type="1">
     <column id="COL846" populated="true" UUID="4665efa4-8f39-41db-bbb1-af62ee6efa68" autoIncrement="true" defaultValue="" name="id_modulo" nullable="0" physicalName="id_modulo" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" source-column-ref="COL303" sourceDataTypeName="INT" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
@@ -2296,11 +2296,11 @@
     <index id="IDX855" populated="true" UUID="d265bd3e-d1c9-4ea2-8770-b1a40fb7b10e" clustered="false" name="PRIMARY" physicalName="PRIMARY" primaryKeyIndex="true" qualifier="orion" unique="true" >
      <index-column id="IDC856" populated="true" UUID="242dda1f-2f61-4f4c-a7e5-e299d29e2248" ascendingOrDescending="UNSPECIFIED" column-ref="COL846" name="id_modulo" physicalName="id_modulo" />
     </index>
-    <index id="IDX857" populated="true" UUID="fe8c8619-37fa-4b26-9c65-b5c5420cb804" clustered="false" name="UNQ_materia_0" physicalName="UNQ_materia_0" primaryKeyIndex="false" qualifier="orion" unique="true" >
+    <index id="IDX857" populated="true" UUID="fe8c8619-37fa-4b26-9c65-b5c5420cb804" clustered="false" name="UNQ_modulo_0" physicalName="UNQ_modulo_0" primaryKeyIndex="false" qualifier="orion" unique="true" >
      <index-column id="IDC858" populated="true" UUID="0b765bc6-d3e1-4895-a89b-fc231865c87e" ascendingOrDescending="ASCENDING" column-ref="COL848" name="CODIGO" physicalName="CODIGO" />
      <index-column id="IDC859" populated="true" UUID="fa9f3e4e-128a-4d97-8b62-204c1f0aefa1" ascendingOrDescending="ASCENDING" column-ref="COL854" name="id_carrera" physicalName="id_carrera" />
     </index>
-    <index id="IDX860" populated="true" UUID="8486de03-bdc6-447f-8b2a-e8069a0de633" clustered="false" name="FK_materia_id_carrera" physicalName="FK_materia_id_carrera" primaryKeyIndex="false" qualifier="orion" unique="false" >
+    <index id="IDX860" populated="true" UUID="8486de03-bdc6-447f-8b2a-e8069a0de633" clustered="false" name="FK_modulo_id_carrera" physicalName="FK_modulo_id_carrera" primaryKeyIndex="false" qualifier="orion" unique="false" >
      <index-column id="IDC861" populated="true" UUID="985fc237-be4b-43fb-83cf-f48594a5d1b6" ascendingOrDescending="ASCENDING" column-ref="COL854" name="id_carrera" physicalName="id_carrera" />
     </index>
    </folder>
@@ -2629,7 +2629,7 @@
    <relationship id="REL970" populated="true" UUID="b9308c3a-2788-49d1-b091-a60b3de3b86f" deferrability="7" deleteRule="1" fk-table-ref="TAB793" fkCardinality="7" identifying="false" name="FK_inscrito_id_carrera" physicalName="FK_inscrito_id_carrera" pk-table-ref="TAB662" pkCardinality="2" updateRule="1" >
     <column-mapping id="CMP971" populated="true" UUID="5982861c-2bf1-48c3-9db1-b1f3777d626b" fk-column-ref="COL799" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL663" />
    </relationship>
-   <relationship id="REL972" populated="true" UUID="01457fde-b23f-4482-849b-c52b1bc03254" deferrability="7" deleteRule="1" fk-table-ref="TAB845" fkCardinality="7" identifying="false" name="FK_materia_id_carrera" physicalName="FK_materia_id_carrera" pk-table-ref="TAB662" pkCardinality="2" updateRule="1" >
+   <relationship id="REL972" populated="true" UUID="01457fde-b23f-4482-849b-c52b1bc03254" deferrability="7" deleteRule="1" fk-table-ref="TAB845" fkCardinality="7" identifying="false" name="FK_modulo_id_carrera" physicalName="FK_modulo_id_carrera" pk-table-ref="TAB662" pkCardinality="2" updateRule="1" >
     <column-mapping id="CMP973" populated="true" UUID="c7119ddc-8f5a-49a5-89c4-9718f950882b" fk-column-ref="COL854" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL663" />
    </relationship>
    <relationship id="REL974" populated="true" UUID="35a627c7-5f39-44f1-a51f-ac89c358a1c7" deferrability="7" deleteRule="1" fk-table-ref="TAB724" fkCardinality="7" identifying="false" name="FK_detalle_id_comprobante" physicalName="FK_detalle_id_comprobante" pk-table-ref="TAB680" pkCardinality="2" updateRule="1" >

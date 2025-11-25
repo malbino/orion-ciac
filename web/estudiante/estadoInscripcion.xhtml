@@ -52,7 +52,7 @@
                                     <p:dataTable id="notas" var="nota" value="#{EstadoInscripcionController.estadoInscripcion}"
                                                  rowIndexVar="rowIndex" reflow="true" emptyMessage="Ningún registro encontrado." tableStyle="width:auto; min-width:100%">
                                         <p:column headerText="Nivel" groupRow="true">  
-                                            <h:outputText value="#{nota.materia.nivel.toString()}"/>
+                                            <h:outputText value="#{nota.modulo.nivel.toString()}"/>
                                         </p:column>
 
                                         <p:column headerText="Nº">
@@ -60,11 +60,11 @@
                                         </p:column>
 
                                         <p:column headerText="Codigo" >  
-                                            <h:outputText value="#{nota.materia.codigo}"/>
+                                            <h:outputText value="#{nota.modulo.codigo}"/>
                                         </p:column>
 
                                         <p:column headerText="Modulo" >  
-                                            <h:outputText value="#{nota.materia.nombre}"/>
+                                            <h:outputText value="#{nota.modulo.nombre}"/>
                                         </p:column>
 
                                         <p:column headerText="Grupo" >  

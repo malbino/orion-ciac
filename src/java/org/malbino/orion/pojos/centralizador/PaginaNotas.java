@@ -23,7 +23,7 @@ public class PaginaNotas extends PaginaCentralizador{
     private String curso;
     private String nota;
 
-    private ModuloCentralizador[] materiasCentralizador;
+    private ModuloCentralizador[] modulosCentralizador;
     private EstudianteCentralizador[] estudiantesCentralizador;
 
     private int cantidadMaximaModulos;
@@ -42,7 +42,7 @@ public class PaginaNotas extends PaginaCentralizador{
         this.curso = curso;
         this.nota = nota;
 
-        this.materiasCentralizador = new ModuloCentralizador[cantidadMaximaModulos];
+        this.modulosCentralizador = new ModuloCentralizador[cantidadMaximaModulos];
         this.estudiantesCentralizador = new EstudianteCentralizador[cantidadMaximaEstudiantes];
     }
 
@@ -187,17 +187,17 @@ public class PaginaNotas extends PaginaCentralizador{
     }
 
     /**
-     * @return the materiasCentralizador
+     * @return the modulosCentralizador
      */
     public ModuloCentralizador[] getModulosCentralizador() {
-        return materiasCentralizador;
+        return modulosCentralizador;
     }
 
     /**
-     * @param materiasCentralizador the materiasCentralizador to set
+     * @param modulosCentralizador the modulosCentralizador to set
      */
-    public void setModulosCentralizador(ModuloCentralizador[] materiasCentralizador) {
-        this.materiasCentralizador = materiasCentralizador;
+    public void setModulosCentralizador(ModuloCentralizador[] modulosCentralizador) {
+        this.modulosCentralizador = modulosCentralizador;
     }
 
     /**

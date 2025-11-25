@@ -65,20 +65,20 @@ empleado | Empleados del instituto
 empresa | Empresas para las pasantias
 estudiante | Estudiantes del instituto
 gestionacademica | Gestiones académicas anuales y semestrales
-grupo | Grupos para las materias
+grupo | Grupos para las modulos
 grupopasantia | Grupos para las pasantias
 indicadorpasantia | Indicadores de evaluación para las pasantias
 inscrito | Inscritos en un gestión académica
 instituto | Datos generarles del instituto
 log | Registro del log del sistema
-materia | Modulos de las carreras del instituto
+modulo | Modulos de las carreras del instituto
 mencion | Menciones de las carreras
 nota | Notas de los estudiantes
 pago | Pago de un estudiante
 pasantia | Pasantias de los estudiantes
 persona | Datos personales
 postulante | Postulantes al instituto
-prerequisito | Prerequisito de las materias
+prerequisito | Prerequisito de las modulos
 privilegio | Privilegios de un rol
 recurso | Recursos del sistema
 rol | Roles del sistema

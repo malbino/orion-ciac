@@ -36,14 +36,6 @@
                                         </div>
 
                                         <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="regimen" value="Régimen:" style="font-size: small"/>
-                                            <p:selectOneMenu id="regimen" value="#{CarreraController.seleccionCarrera.regimen}" converter="#{RegimenConverter}" autoWidth="false" required="true" requiredMessage="* Regimen requerido."> 
-                                                <f:selectItem itemLabel="" itemValue="" />
-                                                <f:selectItems value="#{CarreraController.listaRegimenes()}" var="nivel" itemLabel="#{nivel.toString()}" itemValue="#{nivel}"/>  
-                                            </p:selectOneMenu> 
-                                        </div>
-
-                                        <div class="ui-g-12 ui-md-4">
                                             <p:outputLabel for="nivelAcademico" value="Nivel académico:" style="font-size: small"/>
                                             <p:selectOneMenu id="nivelAcademico" value="#{CarreraController.seleccionCarrera.nivelAcademico}" converter="#{NivelAcademicoConverter}" autoWidth="false" required="true" requiredMessage="* Nivel académico requerido."> 
                                                 <f:selectItem itemLabel="" itemValue="" />
@@ -59,14 +51,6 @@
                                         <div class="ui-g-12 ui-md-4">
                                             <p:outputLabel for="creditajeMatricula" value="Creditaje matricula:" style="font-size: small"/>
                                             <p:inputText id="creditajeMatricula" value="#{CarreraController.seleccionCarrera.creditajeMatricula}" required="true" requiredMessage="* Creditaje matricula requerido." />
-                                        </div>
-
-                                        <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="campus" value="Campus:" style="font-size: small"/>
-                                            <p:selectOneMenu id="campus" value="#{CarreraController.seleccionCarrera.instituto}" converter="#{CampusConverter}" autoWidth="false" required="true" requiredMessage="* Campus requerido."> 
-                                                <f:selectItem itemLabel="" itemValue="" />
-                                                <f:selectItems value="#{CarreraController.listaCampus()}" var="campus" itemLabel="#{campus.toString()}" itemValue="#{campus}"/>
-                                            </p:selectOneMenu>
                                         </div>
 
                                         <div class="ui-g-12 ui-md-4">

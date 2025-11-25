@@ -1305,17 +1305,17 @@ public class BoletinNotasCarrera extends HttpServlet {
 
         List<Modulo> oferta = inscripcionesFacade.ofertaBoletinNotas(inscrito);
         for (int i = 0; i < oferta.size(); i++) {
-            Modulo materia = oferta.get(i);
+            Modulo modulo = oferta.get(i);
 
             if (i % 2 == 0) {
-                cell = new PdfPCell(new Phrase(materia.getCodigo(), NORMAL));
+                cell = new PdfPCell(new Phrase(modulo.getCodigo(), NORMAL));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
                 cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                 cell.setBorder(Rectangle.NO_BORDER);
                 cell.setColspan(10);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(materia.getNombre(), NORMAL));
+                cell = new PdfPCell(new Phrase(modulo.getNombre(), NORMAL));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
                 cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                 cell.setBorder(Rectangle.NO_BORDER);
@@ -1329,14 +1329,14 @@ public class BoletinNotasCarrera extends HttpServlet {
                 cell.setColspan(20);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(materia.prerequisitosToString(), NORMAL));
+                cell = new PdfPCell(new Phrase(modulo.prerequisitosToString(), NORMAL));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
                 cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                 cell.setBorder(Rectangle.NO_BORDER);
                 cell.setColspan(20);
                 table.addCell(cell);
             } else {
-                cell = new PdfPCell(new Phrase(materia.getCodigo(), NORMAL));
+                cell = new PdfPCell(new Phrase(modulo.getCodigo(), NORMAL));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
                 cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                 cell.setBorder(Rectangle.NO_BORDER);
@@ -1344,7 +1344,7 @@ public class BoletinNotasCarrera extends HttpServlet {
                 cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(materia.getNombre(), NORMAL));
+                cell = new PdfPCell(new Phrase(modulo.getNombre(), NORMAL));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
                 cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                 cell.setBorder(Rectangle.NO_BORDER);
@@ -1360,7 +1360,7 @@ public class BoletinNotasCarrera extends HttpServlet {
                 cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(materia.prerequisitosToString(), NORMAL));
+                cell = new PdfPCell(new Phrase(modulo.prerequisitosToString(), NORMAL));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
                 cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                 cell.setBorder(Rectangle.NO_BORDER);

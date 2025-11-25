@@ -59,7 +59,7 @@ public class ReporteHistorialAcademicoController extends AbstractController impl
     @EJB
     InscritoFacade inscritoFacade;
     @EJB
-    ModuloFacade materiaFacade;
+    ModuloFacade moduloFacade;
     @EJB
     CarreraEstudianteFacade carreraEstudianteFacade;
     @Inject
@@ -189,10 +189,10 @@ public class ReporteHistorialAcademicoController extends AbstractController impl
                         } else if (cell.getStringCellValue().contains("<<RM_3>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<RM_3>>", " "));
                         } else if (cell.getStringCellValue().contains("<<MA_MC>>")) {
-                            int materiasAprobadas = notaFacade.cantidadNotasAprobadas(carrera, seleccionEstudiante).intValue();
-                            int materiasCarrera = materiaFacade.cantidadModulosCurriculares(carrera).intValue();
+                            int modulosAprobadas = notaFacade.cantidadNotasAprobadas(carrera, seleccionEstudiante).intValue();
+                            int modulosCarrera = moduloFacade.cantidadModulosCurriculares(carrera).intValue();
 
-                            cell.setCellValue(cell.getStringCellValue().replace("<<MA_MC>>", materiasAprobadas + "/" + materiasCarrera));
+                            cell.setCellValue(cell.getStringCellValue().replace("<<MA_MC>>", modulosAprobadas + "/" + modulosCarrera));
                         } else if (cell.getStringCellValue().contains("<<GA>>")) {
                             rowNum = row.getRowNum();
                         }

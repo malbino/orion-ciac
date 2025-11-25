@@ -35,10 +35,10 @@
                                         </div>
                                         
                                         <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="materia" value="Modulo:" style="font-size: small"/>
-                                            <p:selectOneMenu id="materia" value="#{HistorialAcademicoController.nuevaNota.materia}" converter="#{ModuloConverter}" autoWidth="false" required="true" requiredMessage="* Modulo requerida."> 
+                                            <p:outputLabel for="modulo" value="Modulo:" style="font-size: small"/>
+                                            <p:selectOneMenu id="modulo" value="#{HistorialAcademicoController.nuevaNota.modulo}" converter="#{ModuloConverter}" autoWidth="false" required="true" requiredMessage="* Modulo requerida."> 
                                                 <f:selectItem itemLabel="" itemValue="" />
-                                                <f:selectItems value="#{HistorialAcademicoController.listaModulos()}" var="materia" itemLabel="#{materia.toString()}" itemValue="#{materia}"/>  
+                                                <f:selectItems value="#{HistorialAcademicoController.listaModulos()}" var="modulo" itemLabel="#{modulo.toString()}" itemValue="#{modulo}"/>  
 
                                             </p:selectOneMenu>
                                         </div>

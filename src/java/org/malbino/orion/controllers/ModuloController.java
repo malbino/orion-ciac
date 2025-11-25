@@ -31,13 +31,13 @@ import org.malbino.orion.util.Fecha;
 public class ModuloController extends AbstractController implements Serializable {
 
     @EJB
-    ModuloFacade materiaFacade;
+    ModuloFacade moduloFacade;
     @EJB
     PlanEstudioFacade planEstudioFacade;
     @Inject
     LoginController loginController;
 
-    private List<Modulo> materias;
+    private List<Modulo> modulos;
     private Modulo nuevaModulo;
     private Modulo seleccionModulo;
     private Carrera seleccionCarrera;
@@ -46,7 +46,7 @@ public class ModuloController extends AbstractController implements Serializable
 
     @PostConstruct
     public void init() {
-        materias = new ArrayList();
+        modulos = new ArrayList();
         nuevaModulo = new Modulo();
         seleccionModulo = null;
 
@@ -55,7 +55,7 @@ public class ModuloController extends AbstractController implements Serializable
 
     public void reinit() {
         if (seleccionCarrera != null) {
-            materias = materiaFacade.listaModulos(seleccionCarrera);
+            modulos = moduloFacade.listaModulos(seleccionCarrera);
         }
         nuevaModulo = new Modulo();
         seleccionModulo = null;
@@ -65,24 +65,24 @@ public class ModuloController extends AbstractController implements Serializable
 
     public void buscar() {
         if (seleccionCarrera != null) {
-            materias = materiaFacade.buscar(keyword, seleccionCarrera.getId_carrera());
+            modulos = moduloFacade.buscar(keyword, seleccionCarrera.getId_carrera());
         }
     }
 
     public List<Modulo> listaModulosCrear() {
-        return materiaFacade.listaModulos(seleccionCarrera);
+        return moduloFacade.listaModulos(seleccionCarrera);
     }
 
     public List<Modulo> listaModulosEditar() {
-        return materiaFacade.listaModulos(seleccionModulo.getCarrera(), seleccionModulo.getId_modulo());
+        return moduloFacade.listaModulos(seleccionModulo.getCarrera(), seleccionModulo.getId_modulo());
     }
 
     public void crearModulo() throws IOException {
         nuevaModulo.setCarrera(seleccionCarrera);
-        if (materiaFacade.buscarPorCodigo(nuevaModulo.getCodigo(), nuevaModulo.getCarrera()).isEmpty()) {
-            if (materiaFacade.create(nuevaModulo)) {
+        if (moduloFacade.buscarPorCodigo(nuevaModulo.getCodigo(), nuevaModulo.getCarrera()).isEmpty()) {
+            if (moduloFacade.create(nuevaModulo)) {
                 //log
-                logFacade.create(new Log(Fecha.getDate(), EventoLog.CREATE, EntidadLog.MATERIA, nuevaModulo.getId_modulo(), "Creación materia", loginController.getUsr().toString()));
+                logFacade.create(new Log(Fecha.getDate(), EventoLog.CREATE, EntidadLog.MATERIA, nuevaModulo.getId_modulo(), "Creación modulo", loginController.getUsr().toString()));
 
                 this.toModulos();
             }
@@ -92,10 +92,10 @@ public class ModuloController extends AbstractController implements Serializable
     }
 
     public void editarModulo() throws IOException {
-        if (materiaFacade.buscarPorCodigo(seleccionModulo.getCodigo(), seleccionModulo.getId_modulo(), seleccionModulo.getCarrera()).isEmpty()) {
-            if (materiaFacade.edit(seleccionModulo)) {
+        if (moduloFacade.buscarPorCodigo(seleccionModulo.getCodigo(), seleccionModulo.getId_modulo(), seleccionModulo.getCarrera()).isEmpty()) {
+            if (moduloFacade.edit(seleccionModulo)) {
                 //log
-                logFacade.create(new Log(Fecha.getDate(), EventoLog.UPDATE, EntidadLog.MATERIA, seleccionModulo.getId_modulo(), "Actualización materia", loginController.getUsr().toString()));
+                logFacade.create(new Log(Fecha.getDate(), EventoLog.UPDATE, EntidadLog.MATERIA, seleccionModulo.getId_modulo(), "Actualización modulo", loginController.getUsr().toString()));
 
                 this.toModulos();
             }
@@ -107,38 +107,38 @@ public class ModuloController extends AbstractController implements Serializable
     public void eliminarModulo() throws IOException {
         if (planEstudioFacade.eliminarModulo(seleccionModulo)) {
             //log
-            logFacade.create(new Log(Fecha.getDate(), EventoLog.DELETE, EntidadLog.MATERIA, seleccionModulo.getId_modulo(), "Borrado materia", loginController.getUsr().toString()));
+            logFacade.create(new Log(Fecha.getDate(), EventoLog.DELETE, EntidadLog.MATERIA, seleccionModulo.getId_modulo(), "Borrado modulo", loginController.getUsr().toString()));
 
             this.toModulos();
         }
     }
 
     public void toNuevaModulo() throws IOException {
-        this.redireccionarViewId("/planesEstudio/materia/nuevaModulo");
+        this.redireccionarViewId("/planesEstudio/modulo/nuevaModulo");
     }
 
     public void toEditarModulo() throws IOException {
-        this.redireccionarViewId("/planesEstudio/materia/editarModulo");
+        this.redireccionarViewId("/planesEstudio/modulo/editarModulo");
     }
 
     public void toModulos() throws IOException {
         reinit();
 
-        this.redireccionarViewId("/planesEstudio/materia/materias");
+        this.redireccionarViewId("/planesEstudio/modulo/modulos");
     }
 
     /**
-     * @return the materias
+     * @return the modulos
      */
     public List<Modulo> getModulos() {
-        return materias;
+        return modulos;
     }
 
     /**
-     * @param materias the materias to set
+     * @param modulos the modulos to set
      */
-    public void setModulos(List<Modulo> materias) {
-        this.materias = materias;
+    public void setModulos(List<Modulo> modulos) {
+        this.modulos = modulos;
     }
 
     /**

@@ -15,7 +15,7 @@
                     <div class="col-md-12 col-sm-12 ">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>Oferta de Modulos <small>elige el grupo de tus materias</small></h2>
+                                <h2>Oferta de Modulos <small>elige el grupo de tus modulos</small></h2>
 
                                 <div class="clearfix"></div>
                             </div>
@@ -30,16 +30,16 @@
                                             <p:selectOneButton id="grupo" value="#{InscripcionInternetController.grupo}">
                                                 <f:selectItems value="#{InscripcionInternetController.grupos}"/>
 
-                                                <p:ajax listener="#{InscripcionInternetController.actualizarOferta()}" update="materias"/>
+                                                <p:ajax listener="#{InscripcionInternetController.actualizarOferta()}" update="modulos"/>
                                             </p:selectOneButton>
                                         </div>
                                     </div>
 
-                                    <p:dataTable id="materias" var="materia" value="#{InscripcionInternetController.ofertaModulos}" 
+                                    <p:dataTable id="modulos" var="modulo" value="#{InscripcionInternetController.ofertaModulos}" 
                                                  editable="true" editMode="cell"
                                                  rowIndexVar="rowIndex" reflow="true" emptyMessage="Ningún registro encontrado." tableStyle="width:auto; min-width:100%">
                                         <p:column headerText="Nivel" groupRow="true">  
-                                            <h:outputText value="#{materia.nivel.toString()}"/>
+                                            <h:outputText value="#{modulo.nivel.toString()}"/>
                                         </p:column>
 
                                         <p:column headerText="Nº">
@@ -47,22 +47,22 @@
                                         </p:column>
 
                                         <p:column headerText="Codigo" >  
-                                            <h:outputText value="#{materia.codigo}"/>
+                                            <h:outputText value="#{modulo.codigo}"/>
                                         </p:column>
 
                                         <p:column headerText="Modulo" >  
-                                            <h:outputText value="#{materia.nombre}"/>
+                                            <h:outputText value="#{modulo.nombre}"/>
                                         </p:column>
 
                                         <p:column headerText="Grupo">
                                             <p:cellEditor>
-                                                <f:facet name="output"><h:outputText value="#{materia.grupo.toString_InscripcionInternet()}"/></f:facet>
+                                                <f:facet name="output"><h:outputText value="#{modulo.grupo.toString_InscripcionInternet()}"/></f:facet>
                                                 <f:facet name="input">
-                                                    <h:selectOneMenu id="grupo" value="#{materia.grupo}" converter="#{GrupoConverter}" style="width:100%">
+                                                    <h:selectOneMenu id="grupo" value="#{modulo.grupo}" converter="#{GrupoConverter}" style="width:100%">
                                                         <f:selectItem itemLabel="" itemValue="" />
-                                                        <f:selectItems value="#{InscripcionInternetController.listaGruposAbiertos(materia)}" var="grupo" itemLabel="#{grupo.toString_InscripcionInternet()}" itemValue="#{grupo}" />
+                                                        <f:selectItems value="#{InscripcionInternetController.listaGruposAbiertos(modulo)}" var="grupo" itemLabel="#{grupo.toString_InscripcionInternet()}" itemValue="#{grupo}" />
 
-                                                        <p:ajax update="materias"/>
+                                                        <p:ajax update="modulos"/>
                                                     </h:selectOneMenu>
                                                 </f:facet>
                                             </p:cellEditor>

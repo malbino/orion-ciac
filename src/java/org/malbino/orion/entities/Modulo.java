@@ -50,10 +50,10 @@ public class Modulo implements Serializable {
     @ManyToOne
     private Carrera carrera;
 
-    @OneToMany(mappedBy = "materia", orphanRemoval = true)
+    @OneToMany(mappedBy = "modulo", orphanRemoval = true)
     private List<Grupo> grupos;
 
-    @OneToMany(mappedBy = "materia", orphanRemoval = true)
+    @OneToMany(mappedBy = "modulo", orphanRemoval = true)
     private List<Nota> notas;
 
     @Transient

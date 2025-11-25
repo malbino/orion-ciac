@@ -33,7 +33,7 @@ public class ProgramacionGruposFacade {
     private EntityManager em;
 
     @EJB
-    ModuloFacade materiaFacade;
+    ModuloFacade moduloFacade;
     @EJB
     GrupoFacade grupoFacade;
 

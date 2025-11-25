@@ -210,8 +210,8 @@ public class CentralizadorCalificaciones extends HttpServlet {
                     cell.setBackgroundColor(new BaseColor(216, 228, 188));
                     table.addCell(cell);
 
-                    for (ModuloCentralizador materiaCentralizador : paginaNotas.getModulosCentralizador()) {
-                        cell = new PdfPCell(new Phrase(materiaCentralizador.getCodigo(), NEGRITA_PEQUENA));
+                    for (ModuloCentralizador moduloCentralizador : paginaNotas.getModulosCentralizador()) {
+                        cell = new PdfPCell(new Phrase(moduloCentralizador.getCodigo(), NEGRITA_PEQUENA));
                         cell.setColspan(4);
                         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
                         cell.setBackgroundColor(new BaseColor(155, 187, 89));
@@ -248,8 +248,8 @@ public class CentralizadorCalificaciones extends HttpServlet {
                     cell.setBorder(Rectangle.TOP | Rectangle.RIGHT | Rectangle.BOTTOM);
                     table.addCell(cell);
 
-                    for (ModuloCentralizador materiaCentralizador : paginaNotas.getModulosCentralizador()) {
-                        cell = new PdfPCell(new Phrase(materiaCentralizador.getNombre(), NEGRITA_PEQUENA));
+                    for (ModuloCentralizador moduloCentralizador : paginaNotas.getModulosCentralizador()) {
+                        cell = new PdfPCell(new Phrase(moduloCentralizador.getNombre(), NEGRITA_PEQUENA));
                         cell.setColspan(4);
                         cell.setRowspan(5);
                         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);

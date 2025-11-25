@@ -64,7 +64,7 @@ public class InscripcionManualController extends AbstractController implements S
     @EJB
     PagoFacade pagoFacade;
     @EJB
-    ModuloFacade materiaFacade;
+    ModuloFacade moduloFacade;
     @EJB
     CarreraEstudianteFacade carreraEstudianteFacade;
 
@@ -72,7 +72,7 @@ public class InscripcionManualController extends AbstractController implements S
     private Inscrito seleccionInscrito;
 
     private List<Modulo> ofertaModulos;
-    private List<Modulo> materias;
+    private List<Modulo> modulos;
     private List<Nota> estadoInscripcion;
     private Nota seleccionNota;
 
@@ -83,7 +83,7 @@ public class InscripcionManualController extends AbstractController implements S
     public void init() {
         seleccionInscrito = null;
         ofertaModulos = new ArrayList();
-        materias = new ArrayList();
+        modulos = new ArrayList();
         estadoInscripcion = new ArrayList();
 
         grupo = grupos[0];
@@ -92,7 +92,7 @@ public class InscripcionManualController extends AbstractController implements S
     public void reinit() {
         seleccionInscrito = null;
         ofertaModulos = new ArrayList();
-        materias = new ArrayList();
+        modulos = new ArrayList();
         estadoInscripcion = new ArrayList();
 
         grupo = grupos[0];
@@ -106,10 +106,10 @@ public class InscripcionManualController extends AbstractController implements S
         return l;
     }
 
-    public List<Grupo> listaGruposAbiertos(Modulo materia) {
+    public List<Grupo> listaGruposAbiertos(Modulo modulo) {
         List<Grupo> l = new ArrayList();
-        if (seleccionInscrito != null && materia != null) {
-            l = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), seleccionInscrito.getCarrera().getId_carrera(), materia.getId_modulo());
+        if (seleccionInscrito != null && modulo != null) {
+            l = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), seleccionInscrito.getCarrera().getId_carrera(), modulo.getId_modulo());
         }
         return l;
     }
@@ -118,13 +118,13 @@ public class InscripcionManualController extends AbstractController implements S
         if (seleccionInscrito != null) {
             ofertaModulos = inscripcionesFacade.ofertaTomaModulos(seleccionInscrito);
 
-            for (Modulo materia : ofertaModulos) {
-                List<Grupo> listaGruposAbiertos = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), materia.getId_modulo(), grupo);
+            for (Modulo modulo : ofertaModulos) {
+                List<Grupo> listaGruposAbiertos = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), modulo.getId_modulo(), grupo);
                 Iterator<Grupo> iterator = listaGruposAbiertos.iterator();
                 if (iterator.hasNext()) {
-                    materia.setGrupo(iterator.next());
+                    modulo.setGrupo(iterator.next());
                 } else {
-                    materia.setGrupo(null);
+                    modulo.setGrupo(null);
                 }
             }
         }
@@ -132,7 +132,7 @@ public class InscripcionManualController extends AbstractController implements S
 
     public void actualizarModulos() {
         if (seleccionInscrito != null) {
-            materias = materiaFacade.listaModulos(seleccionInscrito.getCarrera());
+            modulos = moduloFacade.listaModulos(seleccionInscrito.getCarrera());
         }
     }
 
@@ -153,10 +153,10 @@ public class InscripcionManualController extends AbstractController implements S
         return b;
     }
 
-    public boolean materiaRepetida(Modulo materia) {
+    public boolean moduloRepetida(Modulo modulo) {
         boolean b = false;
         for (Nota n : estadoInscripcion) {
-            if (n.getModulo().equals(materia)) {
+            if (n.getModulo().equals(modulo)) {
                 b = true;
                 break;
             }
@@ -189,8 +189,8 @@ public class InscripcionManualController extends AbstractController implements S
                 if (!ofertaModulos.isEmpty()) {
                     if (verificarGrupos()) {
                         List<Nota> aux = new ArrayList();
-                        for (Modulo materia : ofertaModulos) {
-                            Nota nota = new Nota(0, Modalidad.REGULAR, Condicion.ABANDONO, seleccionInscrito.getGestionAcademica(), materia, seleccionInscrito.getEstudiante(), seleccionInscrito, materia.getGrupo());
+                        for (Modulo modulo : ofertaModulos) {
+                            Nota nota = new Nota(0, Modalidad.REGULAR, Condicion.ABANDONO, seleccionInscrito.getGestionAcademica(), modulo, seleccionInscrito.getEstudiante(), seleccionInscrito, modulo.getGrupo());
                             aux.add(nota);
                         }
 
@@ -210,10 +210,10 @@ public class InscripcionManualController extends AbstractController implements S
                             this.mensajeDeError(e.getMessage());
                         }
                     } else {
-                        this.mensajeDeError("Existen materias sin grupos.");
+                        this.mensajeDeError("Existen modulos sin grupos.");
                     }
                 } else {
-                    this.mensajeDeError("No existen materias.");
+                    this.mensajeDeError("No existen modulos.");
                 }
             } else {
                 this.mensajeDeError("Matricula/Cuota pendiente.");
@@ -227,11 +227,11 @@ public class InscripcionManualController extends AbstractController implements S
         if (!actividadFacade.listaActividades(Fecha.getDate(), Funcionalidad.INSCRIPCION, seleccionInscrito.getGestionAcademica().getId_gestionacademica()).isEmpty()) {
             List<Pago> listaPagosPagados = pagoFacade.listaPagosPagados(seleccionInscrito.getId_inscrito());
             if (!listaPagosPagados.isEmpty()) {
-                if (!materias.isEmpty()) {
+                if (!modulos.isEmpty()) {
                     List<Nota> aux = new ArrayList();
-                    for (Modulo materia : materias) {
-                        if (materia.getGrupo() != null && !materiaRepetida(materia)) {
-                            Nota nota = new Nota(0, Modalidad.REGULAR, Condicion.ABANDONO, seleccionInscrito.getGestionAcademica(), materia, seleccionInscrito.getEstudiante(), seleccionInscrito, materia.getGrupo());
+                    for (Modulo modulo : modulos) {
+                        if (modulo.getGrupo() != null && !moduloRepetida(modulo)) {
+                            Nota nota = new Nota(0, Modalidad.REGULAR, Condicion.ABANDONO, seleccionInscrito.getGestionAcademica(), modulo, seleccionInscrito.getEstudiante(), seleccionInscrito, modulo.getGrupo());
                             aux.add(nota);
                         }
                     }
@@ -246,7 +246,7 @@ public class InscripcionManualController extends AbstractController implements S
                         this.mensajeDeError(e.getMessage());
                     }
                 } else {
-                    this.mensajeDeError("No existen materias.");
+                    this.mensajeDeError("No existen modulos.");
                 }
             } else {
                 this.mensajeDeError("Matricula/Cuota pendiente.");
@@ -277,7 +277,7 @@ public class InscripcionManualController extends AbstractController implements S
     public void toModulos() throws IOException {
         actualizarModulos();
 
-        this.redireccionarViewId("/inscripciones/inscripcionManual/materias");
+        this.redireccionarViewId("/inscripciones/inscripcionManual/modulos");
     }
 
     /**
@@ -351,17 +351,17 @@ public class InscripcionManualController extends AbstractController implements S
     }
 
     /**
-     * @return the materias
+     * @return the modulos
      */
     public List<Modulo> getModulos() {
-        return materias;
+        return modulos;
     }
 
     /**
-     * @param materias the materias to set
+     * @param modulos the modulos to set
      */
-    public void setModulos(List<Modulo> materias) {
-        this.materias = materias;
+    public void setModulos(List<Modulo> modulos) {
+        this.modulos = modulos;
     }
 
     /**

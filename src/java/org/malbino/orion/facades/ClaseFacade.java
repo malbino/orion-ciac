@@ -46,7 +46,7 @@ public class ClaseFacade extends AbstractFacade<Clase> {
         Clase c = null;
 
         try {
-            Query q = em.createQuery("SELECT c FROM Clase c JOIN c.grupo g JOIN g.gestionAcademica ga JOIN g.materia m JOIN m.carrera a WHERE ga.id_gestionacademica=:id_gestionacademica AND a.id_carrera=:id_carrera AND g.turno=:turno AND g.codigo=:paralelo AND c.periodo=:periodo AND c.dia=:dia");
+            Query q = em.createQuery("SELECT c FROM Clase c JOIN c.grupo g JOIN g.gestionAcademica ga JOIN g.modulo m JOIN m.carrera a WHERE ga.id_gestionacademica=:id_gestionacademica AND a.id_carrera=:id_carrera AND g.turno=:turno AND g.codigo=:paralelo AND c.periodo=:periodo AND c.dia=:dia");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_carrera", id_carrera);
             q.setParameter("turno", turno);

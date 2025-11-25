@@ -8,14 +8,17 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Carrera;
+import org.malbino.orion.entities.Instituto;
 import org.malbino.orion.entities.Log;
 import org.malbino.orion.enums.EntidadLog;
 import org.malbino.orion.enums.EventoLog;
+import org.malbino.orion.facades.InstitutoFacade;
+import org.malbino.orion.util.Constantes;
 import org.malbino.orion.util.Fecha;
 
 /**
@@ -26,13 +29,15 @@ import org.malbino.orion.util.Fecha;
 @SessionScoped
 public class CarreraController extends AbstractController implements Serializable {
 
+    @EJB
+    InstitutoFacade institutoFacade;
     @Inject
     LoginController loginController;
 
     private List<Carrera> carreras;
     private Carrera nuevaCarrera;
     private Carrera seleccionCarrera;
-    private Campus seleccionCampus;
+    private Instituto instituto;
 
     private String keyword;
 
@@ -41,16 +46,13 @@ public class CarreraController extends AbstractController implements Serializabl
         carreras = carreraFacade.listaCarreras();
         nuevaCarrera = new Carrera();
         seleccionCarrera = null;
+        instituto = institutoFacade.buscarPorId(Constantes.ID_INSTITUTO);
 
         keyword = null;
     }
 
     public void reinit() {
-        if (seleccionCampus == null) {
-            carreras = carreraFacade.listaCarreras();
-        } else {
-            carreras = carreraFacade.listaCarreras(seleccionCampus.getId_campus());
-        }
+        carreras = carreraFacade.listaCarreras();
         nuevaCarrera = new Carrera();
         seleccionCarrera = null;
 
@@ -58,14 +60,11 @@ public class CarreraController extends AbstractController implements Serializabl
     }
 
     public void buscar() {
-        if (seleccionCampus == null) {
-            carreras = carreraFacade.buscar(keyword);
-        } else {
-            carreras = carreraFacade.buscar(keyword, seleccionCampus.getId_campus());
-        }
+        carreras = carreraFacade.buscar(keyword);
     }
 
     public void crearCarrera() throws IOException {
+        nuevaCarrera.setInstituto(instituto);
         if (carreraFacade.buscarPorCodigo(nuevaCarrera.getCodigo()) == null) {
             if (carreraFacade.create(nuevaCarrera)) {
                 //log
@@ -159,19 +158,5 @@ public class CarreraController extends AbstractController implements Serializabl
      */
     public void setKeyword(String keyword) {
         this.keyword = keyword;
-    }
-
-    /**
-     * @return the seleccionCampus
-     */
-    public Campus getSeleccionCampus() {
-        return seleccionCampus;
-    }
-
-    /**
-     * @param seleccionCampus the seleccionCampus to set
-     */
-    public void setSeleccionCampus(Campus seleccionCampus) {
-        this.seleccionCampus = seleccionCampus;
     }
 }

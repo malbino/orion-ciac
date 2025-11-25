@@ -26,19 +26,19 @@ public class PlanEstudioFacade {
     private EntityManager em;
 
     @EJB
-    ModuloFacade materiaFacade;
+    ModuloFacade moduloFacade;
 
     @Transactional(Transactional.TxType.REQUIRES_NEW)
     public boolean eliminarModulo(Modulo prerequisito) {
-        List<Modulo> materias = materiaFacade.listaModulos(prerequisito.getId_modulo());
-        for (Modulo materia : materias) {
-            materia.getPrerequisitos().remove(prerequisito);
+        List<Modulo> modulos = moduloFacade.listaModulos(prerequisito.getId_modulo());
+        for (Modulo modulo : modulos) {
+            modulo.getPrerequisitos().remove(prerequisito);
 
-            materiaFacade.edit(materia);
-            materiaFacade.getEntityManager().flush();
+            moduloFacade.edit(modulo);
+            moduloFacade.getEntityManager().flush();
         }
 
-        materiaFacade.remove(prerequisito);
+        moduloFacade.remove(prerequisito);
 
         return true;
     }

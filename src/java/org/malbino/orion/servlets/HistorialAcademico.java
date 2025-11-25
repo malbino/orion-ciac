@@ -70,7 +70,7 @@ public class HistorialAcademico extends HttpServlet {
     @EJB
     NotaFacade notaFacade;
     @EJB
-    ModuloFacade materiaFacade;
+    ModuloFacade moduloFacade;
     @EJB
     InscritoFacade inscritoFacade;
 
@@ -582,9 +582,9 @@ public class HistorialAcademico extends HttpServlet {
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         table.addCell(cell);
 
-        int materiasAprobadas = notaFacade.cantidadNotasAprobadas(carrera, estudiante).intValue();
-        int materiasCarrera = materiaFacade.cantidadModulosCurriculares(carrera).intValue();
-        cell = new PdfPCell(new Phrase(materiasAprobadas + "/" + materiasCarrera, NORMAL));
+        int modulosAprobadas = notaFacade.cantidadNotasAprobadas(carrera, estudiante).intValue();
+        int modulosCarrera = moduloFacade.cantidadModulosCurriculares(carrera).intValue();
+        cell = new PdfPCell(new Phrase(modulosAprobadas + "/" + modulosCarrera, NORMAL));
         cell.setColspan(5);
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         table.addCell(cell);

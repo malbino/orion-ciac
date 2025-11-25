@@ -18,7 +18,7 @@ public class Seguimiento {
     private String turno;
     private String paralelo;
 
-    private String[] materiasSeguimiento;
+    private String[] modulosSeguimiento;
     private EstudianteSeguimiento[] estudiantesSeguimiento;
 
     public Seguimiento() {
@@ -109,17 +109,17 @@ public class Seguimiento {
     }
 
     /**
-     * @return the materiasSeguimiento
+     * @return the modulosSeguimiento
      */
     public String[] getModulosSeguimiento() {
-        return materiasSeguimiento;
+        return modulosSeguimiento;
     }
 
     /**
-     * @param materiasSeguimiento the materiasSeguimiento to set
+     * @param modulosSeguimiento the modulosSeguimiento to set
      */
-    public void setModulosSeguimiento(String[] materiasSeguimiento) {
-        this.materiasSeguimiento = materiasSeguimiento;
+    public void setModulosSeguimiento(String[] modulosSeguimiento) {
+        this.modulosSeguimiento = modulosSeguimiento;
     }
 
     /**

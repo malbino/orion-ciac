@@ -110,10 +110,10 @@ public class InscripcionInternetController extends AbstractController implements
         return l;
     }
 
-    public List<Grupo> listaGruposAbiertos(Modulo materia) {
+    public List<Grupo> listaGruposAbiertos(Modulo modulo) {
         List<Grupo> l = new ArrayList();
-        if (seleccionInscrito != null && materia != null) {
-            l = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), seleccionInscrito.getCarrera().getId_carrera(), materia.getId_modulo());
+        if (seleccionInscrito != null && modulo != null) {
+            l = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), seleccionInscrito.getCarrera().getId_carrera(), modulo.getId_modulo());
         }
         return l;
     }
@@ -122,13 +122,13 @@ public class InscripcionInternetController extends AbstractController implements
         if (seleccionInscrito != null) {
             ofertaModulos = inscripcionesFacade.ofertaTomaModulos(seleccionInscrito);
 
-            for (Modulo materia : ofertaModulos) {
-                List<Grupo> listaGruposAbiertos = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), materia.getId_modulo(), grupo);
+            for (Modulo modulo : ofertaModulos) {
+                List<Grupo> listaGruposAbiertos = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), modulo.getId_modulo(), grupo);
                 Iterator<Grupo> iterator = listaGruposAbiertos.iterator();
                 if (iterator.hasNext()) {
-                    materia.setGrupo(iterator.next());
+                    modulo.setGrupo(iterator.next());
                 } else {
-                    materia.setGrupo(null);
+                    modulo.setGrupo(null);
                 }
             }
         }
@@ -176,8 +176,8 @@ public class InscripcionInternetController extends AbstractController implements
                 if (!ofertaModulos.isEmpty()) {
                     if (verificarGrupos()) {
                         List<Nota> aux = new ArrayList();
-                        for (Modulo materia : ofertaModulos) {
-                            Nota nota = new Nota(0, Modalidad.REGULAR, Condicion.ABANDONO, seleccionInscrito.getGestionAcademica(), materia, seleccionInscrito.getEstudiante(), seleccionInscrito, materia.getGrupo());
+                        for (Modulo modulo : ofertaModulos) {
+                            Nota nota = new Nota(0, Modalidad.REGULAR, Condicion.ABANDONO, seleccionInscrito.getGestionAcademica(), modulo, seleccionInscrito.getEstudiante(), seleccionInscrito, modulo.getGrupo());
                             aux.add(nota);
                         }
 
@@ -188,7 +188,7 @@ public class InscripcionInternetController extends AbstractController implements
                                 //log
                                 for (Nota nota : aux) {
                                     //log
-                                    logFacade.create(new Log(Fecha.getDate(), EventoLog.CREATE, EntidadLog.NOTA, nota.getId_nota(), "Creación de nota por toma de materias por internet", loginController.getUsr().toString()));
+                                    logFacade.create(new Log(Fecha.getDate(), EventoLog.CREATE, EntidadLog.NOTA, nota.getId_nota(), "Creación de nota por toma de modulos por internet", loginController.getUsr().toString()));
                                 }
 
                                 toEstadoInscripcion();
@@ -197,10 +197,10 @@ public class InscripcionInternetController extends AbstractController implements
                             this.mensajeDeError(e.getMessage());
                         }
                     } else {
-                        this.mensajeDeError("Existen materias sin grupos.");
+                        this.mensajeDeError("Existen modulos sin grupos.");
                     }
                 } else {
-                    this.mensajeDeError("No existen materias.");
+                    this.mensajeDeError("No existen modulos.");
                 }
             } else {
                 this.mensajeDeError("Matricula/Cuota pendiente.");

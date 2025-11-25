@@ -22,7 +22,7 @@ import org.malbino.orion.facades.ModuloFacade;
 public class ModuloConverter implements Converter {
 
     @EJB
-    ModuloFacade materiaFacade;
+    ModuloFacade moduloFacade;
 
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent component, String submittedValue) {
@@ -31,7 +31,7 @@ public class ModuloConverter implements Converter {
         if (submittedValue == null || submittedValue.isEmpty()) {
             o = null;
         } else {
-            o = materiaFacade.find(Integer.valueOf(submittedValue));
+            o = moduloFacade.find(Integer.valueOf(submittedValue));
         }
 
         return o;

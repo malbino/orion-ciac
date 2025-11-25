@@ -122,7 +122,7 @@ public class ModuloFacade extends AbstractFacade<Modulo> {
         List<Modulo> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT m FROM Nota n JOIN n.estudiante e JOIN n.materia m JOIN m.carrera c WHERE e.id_persona=:id_persona AND c.id_carrera=:id_carrera AND n.condicion=:condicion ORDER BY m.numero");
+            Query q = em.createQuery("SELECT m FROM Nota n JOIN n.estudiante e JOIN n.modulo m JOIN m.carrera c WHERE e.id_persona=:id_persona AND c.id_carrera=:id_carrera AND n.condicion=:condicion ORDER BY m.numero");
             q.setParameter("id_persona", id_persona);
             q.setParameter("id_carrera", id_carrera);
             q.setParameter("condicion", Condicion.APROBADO);
@@ -139,7 +139,7 @@ public class ModuloFacade extends AbstractFacade<Modulo> {
         List<Modulo> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT m FROM Nota n JOIN n.materia m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND n.condicion=:condicion ORDER BY m.nivel, m.numero");
+            Query q = em.createQuery("SELECT m FROM Nota n JOIN n.modulo m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND n.condicion=:condicion ORDER BY m.nivel, m.numero");
             q.setParameter("estudiante", estudiante);
             q.setParameter("carrera", carrera);
             q.setParameter("condicion", Condicion.APROBADO);
