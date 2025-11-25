@@ -15,7 +15,7 @@
                     <div class="col-md-12 col-sm-12 ">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>Editar Materia <small>editar materia existente</small></h2>
+                                <h2>Editar Modulo <small>editar materia existente</small></h2>
 
                                 <div class="clearfix"></div>
                             </div>
@@ -27,57 +27,57 @@
                                     <div class="ui-g ui-fluid">
                                         <div class="ui-g-12 ui-md-4">
                                             <p:outputLabel for="nivel" value="Nivel:" style="font-size: small"/>
-                                            <p:selectOneMenu id="nivel" value="#{MateriaController.seleccionMateria.nivel}" converter="#{NivelMateriaConverter}" autoWidth="false" required="true" requiredMessage="* Nivel requerido."> 
+                                            <p:selectOneMenu id="nivel" value="#{ModuloController.seleccionModulo.nivel}" converter="#{NivelModuloConverter}" autoWidth="false" required="true" requiredMessage="* Nivel requerido."> 
                                                 <f:selectItem itemLabel="" itemValue="" />
-                                                <f:selectItems value="#{MateriaController.listaNiveles()}" var="nivel" itemLabel="#{nivel.toString()}" itemValue="#{nivel}"/>  
+                                                <f:selectItems value="#{ModuloController.listaNiveles()}" var="nivel" itemLabel="#{nivel.toString()}" itemValue="#{nivel}"/>  
                                             </p:selectOneMenu> 
                                         </div>
 
                                         <div class="ui-g-12 ui-md-4">
                                             <p:outputLabel for="numero" value="Numero:" style="font-size: small"/>
-                                            <p:inputText id="numero" value="#{MateriaController.seleccionMateria.numero}" required="true" requiredMessage="* Numero requerido." />
+                                            <p:inputText id="numero" value="#{ModuloController.seleccionModulo.numero}" required="true" requiredMessage="* Numero requerido." />
                                         </div>
 
                                         <div class="ui-g-12 ui-md-4">
                                             <p:outputLabel for="codigo" value="Codigo:" style="font-size: small"/>
-                                            <p:inputText id="codigo" value="#{MateriaController.seleccionMateria.codigo}" required="true" requiredMessage="* Codigo requerido." />
+                                            <p:inputText id="codigo" value="#{ModuloController.seleccionModulo.codigo}" required="true" requiredMessage="* Codigo requerido." />
                                         </div>
 
                                         <div class="ui-g-12 ui-md-4">
                                             <p:outputLabel for="nombre" value="Nombre:" style="font-size: small"/>
-                                            <p:inputText id="nombre" value="#{MateriaController.seleccionMateria.nombre}" required="true" requiredMessage="* Nombre requerido." />
+                                            <p:inputText id="nombre" value="#{ModuloController.seleccionModulo.nombre}" required="true" requiredMessage="* Nombre requerido." />
                                         </div>
 
                                         <div class="ui-g-12 ui-md-4">
                                             <p:outputLabel for="horas" value="Horas:" style="font-size: small"/>
-                                            <p:inputText id="horas" value="#{MateriaController.seleccionMateria.horas}" required="true" requiredMessage="* Horas requerido." />
+                                            <p:inputText id="horas" value="#{ModuloController.seleccionModulo.horas}" required="true" requiredMessage="* Horas requerido." />
                                         </div>
 
                                         <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="creditajeMateria" value="Creditaje materia" style="font-size: small"/>
-                                            <p:inputText id="creditajeMateria" value="#{MateriaController.seleccionMateria.creditajeMateria}" required="true" requiredMessage="* Creditaje materia requerido." />
+                                            <p:outputLabel for="creditajeModulo" value="Creditaje materia" style="font-size: small"/>
+                                            <p:inputText id="creditajeModulo" value="#{ModuloController.seleccionModulo.creditajeModulo}" required="true" requiredMessage="* Creditaje materia requerido." />
                                         </div>
 
                                         <div class="ui-g-12 ui-md-4">
                                             <p:outputLabel for="curricular" value="Curricular:" style="font-size: small"/>
-                                            <p:selectBooleanButton id="curricular" value="#{MateriaController.seleccionMateria.curricular}" onLabel="Sí" offLabel="No" onIcon="fa fa-check" offIcon="fa fa-ban"/>
+                                            <p:selectBooleanButton id="curricular" value="#{ModuloController.seleccionModulo.curricular}" onLabel="Sí" offLabel="No" onIcon="fa fa-check" offIcon="fa fa-ban"/>
                                         </div>
 
                                         <div class="ui-g-12 ui-md-4">
                                             <p:outputLabel for="prerequisitos" value="Prerequisitos:" style="font-size: small"/>
-                                            <p:selectCheckboxMenu id="prerequisitos" value="#{MateriaController.seleccionMateria.prerequisitos}" converter="#{MateriaConverter}" label="Prerequisitos" filter="true" filterMatchMode="contains" style="height: 30px">  
-                                                <f:selectItems value="#{MateriaController.listaMateriasEditar()}" var="materia" itemLabel="#{materia.toString()}" itemValue="#{materia}"/>  
+                                            <p:selectCheckboxMenu id="prerequisitos" value="#{ModuloController.seleccionModulo.prerequisitos}" converter="#{ModuloConverter}" label="Prerequisitos" filter="true" filterMatchMode="contains" style="height: 30px">  
+                                                <f:selectItems value="#{ModuloController.listaModulosEditar()}" var="materia" itemLabel="#{materia.toString()}" itemValue="#{materia}"/>  
                                             </p:selectCheckboxMenu> 
                                         </div>
                                     </div>
 
                                     <div class="ui-g ui-fluid">
                                         <div class="ui-g-12 ui-md-2">
-                                            <p:commandButton value="Guardar" icon="fa fa-save" actionListener="#{MateriaController.editarMateria()}" update="form"/>
+                                            <p:commandButton value="Guardar" icon="fa fa-save" actionListener="#{ModuloController.editarModulo()}" update="form"/>
                                         </div>
 
                                         <div class="ui-g-12 ui-md-2">
-                                            <p:commandButton value="Cancelar" icon="fa fa-remove" process="@this" actionListener="#{MateriaController.toMaterias()}"/>
+                                            <p:commandButton value="Cancelar" icon="fa fa-remove" process="@this" actionListener="#{ModuloController.toModulos()}"/>
                                         </div>
                                     </div>
                                 </h:form>

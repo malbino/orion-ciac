@@ -159,14 +159,14 @@ public class NotaFacade extends AbstractFacade<Nota> {
         return l;
     }
 
-    public List<Nota> listaNotasMateria(int id_gestionacademica, int id_persona, int id_materia) {
+    public List<Nota> listaNotasModulo(int id_gestionacademica, int id_persona, int id_modulo) {
         List<Nota> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.gestionAcademica ga JOIN n.materia m JOIN n.estudiante e WHERE ga.id_gestionacademica=:id_gestionacademica AND e.id_persona=:id_persona AND m.id_materia=:id_materia ORDER BY m.numero");
+            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.gestionAcademica ga JOIN n.materia m JOIN n.estudiante e WHERE ga.id_gestionacademica=:id_gestionacademica AND e.id_persona=:id_persona AND m.id_modulo=:id_modulo ORDER BY m.numero");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_persona", id_persona);
-            q.setParameter("id_materia", id_materia);
+            q.setParameter("id_modulo", id_modulo);
 
             l = q.getResultList();
         } catch (Exception e) {

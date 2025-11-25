@@ -18,7 +18,7 @@ import org.malbino.orion.entities.Grupo;
 import org.malbino.orion.entities.Modulo;
 import org.malbino.orion.enums.Turno;
 import org.malbino.orion.facades.GrupoFacade;
-import org.malbino.orion.facades.MateriaFacade;
+import org.malbino.orion.facades.ModuloFacade;
 import org.malbino.orion.util.Constantes;
 
 /**
@@ -33,7 +33,7 @@ public class ProgramacionGruposFacade {
     private EntityManager em;
 
     @EJB
-    MateriaFacade materiaFacade;
+    ModuloFacade materiaFacade;
     @EJB
     GrupoFacade grupoFacade;
 

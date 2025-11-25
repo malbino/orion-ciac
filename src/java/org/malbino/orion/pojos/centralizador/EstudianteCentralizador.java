@@ -18,22 +18,22 @@ public class EstudianteCentralizador {
     private String estado;
     private String observacion;
 
-    private int cantidadMaximaMaterias;
+    private int cantidadMaximaModulos;
 
-    public EstudianteCentralizador(String numero, String nombre, String ci, String estado, String observacion, int cantidadMaximaMaterias) {
+    public EstudianteCentralizador(String numero, String nombre, String ci, String estado, String observacion, int cantidadMaximaModulos) {
         this.numero = numero;
         this.nombre = nombre;
         this.ci = ci;
-        this.notas = notas = new String[cantidadMaximaMaterias];
+        this.notas = notas = new String[cantidadMaximaModulos];
         this.estado = estado;
         this.observacion = observacion;
     }
 
-    public EstudianteCentralizador(String numero, String nombre, String ci, int cantidadMaximaMaterias) {
+    public EstudianteCentralizador(String numero, String nombre, String ci, int cantidadMaximaModulos) {
         this.numero = numero;
         this.nombre = nombre;
         this.ci = ci;
-        this.notas = notas = new String[cantidadMaximaMaterias];
+        this.notas = notas = new String[cantidadMaximaModulos];
     }
 
     /**
@@ -107,17 +107,17 @@ public class EstudianteCentralizador {
     }
 
     /**
-     * @return the cantidadMaximaMaterias
+     * @return the cantidadMaximaModulos
      */
-    public int getCantidadMaximaMaterias() {
-        return cantidadMaximaMaterias;
+    public int getCantidadMaximaModulos() {
+        return cantidadMaximaModulos;
     }
 
     /**
-     * @param cantidadMaximaMaterias the cantidadMaximaMaterias to set
+     * @param cantidadMaximaModulos the cantidadMaximaModulos to set
      */
-    public void setCantidadMaximaMaterias(int cantidadMaximaMaterias) {
-        this.cantidadMaximaMaterias = cantidadMaximaMaterias;
+    public void setCantidadMaximaModulos(int cantidadMaximaModulos) {
+        this.cantidadMaximaModulos = cantidadMaximaModulos;
     }
 
     /**

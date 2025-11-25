@@ -566,10 +566,10 @@ public class CopiarGrupo implements Runnable {
             System.out.println("category -> " + ga_category.getString("name"));
 
             //carrera
-            JSONArray c_categories = getCategory(token, grupo.getGestionAcademica().idnumberMoodle() + grupo.getMateria().getCarrera().idnumberMoodle());
+            JSONArray c_categories = getCategory(token, grupo.getGestionAcademica().idnumberMoodle() + grupo.getModulo().getCarrera().idnumberMoodle());
             System.out.println("get categories -> " + c_categories.length());
             if (c_categories.isEmpty()) {
-                c_categories = createCategory(token, ga_category.getInt("id"), grupo.getMateria().getCarrera().nameMoodle(), grupo.getGestionAcademica().idnumberMoodle() + grupo.getMateria().getCarrera().idnumberMoodle());
+                c_categories = createCategory(token, ga_category.getInt("id"), grupo.getModulo().getCarrera().nameMoodle(), grupo.getGestionAcademica().idnumberMoodle() + grupo.getModulo().getCarrera().idnumberMoodle());
                 System.out.println("create category -> ");
             }
             JSONObject c_category = c_categories.getJSONObject(0);
@@ -600,11 +600,11 @@ public class CopiarGrupo implements Runnable {
             System.out.println("editing supervisor enrol -> ");
 
             //director academico
-            if (grupo.getMateria().getCarrera().getInstituto().getDirectorAcademico() != null) {
-                JSONArray supervisors = getUser(token, grupo.getMateria().getCarrera().getInstituto().getDirectorAcademico());
+            if (grupo.getModulo().getCarrera().getInstituto().getDirectorAcademico() != null) {
+                JSONArray supervisors = getUser(token, grupo.getModulo().getCarrera().getInstituto().getDirectorAcademico());
                 System.out.println("get supervisors -> " + supervisors.length());
                 if (supervisors.isEmpty()) {
-                    supervisors = createUser(token, grupo.getMateria().getCarrera().getInstituto().getDirectorAcademico());
+                    supervisors = createUser(token, grupo.getModulo().getCarrera().getInstituto().getDirectorAcademico());
                     System.out.println("create supervisor -> ");
                 }
 
@@ -616,11 +616,11 @@ public class CopiarGrupo implements Runnable {
             }
 
             //jefe de carrera
-            if (grupo.getMateria().getCarrera().getJefeCarrera() != null) {
-                JSONArray supervisors = getUser(token, grupo.getMateria().getCarrera().getJefeCarrera());
+            if (grupo.getModulo().getCarrera().getJefeCarrera() != null) {
+                JSONArray supervisors = getUser(token, grupo.getModulo().getCarrera().getJefeCarrera());
                 System.out.println("get supervisors -> " + supervisors.length());
                 if (supervisors.isEmpty()) {
-                    supervisors = createUser(token, grupo.getMateria().getCarrera().getJefeCarrera());
+                    supervisors = createUser(token, grupo.getModulo().getCarrera().getJefeCarrera());
                     System.out.println("create supervisor -> ");
                 }
 

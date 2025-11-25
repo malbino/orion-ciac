@@ -111,14 +111,14 @@ public class Seguimiento {
     /**
      * @return the materiasSeguimiento
      */
-    public String[] getMateriasSeguimiento() {
+    public String[] getModulosSeguimiento() {
         return materiasSeguimiento;
     }
 
     /**
      * @param materiasSeguimiento the materiasSeguimiento to set
      */
-    public void setMateriasSeguimiento(String[] materiasSeguimiento) {
+    public void setModulosSeguimiento(String[] materiasSeguimiento) {
         this.materiasSeguimiento = materiasSeguimiento;
     }
 

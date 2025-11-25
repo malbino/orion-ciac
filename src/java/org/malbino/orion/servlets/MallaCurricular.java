@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.Modulo;
-import org.malbino.orion.facades.MateriaFacade;
+import org.malbino.orion.facades.ModuloFacade;
 
 /**
  *
@@ -53,7 +53,7 @@ public class MallaCurricular extends HttpServlet {
     private static final int MARGEN_INFERIOR = 30;
 
     @EJB
-    MateriaFacade materiaFacade;
+    ModuloFacade materiaFacade;
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -147,11 +147,11 @@ public class MallaCurricular extends HttpServlet {
         cell.setBorder(Rectangle.NO_BORDER);
         subtable.addCell(cell);
 
-        Long cantidadMaximaMateriasNivel = materiaFacade.cantidadMaximaMateriasNivel(carrera);
+        Long cantidadMaximaModulosNivel = materiaFacade.cantidadMaximaModulosNivel(carrera);
 
-        List<Modulo> materias = materiaFacade.listaMaterias(carrera);
+        List<Modulo> materias = materiaFacade.listaModulos(carrera);
         Iterator<Modulo> iterator = materias.iterator();
-        for (int i = 0; i < cantidadMaximaMateriasNivel; i++) {
+        for (int i = 0; i < cantidadMaximaModulosNivel; i++) {
             if (iterator.hasNext()) {
                 Modulo materia = iterator.next();
 

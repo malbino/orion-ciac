@@ -22,7 +22,7 @@ import org.malbino.orion.entities.Rol;
 import org.malbino.orion.enums.Condicion;
 import org.malbino.orion.facades.CarreraEstudianteFacade;
 import org.malbino.orion.facades.EstudianteFacade;
-import org.malbino.orion.facades.MateriaFacade;
+import org.malbino.orion.facades.ModuloFacade;
 import org.malbino.orion.facades.RolFacade;
 import org.malbino.orion.util.Constantes;
 import org.malbino.orion.util.Fecha;
@@ -44,7 +44,7 @@ public class FileEstudianteFacade {
     @EJB
     RolFacade rolFacade;
     @EJB
-    MateriaFacade materiaFacade;
+    ModuloFacade materiaFacade;
     @EJB
     CarreraEstudianteFacade carreraEstudianteFacade;
 
@@ -299,16 +299,16 @@ public class FileEstudianteFacade {
         CarreraEstudiante carreraEstudiante = carreraEstudianteFacade.find(carreraEstudianteId);
         if (carreraEstudiante != null) {
             // materias carrera
-            List<Modulo> listaMateriasCarrera = materiaFacade.listaMaterias(carrera);
+            List<Modulo> listaModulosCarrera = materiaFacade.listaModulos(carrera);
 
             // quitando materias aprobadas
-            List<Modulo> listaMateriaAprobadas = materiaFacade.listaMateriaAprobadas(estudiante.getId_persona(), carrera.getId_carrera());
-            listaMateriasCarrera.removeAll(listaMateriaAprobadas);
+            List<Modulo> listaModuloAprobadas = materiaFacade.listaModuloAprobadas(estudiante.getId_persona(), carrera.getId_carrera());
+            listaModulosCarrera.removeAll(listaModuloAprobadas);
 
             // control de prerequisitos
-            for (Modulo materia : listaMateriasCarrera) {
+            for (Modulo materia : listaModulosCarrera) {
                 List<Modulo> prerequisitos = materia.getPrerequisitos();
-                if (listaMateriaAprobadas.containsAll(prerequisitos)) {
+                if (listaModuloAprobadas.containsAll(prerequisitos)) {
                     oferta.add(materia);
                 }
             }

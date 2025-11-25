@@ -255,7 +255,7 @@ public class BoletinNotas extends HttpServlet {
         cell.setBackgroundColor(BaseColor.GRAY);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase("Materia", NEGRITA));
+        cell = new PdfPCell(new Phrase("Modulo", NEGRITA));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         cell.setBorder(Rectangle.NO_BORDER);
@@ -308,14 +308,14 @@ public class BoletinNotas extends HttpServlet {
             Nota nota = notas.get(i);
 
             if (i % 2 == 0) {
-                cell = new PdfPCell(new Phrase(nota.getMateria().getCodigo(), NORMAL));
+                cell = new PdfPCell(new Phrase(nota.getModulo().getCodigo(), NORMAL));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
                 cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                 cell.setBorder(Rectangle.NO_BORDER);
                 cell.setColspan(10);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(nota.getMateria().getNombre(), NORMAL));
+                cell = new PdfPCell(new Phrase(nota.getModulo().getNombre(), NORMAL));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
                 cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                 cell.setBorder(Rectangle.NO_BORDER);
@@ -373,7 +373,7 @@ public class BoletinNotas extends HttpServlet {
                 cell.setColspan(17);
                 table.addCell(cell);
             } else {
-                cell = new PdfPCell(new Phrase(nota.getMateria().getCodigo(), NORMAL));
+                cell = new PdfPCell(new Phrase(nota.getModulo().getCodigo(), NORMAL));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
                 cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                 cell.setBorder(Rectangle.NO_BORDER);
@@ -381,7 +381,7 @@ public class BoletinNotas extends HttpServlet {
                 cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(nota.getMateria().getNombre(), NORMAL));
+                cell = new PdfPCell(new Phrase(nota.getModulo().getNombre(), NORMAL));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
                 cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                 cell.setBorder(Rectangle.NO_BORDER);
@@ -582,7 +582,7 @@ public class BoletinNotas extends HttpServlet {
         cell.setBackgroundColor(BaseColor.GRAY);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase("Materia", NEGRITA));
+        cell = new PdfPCell(new Phrase("Modulo", NEGRITA));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         cell.setBorder(Rectangle.NO_BORDER);
@@ -643,14 +643,14 @@ public class BoletinNotas extends HttpServlet {
             Nota nota = notas.get(i);
 
             if (i % 2 == 0) {
-                cell = new PdfPCell(new Phrase(nota.getMateria().getCodigo(), NORMAL));
+                cell = new PdfPCell(new Phrase(nota.getModulo().getCodigo(), NORMAL));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
                 cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                 cell.setBorder(Rectangle.NO_BORDER);
                 cell.setColspan(10);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(nota.getMateria().getNombre(), NORMAL));
+                cell = new PdfPCell(new Phrase(nota.getModulo().getNombre(), NORMAL));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
                 cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                 cell.setBorder(Rectangle.NO_BORDER);
@@ -719,7 +719,7 @@ public class BoletinNotas extends HttpServlet {
                 cell.setColspan(15);
                 table.addCell(cell);
             } else {
-                cell = new PdfPCell(new Phrase(nota.getMateria().getCodigo(), NORMAL));
+                cell = new PdfPCell(new Phrase(nota.getModulo().getCodigo(), NORMAL));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
                 cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                 cell.setBorder(Rectangle.NO_BORDER);
@@ -727,7 +727,7 @@ public class BoletinNotas extends HttpServlet {
                 cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(nota.getMateria().getNombre(), NORMAL));
+                cell = new PdfPCell(new Phrase(nota.getModulo().getNombre(), NORMAL));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
                 cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                 cell.setBorder(Rectangle.NO_BORDER);
@@ -940,7 +940,7 @@ public class BoletinNotas extends HttpServlet {
         cell.setBackgroundColor(BaseColor.GRAY);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase("Materia", NEGRITA));
+        cell = new PdfPCell(new Phrase("Modulo", NEGRITA));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         cell.setBorder(Rectangle.NO_BORDER);
@@ -1009,14 +1009,14 @@ public class BoletinNotas extends HttpServlet {
             Nota nota = notas.get(i);
 
             if (i % 2 == 0) {
-                cell = new PdfPCell(new Phrase(nota.getMateria().getCodigo(), NORMAL));
+                cell = new PdfPCell(new Phrase(nota.getModulo().getCodigo(), NORMAL));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
                 cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                 cell.setBorder(Rectangle.NO_BORDER);
                 cell.setColspan(10);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(nota.getMateria().getNombre(), NORMAL));
+                cell = new PdfPCell(new Phrase(nota.getModulo().getNombre(), NORMAL));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
                 cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                 cell.setBorder(Rectangle.NO_BORDER);
@@ -1096,7 +1096,7 @@ public class BoletinNotas extends HttpServlet {
                 cell.setColspan(15);
                 table.addCell(cell);
             } else {
-                cell = new PdfPCell(new Phrase(nota.getMateria().getCodigo(), NORMAL));
+                cell = new PdfPCell(new Phrase(nota.getModulo().getCodigo(), NORMAL));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
                 cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                 cell.setBorder(Rectangle.NO_BORDER);
@@ -1104,7 +1104,7 @@ public class BoletinNotas extends HttpServlet {
                 cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(nota.getMateria().getNombre(), NORMAL));
+                cell = new PdfPCell(new Phrase(nota.getModulo().getNombre(), NORMAL));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
                 cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                 cell.setBorder(Rectangle.NO_BORDER);
@@ -1249,7 +1249,7 @@ public class BoletinNotas extends HttpServlet {
         cell.setBackgroundColor(BaseColor.GRAY);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase("Materia", NEGRITA));
+        cell = new PdfPCell(new Phrase("Modulo", NEGRITA));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         cell.setBorder(Rectangle.NO_BORDER);

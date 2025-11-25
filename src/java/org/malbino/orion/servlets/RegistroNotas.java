@@ -186,7 +186,7 @@ public class RegistroNotas extends HttpServlet {
         cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase("Materia", NEGRITA));
+        cell = new PdfPCell(new Phrase("Modulo", NEGRITA));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         cell.setColspan(35);
         cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
@@ -218,7 +218,7 @@ public class RegistroNotas extends HttpServlet {
                     cell.setColspan(30);
                     table.addCell(cell);
 
-                    cell = new PdfPCell(new Phrase(String.valueOf(nota.getMateria().toString()), NORMAL));
+                    cell = new PdfPCell(new Phrase(String.valueOf(nota.getModulo().toString()), NORMAL));
                     cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
                     cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                     cell.setColspan(35);
@@ -254,7 +254,7 @@ public class RegistroNotas extends HttpServlet {
                 cell.setColspan(30);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(String.valueOf(nota.getMateria().toString()), NORMAL));
+                cell = new PdfPCell(new Phrase(String.valueOf(nota.getModulo().toString()), NORMAL));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
                 cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                 cell.setColspan(35);
@@ -296,7 +296,7 @@ public class RegistroNotas extends HttpServlet {
         cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase("Materia", NEGRITA));
+        cell = new PdfPCell(new Phrase("Modulo", NEGRITA));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         cell.setColspan(35);
         cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
@@ -328,7 +328,7 @@ public class RegistroNotas extends HttpServlet {
                     cell.setColspan(30);
                     table.addCell(cell);
 
-                    cell = new PdfPCell(new Phrase(String.valueOf(nota.getMateria().toString()), NORMAL));
+                    cell = new PdfPCell(new Phrase(String.valueOf(nota.getModulo().toString()), NORMAL));
                     cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
                     cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                     cell.setColspan(35);
@@ -364,7 +364,7 @@ public class RegistroNotas extends HttpServlet {
                 cell.setColspan(30);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(String.valueOf(nota.getMateria().toString()), NORMAL));
+                cell = new PdfPCell(new Phrase(String.valueOf(nota.getModulo().toString()), NORMAL));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
                 cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                 cell.setColspan(35);
@@ -406,7 +406,7 @@ public class RegistroNotas extends HttpServlet {
         cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase("Materia", NEGRITA));
+        cell = new PdfPCell(new Phrase("Modulo", NEGRITA));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         cell.setColspan(35);
         cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
@@ -437,7 +437,7 @@ public class RegistroNotas extends HttpServlet {
                     cell.setColspan(30);
                     table.addCell(cell);
 
-                    cell = new PdfPCell(new Phrase(String.valueOf(nota.getMateria().toString()), NORMAL));
+                    cell = new PdfPCell(new Phrase(String.valueOf(nota.getModulo().toString()), NORMAL));
                     cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
                     cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                     cell.setColspan(35);
@@ -473,7 +473,7 @@ public class RegistroNotas extends HttpServlet {
                 cell.setColspan(30);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(String.valueOf(nota.getMateria().toString()), NORMAL));
+                cell = new PdfPCell(new Phrase(String.valueOf(nota.getModulo().toString()), NORMAL));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
                 cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                 cell.setColspan(35);

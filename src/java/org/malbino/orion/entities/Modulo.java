@@ -37,12 +37,12 @@ public class Modulo implements Serializable {
     private String codigo;
     private String nombre;
     private Integer horas;
-    private Integer creditajeMateria;
+    private Integer creditajeModulo;
     private Boolean curricular;
 
     @JoinTable(name = "prerequisito", joinColumns = {
-        @JoinColumn(name = "id_materia", referencedColumnName = "id_materia")}, inverseJoinColumns = {
-        @JoinColumn(name = "id_prerequisito", referencedColumnName = "id_materia")})
+        @JoinColumn(name = "id_modulo", referencedColumnName = "id_modulo")}, inverseJoinColumns = {
+        @JoinColumn(name = "id_prerequisito", referencedColumnName = "id_modulo")})
     @ManyToMany
     private List<Modulo> prerequisitos;
 
@@ -133,17 +133,17 @@ public class Modulo implements Serializable {
     }
 
     /**
-     * @return the creditajeMateria
+     * @return the creditajeModulo
      */
-    public Integer getCreditajeMateria() {
-        return creditajeMateria;
+    public Integer getCreditajeModulo() {
+        return creditajeModulo;
     }
 
     /**
-     * @param creditajeMateria the creditajeMateria to set
+     * @param creditajeModulo the creditajeModulo to set
      */
-    public void setCreditajeMateria(Integer creditajeMateria) {
-        this.creditajeMateria = creditajeMateria;
+    public void setCreditajeModulo(Integer creditajeModulo) {
+        this.creditajeModulo = creditajeModulo;
     }
 
     /**

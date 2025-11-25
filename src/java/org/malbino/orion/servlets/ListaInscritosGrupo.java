@@ -95,7 +95,7 @@ public class ListaInscritosGrupo extends HttpServlet {
         PdfPTable table = new PdfPTable(100);
 
         //cabecera
-        String realPath = getServletContext().getRealPath("/resources/uploads/" + grupo.getMateria().getCarrera().getInstituto().getLogo());
+        String realPath = getServletContext().getRealPath("/resources/uploads/" + grupo.getModulo().getCarrera().getInstituto().getLogo());
         Image image = Image.getInstance(realPath);
         image.scaleToFit(70, 70);
         image.setAlignment(Image.ALIGN_CENTER);
@@ -120,7 +120,7 @@ public class ListaInscritosGrupo extends HttpServlet {
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase(grupo.getMateria().getCarrera().toString(), SUBTITULO));
+        cell = new PdfPCell(new Phrase(grupo.getModulo().getCarrera().toString(), SUBTITULO));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setColspan(80);
         cell.setBorder(Rectangle.NO_BORDER);

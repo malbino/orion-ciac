@@ -23,7 +23,7 @@ public enum EntidadLog {
     GRUPO("Grupo"),
     INSCRITO("Inscrito"),
     INSTITUTO("Instituto"),
-    MATERIA("Materia"),
+    MATERIA("Modulo"),
     NOTA("Nota"),
     PAGO("Pago"),
     RECURSO("Recurso"),

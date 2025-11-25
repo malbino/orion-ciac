@@ -22,7 +22,7 @@ import org.malbino.orion.enums.Turno;
  * @author malbino
  */
 @Entity
-@Table(name = "grupo", uniqueConstraints = @UniqueConstraint(columnNames = {"codigo", "turno", "id_gestionacademica", "id_materia"}))
+@Table(name = "grupo", uniqueConstraints = @UniqueConstraint(columnNames = {"codigo", "turno", "id_gestionacademica", "id_modulo"}))
 public class Grupo implements Serializable {
 
     @Id
@@ -38,9 +38,9 @@ public class Grupo implements Serializable {
     @ManyToOne
     private GestionAcademica gestionAcademica;
 
-    @JoinColumn(name = "id_materia")
+    @JoinColumn(name = "id_modulo")
     @ManyToOne
-    private Modulo materia;
+    private Modulo modulo;
 
     @JoinColumn(name = "id_persona")
     @ManyToOne
@@ -55,7 +55,7 @@ public class Grupo implements Serializable {
         this.turno = turno;
         this.abierto = abierto;
         this.gestionAcademica = gestionAcademica;
-        this.materia = materia;
+        this.modulo = materia;
     }
 
     public String idnumberMoodle() {
@@ -63,16 +63,16 @@ public class Grupo implements Serializable {
     }
 
     public String fullNameMoodle() {
-        return this.getMateria().getNombre() + " - "
+        return this.getModulo().getNombre() + " - "
                 + this.getTurno().getInicial() + this.codigo + " - "
-                + this.getMateria().getCarrera().getNombre() + " - "
+                + this.getModulo().getCarrera().getNombre() + " - "
                 + this.getGestionAcademica().toString();
     }
 
     public String shortNameMoodle() {
-        return this.getMateria().getCodigo() + " - "
+        return this.getModulo().getCodigo() + " - "
                 + this.getTurno().getInicial() + this.codigo + " - "
-                + this.getMateria().getCarrera().getCodigo() + " - "
+                + this.getModulo().getCarrera().getCodigo() + " - "
                 + this.getGestionAcademica().toString();
     }
 
@@ -85,7 +85,7 @@ public class Grupo implements Serializable {
     }
 
     public String summaryMoodle() {
-        return "Curso de " + this.getMateria().getNombre() + " de la carrera de " + this.getMateria().getCarrera().getNombre() + ".";
+        return "Curso de " + this.getModulo().getNombre() + " de la carrera de " + this.getModulo().getCarrera().getNombre() + ".";
     }
 
     /**
@@ -173,17 +173,17 @@ public class Grupo implements Serializable {
     }
 
     /**
-     * @return the materia
+     * @return the modulo
      */
-    public Modulo getMateria() {
-        return materia;
+    public Modulo getModulo() {
+        return modulo;
     }
 
     /**
-     * @param materia the materia to set
+     * @param modulo the modulo to set
      */
-    public void setMateria(Modulo materia) {
-        this.materia = materia;
+    public void setModulo(Modulo modulo) {
+        this.modulo = modulo;
     }
 
     /**
@@ -243,13 +243,13 @@ public class Grupo implements Serializable {
     }
 
     public String toString_RegistroParcial() {
-        return materia.getNombre() + " [" + codigo + ", " + turno.getNombre() + "]";
+        return modulo.getNombre() + " [" + codigo + ", " + turno.getNombre() + "]";
     }
 
     public String toString_Horario() {
-        String s = materia.getNombre() + " [Por designar]";
+        String s = modulo.getNombre() + " [Por designar]";
         if (empleado != null) {
-            s = materia.getNombre() + " [" + empleado.toString() + "]";
+            s = modulo.getNombre() + " [" + empleado.toString() + "]";
         }
         return s;
     }
@@ -257,8 +257,8 @@ public class Grupo implements Serializable {
     public String toHtml_Horario() {
         String s = "<br/>";
 
-        s += materia.getCodigo() + " [" + codigo + ", " + turno.getNombre() + "]" + "<br/>";
-        s += materia.getCarrera().getCodigo() + "<br/>";
+        s += modulo.getCodigo() + " [" + codigo + ", " + turno.getNombre() + "]" + "<br/>";
+        s += modulo.getCarrera().getCodigo() + "<br/>";
         String e = "Por designar";
         if (empleado != null) {
             e = empleado.getPrimerApellido();

@@ -11,7 +11,7 @@ package org.malbino.orion.pojos.centralizador;
  */
 public class PaginaEstadisticas extends PaginaCentralizador {
 
-    private int cantidadMaximaMaterias;
+    private int cantidadMaximaModulos;
     private GrupoCentralizador[] gruposCentralizador;
 
     private int cantidadInscritos;
@@ -23,8 +23,8 @@ public class PaginaEstadisticas extends PaginaCentralizador {
     private int cantidadNoSePresento;
     private int porcentajeNoSePresento;
 
-    public PaginaEstadisticas(int cantidadMaximaMaterias, int cantidadInscritos, int porcentajeInscritos, int cantidadAprobados, int porcentajeAprobados, int cantidadReprobados, int porcentajeReprobados, int cantidadNoSePresento, int porcentajeNoSePresento) {
-        this.gruposCentralizador = new GrupoCentralizador[cantidadMaximaMaterias];
+    public PaginaEstadisticas(int cantidadMaximaModulos, int cantidadInscritos, int porcentajeInscritos, int cantidadAprobados, int porcentajeAprobados, int cantidadReprobados, int porcentajeReprobados, int cantidadNoSePresento, int porcentajeNoSePresento) {
+        this.gruposCentralizador = new GrupoCentralizador[cantidadMaximaModulos];
 
         this.cantidadInscritos = cantidadInscritos;
         this.porcentajeInscritos = porcentajeInscritos;
@@ -37,17 +37,17 @@ public class PaginaEstadisticas extends PaginaCentralizador {
     }
 
     /**
-     * @return the cantidadMaximaMaterias
+     * @return the cantidadMaximaModulos
      */
-    public int getCantidadMaximaMaterias() {
-        return cantidadMaximaMaterias;
+    public int getCantidadMaximaModulos() {
+        return cantidadMaximaModulos;
     }
 
     /**
-     * @param cantidadMaximaMaterias the cantidadMaximaMaterias to set
+     * @param cantidadMaximaModulos the cantidadMaximaModulos to set
      */
-    public void setCantidadMaximaMaterias(int cantidadMaximaMaterias) {
-        this.cantidadMaximaMaterias = cantidadMaximaMaterias;
+    public void setCantidadMaximaModulos(int cantidadMaximaModulos) {
+        this.cantidadMaximaModulos = cantidadMaximaModulos;
     }
 
     /**

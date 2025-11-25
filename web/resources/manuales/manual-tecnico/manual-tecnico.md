@@ -71,7 +71,7 @@ indicadorpasantia | Indicadores de evaluación para las pasantias
 inscrito | Inscritos en un gestión académica
 instituto | Datos generarles del instituto
 log | Registro del log del sistema
-materia | Materias de las carreras del instituto
+materia | Modulos de las carreras del instituto
 mencion | Menciones de las carreras
 nota | Notas de los estudiantes
 pago | Pago de un estudiante

@@ -106,7 +106,7 @@ public class PlanillaSeguimiento extends HttpServlet {
     public PdfPTable cabecera(Grupo grupo) throws BadElementException, IOException {
         PdfPTable table = new PdfPTable(100);
 
-        PdfPCell cell = new PdfPCell(new Phrase(grupo.getMateria().getCarrera().getInstituto().getNombre(), TITULO));
+        PdfPCell cell = new PdfPCell(new Phrase(grupo.getModulo().getCarrera().getInstituto().getNombre(), TITULO));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         cell.setColspan(100);
@@ -125,7 +125,7 @@ public class PlanillaSeguimiento extends HttpServlet {
         table.addCell(cell);
 
         // fila 0
-        cell = new PdfPCell(new Phrase("CARRERA:\n" + grupo.getMateria().getCarrera().getNombre(), NEGRITA));
+        cell = new PdfPCell(new Phrase("CARRERA:\n" + grupo.getModulo().getCarrera().getNombre(), NEGRITA));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         cell.setColspan(35);
@@ -138,7 +138,7 @@ public class PlanillaSeguimiento extends HttpServlet {
         cell.setColspan(12);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase(grupo.getMateria().getNombre(), NEGRITA));
+        cell = new PdfPCell(new Phrase(grupo.getModulo().getNombre(), NEGRITA));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         cell.setColspan(28);
@@ -151,7 +151,7 @@ public class PlanillaSeguimiento extends HttpServlet {
         cell.setColspan(10);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase(grupo.getMateria().getCodigo(), NEGRITA));
+        cell = new PdfPCell(new Phrase(grupo.getModulo().getCodigo(), NEGRITA));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         cell.setColspan(15);

@@ -30,7 +30,7 @@ import org.malbino.orion.facades.ComprobanteFacade;
 import org.malbino.orion.facades.EstudianteFacade;
 import org.malbino.orion.facades.GrupoFacade;
 import org.malbino.orion.facades.InscritoFacade;
-import org.malbino.orion.facades.MateriaFacade;
+import org.malbino.orion.facades.ModuloFacade;
 import org.malbino.orion.facades.NotaFacade;
 import org.malbino.orion.facades.RolFacade;
 import org.malbino.orion.util.Constantes;
@@ -50,7 +50,7 @@ public class InscripcionesFacade {
     @EJB
     InscritoFacade inscritoFacade;
     @EJB
-    MateriaFacade materiaFacade;
+    ModuloFacade materiaFacade;
     @EJB
     RolFacade rolFacade;
     @EJB
@@ -199,7 +199,7 @@ public class InscripcionesFacade {
 
         List<Modulo> oferta = oferta(inscrito);
         for (Modulo materia : oferta) {
-            l += materia.getCreditajeMateria();
+            l += materia.getCreditajeModulo();
         }
 
         return l;
@@ -209,14 +209,14 @@ public class InscripcionesFacade {
     public List<Modulo> oferta(Inscrito inscrito) {
         List<Modulo> oferta = new ArrayList();
 
-        List<Modulo> listaMateriaAprobadas = materiaFacade.listaMateriaAprobadas(inscrito.getEstudiante().getId_persona(), inscrito.getCarrera().getId_carrera());
+        List<Modulo> listaModuloAprobadas = materiaFacade.listaModuloAprobadas(inscrito.getEstudiante().getId_persona(), inscrito.getCarrera().getId_carrera());
 
-        List<Modulo> listaMaterias = materiaFacade.listaMaterias(inscrito.getCarrera());
-        listaMaterias.removeAll(listaMateriaAprobadas);
+        List<Modulo> listaModulos = materiaFacade.listaModulos(inscrito.getCarrera());
+        listaModulos.removeAll(listaModuloAprobadas);
 
-        for (Modulo materia : listaMaterias) {
+        for (Modulo materia : listaModulos) {
             List<Modulo> prerequisitos = materia.getPrerequisitos();
-            if (listaMateriaAprobadas.containsAll(prerequisitos)) {
+            if (listaModuloAprobadas.containsAll(prerequisitos)) {
                 oferta.add(materia);
             }
         }
@@ -225,7 +225,7 @@ public class InscripcionesFacade {
     }
 
     @Transactional(Transactional.TxType.REQUIRES_NEW)
-    public boolean tomarMaterias(List<Nota> notas) {
+    public boolean tomarModulos(List<Nota> notas) {
         for (Nota nota : notas) {
             Grupo grupo = nota.getGrupo();
             long cantidadNotasGrupo = grupoFacade.cantidadNotasGrupo(grupo.getId_grupo());
@@ -245,7 +245,7 @@ public class InscripcionesFacade {
     }
 
     @Transactional(Transactional.TxType.REQUIRES_NEW)
-    public boolean retirarMateria(Nota nota) {
+    public boolean retirarModulo(Nota nota) {
         Grupo grupo = nota.getGrupo();
         long cantidadNotasGrupo = grupoFacade.cantidadNotasGrupo(grupo.getId_grupo());
 
@@ -262,21 +262,21 @@ public class InscripcionesFacade {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public List<Modulo> ofertaTomaMaterias(Inscrito inscrito) {
-        List<Modulo> ofertaTomaMaterias = oferta(inscrito);
+    public List<Modulo> ofertaTomaModulos(Inscrito inscrito) {
+        List<Modulo> ofertaTomaModulos = oferta(inscrito);
 
         List<Nota> estadoInscripcion = notaFacade.listaNotas(inscrito.getId_inscrito());
         for (Nota nota : estadoInscripcion) {
-            ofertaTomaMaterias.remove(nota.getMateria());
+            ofertaTomaModulos.remove(nota.getModulo());
         }
 
-        return ofertaTomaMaterias;
+        return ofertaTomaModulos;
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
     public List<Modulo> ofertaBoletinNotas(Inscrito inscrito) {
-        List<Modulo> ofertaTomaMaterias = oferta(inscrito);
+        List<Modulo> ofertaTomaModulos = oferta(inscrito);
 
-        return ofertaTomaMaterias;
+        return ofertaTomaModulos;
     }
 }

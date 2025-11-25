@@ -590,7 +590,7 @@
       <column id="COL198" populated="true" UUID="e50054bf-73ab-4714-8cc0-e2889c1df57f" autoIncrement="false" defaultValue="NULL" name="id_gestionacademica" nullable="1" physicalName="id_gestionacademica" precision="10" referenceCount="2" scale="0" sourceDataTypeName="INT" type="4" >
        <remarks></remarks>
       </column>
-      <column id="COL199" populated="true" UUID="bc6676b1-7b29-488d-95cc-fb21e47000d7" autoIncrement="false" defaultValue="NULL" name="id_materia" nullable="1" physicalName="id_materia" precision="10" referenceCount="2" scale="0" sourceDataTypeName="INT" type="4" >
+      <column id="COL199" populated="true" UUID="bc6676b1-7b29-488d-95cc-fb21e47000d7" autoIncrement="false" defaultValue="NULL" name="id_modulo" nullable="1" physicalName="id_modulo" precision="10" referenceCount="2" scale="0" sourceDataTypeName="INT" type="4" >
        <remarks></remarks>
       </column>
       </folder>
@@ -606,13 +606,13 @@
        <index-column id="IDC203" populated="true" UUID="5860b342-41c3-4fd7-97c7-d36eb8542c5c" ascendingOrDescending="ASCENDING" column-ref="COL195" name="CODIGO" physicalName="CODIGO" />
        <index-column id="IDC204" populated="true" UUID="a38ba711-bf89-45db-b7ef-bb85022cc654" ascendingOrDescending="ASCENDING" column-ref="COL196" name="TURNO" physicalName="TURNO" />
        <index-column id="IDC205" populated="true" UUID="48e577a3-e8d6-43b8-8895-04d1bd200627" ascendingOrDescending="ASCENDING" column-ref="COL198" name="id_gestionacademica" physicalName="id_gestionacademica" />
-       <index-column id="IDC206" populated="true" UUID="9507ec00-7e11-4754-b799-06a6f3ff83ad" ascendingOrDescending="ASCENDING" column-ref="COL199" name="id_materia" physicalName="id_materia" />
+       <index-column id="IDC206" populated="true" UUID="9507ec00-7e11-4754-b799-06a6f3ff83ad" ascendingOrDescending="ASCENDING" column-ref="COL199" name="id_modulo" physicalName="id_modulo" />
       </index>
       <index id="IDX207" populated="true" UUID="2ce9f00d-cbe1-40ce-bd81-a6d458047be0" clustered="false" name="FK_grupo_id_gestionacademica" physicalName="FK_grupo_id_gestionacademica" primaryKeyIndex="false" qualifier="orion" unique="false" >
        <index-column id="IDC208" populated="true" UUID="1758a141-75da-4061-b1da-29f9c2d8001a" ascendingOrDescending="ASCENDING" column-ref="COL198" name="id_gestionacademica" physicalName="id_gestionacademica" />
       </index>
-      <index id="IDX209" populated="true" UUID="0c8a2b1d-7e2a-40b7-8bfb-dc119277eacc" clustered="false" name="FK_grupo_id_materia" physicalName="FK_grupo_id_materia" primaryKeyIndex="false" qualifier="orion" unique="false" >
-       <index-column id="IDC210" populated="true" UUID="de29b8e5-0579-4675-b753-40cb36ab415e" ascendingOrDescending="ASCENDING" column-ref="COL199" name="id_materia" physicalName="id_materia" />
+      <index id="IDX209" populated="true" UUID="0c8a2b1d-7e2a-40b7-8bfb-dc119277eacc" clustered="false" name="FK_grupo_id_modulo" physicalName="FK_grupo_id_modulo" primaryKeyIndex="false" qualifier="orion" unique="false" >
+       <index-column id="IDC210" populated="true" UUID="de29b8e5-0579-4675-b753-40cb36ab415e" ascendingOrDescending="ASCENDING" column-ref="COL199" name="id_modulo" physicalName="id_modulo" />
       </index>
       <index id="IDX211" populated="true" UUID="49bb4a63-1aee-444a-99fb-815afd9a3697" clustered="false" name="FK_grupo_id_persona" physicalName="FK_grupo_id_persona" primaryKeyIndex="false" qualifier="orion" unique="false" >
        <index-column id="IDC212" populated="true" UUID="def95d46-e52d-4aae-a954-43fd324f7ca0" ascendingOrDescending="ASCENDING" column-ref="COL197" name="id_persona" physicalName="id_persona" />
@@ -862,7 +862,7 @@
     <table id="TAB302" populated="true" UUID="622a872a-e10c-4aa2-ba0f-c65f3154bb57" name="materia" objectType="TABLE" physicalName="materia" >
      <remarks></remarks>
      <folder id="FOLTAB3021" populated="true" name="Columns" physicalName="Columns" type="1">
-      <column id="COL303" populated="true" UUID="c9230ae1-24d5-4024-99d0-f36dcf015eb1" autoIncrement="true" defaultValue="" name="ID_MATERIA" nullable="0" physicalName="ID_MATERIA" precision="10" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="INT" type="4" >
+      <column id="COL303" populated="true" UUID="c9230ae1-24d5-4024-99d0-f36dcf015eb1" autoIncrement="true" defaultValue="" name="id_modulo" nullable="0" physicalName="id_modulo" precision="10" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="INT" type="4" >
        <remarks></remarks>
       </column>
       <column id="COL304" populated="true" UUID="603b6626-be90-4471-ba44-d4b527aab301" autoIncrement="false" defaultValue="NULL" name="CODIGO" nullable="1" physicalName="CODIGO" precision="255" referenceCount="1" scale="0" sourceDataTypeName="VARCHAR" type="12" >
@@ -899,7 +899,7 @@
       </folder>
       <folder id="FOLTAB3024" populated="true" name="Indices" physicalName="Indices" type="4">
       <index id="IDX313" populated="true" UUID="923c0f8c-0d27-4bf9-a0a7-d5680b273319" clustered="false" name="PRIMARY" physicalName="PRIMARY" primaryKeyIndex="true" qualifier="orion" unique="true" >
-       <index-column id="IDC314" populated="true" UUID="33ae86e1-2117-45cb-be20-d1ec451b44f9" ascendingOrDescending="UNSPECIFIED" column-ref="COL303" name="ID_MATERIA" physicalName="ID_MATERIA" />
+       <index-column id="IDC314" populated="true" UUID="33ae86e1-2117-45cb-be20-d1ec451b44f9" ascendingOrDescending="UNSPECIFIED" column-ref="COL303" name="id_modulo" physicalName="id_modulo" />
       </index>
       <index id="IDX315" populated="true" UUID="6d7de89b-707d-4cfd-9129-942fdfe313ac" clustered="false" name="UNQ_materia_0" physicalName="UNQ_materia_0" primaryKeyIndex="false" qualifier="orion" unique="true" >
        <index-column id="IDC316" populated="true" UUID="1672ec6c-874e-4e81-8a91-87fd48d5cb4c" ascendingOrDescending="ASCENDING" column-ref="COL304" name="CODIGO" physicalName="CODIGO" />
@@ -1012,7 +1012,7 @@
       <column id="COL355" populated="true" UUID="62a8659e-ed0f-4331-8f2d-b7bb80f34edd" autoIncrement="false" defaultValue="NULL" name="id_inscrito" nullable="1" physicalName="id_inscrito" precision="10" referenceCount="2" scale="0" sourceDataTypeName="INT" type="4" >
        <remarks></remarks>
       </column>
-      <column id="COL356" populated="true" UUID="b0106109-98a2-4963-8365-45231178de81" autoIncrement="false" defaultValue="NULL" name="id_materia" nullable="1" physicalName="id_materia" precision="10" referenceCount="2" scale="0" sourceDataTypeName="INT" type="4" >
+      <column id="COL356" populated="true" UUID="b0106109-98a2-4963-8365-45231178de81" autoIncrement="false" defaultValue="NULL" name="id_modulo" nullable="1" physicalName="id_modulo" precision="10" referenceCount="2" scale="0" sourceDataTypeName="INT" type="4" >
        <remarks></remarks>
       </column>
       </folder>
@@ -1026,7 +1026,7 @@
       </index>
       <index id="IDX359" populated="true" UUID="2d7e8e00-f7cf-422c-a006-c32833bf210b" clustered="false" name="UNQ_nota_0" physicalName="UNQ_nota_0" primaryKeyIndex="false" qualifier="orion" unique="true" >
        <index-column id="IDC360" populated="true" UUID="82672630-aaf6-414e-9fbb-f0853a899952" ascendingOrDescending="ASCENDING" column-ref="COL353" name="id_gestionacademica" physicalName="id_gestionacademica" />
-       <index-column id="IDC361" populated="true" UUID="3414be6e-4a7d-4655-a30f-cc5995667b82" ascendingOrDescending="ASCENDING" column-ref="COL356" name="id_materia" physicalName="id_materia" />
+       <index-column id="IDC361" populated="true" UUID="3414be6e-4a7d-4655-a30f-cc5995667b82" ascendingOrDescending="ASCENDING" column-ref="COL356" name="id_modulo" physicalName="id_modulo" />
        <index-column id="IDC362" populated="true" UUID="6588593a-e174-4043-a69c-45af2577f83b" ascendingOrDescending="ASCENDING" column-ref="COL352" name="id_estudiante" physicalName="id_estudiante" />
       </index>
       <index id="IDX363" populated="true" UUID="bb566d93-2ce4-47b5-8884-f27e64a73b88" clustered="false" name="FK_nota_id_estudiante" physicalName="FK_nota_id_estudiante" primaryKeyIndex="false" qualifier="orion" unique="false" >
@@ -1038,8 +1038,8 @@
       <index id="IDX367" populated="true" UUID="fcad294c-ac55-4ca8-9478-0b231355ed35" clustered="false" name="FK_nota_id_inscrito" physicalName="FK_nota_id_inscrito" primaryKeyIndex="false" qualifier="orion" unique="false" >
        <index-column id="IDC368" populated="true" UUID="76f54de5-be07-4bd6-b8cc-cefa322c39b6" ascendingOrDescending="ASCENDING" column-ref="COL355" name="id_inscrito" physicalName="id_inscrito" />
       </index>
-      <index id="IDX369" populated="true" UUID="5c56f426-5f9b-4a77-91ae-6b79db0ed147" clustered="false" name="FK_nota_id_materia" physicalName="FK_nota_id_materia" primaryKeyIndex="false" qualifier="orion" unique="false" >
-       <index-column id="IDC370" populated="true" UUID="4c2eb56f-c44c-48c0-9e1d-81f3d558546b" ascendingOrDescending="ASCENDING" column-ref="COL356" name="id_materia" physicalName="id_materia" />
+      <index id="IDX369" populated="true" UUID="5c56f426-5f9b-4a77-91ae-6b79db0ed147" clustered="false" name="FK_nota_id_modulo" physicalName="FK_nota_id_modulo" primaryKeyIndex="false" qualifier="orion" unique="false" >
+       <index-column id="IDC370" populated="true" UUID="4c2eb56f-c44c-48c0-9e1d-81f3d558546b" ascendingOrDescending="ASCENDING" column-ref="COL356" name="id_modulo" physicalName="id_modulo" />
       </index>
      </folder>
     </table>
@@ -1377,7 +1377,7 @@
     <table id="TAB489" populated="true" UUID="6ce36c79-5908-47a0-a267-8d33b4202ef2" name="prerequisito" objectType="TABLE" physicalName="prerequisito" >
      <remarks></remarks>
      <folder id="FOLTAB4891" populated="true" name="Columns" physicalName="Columns" type="1">
-      <column id="COL490" populated="true" UUID="0c2bcfe6-3936-4c68-8407-a0b98b4cd919" autoIncrement="false" defaultValue="" name="id_materia" nullable="0" physicalName="id_materia" precision="10" primaryKeySeq="0" referenceCount="2" scale="0" sourceDataTypeName="INT" type="4" >
+      <column id="COL490" populated="true" UUID="0c2bcfe6-3936-4c68-8407-a0b98b4cd919" autoIncrement="false" defaultValue="" name="id_modulo" nullable="0" physicalName="id_modulo" precision="10" primaryKeySeq="0" referenceCount="2" scale="0" sourceDataTypeName="INT" type="4" >
        <remarks></remarks>
       </column>
       <column id="COL491" populated="true" UUID="ccb96f40-3a65-4813-bed8-b2ea68642879" autoIncrement="false" defaultValue="" name="id_prerequisito" nullable="0" physicalName="id_prerequisito" precision="10" primaryKeySeq="1" referenceCount="2" scale="0" sourceDataTypeName="INT" type="4" >
@@ -1390,7 +1390,7 @@
       </folder>
       <folder id="FOLTAB4894" populated="true" name="Indices" physicalName="Indices" type="4">
       <index id="IDX492" populated="true" UUID="220479f5-3a11-4ad0-97ae-24e5d212ead2" clustered="false" name="PRIMARY" physicalName="PRIMARY" primaryKeyIndex="true" qualifier="orion" unique="true" >
-       <index-column id="IDC493" populated="true" UUID="21c491b3-e9a6-4eff-bf67-3b9b9ea308c3" ascendingOrDescending="UNSPECIFIED" column-ref="COL490" name="id_materia" physicalName="id_materia" />
+       <index-column id="IDC493" populated="true" UUID="21c491b3-e9a6-4eff-bf67-3b9b9ea308c3" ascendingOrDescending="UNSPECIFIED" column-ref="COL490" name="id_modulo" physicalName="id_modulo" />
        <index-column id="IDC494" populated="true" UUID="f2e3a207-ff44-4c9b-97bd-7bb219dff56a" ascendingOrDescending="UNSPECIFIED" column-ref="COL491" name="id_prerequisito" physicalName="id_prerequisito" />
       </index>
       <index id="IDX495" populated="true" UUID="dfc79624-2c19-4b75-843c-0f5655ea5d5c" clustered="false" name="FK_prerequisito_id_prerequisito" physicalName="FK_prerequisito_id_prerequisito" primaryKeyIndex="false" qualifier="orion" unique="false" >
@@ -1571,13 +1571,13 @@
     <relationship id="REL573" populated="true" UUID="00dd8337-72e3-48b1-bd47-e9212bce10f2" deferrability="7" deleteRule="1" fk-table-ref="TAB39" fkCardinality="7" identifying="false" name="FK_campus_id_instituto" physicalName="FK_campus_id_instituto" pk-table-ref="TAB271" pkCardinality="2" updateRule="1" >
      <column-mapping id="CMP574" populated="true" UUID="a9ce8d99-1466-4642-bc38-01926244fc60" fk-column-ref="COL45" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL272" />
     </relationship>
-    <relationship id="REL575" populated="true" UUID="00679d07-7399-4ea0-8e0d-8f77e65c5cb6" deferrability="7" deleteRule="1" fk-table-ref="TAB191" fkCardinality="7" identifying="false" name="FK_grupo_id_materia" physicalName="FK_grupo_id_materia" pk-table-ref="TAB302" pkCardinality="2" updateRule="1" >
+    <relationship id="REL575" populated="true" UUID="00679d07-7399-4ea0-8e0d-8f77e65c5cb6" deferrability="7" deleteRule="1" fk-table-ref="TAB191" fkCardinality="7" identifying="false" name="FK_grupo_id_modulo" physicalName="FK_grupo_id_modulo" pk-table-ref="TAB302" pkCardinality="2" updateRule="1" >
      <column-mapping id="CMP576" populated="true" UUID="ca899594-6369-4ba3-bff0-2787525638ab" fk-column-ref="COL199" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL303" />
     </relationship>
-    <relationship id="REL577" populated="true" UUID="35114006-f9b0-48fe-98b7-c1399a514d4d" deferrability="7" deleteRule="1" fk-table-ref="TAB334" fkCardinality="7" identifying="false" name="FK_nota_id_materia" physicalName="FK_nota_id_materia" pk-table-ref="TAB302" pkCardinality="2" updateRule="1" >
+    <relationship id="REL577" populated="true" UUID="35114006-f9b0-48fe-98b7-c1399a514d4d" deferrability="7" deleteRule="1" fk-table-ref="TAB334" fkCardinality="7" identifying="false" name="FK_nota_id_modulo" physicalName="FK_nota_id_modulo" pk-table-ref="TAB302" pkCardinality="2" updateRule="1" >
      <column-mapping id="CMP578" populated="true" UUID="f884a49f-4034-4077-9292-186bade39936" fk-column-ref="COL356" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL303" />
     </relationship>
-    <relationship id="REL579" populated="true" UUID="c1afb138-3ddf-4b1b-97dc-39cc4aa8d04b" deferrability="7" deleteRule="1" fk-table-ref="TAB489" fkCardinality="7" identifying="false" name="FK_prerequisito_id_materia" physicalName="FK_prerequisito_id_materia" pk-table-ref="TAB302" pkCardinality="2" updateRule="1" >
+    <relationship id="REL579" populated="true" UUID="c1afb138-3ddf-4b1b-97dc-39cc4aa8d04b" deferrability="7" deleteRule="1" fk-table-ref="TAB489" fkCardinality="7" identifying="false" name="FK_prerequisito_id_modulo" physicalName="FK_prerequisito_id_modulo" pk-table-ref="TAB302" pkCardinality="2" updateRule="1" >
      <column-mapping id="CMP580" populated="true" UUID="db942906-8b2d-4827-9c9b-4df412f47bac" fk-column-ref="COL490" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL303" />
     </relationship>
     <relationship id="REL581" populated="true" UUID="a54e5fc0-c859-41e1-881f-ed5e95eccadb" deferrability="7" deleteRule="1" fk-table-ref="TAB489" fkCardinality="7" identifying="false" name="FK_prerequisito_id_prerequisito" physicalName="FK_prerequisito_id_prerequisito" pk-table-ref="TAB302" pkCardinality="2" updateRule="1" >
@@ -2083,7 +2083,7 @@
     <column id="COL778" populated="true" UUID="161b69e0-4d74-44ec-b9c5-970ca1196c21" autoIncrement="false" defaultValue="NULL" name="id_gestionacademica" nullable="1" physicalName="id_gestionacademica" precision="0" referenceCount="2" scale="0" source-column-ref="COL198" sourceDataTypeName="INT" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL779" populated="true" UUID="c30c8c20-8782-48e8-ac54-d37410c1c7a2" autoIncrement="false" defaultValue="NULL" name="id_materia" nullable="1" physicalName="id_materia" precision="0" referenceCount="2" scale="0" source-column-ref="COL199" sourceDataTypeName="INT" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+    <column id="COL779" populated="true" UUID="c30c8c20-8782-48e8-ac54-d37410c1c7a2" autoIncrement="false" defaultValue="NULL" name="id_modulo" nullable="1" physicalName="id_modulo" precision="0" referenceCount="2" scale="0" source-column-ref="COL199" sourceDataTypeName="INT" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
     </folder>
@@ -2099,13 +2099,13 @@
      <index-column id="IDC783" populated="true" UUID="c20bb01e-8dec-4d6e-ac73-b8b21c13f848" ascendingOrDescending="ASCENDING" column-ref="COL775" name="CODIGO" physicalName="CODIGO" />
      <index-column id="IDC784" populated="true" UUID="40a5bf90-e7c3-43e1-aa67-a67ca86545e4" ascendingOrDescending="ASCENDING" column-ref="COL776" name="TURNO" physicalName="TURNO" />
      <index-column id="IDC785" populated="true" UUID="8507021b-b865-4758-9879-c03314f78b4a" ascendingOrDescending="ASCENDING" column-ref="COL778" name="id_gestionacademica" physicalName="id_gestionacademica" />
-     <index-column id="IDC786" populated="true" UUID="258e5602-99d1-458e-b459-fd20de6a2b01" ascendingOrDescending="ASCENDING" column-ref="COL779" name="id_materia" physicalName="id_materia" />
+     <index-column id="IDC786" populated="true" UUID="258e5602-99d1-458e-b459-fd20de6a2b01" ascendingOrDescending="ASCENDING" column-ref="COL779" name="id_modulo" physicalName="id_modulo" />
     </index>
     <index id="IDX787" populated="true" UUID="4e8def4c-b97b-4276-a4eb-2317ee83f6b7" clustered="false" name="FK_grupo_id_gestionacademica" physicalName="FK_grupo_id_gestionacademica" primaryKeyIndex="false" qualifier="orion" unique="false" >
      <index-column id="IDC788" populated="true" UUID="8a19de54-bfc2-4d63-8dc6-d3e895636eaa" ascendingOrDescending="ASCENDING" column-ref="COL778" name="id_gestionacademica" physicalName="id_gestionacademica" />
     </index>
-    <index id="IDX789" populated="true" UUID="b0dbf051-ad95-4180-aab1-3299da25dd20" clustered="false" name="FK_grupo_id_materia" physicalName="FK_grupo_id_materia" primaryKeyIndex="false" qualifier="orion" unique="false" >
-     <index-column id="IDC790" populated="true" UUID="02b668d8-ab55-4151-98a3-a096dbfa2ffb" ascendingOrDescending="ASCENDING" column-ref="COL779" name="id_materia" physicalName="id_materia" />
+    <index id="IDX789" populated="true" UUID="b0dbf051-ad95-4180-aab1-3299da25dd20" clustered="false" name="FK_grupo_id_modulo" physicalName="FK_grupo_id_modulo" primaryKeyIndex="false" qualifier="orion" unique="false" >
+     <index-column id="IDC790" populated="true" UUID="02b668d8-ab55-4151-98a3-a096dbfa2ffb" ascendingOrDescending="ASCENDING" column-ref="COL779" name="id_modulo" physicalName="id_modulo" />
     </index>
     <index id="IDX791" populated="true" UUID="6beac510-86b3-4dc8-9953-04bb68e9fcfa" clustered="false" name="FK_grupo_id_persona" physicalName="FK_grupo_id_persona" primaryKeyIndex="false" qualifier="orion" unique="false" >
      <index-column id="IDC792" populated="true" UUID="2d6040d0-1148-44ca-b1f8-f4d85e16f180" ascendingOrDescending="ASCENDING" column-ref="COL777" name="id_persona" physicalName="id_persona" />
@@ -2260,7 +2260,7 @@
   <table id="TAB845" populated="true" UUID="eeb8f0c8-1b2a-4260-83e7-a9aae5d5f985" name="materia" objectType="TABLE" physicalName="materia" >
    <remarks></remarks>
    <folder id="FOLTAB8451" populated="true" name="Columns" physicalName="Columns" type="1">
-    <column id="COL846" populated="true" UUID="4665efa4-8f39-41db-bbb1-af62ee6efa68" autoIncrement="true" defaultValue="" name="ID_MATERIA" nullable="0" physicalName="ID_MATERIA" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" source-column-ref="COL303" sourceDataTypeName="INT" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+    <column id="COL846" populated="true" UUID="4665efa4-8f39-41db-bbb1-af62ee6efa68" autoIncrement="true" defaultValue="" name="id_modulo" nullable="0" physicalName="id_modulo" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" source-column-ref="COL303" sourceDataTypeName="INT" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
     <column id="COL847" populated="true" UUID="20dfbc6b-b43d-49de-93f7-fe61d2392ce9" autoIncrement="false" defaultValue="NULL" name="NUMERO" nullable="1" physicalName="NUMERO" precision="0" referenceCount="1" scale="0" source-column-ref="COL310" sourceDataTypeName="INT" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
@@ -2294,7 +2294,7 @@
     </folder>
     <folder id="FOLTAB8454" populated="true" name="Indices" physicalName="Indices" type="4">
     <index id="IDX855" populated="true" UUID="d265bd3e-d1c9-4ea2-8770-b1a40fb7b10e" clustered="false" name="PRIMARY" physicalName="PRIMARY" primaryKeyIndex="true" qualifier="orion" unique="true" >
-     <index-column id="IDC856" populated="true" UUID="242dda1f-2f61-4f4c-a7e5-e299d29e2248" ascendingOrDescending="UNSPECIFIED" column-ref="COL846" name="ID_MATERIA" physicalName="ID_MATERIA" />
+     <index-column id="IDC856" populated="true" UUID="242dda1f-2f61-4f4c-a7e5-e299d29e2248" ascendingOrDescending="UNSPECIFIED" column-ref="COL846" name="id_modulo" physicalName="id_modulo" />
     </index>
     <index id="IDX857" populated="true" UUID="fe8c8619-37fa-4b26-9c65-b5c5420cb804" clustered="false" name="UNQ_materia_0" physicalName="UNQ_materia_0" primaryKeyIndex="false" qualifier="orion" unique="true" >
      <index-column id="IDC858" populated="true" UUID="0b765bc6-d3e1-4895-a89b-fc231865c87e" ascendingOrDescending="ASCENDING" column-ref="COL848" name="CODIGO" physicalName="CODIGO" />
@@ -2371,7 +2371,7 @@
     <column id="COL883" populated="true" UUID="f4230132-4a9d-4fb8-b801-243013344a33" autoIncrement="false" defaultValue="NULL" name="id_inscrito" nullable="1" physicalName="id_inscrito" precision="0" referenceCount="2" scale="0" source-column-ref="COL355" sourceDataTypeName="INT" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL884" populated="true" UUID="f9c6551c-72c8-4bc5-9402-84ed4942c9ff" autoIncrement="false" defaultValue="NULL" name="id_materia" nullable="1" physicalName="id_materia" precision="0" referenceCount="2" scale="0" source-column-ref="COL356" sourceDataTypeName="INT" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+    <column id="COL884" populated="true" UUID="f9c6551c-72c8-4bc5-9402-84ed4942c9ff" autoIncrement="false" defaultValue="NULL" name="id_modulo" nullable="1" physicalName="id_modulo" precision="0" referenceCount="2" scale="0" source-column-ref="COL356" sourceDataTypeName="INT" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
     </folder>
@@ -2385,7 +2385,7 @@
     </index>
     <index id="IDX887" populated="true" UUID="72fe7fe5-1547-49db-a2c1-5638a8c0bbab" clustered="false" name="UNQ_nota_0" physicalName="UNQ_nota_0" primaryKeyIndex="false" qualifier="orion" unique="true" >
      <index-column id="IDC888" populated="true" UUID="f6906e9b-17ea-4d0a-a3ed-170c57f52cba" ascendingOrDescending="ASCENDING" column-ref="COL881" name="id_gestionacademica" physicalName="id_gestionacademica" />
-     <index-column id="IDC889" populated="true" UUID="50de9e00-794c-4d82-bc76-df2439d79c52" ascendingOrDescending="ASCENDING" column-ref="COL884" name="id_materia" physicalName="id_materia" />
+     <index-column id="IDC889" populated="true" UUID="50de9e00-794c-4d82-bc76-df2439d79c52" ascendingOrDescending="ASCENDING" column-ref="COL884" name="id_modulo" physicalName="id_modulo" />
      <index-column id="IDC890" populated="true" UUID="df41a536-08e6-42d7-ac98-8ba7d9fdaddd" ascendingOrDescending="ASCENDING" column-ref="COL880" name="id_estudiante" physicalName="id_estudiante" />
     </index>
     <index id="IDX891" populated="true" UUID="53281a72-c984-4c22-abee-15b842328d08" clustered="false" name="FK_nota_id_estudiante" physicalName="FK_nota_id_estudiante" primaryKeyIndex="false" qualifier="orion" unique="false" >
@@ -2397,8 +2397,8 @@
     <index id="IDX895" populated="true" UUID="edaed8d9-3c50-404d-a909-e8ffe8826b49" clustered="false" name="FK_nota_id_inscrito" physicalName="FK_nota_id_inscrito" primaryKeyIndex="false" qualifier="orion" unique="false" >
      <index-column id="IDC896" populated="true" UUID="2b89fdfb-7a0a-4398-bae7-0cf84ffd9263" ascendingOrDescending="ASCENDING" column-ref="COL883" name="id_inscrito" physicalName="id_inscrito" />
     </index>
-    <index id="IDX897" populated="true" UUID="6017bc32-366c-4e66-9262-ad0aa127875b" clustered="false" name="FK_nota_id_materia" physicalName="FK_nota_id_materia" primaryKeyIndex="false" qualifier="orion" unique="false" >
-     <index-column id="IDC898" populated="true" UUID="97a59244-1c6b-407a-83a9-a07eca53b53c" ascendingOrDescending="ASCENDING" column-ref="COL884" name="id_materia" physicalName="id_materia" />
+    <index id="IDX897" populated="true" UUID="6017bc32-366c-4e66-9262-ad0aa127875b" clustered="false" name="FK_nota_id_modulo" physicalName="FK_nota_id_modulo" primaryKeyIndex="false" qualifier="orion" unique="false" >
+     <index-column id="IDC898" populated="true" UUID="97a59244-1c6b-407a-83a9-a07eca53b53c" ascendingOrDescending="ASCENDING" column-ref="COL884" name="id_modulo" physicalName="id_modulo" />
     </index>
    </folder>
   </table>
@@ -2467,7 +2467,7 @@
   <table id="TAB918" populated="true" UUID="b7d0057a-6f18-43de-88de-d37ba0a3a843" name="prerequisito" objectType="TABLE" physicalName="prerequisito" >
    <remarks></remarks>
    <folder id="FOLTAB9181" populated="true" name="Columns" physicalName="Columns" type="1">
-    <column id="COL919" populated="true" UUID="e945a349-0ab0-41fc-8ca7-c20b897e08bb" autoIncrement="false" defaultValue="" name="id_materia" nullable="0" physicalName="id_materia" precision="0" primaryKeySeq="0" referenceCount="2" scale="0" source-column-ref="COL490" sourceDataTypeName="INT" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+    <column id="COL919" populated="true" UUID="e945a349-0ab0-41fc-8ca7-c20b897e08bb" autoIncrement="false" defaultValue="" name="id_modulo" nullable="0" physicalName="id_modulo" precision="0" primaryKeySeq="0" referenceCount="2" scale="0" source-column-ref="COL490" sourceDataTypeName="INT" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
     <column id="COL920" populated="true" UUID="dd4e55e4-4acd-47df-bde3-4bfc97bf4e6c" autoIncrement="false" defaultValue="" name="id_prerequisito" nullable="0" physicalName="id_prerequisito" precision="0" primaryKeySeq="1" referenceCount="2" scale="0" source-column-ref="COL491" sourceDataTypeName="INT" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
@@ -2480,7 +2480,7 @@
     </folder>
     <folder id="FOLTAB9184" populated="true" name="Indices" physicalName="Indices" type="4">
     <index id="IDX921" populated="true" UUID="fcc4dd4f-0460-4e9d-b9d8-b79396820280" clustered="false" name="PRIMARY" physicalName="PRIMARY" primaryKeyIndex="true" qualifier="orion" unique="true" >
-     <index-column id="IDC922" populated="true" UUID="afc9a040-6881-48e3-a26d-e028f52a881d" ascendingOrDescending="UNSPECIFIED" column-ref="COL919" name="id_materia" physicalName="id_materia" />
+     <index-column id="IDC922" populated="true" UUID="afc9a040-6881-48e3-a26d-e028f52a881d" ascendingOrDescending="UNSPECIFIED" column-ref="COL919" name="id_modulo" physicalName="id_modulo" />
      <index-column id="IDC923" populated="true" UUID="81d34dbb-f645-4422-ac8a-5bd730f4b6a7" ascendingOrDescending="UNSPECIFIED" column-ref="COL920" name="id_prerequisito" physicalName="id_prerequisito" />
     </index>
     <index id="IDX924" populated="true" UUID="242393a8-4c57-4679-9456-48e5675d976c" clustered="false" name="FK_prerequisito_id_prerequisito" physicalName="FK_prerequisito_id_prerequisito" primaryKeyIndex="false" qualifier="orion" unique="false" >
@@ -2668,13 +2668,13 @@
    <relationship id="REL996" populated="true" UUID="4ff01f60-e85c-4a66-a706-a4e189fa6fb2" deferrability="7" deleteRule="3" fk-table-ref="TAB955" fkCardinality="7" identifying="false" name="instituto_conceptopago_fk" physicalName="instituto_conceptopago_fk" pk-table-ref="TAB817" pkCardinality="2" updateRule="3" >
     <column-mapping id="CMP997" populated="true" UUID="6ac91a82-dd78-41c9-be89-3b99b4a9a709" fk-column-ref="COL961" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL818" />
    </relationship>
-   <relationship id="REL998" populated="true" UUID="7b82fb5e-22a1-49e2-93fa-0339c568efe4" deferrability="7" deleteRule="1" fk-table-ref="TAB771" fkCardinality="7" identifying="false" name="FK_grupo_id_materia" physicalName="FK_grupo_id_materia" pk-table-ref="TAB845" pkCardinality="2" updateRule="1" >
+   <relationship id="REL998" populated="true" UUID="7b82fb5e-22a1-49e2-93fa-0339c568efe4" deferrability="7" deleteRule="1" fk-table-ref="TAB771" fkCardinality="7" identifying="false" name="FK_grupo_id_modulo" physicalName="FK_grupo_id_modulo" pk-table-ref="TAB845" pkCardinality="2" updateRule="1" >
     <column-mapping id="CMP999" populated="true" UUID="5e3a0729-d502-4303-bca4-e4da95035f11" fk-column-ref="COL779" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL846" />
    </relationship>
-   <relationship id="REL1000" populated="true" UUID="001e3004-7cf0-4623-90b4-5c368a5a5ae3" deferrability="7" deleteRule="1" fk-table-ref="TAB862" fkCardinality="7" identifying="false" name="FK_nota_id_materia" physicalName="FK_nota_id_materia" pk-table-ref="TAB845" pkCardinality="2" updateRule="1" >
+   <relationship id="REL1000" populated="true" UUID="001e3004-7cf0-4623-90b4-5c368a5a5ae3" deferrability="7" deleteRule="1" fk-table-ref="TAB862" fkCardinality="7" identifying="false" name="FK_nota_id_modulo" physicalName="FK_nota_id_modulo" pk-table-ref="TAB845" pkCardinality="2" updateRule="1" >
     <column-mapping id="CMP1001" populated="true" UUID="17a3adc0-c932-4db7-a73f-bf85f270e20b" fk-column-ref="COL884" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL846" />
    </relationship>
-   <relationship id="REL1002" populated="true" UUID="94ffda37-aa67-4551-8d52-7ea9f6720854" deferrability="7" deleteRule="1" fk-table-ref="TAB918" fkCardinality="7" identifying="true" name="FK_prerequisito_id_materia" physicalName="FK_prerequisito_id_materia" pk-table-ref="TAB845" pkCardinality="2" updateRule="1" >
+   <relationship id="REL1002" populated="true" UUID="94ffda37-aa67-4551-8d52-7ea9f6720854" deferrability="7" deleteRule="1" fk-table-ref="TAB918" fkCardinality="7" identifying="true" name="FK_prerequisito_id_modulo" physicalName="FK_prerequisito_id_modulo" pk-table-ref="TAB845" pkCardinality="2" updateRule="1" >
     <column-mapping id="CMP1003" populated="true" UUID="7d2b2b93-c372-49c5-ba6d-bf0ccb9f9f2d" fk-column-ref="COL919" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL846" />
    </relationship>
    <relationship id="REL1004" populated="true" UUID="da0767f3-26f5-4a95-822e-d3fdc6855b21" deferrability="7" deleteRule="1" fk-table-ref="TAB918" fkCardinality="7" identifying="true" name="FK_prerequisito_id_prerequisito" physicalName="FK_prerequisito_id_prerequisito" pk-table-ref="TAB845" pkCardinality="2" updateRule="1" >

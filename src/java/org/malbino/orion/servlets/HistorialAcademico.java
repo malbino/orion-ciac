@@ -34,7 +34,7 @@ import org.malbino.orion.entities.Nota;
 import org.malbino.orion.facades.CarreraFacade;
 import org.malbino.orion.facades.EstudianteFacade;
 import org.malbino.orion.facades.InscritoFacade;
-import org.malbino.orion.facades.MateriaFacade;
+import org.malbino.orion.facades.ModuloFacade;
 import org.malbino.orion.facades.NotaFacade;
 import org.malbino.orion.util.Fecha;
 import org.malbino.orion.util.Redondeo;
@@ -70,7 +70,7 @@ public class HistorialAcademico extends HttpServlet {
     @EJB
     NotaFacade notaFacade;
     @EJB
-    MateriaFacade materiaFacade;
+    ModuloFacade materiaFacade;
     @EJB
     InscritoFacade inscritoFacade;
 
@@ -391,17 +391,17 @@ public class HistorialAcademico extends HttpServlet {
             cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
             table.addCell(cell);
 
-            cell = new PdfPCell(new Phrase(nota.getMateria().getCodigo(), NORMAL));
+            cell = new PdfPCell(new Phrase(nota.getModulo().getCodigo(), NORMAL));
             cell.setColspan(5);
             cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
             table.addCell(cell);
 
-            cell = new PdfPCell(new Phrase(nota.getMateria().getNombre(), NORMAL));
+            cell = new PdfPCell(new Phrase(nota.getModulo().getNombre(), NORMAL));
             cell.setColspan(22);
             cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
             table.addCell(cell);
 
-            cell = new PdfPCell(new Phrase(nota.getMateria().prerequisitosToString(), NORMAL));
+            cell = new PdfPCell(new Phrase(nota.getModulo().prerequisitosToString(), NORMAL));
             cell.setColspan(6);
             cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
             table.addCell(cell);
@@ -583,7 +583,7 @@ public class HistorialAcademico extends HttpServlet {
         table.addCell(cell);
 
         int materiasAprobadas = notaFacade.cantidadNotasAprobadas(carrera, estudiante).intValue();
-        int materiasCarrera = materiaFacade.cantidadMateriasCurriculares(carrera).intValue();
+        int materiasCarrera = materiaFacade.cantidadModulosCurriculares(carrera).intValue();
         cell = new PdfPCell(new Phrase(materiasAprobadas + "/" + materiasCarrera, NORMAL));
         cell.setColspan(5);
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);

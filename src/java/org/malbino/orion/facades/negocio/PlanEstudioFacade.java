@@ -12,7 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import org.malbino.orion.entities.Modulo;
-import org.malbino.orion.facades.MateriaFacade;
+import org.malbino.orion.facades.ModuloFacade;
 
 /**
  *
@@ -26,11 +26,11 @@ public class PlanEstudioFacade {
     private EntityManager em;
 
     @EJB
-    MateriaFacade materiaFacade;
+    ModuloFacade materiaFacade;
 
     @Transactional(Transactional.TxType.REQUIRES_NEW)
-    public boolean eliminarMateria(Modulo prerequisito) {
-        List<Modulo> materias = materiaFacade.listaMaterias(prerequisito.getId_modulo());
+    public boolean eliminarModulo(Modulo prerequisito) {
+        List<Modulo> materias = materiaFacade.listaModulos(prerequisito.getId_modulo());
         for (Modulo materia : materias) {
             materia.getPrerequisitos().remove(prerequisito);
 

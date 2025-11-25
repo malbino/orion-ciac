@@ -137,7 +137,7 @@ public class HistorialAcademicoController extends AbstractController implements 
         return l;
     }
 
-    public List<Modulo> listaMaterias() {
+    public List<Modulo> listaModulos() {
         List<Modulo> l = new ArrayList();
         if (seleccionCarreraEstudiante != null && seleccionEstudiante != null) {
             l = fileEstudianteFacade.oferta(seleccionCarreraEstudiante.getCarrera(), seleccionEstudiante);
@@ -164,7 +164,7 @@ public class HistorialAcademicoController extends AbstractController implements 
     }
 
     public void editarRecuperatorio() throws IOException {
-        List<Nota> listaNotasReprobadas = notaFacade.listaNotasReprobadas(seleccionNota.getGestionAcademica(), seleccionNota.getMateria().getCarrera(), seleccionNota.getEstudiante());
+        List<Nota> listaNotasReprobadas = notaFacade.listaNotasReprobadas(seleccionNota.getGestionAcademica(), seleccionNota.getModulo().getCarrera(), seleccionNota.getEstudiante());
         if (listaNotasReprobadas.size() <= seleccionNota.getGestionAcademica().getModalidadEvaluacion().getCantidadMaximaReprobaciones()) {
             if (seleccionNota.getNotaFinal() != null
                     && seleccionNota.getNotaFinal() >= seleccionNota.getGestionAcademica().getModalidadEvaluacion().getNotaMinimmaPruebaRecuperacion()
@@ -184,8 +184,8 @@ public class HistorialAcademicoController extends AbstractController implements 
     }
 
     public void crearNota() throws IOException {
-        List<Nota> listaNotasMateria = notaFacade.listaNotasMateria(nuevaNota.getGestionAcademica().getId_gestionacademica(), seleccionEstudiante.getId_persona(), nuevaNota.getMateria().getId_modulo());
-        if (listaNotasMateria.isEmpty()) {
+        List<Nota> listaNotasModulo = notaFacade.listaNotasModulo(nuevaNota.getGestionAcademica().getId_gestionacademica(), seleccionEstudiante.getId_persona(), nuevaNota.getModulo().getId_modulo());
+        if (listaNotasModulo.isEmpty()) {
             nuevaNota.setEstudiante(seleccionEstudiante);
             if (fileEstudianteFacade.crearNota(nuevaNota)) {
                 //log

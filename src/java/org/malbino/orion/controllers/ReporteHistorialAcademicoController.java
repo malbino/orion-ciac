@@ -37,7 +37,7 @@ import org.malbino.orion.entities.Nota;
 import org.malbino.orion.enums.EventoLog;
 import org.malbino.orion.facades.CarreraEstudianteFacade;
 import org.malbino.orion.facades.InscritoFacade;
-import org.malbino.orion.facades.MateriaFacade;
+import org.malbino.orion.facades.ModuloFacade;
 import org.malbino.orion.facades.NotaFacade;
 import org.malbino.orion.util.Fecha;
 import org.malbino.orion.util.Redondeo;
@@ -59,7 +59,7 @@ public class ReporteHistorialAcademicoController extends AbstractController impl
     @EJB
     InscritoFacade inscritoFacade;
     @EJB
-    MateriaFacade materiaFacade;
+    ModuloFacade materiaFacade;
     @EJB
     CarreraEstudianteFacade carreraEstudianteFacade;
     @Inject
@@ -190,7 +190,7 @@ public class ReporteHistorialAcademicoController extends AbstractController impl
                             cell.setCellValue(cell.getStringCellValue().replace("<<RM_3>>", " "));
                         } else if (cell.getStringCellValue().contains("<<MA_MC>>")) {
                             int materiasAprobadas = notaFacade.cantidadNotasAprobadas(carrera, seleccionEstudiante).intValue();
-                            int materiasCarrera = materiaFacade.cantidadMateriasCurriculares(carrera).intValue();
+                            int materiasCarrera = materiaFacade.cantidadModulosCurriculares(carrera).intValue();
 
                             cell.setCellValue(cell.getStringCellValue().replace("<<MA_MC>>", materiasAprobadas + "/" + materiasCarrera));
                         } else if (cell.getStringCellValue().contains("<<GA>>")) {
@@ -316,11 +316,11 @@ public class ReporteHistorialAcademicoController extends AbstractController impl
                         } else if (cell.getStringCellValue().contains("<<NIVEL>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL>>", ""));
                         } else if (cell.getStringCellValue().contains("<<CODIGO>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<CODIGO>>", nota.getMateria().getCodigo()));
-                        } else if (cell.getStringCellValue().contains("<<MATERIA>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<MATERIA>>", nota.getMateria().getNombre()));
+                            cell.setCellValue(cell.getStringCellValue().replace("<<CODIGO>>", nota.getModulo().getCodigo()));
+                        } else if (cell.getStringCellValue().contains("<<MODULO>>")) {
+                            cell.setCellValue(cell.getStringCellValue().replace("<<MODULO>>", nota.getModulo().getNombre()));
                         } else if (cell.getStringCellValue().contains("<<COD_PRE>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<COD_PRE>>", nota.getMateria().prerequisitosToString()));
+                            cell.setCellValue(cell.getStringCellValue().replace("<<COD_PRE>>", nota.getModulo().prerequisitosToString()));
                         } else if (cell.getStringCellValue().contains("<<CONDICION>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<CONDICION>>", nota.getCondicion().getNombre()));
                         }

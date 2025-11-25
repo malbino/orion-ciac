@@ -33,7 +33,7 @@ import org.malbino.orion.facades.ActividadFacade;
 import org.malbino.orion.facades.CarreraEstudianteFacade;
 import org.malbino.orion.facades.GrupoFacade;
 import org.malbino.orion.facades.InscritoFacade;
-import org.malbino.orion.facades.MateriaFacade;
+import org.malbino.orion.facades.ModuloFacade;
 import org.malbino.orion.facades.NotaFacade;
 import org.malbino.orion.facades.PagoFacade;
 import org.malbino.orion.facades.negocio.InscripcionesFacade;
@@ -64,14 +64,14 @@ public class InscripcionManualController extends AbstractController implements S
     @EJB
     PagoFacade pagoFacade;
     @EJB
-    MateriaFacade materiaFacade;
+    ModuloFacade materiaFacade;
     @EJB
     CarreraEstudianteFacade carreraEstudianteFacade;
 
     private Estudiante seleccionEstudiante;
     private Inscrito seleccionInscrito;
 
-    private List<Modulo> ofertaMaterias;
+    private List<Modulo> ofertaModulos;
     private List<Modulo> materias;
     private List<Nota> estadoInscripcion;
     private Nota seleccionNota;
@@ -82,7 +82,7 @@ public class InscripcionManualController extends AbstractController implements S
     @PostConstruct
     public void init() {
         seleccionInscrito = null;
-        ofertaMaterias = new ArrayList();
+        ofertaModulos = new ArrayList();
         materias = new ArrayList();
         estadoInscripcion = new ArrayList();
 
@@ -91,7 +91,7 @@ public class InscripcionManualController extends AbstractController implements S
 
     public void reinit() {
         seleccionInscrito = null;
-        ofertaMaterias = new ArrayList();
+        ofertaModulos = new ArrayList();
         materias = new ArrayList();
         estadoInscripcion = new ArrayList();
 
@@ -116,9 +116,9 @@ public class InscripcionManualController extends AbstractController implements S
 
     public void actualizarOferta() {
         if (seleccionInscrito != null) {
-            ofertaMaterias = inscripcionesFacade.ofertaTomaMaterias(seleccionInscrito);
+            ofertaModulos = inscripcionesFacade.ofertaTomaModulos(seleccionInscrito);
 
-            for (Modulo materia : ofertaMaterias) {
+            for (Modulo materia : ofertaModulos) {
                 List<Grupo> listaGruposAbiertos = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), materia.getId_modulo(), grupo);
                 Iterator<Grupo> iterator = listaGruposAbiertos.iterator();
                 if (iterator.hasNext()) {
@@ -130,9 +130,9 @@ public class InscripcionManualController extends AbstractController implements S
         }
     }
 
-    public void actualizarMaterias() {
+    public void actualizarModulos() {
         if (seleccionInscrito != null) {
-            materias = materiaFacade.listaMaterias(seleccionInscrito.getCarrera());
+            materias = materiaFacade.listaModulos(seleccionInscrito.getCarrera());
         }
     }
 
@@ -144,7 +144,7 @@ public class InscripcionManualController extends AbstractController implements S
 
     public boolean verificarGrupos() {
         boolean b = true;
-        for (Modulo m : ofertaMaterias) {
+        for (Modulo m : ofertaModulos) {
             if (m.getGrupo() == null) {
                 b = false;
                 break;
@@ -156,7 +156,7 @@ public class InscripcionManualController extends AbstractController implements S
     public boolean materiaRepetida(Modulo materia) {
         boolean b = false;
         for (Nota n : estadoInscripcion) {
-            if (n.getMateria().equals(materia)) {
+            if (n.getModulo().equals(materia)) {
                 b = true;
                 break;
             }
@@ -182,20 +182,20 @@ public class InscripcionManualController extends AbstractController implements S
         }
     }
 
-    public void tomarMaterias() throws IOException {
+    public void tomarModulos() throws IOException {
         if (!actividadFacade.listaActividades(Fecha.getDate(), Funcionalidad.INSCRIPCION, seleccionInscrito.getGestionAcademica().getId_gestionacademica()).isEmpty()) {
             List<Pago> listaPagosPagados = pagoFacade.listaPagosPagados(seleccionInscrito.getId_inscrito());
             if (!listaPagosPagados.isEmpty()) {
-                if (!ofertaMaterias.isEmpty()) {
+                if (!ofertaModulos.isEmpty()) {
                     if (verificarGrupos()) {
                         List<Nota> aux = new ArrayList();
-                        for (Modulo materia : ofertaMaterias) {
+                        for (Modulo materia : ofertaModulos) {
                             Nota nota = new Nota(0, Modalidad.REGULAR, Condicion.ABANDONO, seleccionInscrito.getGestionAcademica(), materia, seleccionInscrito.getEstudiante(), seleccionInscrito, materia.getGrupo());
                             aux.add(nota);
                         }
 
                         try {
-                            if (inscripcionesFacade.tomarMaterias(aux)) {
+                            if (inscripcionesFacade.tomarModulos(aux)) {
                                 copiarInscrito(seleccionInscrito.getEstudiante(), aux);
 
                                 //log
@@ -237,7 +237,7 @@ public class InscripcionManualController extends AbstractController implements S
                     }
 
                     try {
-                        if (inscripcionesFacade.tomarMaterias(aux)) {
+                        if (inscripcionesFacade.tomarModulos(aux)) {
                             copiarInscrito(seleccionInscrito.getEstudiante(), aux);
 
                             toEstadoInscripcion();
@@ -256,8 +256,8 @@ public class InscripcionManualController extends AbstractController implements S
         }
     }
 
-    public void retirarMateria() throws IOException {
-        if (inscripcionesFacade.retirarMateria(seleccionNota)) {
+    public void retirarModulo() throws IOException {
+        if (inscripcionesFacade.retirarModulo(seleccionNota)) {
             toEstadoInscripcion();
         }
     }
@@ -268,14 +268,14 @@ public class InscripcionManualController extends AbstractController implements S
         this.redireccionarViewId("/inscripciones/inscripcionManual/estadoInscripcion");
     }
 
-    public void toOfertaMaterias() throws IOException {
+    public void toOfertaModulos() throws IOException {
         actualizarOferta();
 
-        this.redireccionarViewId("/inscripciones/inscripcionManual/ofertaMaterias");
+        this.redireccionarViewId("/inscripciones/inscripcionManual/ofertaModulos");
     }
 
-    public void toMaterias() throws IOException {
-        actualizarMaterias();
+    public void toModulos() throws IOException {
+        actualizarModulos();
 
         this.redireccionarViewId("/inscripciones/inscripcionManual/materias");
     }
@@ -295,17 +295,17 @@ public class InscripcionManualController extends AbstractController implements S
     }
 
     /**
-     * @return the ofertaMaterias
+     * @return the ofertaModulos
      */
-    public List<Modulo> getOfertaMaterias() {
-        return ofertaMaterias;
+    public List<Modulo> getOfertaModulos() {
+        return ofertaModulos;
     }
 
     /**
-     * @param ofertaMaterias the ofertaMaterias to set
+     * @param ofertaModulos the ofertaModulos to set
      */
-    public void setOfertaMaterias(List<Modulo> ofertaMaterias) {
-        this.ofertaMaterias = ofertaMaterias;
+    public void setOfertaModulos(List<Modulo> ofertaModulos) {
+        this.ofertaModulos = ofertaModulos;
     }
 
     /**
@@ -353,14 +353,14 @@ public class InscripcionManualController extends AbstractController implements S
     /**
      * @return the materias
      */
-    public List<Modulo> getMaterias() {
+    public List<Modulo> getModulos() {
         return materias;
     }
 
     /**
      * @param materias the materias to set
      */
-    public void setMaterias(List<Modulo> materias) {
+    public void setModulos(List<Modulo> materias) {
         this.materias = materias;
     }
 

@@ -11,18 +11,18 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import org.malbino.orion.entities.Modulo;
-import org.malbino.orion.facades.MateriaFacade;
+import org.malbino.orion.facades.ModuloFacade;
 
 /**
  *
  * @author malbino
  */
-@Named(value = "MateriaConverter")
+@Named(value = "ModuloConverter")
 @RequestScoped
-public class MateriaConverter implements Converter {
+public class ModuloConverter implements Converter {
 
     @EJB
-    MateriaFacade materiaFacade;
+    ModuloFacade materiaFacade;
 
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent component, String submittedValue) {

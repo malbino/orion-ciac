@@ -22,12 +22,12 @@ import org.malbino.orion.enums.Condicion;
  */
 @Stateless
 @LocalBean
-public class MateriaFacade extends AbstractFacade<Modulo> {
+public class ModuloFacade extends AbstractFacade<Modulo> {
 
     @PersistenceContext(unitName = "orionPU")
     private EntityManager em;
 
-    public MateriaFacade() {
+    public ModuloFacade() {
         super(Modulo.class);
     }
 
@@ -40,7 +40,7 @@ public class MateriaFacade extends AbstractFacade<Modulo> {
         List<Modulo> l = new ArrayList<>();
 
         try {
-            Query q = em.createQuery("SELECT m FROM Materia m WHERE m.codigo=:codigo AND m.carrera=:carrera");
+            Query q = em.createQuery("SELECT m FROM Modulo m WHERE m.codigo=:codigo AND m.carrera=:carrera");
             q.setParameter("codigo", codigo);
             q.setParameter("carrera", carrera);
 
@@ -52,13 +52,13 @@ public class MateriaFacade extends AbstractFacade<Modulo> {
         return l;
     }
 
-    public List<Modulo> buscarPorCodigo(String codigo, int id_materia, Carrera carrera) {
+    public List<Modulo> buscarPorCodigo(String codigo, int id_modulo, Carrera carrera) {
         List<Modulo> l = new ArrayList<>();
 
         try {
-            Query q = em.createQuery("SELECT m FROM Materia m WHERE m.codigo=:codigo AND m.id_materia!=:id_materia AND m.carrera=:carrera");
+            Query q = em.createQuery("SELECT m FROM Modulo m WHERE m.codigo=:codigo AND m.id_modulo!=:id_modulo AND m.carrera=:carrera");
             q.setParameter("codigo", codigo);
-            q.setParameter("id_materia", id_materia);
+            q.setParameter("id_modulo", id_modulo);
             q.setParameter("carrera", carrera);
 
             l = q.getResultList();
@@ -69,11 +69,11 @@ public class MateriaFacade extends AbstractFacade<Modulo> {
         return l;
     }
 
-    public List<Modulo> listaMaterias(Carrera carrera) {
+    public List<Modulo> listaModulos(Carrera carrera) {
         List<Modulo> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT m FROM Materia m WHERE m.carrera=:carrera ORDER BY m.nivel, m.numero");
+            Query q = em.createQuery("SELECT m FROM Modulo m WHERE m.carrera=:carrera ORDER BY m.nivel, m.numero");
             q.setParameter("carrera", carrera);
 
             l = q.getResultList();
@@ -84,13 +84,13 @@ public class MateriaFacade extends AbstractFacade<Modulo> {
         return l;
     }
 
-    public List<Modulo> listaMaterias(Carrera carrera, int id_materia) {
+    public List<Modulo> listaModulos(Carrera carrera, int id_modulo) {
         List<Modulo> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT m FROM Materia m WHERE m.carrera=:carrera AND m.id_materia!=:id_materia ORDER BY m.nivel, m.numero");
+            Query q = em.createQuery("SELECT m FROM Modulo m WHERE m.carrera=:carrera AND m.id_modulo!=:id_modulo ORDER BY m.nivel, m.numero");
             q.setParameter("carrera", carrera);
-            q.setParameter("id_materia", id_materia);
+            q.setParameter("id_modulo", id_modulo);
 
             l = q.getResultList();
         } catch (Exception e) {
@@ -104,7 +104,7 @@ public class MateriaFacade extends AbstractFacade<Modulo> {
         List<Modulo> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT m FROM Materia m JOIN m.carrera c WHERE c.id_carrera=:id_carrera AND "
+            Query q = em.createQuery("SELECT m FROM Modulo m JOIN m.carrera c WHERE c.id_carrera=:id_carrera AND "
                     + "(LOWER(m.codigo) LIKE LOWER(:keyword) OR "
                     + "LOWER(m.nombre) LIKE LOWER(:keyword)) "
                     + "ORDER BY m.nivel, m.numero");
@@ -118,7 +118,7 @@ public class MateriaFacade extends AbstractFacade<Modulo> {
         return l;
     }
 
-    public List<Modulo> listaMateriaAprobadas(int id_persona, int id_carrera) {
+    public List<Modulo> listaModuloAprobadas(int id_persona, int id_carrera) {
         List<Modulo> l = new ArrayList();
 
         try {
@@ -135,7 +135,7 @@ public class MateriaFacade extends AbstractFacade<Modulo> {
         return l;
     }
 
-    public List<Modulo> listaMateriaAprobadas(Estudiante estudiante, Carrera carrera) {
+    public List<Modulo> listaModuloAprobadas(Estudiante estudiante, Carrera carrera) {
         List<Modulo> l = new ArrayList();
 
         try {
@@ -152,11 +152,11 @@ public class MateriaFacade extends AbstractFacade<Modulo> {
         return l;
     }
 
-    public Long cantidadMaximaMateriasNivel(Carrera carrera) {
+    public Long cantidadMaximaModulosNivel(Carrera carrera) {
         Long l = 0l;
 
         try {
-            Query q = em.createQuery("SELECT COUNT(m) AS cantidad FROM Materia m WHERE m.carrera=:carrera GROUP BY m.nivel ORDER BY cantidad DESC");
+            Query q = em.createQuery("SELECT COUNT(m) AS cantidad FROM Modulo m WHERE m.carrera=:carrera GROUP BY m.nivel ORDER BY cantidad DESC");
             q.setParameter("carrera", carrera);
             q.setMaxResults(1);
 
@@ -168,11 +168,11 @@ public class MateriaFacade extends AbstractFacade<Modulo> {
         return l;
     }
 
-    public Long cantidadMateriasCurriculares(Carrera carrera) {
+    public Long cantidadModulosCurriculares(Carrera carrera) {
         Long l = 0l;
 
         try {
-            Query q = em.createQuery("SELECT COUNT(m) FROM Materia m WHERE m.carrera=:carrera AND m.curricular = TRUE");
+            Query q = em.createQuery("SELECT COUNT(m) FROM Modulo m WHERE m.carrera=:carrera AND m.curricular = TRUE");
             q.setParameter("carrera", carrera);
 
             l = (Long) q.getSingleResult();
@@ -183,11 +183,11 @@ public class MateriaFacade extends AbstractFacade<Modulo> {
         return l;
     }
 
-    public List<Modulo> listaMaterias(int id_prerequisito) {
+    public List<Modulo> listaModulos(int id_prerequisito) {
         List<Modulo> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT m FROM Materia m JOIN m.prerequisitos p WHERE p.id_materia=:id_prerequisito");
+            Query q = em.createQuery("SELECT m FROM Modulo m JOIN m.prerequisitos p WHERE p.id_modulo=:id_prerequisito");
             q.setParameter("id_prerequisito", id_prerequisito);
 
             l = q.getResultList();

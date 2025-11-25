@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.malbino.orion.pojos.centralizador.Centralizador;
 import org.malbino.orion.pojos.centralizador.EstudianteCentralizador;
 import org.malbino.orion.pojos.centralizador.GrupoCentralizador;
-import org.malbino.orion.pojos.centralizador.MateriaCentralizador;
+import org.malbino.orion.pojos.centralizador.ModuloCentralizador;
 import org.malbino.orion.pojos.centralizador.PaginaCentralizador;
 import org.malbino.orion.pojos.centralizador.PaginaEstadisticas;
 import org.malbino.orion.pojos.centralizador.PaginaNotas;
@@ -210,7 +210,7 @@ public class CentralizadorCalificaciones extends HttpServlet {
                     cell.setBackgroundColor(new BaseColor(216, 228, 188));
                     table.addCell(cell);
 
-                    for (MateriaCentralizador materiaCentralizador : paginaNotas.getMateriasCentralizador()) {
+                    for (ModuloCentralizador materiaCentralizador : paginaNotas.getModulosCentralizador()) {
                         cell = new PdfPCell(new Phrase(materiaCentralizador.getCodigo(), NEGRITA_PEQUENA));
                         cell.setColspan(4);
                         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
@@ -248,7 +248,7 @@ public class CentralizadorCalificaciones extends HttpServlet {
                     cell.setBorder(Rectangle.TOP | Rectangle.RIGHT | Rectangle.BOTTOM);
                     table.addCell(cell);
 
-                    for (MateriaCentralizador materiaCentralizador : paginaNotas.getMateriasCentralizador()) {
+                    for (ModuloCentralizador materiaCentralizador : paginaNotas.getModulosCentralizador()) {
                         cell = new PdfPCell(new Phrase(materiaCentralizador.getNombre(), NEGRITA_PEQUENA));
                         cell.setColspan(4);
                         cell.setRowspan(5);
@@ -435,7 +435,7 @@ public class CentralizadorCalificaciones extends HttpServlet {
                             Phrase phrase = new Phrase();
                             phrase.add(new Chunk(gruposCentralizador[i].getDocente(), NORMAL));
                             phrase.add(new Chunk("\n", NORMAL));
-                            phrase.add(new Chunk(gruposCentralizador[i].getMateria(), NORMAL));
+                            phrase.add(new Chunk(gruposCentralizador[i].getModulo(), NORMAL));
                             PdfPCell cell = new PdfPCell(phrase);
                             cell.setColspan(25);
                             cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);

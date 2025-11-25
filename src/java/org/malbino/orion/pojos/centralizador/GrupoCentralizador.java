@@ -36,14 +36,14 @@ public class GrupoCentralizador {
     /**
      * @return the materia
      */
-    public String getMateria() {
+    public String getModulo() {
         return materia;
     }
 
     /**
      * @param materia the materia to set
      */
-    public void setMateria(String materia) {
+    public void setModulo(String materia) {
         this.materia = materia;
     }
 

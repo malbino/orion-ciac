@@ -160,10 +160,10 @@ public class ReportePlanillaSeguimientoController extends AbstractController imp
                     Cell cell = cellIterator.next();
 
                     if (cell.getCellTypeEnum() == CellType.STRING) {
-                        if (cell.getStringCellValue().contains("<<MATERIA>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<MATERIA>>", seleccionGrupo.getMateria().getNombre()));
+                        if (cell.getStringCellValue().contains("<<MODULO>>")) {
+                            cell.setCellValue(cell.getStringCellValue().replace("<<MODULO>>", seleccionGrupo.getModulo().getNombre()));
                         } else if (cell.getStringCellValue().contains("<<CARRERA>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<CARRERA>>", seleccionGrupo.getMateria().getCarrera().toString()));
+                            cell.setCellValue(cell.getStringCellValue().replace("<<CARRERA>>", seleccionGrupo.getModulo().getCarrera().toString()));
                         } else if (cell.getStringCellValue().contains("<<NIVEL>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL>>", ""));
                         } else if (cell.getStringCellValue().contains("<<GA>>")) {
@@ -171,17 +171,17 @@ public class ReportePlanillaSeguimientoController extends AbstractController imp
                         } else if (cell.getStringCellValue().contains("<<DOCENTE>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<DOCENTE>>", seleccionGrupo.getEmpleado().toString()));
                         } else if (cell.getStringCellValue().contains("<<COD_MAT>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<COD_MAT>>", seleccionGrupo.getMateria().getCodigo()));
+                            cell.setCellValue(cell.getStringCellValue().replace("<<COD_MAT>>", seleccionGrupo.getModulo().getCodigo()));
                         } else if (cell.getStringCellValue().contains("<<INSTITUTO>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<INSTITUTO>>", seleccionGrupo.getMateria().getCarrera().getInstituto().getNombre()));
+                            cell.setCellValue(cell.getStringCellValue().replace("<<INSTITUTO>>", seleccionGrupo.getModulo().getCarrera().getInstituto().getNombre()));
                         } else if (cell.getStringCellValue().contains("<<NIVEL_ACADEMICO>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL_ACADEMICO>>", seleccionGrupo.getMateria().getCarrera().getNivelAcademico().getNombre()));
+                            cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL_ACADEMICO>>", seleccionGrupo.getModulo().getCarrera().getNivelAcademico().getNombre()));
                         } else if (cell.getStringCellValue().contains("<<NIVEL>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL>>", ""));
                         } else if (cell.getStringCellValue().contains("<<GRUPO>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<GRUPO>>", seleccionGrupo.toString()));
                         } else if (cell.getStringCellValue().contains("<<NA>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<NA>>", seleccionGrupo.getMateria().getCarrera().getNivelAcademico().toString()));
+                            cell.setCellValue(cell.getStringCellValue().replace("<<NA>>", seleccionGrupo.getModulo().getCarrera().getNivelAcademico().toString()));
                         } else if (cell.getStringCellValue().contains("<<ESTUDIANTE>>")) {
                             rowNum = row.getRowNum();
                         }

@@ -69,7 +69,7 @@ public class InscripcionInternetController extends AbstractController implements
     private CarreraEstudiante seleccionCarreraEstudiante;
     private Inscrito seleccionInscrito;
 
-    private List<Modulo> ofertaMaterias;
+    private List<Modulo> ofertaModulos;
     private List<Nota> estadoInscripcion;
 
     private String[] grupos = Arrays.copyOfRange(Constantes.ABECEDARIO, 0, 6);
@@ -79,7 +79,7 @@ public class InscripcionInternetController extends AbstractController implements
     public void init() {
         seleccionCarreraEstudiante = null;
         seleccionInscrito = null;
-        ofertaMaterias = new ArrayList();
+        ofertaModulos = new ArrayList();
         estadoInscripcion = new ArrayList();
 
         grupo = grupos[0];
@@ -88,7 +88,7 @@ public class InscripcionInternetController extends AbstractController implements
     public void reinit() {
         seleccionCarreraEstudiante = null;
         seleccionInscrito = null;
-        ofertaMaterias = new ArrayList();
+        ofertaModulos = new ArrayList();
         estadoInscripcion = new ArrayList();
 
         grupo = grupos[0];
@@ -120,9 +120,9 @@ public class InscripcionInternetController extends AbstractController implements
 
     public void actualizarOferta() {
         if (seleccionInscrito != null) {
-            ofertaMaterias = inscripcionesFacade.ofertaTomaMaterias(seleccionInscrito);
+            ofertaModulos = inscripcionesFacade.ofertaTomaModulos(seleccionInscrito);
 
-            for (Modulo materia : ofertaMaterias) {
+            for (Modulo materia : ofertaModulos) {
                 List<Grupo> listaGruposAbiertos = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), materia.getId_modulo(), grupo);
                 Iterator<Grupo> iterator = listaGruposAbiertos.iterator();
                 if (iterator.hasNext()) {
@@ -142,7 +142,7 @@ public class InscripcionInternetController extends AbstractController implements
 
     public boolean verificarGrupos() {
         boolean b = true;
-        for (Modulo m : ofertaMaterias) {
+        for (Modulo m : ofertaModulos) {
             if (m.getGrupo() == null) {
                 b = false;
                 break;
@@ -169,20 +169,20 @@ public class InscripcionInternetController extends AbstractController implements
         }
     }
 
-    public void tomarMaterias() throws IOException {
+    public void tomarModulos() throws IOException {
         if (!actividadFacade.listaActividades(Fecha.getDate(), Funcionalidad.INSCRIPCION_INTERNET, seleccionInscrito.getGestionAcademica().getId_gestionacademica()).isEmpty()) {
             List<Pago> listaPagosPagados = pagoFacade.listaPagosPagados(seleccionInscrito.getId_inscrito());
             if (!listaPagosPagados.isEmpty()) {
-                if (!ofertaMaterias.isEmpty()) {
+                if (!ofertaModulos.isEmpty()) {
                     if (verificarGrupos()) {
                         List<Nota> aux = new ArrayList();
-                        for (Modulo materia : ofertaMaterias) {
+                        for (Modulo materia : ofertaModulos) {
                             Nota nota = new Nota(0, Modalidad.REGULAR, Condicion.ABANDONO, seleccionInscrito.getGestionAcademica(), materia, seleccionInscrito.getEstudiante(), seleccionInscrito, materia.getGrupo());
                             aux.add(nota);
                         }
 
                         try {
-                            if (inscripcionesFacade.tomarMaterias(aux)) {
+                            if (inscripcionesFacade.tomarModulos(aux)) {
                                 copiarInscrito(seleccionInscrito.getEstudiante(), aux);
 
                                 //log
@@ -216,10 +216,10 @@ public class InscripcionInternetController extends AbstractController implements
         this.redireccionarViewId("/estudiante/inscripcionInternet/estadoInscripcion");
     }
 
-    public void toOfertaMaterias() throws IOException {
+    public void toOfertaModulos() throws IOException {
         actualizarOferta();
 
-        this.redireccionarViewId("/estudiante/inscripcionInternet/ofertaMaterias");
+        this.redireccionarViewId("/estudiante/inscripcionInternet/ofertaModulos");
     }
 
     /**
@@ -251,17 +251,17 @@ public class InscripcionInternetController extends AbstractController implements
     }
 
     /**
-     * @return the ofertaMaterias
+     * @return the ofertaModulos
      */
-    public List<Modulo> getOfertaMaterias() {
-        return ofertaMaterias;
+    public List<Modulo> getOfertaModulos() {
+        return ofertaModulos;
     }
 
     /**
-     * @param ofertaMaterias the ofertaMaterias to set
+     * @param ofertaModulos the ofertaModulos to set
      */
-    public void setOfertaMaterias(List<Modulo> ofertaMaterias) {
-        this.ofertaMaterias = ofertaMaterias;
+    public void setOfertaModulos(List<Modulo> ofertaModulos) {
+        this.ofertaModulos = ofertaModulos;
     }
 
     /**

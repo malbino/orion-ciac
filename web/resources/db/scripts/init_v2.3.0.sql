@@ -29,7 +29,7 @@ INSERT INTO recurso (ID_RECURSO,NOMBRE,URLPATTERN) VALUES
 	 (9,'Planes de Estudio > Campus','/planesEstudio/campus/'),
 	 (10,'Planes de Estudio > Carreras','/planesEstudio/carrera/'),
 	 (11,'Planes de Estudio > Menciones','/planesEstudio/mencion/'),
-	 (12,'Planes de Estudio > Materias','/planesEstudio/materia/'),
+	 (12,'Planes de Estudio > Modulos','/planesEstudio/materia/'),
 	 (13,'Planes de Estudio > Pasantias','/planesEstudio/pasantia/'),
 	 (14,'Gestiónes Académicas > Calendario Académico','/gestionesAcademicas/calendarioAcademico/'),
 	 (15,'Gestiónes Académicas > Gestiones Académicas','/gestionesAcademicas/gestionAcademica/'),

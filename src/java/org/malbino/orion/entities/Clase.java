@@ -86,7 +86,7 @@ public class Clase implements Serializable {
     }
 
     public String toString_Paralelo() {
-        String s = grupo.getMateria().getNombre() + "\n\n";
+        String s = grupo.getModulo().getNombre() + "\n\n";
         if (grupo.getEmpleado() != null) {
             s += grupo.getEmpleado().nombreHorario();
         } else {

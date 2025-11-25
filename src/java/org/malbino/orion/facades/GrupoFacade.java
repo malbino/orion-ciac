@@ -50,13 +50,13 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
         return l;
     }
 
-    public Long cantidadGrupos(int id_gestionacademica, int id_materia, Turno turno) {
+    public Long cantidadGrupos(int id_gestionacademica, int id_modulo, Turno turno) {
         Long l = 0l;
 
         try {
-            Query q = em.createQuery("SELECT COUNT(g) FROM Grupo g JOIN g.gestionAcademica ga JOIN g.materia m WHERE ga.id_gestionacademica=:id_gestionacademica AND m.id_materia=:id_materia AND g.turno=:turno");
+            Query q = em.createQuery("SELECT COUNT(g) FROM Grupo g JOIN g.gestionAcademica ga JOIN g.materia m WHERE ga.id_gestionacademica=:id_gestionacademica AND m.id_modulo=:id_modulo AND g.turno=:turno");
             q.setParameter("id_gestionacademica", id_gestionacademica);
-            q.setParameter("id_materia", id_materia);
+            q.setParameter("id_modulo", id_modulo);
             q.setParameter("turno", turno);
 
             l = (Long) q.getSingleResult();
@@ -86,14 +86,14 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
         return l;
     }
 
-    public List<Grupo> listaGrupos(int id_gestionacademica, int id_carrera, int id_materia) {
+    public List<Grupo> listaGrupos(int id_gestionacademica, int id_carrera, int id_modulo) {
         List<Grupo> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT g FROM Grupo g JOIN g.gestionAcademica ga JOIN g.materia m JOIN m.carrera c WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND m.id_materia=:id_materia ORDER BY g.turno, g.codigo");
+            Query q = em.createQuery("SELECT g FROM Grupo g JOIN g.gestionAcademica ga JOIN g.materia m JOIN m.carrera c WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND m.id_modulo=:id_modulo ORDER BY g.turno, g.codigo");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_carrera", id_carrera);
-            q.setParameter("id_materia", id_materia);
+            q.setParameter("id_modulo", id_modulo);
 
             l = q.getResultList();
         } catch (Exception e) {
@@ -103,14 +103,14 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
         return l;
     }
 
-    public List<Grupo> listaGruposAbiertos(int id_gestionacademica, int id_carrera, int id_materia) {
+    public List<Grupo> listaGruposAbiertos(int id_gestionacademica, int id_carrera, int id_modulo) {
         List<Grupo> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT g FROM Grupo g JOIN g.gestionAcademica ga JOIN g.materia m JOIN m.carrera c WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND m.id_materia=:id_materia AND g.abierto=TRUE ORDER BY g.turno, g.codigo");
+            Query q = em.createQuery("SELECT g FROM Grupo g JOIN g.gestionAcademica ga JOIN g.materia m JOIN m.carrera c WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND m.id_modulo=:id_modulo AND g.abierto=TRUE ORDER BY g.turno, g.codigo");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_carrera", id_carrera);
-            q.setParameter("id_materia", id_materia);
+            q.setParameter("id_modulo", id_modulo);
 
             l = q.getResultList();
         } catch (Exception e) {
@@ -152,13 +152,13 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
         return l;
     }
 
-    public List<Grupo> listaGruposAbiertos(int id_gestionacademica, int id_materia, String codigo) {
+    public List<Grupo> listaGruposAbiertos(int id_gestionacademica, int id_modulo, String codigo) {
         List<Grupo> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT g FROM Grupo g JOIN g.gestionAcademica ga JOIN g.materia m WHERE ga.id_gestionacademica=:id_gestionacademica AND m.id_materia=:id_materia AND g.codigo=:codigo AND g.abierto=TRUE ORDER BY g.codigo");
+            Query q = em.createQuery("SELECT g FROM Grupo g JOIN g.gestionAcademica ga JOIN g.materia m WHERE ga.id_gestionacademica=:id_gestionacademica AND m.id_modulo=:id_modulo AND g.codigo=:codigo AND g.abierto=TRUE ORDER BY g.codigo");
             q.setParameter("id_gestionacademica", id_gestionacademica);
-            q.setParameter("id_materia", id_materia);
+            q.setParameter("id_modulo", id_modulo);
             q.setParameter("codigo", codigo);
 
             l = q.getResultList();

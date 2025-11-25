@@ -23,7 +23,7 @@ import org.malbino.orion.enums.Modalidad;
  * @author malbino
  */
 @Entity
-@Table(name = "nota", uniqueConstraints = @UniqueConstraint(columnNames = {"id_gestionacademica", "id_materia", "id_estudiante"}))
+@Table(name = "nota", uniqueConstraints = @UniqueConstraint(columnNames = {"id_gestionacademica", "id_modulo", "id_estudiante"}))
 public class Nota implements Serializable {
 
     @Id
@@ -58,9 +58,9 @@ public class Nota implements Serializable {
     @ManyToOne
     private GestionAcademica gestionAcademica;
 
-    @JoinColumn(name = "id_materia")
+    @JoinColumn(name = "id_modulo")
     @ManyToOne
-    private Modulo materia;
+    private Modulo modulo;
 
     @JoinColumn(name = "id_estudiante")
     @ManyToOne
@@ -82,7 +82,7 @@ public class Nota implements Serializable {
         this.modalidad = modalidad;
         this.condicion = condicion;
         this.gestionAcademica = gestionAcademica;
-        this.materia = materia;
+        this.modulo = materia;
         this.estudiante = estudiante;
         this.inscrito = inscrito;
         this.grupo = grupo;
@@ -341,17 +341,17 @@ public class Nota implements Serializable {
     }
 
     /**
-     * @return the materia
+     * @return the modulo
      */
-    public Modulo getMateria() {
-        return materia;
+    public Modulo getModulo() {
+        return modulo;
     }
 
     /**
-     * @param materia the materia to set
+     * @param modulo the modulo to set
      */
-    public void setMateria(Modulo materia) {
-        this.materia = materia;
+    public void setModulo(Modulo modulo) {
+        this.modulo = modulo;
     }
 
     /**

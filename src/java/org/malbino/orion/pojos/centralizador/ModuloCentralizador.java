@@ -9,12 +9,12 @@ package org.malbino.orion.pojos.centralizador;
  *
  * @author Tincho
  */
-public class MateriaCentralizador {
+public class ModuloCentralizador {
 
     private String codigo;
     private String nombre;
 
-    public MateriaCentralizador(String codigo, String nombre) {
+    public ModuloCentralizador(String codigo, String nombre) {
         this.codigo = codigo;
         this.nombre = nombre;
     }
