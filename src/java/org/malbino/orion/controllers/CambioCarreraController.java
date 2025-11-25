@@ -22,7 +22,6 @@ import org.malbino.orion.entities.Usuario;
 import org.malbino.orion.enums.EntidadLog;
 import org.malbino.orion.enums.EventoLog;
 import org.malbino.orion.enums.Funcionalidad;
-import org.malbino.orion.enums.Nivel;
 import org.malbino.orion.facades.ActividadFacade;
 import org.malbino.orion.facades.InscritoFacade;
 import org.malbino.orion.facades.negocio.InscripcionesFacade;
@@ -50,21 +49,18 @@ public class CambioCarreraController extends AbstractController implements Seria
     LoginController loginController;
 
     private Estudiante seleccionEstudiante;
-    private Boolean traspasoConvalidacion;
     private CarreraEstudiante seleccionCarreraEstudiante;
     private GestionAcademica seleccionGestionAcademica;
 
     @PostConstruct
     public void init() {
         seleccionEstudiante = null;
-        traspasoConvalidacion = Boolean.FALSE;
         seleccionCarreraEstudiante = null;
         seleccionGestionAcademica = null;
     }
 
     public void reinit() {
         seleccionEstudiante = null;
-        traspasoConvalidacion = Boolean.FALSE;
         seleccionCarreraEstudiante = null;
         seleccionGestionAcademica = null;
     }
@@ -74,31 +70,14 @@ public class CambioCarreraController extends AbstractController implements Seria
 
         List<Carrera> carreras = carreraFacade.listaCarreras();
         for (Carrera carrera : carreras) {
-            if (!traspasoConvalidacion) {
-                CarreraEstudiante.CarreraEstudianteId carreraEstudianteId = new CarreraEstudiante.CarreraEstudianteId();
-                carreraEstudianteId.setId_carrera(carrera.getId_carrera());
-                carreraEstudianteId.setId_persona(0);
-                CarreraEstudiante carreraEstudiante = new CarreraEstudiante();
-                carreraEstudiante.setCarreraEstudianteId(carreraEstudianteId);
-                carreraEstudiante.setCarrera(carrera);
+            CarreraEstudiante.CarreraEstudianteId carreraEstudianteId = new CarreraEstudiante.CarreraEstudianteId();
+            carreraEstudianteId.setId_carrera(carrera.getId_carrera());
+            carreraEstudianteId.setId_persona(0);
+            CarreraEstudiante carreraEstudiante = new CarreraEstudiante();
+            carreraEstudiante.setCarreraEstudianteId(carreraEstudianteId);
+            carreraEstudiante.setCarrera(carrera);
 
-                l.add(carreraEstudiante);
-            } else {
-                Nivel[] niveles = Nivel.values(carrera.getRegimen());
-                for (int i = 1; i < niveles.length; i++) {
-                    Nivel nivel = niveles[i];
-
-                    CarreraEstudiante.CarreraEstudianteId carreraEstudianteId = new CarreraEstudiante.CarreraEstudianteId();
-                    carreraEstudianteId.setId_carrera(carrera.getId_carrera());
-                    carreraEstudianteId.setId_persona(0);
-                    CarreraEstudiante carreraEstudiante = new CarreraEstudiante();
-                    carreraEstudiante.setCarreraEstudianteId(carreraEstudianteId);
-                    carreraEstudiante.setCarrera(carrera);
-                    carreraEstudiante.setNivelInicio(nivel);
-
-                    l.add(carreraEstudiante);
-                }
-            }
+            l.add(carreraEstudiante);
         }
         return l;
     }
@@ -210,19 +189,4 @@ public class CambioCarreraController extends AbstractController implements Seria
     public void setSeleccionGestionAcademica(GestionAcademica seleccionGestionAcademica) {
         this.seleccionGestionAcademica = seleccionGestionAcademica;
     }
-
-    /**
-     * @return the traspasoConvalidacion
-     */
-    public Boolean getTraspasoConvalidacion() {
-        return traspasoConvalidacion;
-    }
-
-    /**
-     * @param traspasoConvalidacion the traspasoConvalidacion to set
-     */
-    public void setTraspasoConvalidacion(Boolean traspasoConvalidacion) {
-        this.traspasoConvalidacion = traspasoConvalidacion;
-    }
-
 }

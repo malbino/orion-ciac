@@ -10,7 +10,7 @@ import javax.faces.convert.Converter;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import org.malbino.orion.entities.Materia;
+import org.malbino.orion.entities.Modulo;
 import org.malbino.orion.facades.MateriaFacade;
 
 /**
@@ -44,7 +44,7 @@ public class MateriaConverter implements Converter {
         if (value == null || value.equals("")) {
             s = "";
         } else {
-            s = String.valueOf(((Materia) value).getId_materia());
+            s = String.valueOf(((Modulo) value).getId_modulo());
         }
 
         return s;

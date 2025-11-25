@@ -17,7 +17,7 @@ import org.malbino.orion.entities.CarreraEstudiante;
 import org.malbino.orion.entities.Estudiante;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Log;
-import org.malbino.orion.entities.Materia;
+import org.malbino.orion.entities.Modulo;
 import org.malbino.orion.entities.Nota;
 import org.malbino.orion.enums.EntidadLog;
 import org.malbino.orion.enums.EventoLog;
@@ -137,8 +137,8 @@ public class HistorialAcademicoController extends AbstractController implements 
         return l;
     }
 
-    public List<Materia> listaMaterias() {
-        List<Materia> l = new ArrayList();
+    public List<Modulo> listaMaterias() {
+        List<Modulo> l = new ArrayList();
         if (seleccionCarreraEstudiante != null && seleccionEstudiante != null) {
             l = fileEstudianteFacade.oferta(seleccionCarreraEstudiante.getCarrera(), seleccionEstudiante);
         }
@@ -184,7 +184,7 @@ public class HistorialAcademicoController extends AbstractController implements 
     }
 
     public void crearNota() throws IOException {
-        List<Nota> listaNotasMateria = notaFacade.listaNotasMateria(nuevaNota.getGestionAcademica().getId_gestionacademica(), seleccionEstudiante.getId_persona(), nuevaNota.getMateria().getId_materia());
+        List<Nota> listaNotasMateria = notaFacade.listaNotasMateria(nuevaNota.getGestionAcademica().getId_gestionacademica(), seleccionEstudiante.getId_persona(), nuevaNota.getMateria().getId_modulo());
         if (listaNotasMateria.isEmpty()) {
             nuevaNota.setEstudiante(seleccionEstudiante);
             if (fileEstudianteFacade.crearNota(nuevaNota)) {

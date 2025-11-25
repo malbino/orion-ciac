@@ -126,7 +126,7 @@ public class ListaInscritosGrupo extends HttpServlet {
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase(grupo.getMateria().getNivel().toString(), SUBTITULO));
+        cell = new PdfPCell(new Phrase("", SUBTITULO));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setColspan(80);
         cell.setBorder(Rectangle.NO_BORDER);

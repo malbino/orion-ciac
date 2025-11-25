@@ -33,7 +33,6 @@ import org.malbino.orion.entities.Clase;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Periodo;
 import org.malbino.orion.enums.Dia;
-import org.malbino.orion.enums.Nivel;
 import org.malbino.orion.enums.Turno;
 import org.malbino.orion.facades.CarreraFacade;
 import org.malbino.orion.facades.ClaseFacade;
@@ -81,11 +80,10 @@ public class HorarioParalelo extends HttpServlet {
     public void generarPDF(HttpServletRequest request, HttpServletResponse response) {
         Integer id_gestionacademica = (Integer) request.getSession().getAttribute("id_gestionacademica");
         Integer id_carrera = (Integer) request.getSession().getAttribute("id_carrera");
-        Nivel nivel = (Nivel) request.getSession().getAttribute("nivel");
         Turno turno = (Turno) request.getSession().getAttribute("turno");
         String paralelo = (String) request.getSession().getAttribute("paralelo");
 
-        if (id_gestionacademica != null && id_carrera != null && nivel != null && paralelo != null) {
+        if (id_gestionacademica != null && id_carrera != null && paralelo != null) {
             GestionAcademica gestionAcademica = gestionAcademicaFacade.find(id_gestionacademica);
             Carrera carrera = carreraFacade.find(id_carrera);
             try {
@@ -96,8 +94,8 @@ public class HorarioParalelo extends HttpServlet {
 
                 document.open();
 
-                document.add(titulo(gestionAcademica, carrera, nivel, turno, paralelo));
-                document.add(contenido(gestionAcademica, carrera, nivel, turno, paralelo));
+                document.add(titulo(gestionAcademica, carrera, turno, paralelo));
+                document.add(contenido(gestionAcademica, carrera, turno, paralelo));
 
                 document.close();
             } catch (IOException | DocumentException ex) {
@@ -107,7 +105,7 @@ public class HorarioParalelo extends HttpServlet {
         }
     }
 
-    public PdfPTable titulo(GestionAcademica gestionAcademica, Carrera carrera, Nivel nivel, Turno turno, String paralelo) throws BadElementException, IOException {
+    public PdfPTable titulo(GestionAcademica gestionAcademica, Carrera carrera, Turno turno, String paralelo) throws BadElementException, IOException {
         PdfPTable table = new PdfPTable(100);
 
         //cabecera
@@ -142,7 +140,7 @@ public class HorarioParalelo extends HttpServlet {
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase(nivel.toString(), SUBTITULO));
+        cell = new PdfPCell(new Phrase("", SUBTITULO));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setColspan(80);
         cell.setBorder(Rectangle.NO_BORDER);
@@ -163,7 +161,7 @@ public class HorarioParalelo extends HttpServlet {
         return table;
     }
 
-    public PdfPTable contenido(GestionAcademica gestionAcademica, Carrera carrera, Nivel nivel, Turno turno, String paralelo) throws BadElementException, IOException {
+    public PdfPTable contenido(GestionAcademica gestionAcademica, Carrera carrera, Turno turno, String paralelo) throws BadElementException, IOException {
         PdfPTable table = new PdfPTable(80);
 
         PdfPCell cell = new PdfPCell(new Phrase(" ", NEGRITA));
@@ -199,7 +197,7 @@ public class HorarioParalelo extends HttpServlet {
             for (int j = 0; j < dias.length; j++) {
                 Dia dia = dias[j];
 
-                Clase clase = claseFacade.buscar(gestionAcademica.getId_gestionacademica(), carrera.getId_carrera(), nivel, turno, paralelo, periodo, dia);
+                Clase clase = claseFacade.buscar(gestionAcademica.getId_gestionacademica(), carrera.getId_carrera(), turno, paralelo, periodo, dia);
                 if (clase != null) {
                     cell = new PdfPCell(new Phrase(clase.toString_Paralelo(), NORMAL));
                     cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);

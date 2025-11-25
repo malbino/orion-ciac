@@ -12,7 +12,6 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.malbino.orion.enums.Nivel;
 
 /**
  *
@@ -24,8 +23,6 @@ public class CarreraEstudiante implements Serializable {
 
     @EmbeddedId
     private CarreraEstudianteId carreraEstudianteId;
-
-    private Nivel nivelInicio;
 
     @Transient
     private Carrera carrera;
@@ -69,7 +66,6 @@ public class CarreraEstudiante implements Serializable {
     public int hashCode() {
         int hash = 7;
         hash = 89 * hash + Objects.hashCode(this.carreraEstudianteId);
-        hash = 89 * hash + Objects.hashCode(this.nivelInicio);
         return hash;
     }
 
@@ -88,18 +84,12 @@ public class CarreraEstudiante implements Serializable {
         if (!Objects.equals(this.carreraEstudianteId, other.carreraEstudianteId)) {
             return false;
         }
-        if (this.nivelInicio != other.nivelInicio) {
-            return false;
-        }
         return true;
     }
 
     @Override
     public String toString() {
         String s = carrera.toString();
-        if (nivelInicio != null) {
-            s += " -> " + nivelInicio.getAbreviatura();
-        }
         return s;
     }
 
@@ -176,17 +166,4 @@ public class CarreraEstudiante implements Serializable {
 
     }
 
-    /**
-     * @return the nivelInicio
-     */
-    public Nivel getNivelInicio() {
-        return nivelInicio;
-    }
-
-    /**
-     * @param nivelInicio the nivelInicio to set
-     */
-    public void setNivelInicio(Nivel nivelInicio) {
-        this.nivelInicio = nivelInicio;
-    }
 }

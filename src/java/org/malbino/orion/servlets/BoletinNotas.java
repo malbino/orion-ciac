@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.malbino.orion.entities.CarreraEstudiante;
 import org.malbino.orion.entities.CarreraEstudiante.CarreraEstudianteId;
 import org.malbino.orion.entities.Inscrito;
-import org.malbino.orion.entities.Materia;
+import org.malbino.orion.entities.Modulo;
 import org.malbino.orion.entities.Nota;
 import org.malbino.orion.enums.ModalidadEvaluacion;
 import org.malbino.orion.facades.CarreraEstudianteFacade;
@@ -1273,9 +1273,9 @@ public class BoletinNotas extends HttpServlet {
         cell.setBackgroundColor(BaseColor.GRAY);
         table.addCell(cell);
 
-        List<Materia> oferta = inscripcionesFacade.ofertaBoletinNotas(inscrito);
+        List<Modulo> oferta = inscripcionesFacade.ofertaBoletinNotas(inscrito);
         for (int i = 0; i < oferta.size(); i++) {
-            Materia materia = oferta.get(i);
+            Modulo materia = oferta.get(i);
 
             if (i % 2 == 0) {
                 cell = new PdfPCell(new Phrase(materia.getCodigo(), NORMAL));
@@ -1292,7 +1292,7 @@ public class BoletinNotas extends HttpServlet {
                 cell.setColspan(50);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(materia.getNivel().getNombre(), NORMAL));
+                cell = new PdfPCell(new Phrase("", NORMAL));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
                 cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                 cell.setBorder(Rectangle.NO_BORDER);
@@ -1322,7 +1322,7 @@ public class BoletinNotas extends HttpServlet {
                 cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(materia.getNivel().getNombre(), NORMAL));
+                cell = new PdfPCell(new Phrase("", NORMAL));
                 cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
                 cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
                 cell.setBorder(Rectangle.NO_BORDER);

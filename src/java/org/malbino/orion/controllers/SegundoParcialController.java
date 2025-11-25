@@ -197,7 +197,7 @@ public class SegundoParcialController extends AbstractController implements Seri
                         } else if (cell.getStringCellValue().contains("<<CARRERA>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<CARRERA>>", seleccionGrupo.getMateria().getCarrera().toString()));
                         } else if (cell.getStringCellValue().contains("<<NIVEL>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL>>", seleccionGrupo.getMateria().getNivel().toString()));
+                            cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL>>", ""));
                         } else if (cell.getStringCellValue().contains("<<GA>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<GA>>", seleccionGrupo.getGestionAcademica().toString()));
                         } else if (cell.getStringCellValue().contains("<<DOCENTE>>")) {

@@ -166,7 +166,7 @@ public class PlanillaSeguimiento extends HttpServlet {
         cell.setColspan(12);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase(grupo.getMateria().getNivel().getNombre(), NEGRITA));
+        cell = new PdfPCell(new Phrase("", NEGRITA));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         cell.setColspan(28);

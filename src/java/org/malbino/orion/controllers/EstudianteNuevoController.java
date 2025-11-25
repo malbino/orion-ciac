@@ -22,7 +22,6 @@ import org.malbino.orion.entities.Usuario;
 import org.malbino.orion.enums.EntidadLog;
 import org.malbino.orion.enums.EventoLog;
 import org.malbino.orion.enums.Funcionalidad;
-import org.malbino.orion.enums.Nivel;
 import org.malbino.orion.facades.ActividadFacade;
 import org.malbino.orion.facades.negocio.InscripcionesFacade;
 import org.malbino.orion.util.Encriptador;
@@ -71,31 +70,14 @@ public class EstudianteNuevoController extends AbstractController implements Ser
         if (seleccionGestionAcademica != null) {
             List<Carrera> carreras = carreraFacade.listaCarreras(seleccionGestionAcademica.getRegimen());
             for (Carrera carrera : carreras) {
-                if (!traspasoConvalidacion) {
-                    CarreraEstudiante.CarreraEstudianteId carreraEstudianteId = new CarreraEstudiante.CarreraEstudianteId();
-                    carreraEstudianteId.setId_carrera(carrera.getId_carrera());
-                    carreraEstudianteId.setId_persona(0);
-                    CarreraEstudiante carreraEstudiante = new CarreraEstudiante();
-                    carreraEstudiante.setCarreraEstudianteId(carreraEstudianteId);
-                    carreraEstudiante.setCarrera(carrera);
+                CarreraEstudiante.CarreraEstudianteId carreraEstudianteId = new CarreraEstudiante.CarreraEstudianteId();
+                carreraEstudianteId.setId_carrera(carrera.getId_carrera());
+                carreraEstudianteId.setId_persona(0);
+                CarreraEstudiante carreraEstudiante = new CarreraEstudiante();
+                carreraEstudiante.setCarreraEstudianteId(carreraEstudianteId);
+                carreraEstudiante.setCarrera(carrera);
 
-                    l.add(carreraEstudiante);
-                } else {
-                    Nivel[] niveles = Nivel.values(carrera.getRegimen());
-                    for (int i = 1; i < niveles.length; i++) {
-                        Nivel nivel = niveles[i];
-
-                        CarreraEstudiante.CarreraEstudianteId carreraEstudianteId = new CarreraEstudiante.CarreraEstudianteId();
-                        carreraEstudianteId.setId_carrera(carrera.getId_carrera());
-                        carreraEstudianteId.setId_persona(0);
-                        CarreraEstudiante carreraEstudiante = new CarreraEstudiante();
-                        carreraEstudiante.setCarreraEstudianteId(carreraEstudianteId);
-                        carreraEstudiante.setCarrera(carrera);
-                        carreraEstudiante.setNivelInicio(nivel);
-
-                        l.add(carreraEstudiante);
-                    }
-                }
+                l.add(carreraEstudiante);
             }
         }
         return l;

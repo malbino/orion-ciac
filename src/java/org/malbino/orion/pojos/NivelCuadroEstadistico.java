@@ -6,7 +6,6 @@
 package org.malbino.orion.pojos;
 
 import java.io.Serializable;
-import org.malbino.orion.enums.Nivel;
 
 /**
  *
@@ -16,7 +15,6 @@ public class NivelCuadroEstadistico implements Serializable {
 
     private String codigo;
     private String nombre;
-    private Nivel nivel;
     private String paralelo;
 
     private Integer inscritosVarones;
@@ -68,20 +66,6 @@ public class NivelCuadroEstadistico implements Serializable {
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    /**
-     * @return the nivel
-     */
-    public Nivel getNivel() {
-        return nivel;
-    }
-
-    /**
-     * @param nivel the nivel to set
-     */
-    public void setNivel(Nivel nivel) {
-        this.nivel = nivel;
     }
 
     /**

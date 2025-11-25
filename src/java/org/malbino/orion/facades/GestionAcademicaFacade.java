@@ -16,7 +16,6 @@ import org.malbino.orion.entities.Estudiante;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.enums.Condicion;
 import org.malbino.orion.enums.ModalidadEvaluacion;
-import org.malbino.orion.enums.Nivel;
 import org.malbino.orion.enums.Periodo;
 import org.malbino.orion.enums.Regimen;
 
@@ -216,14 +215,13 @@ public class GestionAcademicaFacade extends AbstractFacade<GestionAcademica> {
         return l;
     }
 
-    public List<GestionAcademica> listaGestionesAcademicas(Estudiante estudiante, Carrera carrera, Nivel nivel) {
+    public List<GestionAcademica> listaGestionesAcademicas(Estudiante estudiante, Carrera carrera) {
         List<GestionAcademica> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT DISTINCT ga FROM Nota n JOIN n.materia m JOIN n.gestionAcademica ga WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND m.nivel=:nivel AND m.curricular=TRUE AND n.condicion=:condicion ORDER BY m.numero");
+            Query q = em.createQuery("SELECT DISTINCT ga FROM Nota n JOIN n.materia m JOIN n.gestionAcademica ga WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND m.curricular=TRUE AND n.condicion=:condicion ORDER BY m.numero");
             q.setParameter("estudiante", estudiante);
             q.setParameter("carrera", carrera);
-            q.setParameter("nivel", nivel);
             q.setParameter("condicion", Condicion.APROBADO);
 
             l = q.getResultList();

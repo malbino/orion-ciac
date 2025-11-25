@@ -19,7 +19,6 @@ import org.malbino.orion.entities.Inscrito;
 import org.malbino.orion.entities.Log;
 import org.malbino.orion.enums.EntidadLog;
 import org.malbino.orion.enums.EventoLog;
-import org.malbino.orion.enums.Nivel;
 import org.malbino.orion.enums.Turno;
 import org.malbino.orion.facades.GrupoFacade;
 import org.malbino.orion.facades.InscritoFacade;
@@ -42,7 +41,6 @@ public class InscritosController extends AbstractController implements Serializa
 
     private GestionAcademica seleccionGestionAcademica;
     private Carrera seleccionCarrera;
-    private Nivel seleccionNivel;
     private Turno seleccionTurno;
     private String seleccionParalelo;
 
@@ -55,7 +53,6 @@ public class InscritosController extends AbstractController implements Serializa
     public void init() {
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
-        seleccionNivel = null;
         seleccionTurno = null;
         seleccionParalelo = null;
 
@@ -66,16 +63,16 @@ public class InscritosController extends AbstractController implements Serializa
     }
 
     public void reinit() {
-        if (seleccionGestionAcademica != null && seleccionCarrera == null && seleccionNivel == null && seleccionTurno == null && seleccionParalelo == null) {
+        if (seleccionGestionAcademica != null && seleccionCarrera == null && seleccionTurno == null && seleccionParalelo == null) {
             inscritos = inscritoFacade.listaInscritos(seleccionGestionAcademica.getId_gestionacademica());
-        } else if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionNivel == null && seleccionTurno == null && seleccionParalelo == null) {
+        } else if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionTurno == null && seleccionParalelo == null) {
             inscritos = inscritoFacade.listaInscritos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera());
-        } else if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionNivel != null && seleccionTurno == null && seleccionParalelo == null) {
-            inscritos = inscritoFacade.listaInscritos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionNivel);
-        } else if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionNivel != null && seleccionTurno != null && seleccionParalelo == null) {
-            inscritos = inscritoFacade.listaInscritos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionNivel, seleccionTurno);
-        } else if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionNivel != null && seleccionTurno != null && seleccionParalelo != null) {
-            inscritos = inscritoFacade.listaInscritos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionNivel, seleccionTurno, seleccionParalelo);
+        } else if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionTurno == null && seleccionParalelo == null) {
+            inscritos = inscritoFacade.listaInscritos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera());
+        } else if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionTurno != null && seleccionParalelo == null) {
+            inscritos = inscritoFacade.listaInscritos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionTurno);
+        } else if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionTurno != null && seleccionParalelo != null) {
+            inscritos = inscritoFacade.listaInscritos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionTurno, seleccionParalelo);
         } else {
             inscritos = new ArrayList<>();
         }
@@ -93,18 +90,10 @@ public class InscritosController extends AbstractController implements Serializa
         return l;
     }
 
-    public Nivel[] listaNiveles() {
-        Nivel[] niveles = new Nivel[0];
-        if (seleccionGestionAcademica != null && seleccionCarrera != null) {
-            niveles = Nivel.values(seleccionCarrera.getRegimen());
-        }
-        return niveles;
-    }
-
     @Override
     public Turno[] listaTurnos() {
         Turno[] turnos = new Turno[0];
-        if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionNivel != null) {
+        if (seleccionGestionAcademica != null && seleccionCarrera != null) {
             turnos = Turno.values();
         }
         return turnos;
@@ -112,23 +101,23 @@ public class InscritosController extends AbstractController implements Serializa
 
     public List<String> listaParalelos() {
         List<String> paralelos = new ArrayList<>();
-        if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionNivel != null && seleccionTurno != null) {
-            paralelos = grupoFacade.listaParalelos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionNivel, seleccionTurno);
+        if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionTurno != null) {
+            paralelos = grupoFacade.listaParalelos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionTurno);
         }
         return paralelos;
     }
 
     public void buscar() {
-        if (seleccionGestionAcademica != null && seleccionCarrera == null && seleccionNivel == null && seleccionTurno == null && seleccionParalelo == null) {
+        if (seleccionGestionAcademica != null && seleccionCarrera == null && seleccionTurno == null && seleccionParalelo == null) {
             inscritos = inscritoFacade.buscar(seleccionGestionAcademica.getId_gestionacademica(), keyword);
-        } else if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionNivel == null && seleccionTurno == null && seleccionParalelo == null) {
+        } else if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionTurno == null && seleccionParalelo == null) {
             inscritos = inscritoFacade.buscar(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), keyword);
-        } else if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionNivel != null && seleccionTurno == null && seleccionParalelo == null) {
-            inscritos = inscritoFacade.buscar(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionNivel, keyword);
-        } else if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionNivel != null && seleccionTurno != null && seleccionParalelo == null) {
-            inscritos = inscritoFacade.buscar(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionNivel, seleccionTurno, keyword);
-        } else if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionNivel != null && seleccionTurno != null && seleccionParalelo != null) {
-            inscritos = inscritoFacade.buscar(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionNivel, seleccionTurno, seleccionParalelo, keyword);
+        } else if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionTurno == null && seleccionParalelo == null) {
+            inscritos = inscritoFacade.buscar(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), keyword);
+        } else if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionTurno != null && seleccionParalelo == null) {
+            inscritos = inscritoFacade.buscar(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionTurno, keyword);
+        } else if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionTurno != null && seleccionParalelo != null) {
+            inscritos = inscritoFacade.buscar(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionTurno, seleccionParalelo, keyword);
         }
     }
 
@@ -167,20 +156,6 @@ public class InscritosController extends AbstractController implements Serializa
      */
     public void setSeleccionCarrera(Carrera seleccionCarrera) {
         this.seleccionCarrera = seleccionCarrera;
-    }
-
-    /**
-     * @return the seleccionNivel
-     */
-    public Nivel getSeleccionNivel() {
-        return seleccionNivel;
-    }
-
-    /**
-     * @param seleccionNivel the seleccionNivel to set
-     */
-    public void setSeleccionNivel(Nivel seleccionNivel) {
-        this.seleccionNivel = seleccionNivel;
     }
 
     /**

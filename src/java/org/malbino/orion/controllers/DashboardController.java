@@ -20,7 +20,6 @@ import org.malbino.orion.entities.Inscrito;
 import org.malbino.orion.entities.Log;
 import org.malbino.orion.enums.Condicion;
 import org.malbino.orion.enums.EventoLog;
-import org.malbino.orion.enums.Nivel;
 import org.malbino.orion.enums.Sexo;
 import org.malbino.orion.facades.GrupoFacade;
 import org.malbino.orion.facades.InscritoFacade;
@@ -396,87 +395,82 @@ public class DashboardController extends AbstractController implements Serializa
                 Integer subtotalReprobadosVarones = 0;
                 Integer subtotalReprobadosMujeres = 0;
 
-                Nivel[] niveles = Nivel.values(carrera.getRegimen());
-                for (Nivel nivel : niveles) {
+                List<String> paralelos = grupoFacade.listaParalelos(seleccionGestionAcademica.getId_gestionacademica(), carrera.getId_carrera());
+                for (String paralelo : paralelos) {
 
-                    List<String> paralelos = grupoFacade.listaParalelos(seleccionGestionAcademica.getId_gestionacademica(), carrera.getId_carrera(), nivel);
-                    for (String paralelo : paralelos) {
+                    List<Inscrito> inscritos = inscritoFacade.listaInscritos(seleccionGestionAcademica.getId_gestionacademica(), carrera.getId_carrera(), paralelo);
+                    if (!inscritos.isEmpty()) {
+                        nivelCuadroEstadistico = new NivelCuadroEstadistico();
 
-                        List<Inscrito> inscritos = inscritoFacade.listaInscritos(seleccionGestionAcademica.getId_gestionacademica(), carrera.getId_carrera(), nivel, paralelo);
-                        if (!inscritos.isEmpty()) {
-                            nivelCuadroEstadistico = new NivelCuadroEstadistico();
+                        nivelCuadroEstadistico.setCodigo(carrera.getCodigo());
+                        nivelCuadroEstadistico.setNombre(carrera.getNombre());
+                        nivelCuadroEstadistico.setParalelo(paralelo);
 
-                            nivelCuadroEstadistico.setCodigo(carrera.getCodigo());
-                            nivelCuadroEstadistico.setNombre(carrera.getNombre());
-                            nivelCuadroEstadistico.setNivel(nivel);
-                            nivelCuadroEstadistico.setParalelo(paralelo);
+                        List<Inscrito> inscritosVarones = inscritos.stream().filter(i -> i.getEstudiante().getSexo().equals(Sexo.MASCULINO)).collect(Collectors.toList());
+                        List<Inscrito> inscritosMujeres = inscritos.stream().filter(i -> i.getEstudiante().getSexo().equals(Sexo.FEMENINO)).collect(Collectors.toList());
+                        nivelCuadroEstadistico.setInscritos(inscritos.size());
+                        nivelCuadroEstadistico.setInscritosVarones(inscritosVarones.size());
+                        nivelCuadroEstadistico.setInscritosMujeres(inscritosMujeres.size());
+                        subtotalInscritos += inscritos.size();
+                        totalInscritos += inscritos.size();
+                        subtotalInscritosVarones += inscritosVarones.size();
+                        totalInscritosVarones += inscritosVarones.size();
+                        subtotalInscritosMujeres += inscritosMujeres.size();
+                        totalInscritosMujeres += inscritosMujeres.size();
 
-                            List<Inscrito> inscritosVarones = inscritos.stream().filter(i -> i.getEstudiante().getSexo().equals(Sexo.MASCULINO)).collect(Collectors.toList());
-                            List<Inscrito> inscritosMujeres = inscritos.stream().filter(i -> i.getEstudiante().getSexo().equals(Sexo.FEMENINO)).collect(Collectors.toList());
-                            nivelCuadroEstadistico.setInscritos(inscritos.size());
-                            nivelCuadroEstadistico.setInscritosVarones(inscritosVarones.size());
-                            nivelCuadroEstadistico.setInscritosMujeres(inscritosMujeres.size());
-                            subtotalInscritos += inscritos.size();
-                            totalInscritos += inscritos.size();
-                            subtotalInscritosVarones += inscritosVarones.size();
-                            totalInscritosVarones += inscritosVarones.size();
-                            subtotalInscritosMujeres += inscritosMujeres.size();
-                            totalInscritosMujeres += inscritosMujeres.size();
+                        List<Inscrito> retirados = inscritos.stream().filter(i -> i.condicion().equals(Condicion.ABANDONO)).collect(Collectors.toList());
+                        List<Inscrito> retiradosVarones = retirados.stream().filter(i -> i.getEstudiante().getSexo().equals(Sexo.MASCULINO)).collect(Collectors.toList());
+                        List<Inscrito> retiradosMujeres = retirados.stream().filter(i -> i.getEstudiante().getSexo().equals(Sexo.FEMENINO)).collect(Collectors.toList());
+                        nivelCuadroEstadistico.setRetirados(retirados.size());
+                        nivelCuadroEstadistico.setRetiradosVarones(retiradosVarones.size());
+                        nivelCuadroEstadistico.setRetiradosMujeres(retiradosMujeres.size());
+                        subtotalRetirados += retirados.size();
+                        totalRetirados += retirados.size();
+                        subtotalRetiradosVarones += retiradosVarones.size();
+                        totalRetiradosVarones += retiradosVarones.size();
+                        subtotalRetiradosMujeres += retiradosMujeres.size();
+                        totalRetiradosMujeres += retiradosMujeres.size();
 
-                            List<Inscrito> retirados = inscritos.stream().filter(i -> i.condicion().equals(Condicion.ABANDONO)).collect(Collectors.toList());
-                            List<Inscrito> retiradosVarones = retirados.stream().filter(i -> i.getEstudiante().getSexo().equals(Sexo.MASCULINO)).collect(Collectors.toList());
-                            List<Inscrito> retiradosMujeres = retirados.stream().filter(i -> i.getEstudiante().getSexo().equals(Sexo.FEMENINO)).collect(Collectors.toList());
-                            nivelCuadroEstadistico.setRetirados(retirados.size());
-                            nivelCuadroEstadistico.setRetiradosVarones(retiradosVarones.size());
-                            nivelCuadroEstadistico.setRetiradosMujeres(retiradosMujeres.size());
-                            subtotalRetirados += retirados.size();
-                            totalRetirados += retirados.size();
-                            subtotalRetiradosVarones += retiradosVarones.size();
-                            totalRetiradosVarones += retiradosVarones.size();
-                            subtotalRetiradosMujeres += retiradosMujeres.size();
-                            totalRetiradosMujeres += retiradosMujeres.size();
+                        Integer efectivos = inscritos.size() - retirados.size();
+                        Integer efectivosVarones = inscritosVarones.size() - retiradosVarones.size();
+                        Integer efectivosMujeres = inscritosMujeres.size() - retiradosMujeres.size();
+                        nivelCuadroEstadistico.setEfectivos(efectivos);
+                        nivelCuadroEstadistico.setEfectivosVarones(efectivosVarones);
+                        nivelCuadroEstadistico.setEfectivosMujeres(efectivosMujeres);
+                        subtotalEfectivos += efectivos;
+                        totalEfectivos += efectivos;
+                        subtotalEfectivosVarones += efectivosVarones;
+                        totalEfectivosVarones += efectivosVarones;
+                        subtotalEfectivosMujeres += efectivosMujeres;
+                        totalEfectivosMujeres += efectivosMujeres;
 
-                            Integer efectivos = inscritos.size() - retirados.size();
-                            Integer efectivosVarones = inscritosVarones.size() - retiradosVarones.size();
-                            Integer efectivosMujeres = inscritosMujeres.size() - retiradosMujeres.size();
-                            nivelCuadroEstadistico.setEfectivos(efectivos);
-                            nivelCuadroEstadistico.setEfectivosVarones(efectivosVarones);
-                            nivelCuadroEstadistico.setEfectivosMujeres(efectivosMujeres);
-                            subtotalEfectivos += efectivos;
-                            totalEfectivos += efectivos;
-                            subtotalEfectivosVarones += efectivosVarones;
-                            totalEfectivosVarones += efectivosVarones;
-                            subtotalEfectivosMujeres += efectivosMujeres;
-                            totalEfectivosMujeres += efectivosMujeres;
+                        List<Inscrito> aprobados = inscritos.stream().filter(i -> i.condicion().equals(Condicion.APROBADO)).collect(Collectors.toList());
+                        List<Inscrito> aprobadosVarones = aprobados.stream().filter(i -> i.getEstudiante().getSexo().equals(Sexo.MASCULINO)).collect(Collectors.toList());
+                        List<Inscrito> aprobadosMujeres = aprobados.stream().filter(i -> i.getEstudiante().getSexo().equals(Sexo.FEMENINO)).collect(Collectors.toList());
+                        nivelCuadroEstadistico.setAprobados(aprobados.size());
+                        nivelCuadroEstadistico.setAprobadosVarones(aprobadosVarones.size());
+                        nivelCuadroEstadistico.setAprobadosMujeres(aprobadosMujeres.size());
+                        subtotalAprobados += aprobados.size();
+                        totalAprobados += aprobados.size();
+                        subtotalAprobadosVarones += aprobadosVarones.size();
+                        totalAprobadosVarones += aprobadosVarones.size();
+                        subtotalAprobadosMujeres += aprobadosMujeres.size();
+                        totalAprobadosMujeres += aprobadosMujeres.size();
 
-                            List<Inscrito> aprobados = inscritos.stream().filter(i -> i.condicion().equals(Condicion.APROBADO)).collect(Collectors.toList());
-                            List<Inscrito> aprobadosVarones = aprobados.stream().filter(i -> i.getEstudiante().getSexo().equals(Sexo.MASCULINO)).collect(Collectors.toList());
-                            List<Inscrito> aprobadosMujeres = aprobados.stream().filter(i -> i.getEstudiante().getSexo().equals(Sexo.FEMENINO)).collect(Collectors.toList());
-                            nivelCuadroEstadistico.setAprobados(aprobados.size());
-                            nivelCuadroEstadistico.setAprobadosVarones(aprobadosVarones.size());
-                            nivelCuadroEstadistico.setAprobadosMujeres(aprobadosMujeres.size());
-                            subtotalAprobados += aprobados.size();
-                            totalAprobados += aprobados.size();
-                            subtotalAprobadosVarones += aprobadosVarones.size();
-                            totalAprobadosVarones += aprobadosVarones.size();
-                            subtotalAprobadosMujeres += aprobadosMujeres.size();
-                            totalAprobadosMujeres += aprobadosMujeres.size();
+                        List<Inscrito> reprobados = inscritos.stream().filter(i -> i.condicion().equals(Condicion.REPROBADO)).collect(Collectors.toList());
+                        List<Inscrito> reprobadosVarones = reprobados.stream().filter(i -> i.getEstudiante().getSexo().equals(Sexo.MASCULINO)).collect(Collectors.toList());
+                        List<Inscrito> reprobadosMujeres = reprobados.stream().filter(i -> i.getEstudiante().getSexo().equals(Sexo.FEMENINO)).collect(Collectors.toList());
+                        nivelCuadroEstadistico.setReprobados(reprobados.size());
+                        nivelCuadroEstadistico.setReprobadosVarones(reprobadosVarones.size());
+                        nivelCuadroEstadistico.setReprobadosMujeres(reprobadosMujeres.size());
+                        subtotalReprobados += reprobados.size();
+                        totalReprobados += reprobados.size();
+                        subtotalReprobadosVarones += reprobadosVarones.size();
+                        totalReprobadosVarones += reprobadosVarones.size();
+                        subtotalReprobadosMujeres += reprobadosMujeres.size();
+                        totalReprobadosMujeres += reprobadosMujeres.size();
 
-                            List<Inscrito> reprobados = inscritos.stream().filter(i -> i.condicion().equals(Condicion.REPROBADO)).collect(Collectors.toList());
-                            List<Inscrito> reprobadosVarones = reprobados.stream().filter(i -> i.getEstudiante().getSexo().equals(Sexo.MASCULINO)).collect(Collectors.toList());
-                            List<Inscrito> reprobadosMujeres = reprobados.stream().filter(i -> i.getEstudiante().getSexo().equals(Sexo.FEMENINO)).collect(Collectors.toList());
-                            nivelCuadroEstadistico.setReprobados(reprobados.size());
-                            nivelCuadroEstadistico.setReprobadosVarones(reprobadosVarones.size());
-                            nivelCuadroEstadistico.setReprobadosMujeres(reprobadosMujeres.size());
-                            subtotalReprobados += reprobados.size();
-                            totalReprobados += reprobados.size();
-                            subtotalReprobadosVarones += reprobadosVarones.size();
-                            totalReprobadosVarones += reprobadosVarones.size();
-                            subtotalReprobadosMujeres += reprobadosMujeres.size();
-                            totalReprobadosMujeres += reprobadosMujeres.size();
-
-                            nivelesCuadroEstadistico.add(nivelCuadroEstadistico);
-                        }
+                        nivelesCuadroEstadistico.add(nivelCuadroEstadistico);
                     }
                 }
 
@@ -485,7 +479,6 @@ public class DashboardController extends AbstractController implements Serializa
                     nivelCuadroEstadistico = new NivelCuadroEstadistico();
                     nivelCuadroEstadistico.setCodigo("");
                     nivelCuadroEstadistico.setNombre("");
-                    nivelCuadroEstadistico.setNivel(null);
                     nivelCuadroEstadistico.setInscritos(subtotalInscritos);
                     nivelCuadroEstadistico.setInscritosVarones(subtotalInscritosVarones);
                     nivelCuadroEstadistico.setInscritosMujeres(subtotalInscritosMujeres);
@@ -510,7 +503,6 @@ public class DashboardController extends AbstractController implements Serializa
                 nivelCuadroEstadistico = new NivelCuadroEstadistico();
                 nivelCuadroEstadistico.setCodigo("");
                 nivelCuadroEstadistico.setNombre("");
-                nivelCuadroEstadistico.setNivel(null);
                 nivelCuadroEstadistico.setInscritos(totalInscritos);
                 nivelCuadroEstadistico.setInscritosVarones(totalInscritosVarones);
                 nivelCuadroEstadistico.setInscritosMujeres(totalInscritosMujeres);

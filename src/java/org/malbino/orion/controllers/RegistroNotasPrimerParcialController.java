@@ -196,7 +196,7 @@ public class RegistroNotasPrimerParcialController extends AbstractController imp
                         } else if (cell.getStringCellValue().contains("<<CARRERA>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<CARRERA>>", seleccionGrupo.getMateria().getCarrera().toString()));
                         } else if (cell.getStringCellValue().contains("<<NIVEL>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL>>", seleccionGrupo.getMateria().getNivel().toString()));
+                            cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL>>", ""));
                         } else if (cell.getStringCellValue().contains("<<GA>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<GA>>", seleccionGrupo.getGestionAcademica().toString()));
                         } else if (cell.getStringCellValue().contains("<<DOCENTE>>")) {
@@ -355,7 +355,7 @@ public class RegistroNotasPrimerParcialController extends AbstractController imp
                         } else if (cell.getStringCellValue().contains("<<CARRERA>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<CARRERA>>", seleccionGrupo.getMateria().getCarrera().toString()));
                         } else if (cell.getStringCellValue().contains("<<NIVEL>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL>>", seleccionGrupo.getMateria().getNivel().toString()));
+                            cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL>>", ""));
                         } else if (cell.getStringCellValue().contains("<<GA>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<GA>>", seleccionGrupo.getGestionAcademica().toString()));
                         } else if (cell.getStringCellValue().contains("<<DOCENTE>>")) {
@@ -367,7 +367,7 @@ public class RegistroNotasPrimerParcialController extends AbstractController imp
                         } else if (cell.getStringCellValue().contains("<<NIVEL_ACADEMICO>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL_ACADEMICO>>", seleccionGrupo.getMateria().getCarrera().getNivelAcademico().getNombre()));
                         } else if (cell.getStringCellValue().contains("<<NIVEL>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL>>", seleccionGrupo.getMateria().getNivel().getNombre()));
+                            cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL>>", ""));
                         } else if (cell.getStringCellValue().contains("<<GRUPO>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<GRUPO>>", seleccionGrupo.getCodigo()));
                         } else if (cell.getStringCellValue().contains("<<NA>>")) {

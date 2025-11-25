@@ -22,7 +22,7 @@ import org.malbino.orion.entities.Estudiante;
 import org.malbino.orion.entities.Grupo;
 import org.malbino.orion.entities.Inscrito;
 import org.malbino.orion.entities.Log;
-import org.malbino.orion.entities.Materia;
+import org.malbino.orion.entities.Modulo;
 import org.malbino.orion.entities.Nota;
 import org.malbino.orion.entities.Pago;
 import org.malbino.orion.enums.Condicion;
@@ -69,7 +69,7 @@ public class InscripcionInternetController extends AbstractController implements
     private CarreraEstudiante seleccionCarreraEstudiante;
     private Inscrito seleccionInscrito;
 
-    private List<Materia> ofertaMaterias;
+    private List<Modulo> ofertaMaterias;
     private List<Nota> estadoInscripcion;
 
     private String[] grupos = Arrays.copyOfRange(Constantes.ABECEDARIO, 0, 6);
@@ -110,10 +110,10 @@ public class InscripcionInternetController extends AbstractController implements
         return l;
     }
 
-    public List<Grupo> listaGruposAbiertos(Materia materia) {
+    public List<Grupo> listaGruposAbiertos(Modulo materia) {
         List<Grupo> l = new ArrayList();
         if (seleccionInscrito != null && materia != null) {
-            l = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), seleccionInscrito.getCarrera().getId_carrera(), materia.getId_materia());
+            l = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), seleccionInscrito.getCarrera().getId_carrera(), materia.getId_modulo());
         }
         return l;
     }
@@ -122,8 +122,8 @@ public class InscripcionInternetController extends AbstractController implements
         if (seleccionInscrito != null) {
             ofertaMaterias = inscripcionesFacade.ofertaTomaMaterias(seleccionInscrito);
 
-            for (Materia materia : ofertaMaterias) {
-                List<Grupo> listaGruposAbiertos = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), materia.getId_materia(), grupo);
+            for (Modulo materia : ofertaMaterias) {
+                List<Grupo> listaGruposAbiertos = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), materia.getId_modulo(), grupo);
                 Iterator<Grupo> iterator = listaGruposAbiertos.iterator();
                 if (iterator.hasNext()) {
                     materia.setGrupo(iterator.next());
@@ -142,7 +142,7 @@ public class InscripcionInternetController extends AbstractController implements
 
     public boolean verificarGrupos() {
         boolean b = true;
-        for (Materia m : ofertaMaterias) {
+        for (Modulo m : ofertaMaterias) {
             if (m.getGrupo() == null) {
                 b = false;
                 break;
@@ -176,7 +176,7 @@ public class InscripcionInternetController extends AbstractController implements
                 if (!ofertaMaterias.isEmpty()) {
                     if (verificarGrupos()) {
                         List<Nota> aux = new ArrayList();
-                        for (Materia materia : ofertaMaterias) {
+                        for (Modulo materia : ofertaMaterias) {
                             Nota nota = new Nota(0, Modalidad.REGULAR, Condicion.ABANDONO, seleccionInscrito.getGestionAcademica(), materia, seleccionInscrito.getEstudiante(), seleccionInscrito, materia.getGrupo());
                             aux.add(nota);
                         }
@@ -253,14 +253,14 @@ public class InscripcionInternetController extends AbstractController implements
     /**
      * @return the ofertaMaterias
      */
-    public List<Materia> getOfertaMaterias() {
+    public List<Modulo> getOfertaMaterias() {
         return ofertaMaterias;
     }
 
     /**
      * @param ofertaMaterias the ofertaMaterias to set
      */
-    public void setOfertaMaterias(List<Materia> ofertaMaterias) {
+    public void setOfertaMaterias(List<Modulo> ofertaMaterias) {
         this.ofertaMaterias = ofertaMaterias;
     }
 

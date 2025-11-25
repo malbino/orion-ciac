@@ -12,7 +12,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.malbino.orion.entities.Grupo;
-import org.malbino.orion.enums.Nivel;
 import org.malbino.orion.enums.Turno;
 
 /**
@@ -42,23 +41,6 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
             Query q = em.createQuery("SELECT g FROM Grupo g JOIN g.gestionAcademica ga JOIN g.materia m JOIN m.carrera c WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera ORDER BY m.nivel, g.turno, g.codigo, m.numero");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_carrera", id_carrera);
-
-            l = q.getResultList();
-        } catch (Exception e) {
-
-        }
-
-        return l;
-    }
-
-    public List<Grupo> listaGrupos(int id_gestionacademica, int id_carrera, Nivel nivel) {
-        List<Grupo> l = new ArrayList();
-
-        try {
-            Query q = em.createQuery("SELECT g FROM Grupo g JOIN g.gestionAcademica ga JOIN g.materia m JOIN m.carrera c WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND m.nivel=:nivel ORDER BY m.nombre, g.codigo");
-            q.setParameter("id_gestionacademica", id_gestionacademica);
-            q.setParameter("id_carrera", id_carrera);
-            q.setParameter("nivel", nivel);
 
             l = q.getResultList();
         } catch (Exception e) {
@@ -187,13 +169,12 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
         return l;
     }
 
-    public Long cantidadGrupos(int id_carrera, Nivel nivel) {
+    public Long cantidadGrupos(int id_carrera) {
         Long l = 0l;
 
         try {
-            Query q = em.createQuery("SELECT COUNT(DISTINCT(g.codigo)) FROM Grupo g JOIN g.gestionAcademica ga JOIN g.materia m JOIN m.carrera c WHERE ga.vigente=TRUE AND c.id_carrera=:id_carrera AND m.nivel=:nivel");
+            Query q = em.createQuery("SELECT COUNT(DISTINCT(g.codigo)) FROM Grupo g JOIN g.gestionAcademica ga JOIN g.materia m JOIN m.carrera c WHERE ga.vigente=TRUE AND c.id_carrera=:id_carrera");
             q.setParameter("id_carrera", id_carrera);
-            q.setParameter("nivel", nivel);
 
             l = (Long) q.getSingleResult();
         } catch (Exception e) {
@@ -203,14 +184,13 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
         return l;
     }
 
-    public List<String> listaParalelos(int id_gestionacademica, int id_carrera, Nivel nivel) {
+    public List<String> listaParalelos(int id_gestionacademica, int id_carrera) {
         List<String> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT DISTINCT g.codigo FROM Grupo g JOIN g.gestionAcademica ga JOIN g.materia m JOIN m.carrera c WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND m.nivel=:nivel ORDER BY g.codigo");
+            Query q = em.createQuery("SELECT DISTINCT g.codigo FROM Grupo g JOIN g.gestionAcademica ga JOIN g.materia m JOIN m.carrera c WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera ORDER BY g.codigo");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_carrera", id_carrera);
-            q.setParameter("nivel", nivel);
 
             l = q.getResultList();
         } catch (Exception e) {
@@ -220,14 +200,13 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
         return l;
     }
 
-    public List<String> listaParalelos(int id_gestionacademica, int id_carrera, Nivel nivel, Turno turno) {
+    public List<String> listaParalelos(int id_gestionacademica, int id_carrera, Turno turno) {
         List<String> l = new ArrayList();
 
         try {
             Query q = em.createQuery("SELECT DISTINCT g.codigo FROM Grupo g JOIN g.gestionAcademica ga JOIN g.materia m JOIN m.carrera c WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND m.nivel=:nivel AND g.turno=:turno ORDER BY g.codigo");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_carrera", id_carrera);
-            q.setParameter("nivel", nivel);
             q.setParameter("turno", turno);
 
             l = q.getResultList();
@@ -238,14 +217,13 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
         return l;
     }
 
-    public List<Grupo> listaGrupos(int id_gestionacademica, int id_carrera, Nivel nivel, Turno turno) {
+    public List<Grupo> listaGrupos(int id_gestionacademica, int id_carrera, Turno turno) {
         List<Grupo> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT g FROM Grupo g JOIN g.gestionAcademica ga JOIN g.materia m JOIN m.carrera c WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND m.nivel=:nivel AND g.turno=:turno ORDER BY m.nombre, g.codigo");
+            Query q = em.createQuery("SELECT g FROM Grupo g JOIN g.gestionAcademica ga JOIN g.materia m JOIN m.carrera c WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND g.turno=:turno ORDER BY m.nombre, g.codigo");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_carrera", id_carrera);
-            q.setParameter("nivel", nivel);
             q.setParameter("turno", turno);
 
             l = q.getResultList();
@@ -256,14 +234,13 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
         return l;
     }
 
-    public List<Grupo> listaGrupos(int id_gestionacademica, int id_carrera, Nivel nivel, Turno turno, String paralelo) {
+    public List<Grupo> listaGrupos(int id_gestionacademica, int id_carrera, Turno turno, String paralelo) {
         List<Grupo> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT g FROM Grupo g JOIN g.gestionAcademica ga JOIN g.materia m JOIN m.carrera c WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND m.nivel=:nivel AND g.turno=:turno AND g.codigo=:paralelo ORDER BY m.nombre, g.codigo");
+            Query q = em.createQuery("SELECT g FROM Grupo g JOIN g.gestionAcademica ga JOIN g.materia m JOIN m.carrera c WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND g.turno=:turno AND g.codigo=:paralelo ORDER BY m.nombre, g.codigo");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_carrera", id_carrera);
-            q.setParameter("nivel", nivel);
             q.setParameter("turno", turno);
             q.setParameter("paralelo", paralelo);
 

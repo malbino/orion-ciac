@@ -12,7 +12,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.CarreraEstudiante;
-import org.malbino.orion.enums.Nivel;
 import org.malbino.orion.facades.CarreraFacade;
 
 /**
@@ -37,7 +36,6 @@ public class CarreraEstudianteConverter implements Converter {
 
             Integer id_carrera = Integer.valueOf(split[0]);
             Integer id_persona = Integer.valueOf(split[1]);
-            Nivel nivel = Nivel.getById(Integer.valueOf(split[2]));
 
             CarreraEstudiante.CarreraEstudianteId carreraEstudianteId = new CarreraEstudiante.CarreraEstudianteId();
             carreraEstudianteId.setId_carrera(id_carrera);
@@ -45,7 +43,6 @@ public class CarreraEstudianteConverter implements Converter {
 
             CarreraEstudiante carreraEstudiante = new CarreraEstudiante();
             carreraEstudiante.setCarreraEstudianteId(carreraEstudianteId);
-            carreraEstudiante.setNivelInicio(nivel);
 
             Carrera carrera = carreraFacade.find(id_carrera);
             carreraEstudiante.setCarrera(carrera);
@@ -68,12 +65,6 @@ public class CarreraEstudianteConverter implements Converter {
                     ce.getCarreraEstudianteId().getId_carrera()
                     + "," + ce.getCarreraEstudianteId().getId_persona()
             );
-
-            if (ce.getNivelInicio() != null) {
-                s += "," + ce.getNivelInicio().getId();
-            } else {
-                s += ",-1";
-            }
         }
 
         return s;

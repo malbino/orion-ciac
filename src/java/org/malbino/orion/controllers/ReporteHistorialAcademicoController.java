@@ -314,7 +314,7 @@ public class ReporteHistorialAcademicoController extends AbstractController impl
                         } else if (cell.getStringCellValue().contains("<<GA>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<GA>>", nota.getGestionAcademica().codigo()));
                         } else if (cell.getStringCellValue().contains("<<NIVEL>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL>>", nota.getMateria().getNivel().getOrdinal()));
+                            cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL>>", ""));
                         } else if (cell.getStringCellValue().contains("<<CODIGO>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<CODIGO>>", nota.getMateria().getCodigo()));
                         } else if (cell.getStringCellValue().contains("<<MATERIA>>")) {

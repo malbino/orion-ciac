@@ -30,7 +30,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.malbino.orion.entities.Inscrito;
 import org.malbino.orion.entities.Instituto;
-import org.malbino.orion.enums.Nivel;
 import org.malbino.orion.enums.Periodo;
 import org.malbino.orion.facades.InscritoFacade;
 import org.malbino.orion.facades.InstitutoFacade;
@@ -224,12 +223,7 @@ public class LibroInscripciones extends HttpServlet {
             cell.setColspan(30);
             table.addCell(cell);
 
-            Nivel nivel = inscrito.nivel();
-            if (nivel != null) {
-                cell = new PdfPCell(new Phrase(String.valueOf(inscrito.nivel().getAbreviatura()), NORMAL));
-            } else {
-                cell = new PdfPCell(new Phrase("", NORMAL));
-            }
+            cell = new PdfPCell(new Phrase("", NORMAL));
             cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
             cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
             cell.setColspan(10);

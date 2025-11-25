@@ -17,7 +17,6 @@ import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Log;
 import org.malbino.orion.enums.EventoLog;
-import org.malbino.orion.enums.Nivel;
 import org.malbino.orion.enums.Turno;
 import org.malbino.orion.facades.GrupoFacade;
 import org.malbino.orion.util.Fecha;
@@ -37,7 +36,6 @@ public class ReporteHorarioParaleloController extends AbstractController impleme
 
     private GestionAcademica seleccionGestionAcademica;
     private Carrera seleccionCarrera;
-    private Nivel seleccionNivel;
     private Turno seleccionTurno;
     private String seleccionParalelo;
 
@@ -45,14 +43,12 @@ public class ReporteHorarioParaleloController extends AbstractController impleme
     public void init() {
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
-        seleccionNivel = null;
         seleccionParalelo = null;
     }
 
     public void reinit() {
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
-        seleccionNivel = null;
         seleccionParalelo = null;
     }
 
@@ -65,18 +61,10 @@ public class ReporteHorarioParaleloController extends AbstractController impleme
         return l;
     }
 
-    public Nivel[] listaNiveles() {
-        Nivel[] niveles = new Nivel[0];
-        if (seleccionGestionAcademica != null && seleccionCarrera != null) {
-            niveles = Nivel.values(seleccionCarrera.getRegimen());
-        }
-        return niveles;
-    }
-
     @Override
     public Turno[] listaTurnos() {
         Turno[] turnos = new Turno[0];
-        if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionNivel != null) {
+        if (seleccionGestionAcademica != null && seleccionCarrera != null) {
             turnos = Turno.values();
         }
         return turnos;
@@ -84,8 +72,8 @@ public class ReporteHorarioParaleloController extends AbstractController impleme
 
     public List<String> listaParalelos() {
         List<String> paralelos = new ArrayList<>();
-        if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionNivel != null && seleccionTurno != null) {
-            paralelos = grupoFacade.listaParalelos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionNivel, seleccionTurno);
+        if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionTurno != null) {
+            paralelos = grupoFacade.listaParalelos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionTurno);
         }
         return paralelos;
     }
@@ -94,7 +82,6 @@ public class ReporteHorarioParaleloController extends AbstractController impleme
         if (seleccionGestionAcademica != null && seleccionCarrera != null) {
             this.insertarParametro("id_gestionacademica", seleccionGestionAcademica.getId_gestionacademica());
             this.insertarParametro("id_carrera", seleccionCarrera.getId_carrera());
-            this.insertarParametro("nivel", seleccionNivel);
             this.insertarParametro("turno", seleccionTurno);
             this.insertarParametro("paralelo", seleccionParalelo);
 
@@ -141,20 +128,6 @@ public class ReporteHorarioParaleloController extends AbstractController impleme
      */
     public void setSeleccionCarrera(Carrera seleccionCarrera) {
         this.seleccionCarrera = seleccionCarrera;
-    }
-
-    /**
-     * @return the seleccionNivel
-     */
-    public Nivel getSeleccionNivel() {
-        return seleccionNivel;
-    }
-
-    /**
-     * @param seleccionNivel the seleccionNivel to set
-     */
-    public void setSeleccionNivel(Nivel seleccionNivel) {
-        this.seleccionNivel = seleccionNivel;
     }
 
     /**

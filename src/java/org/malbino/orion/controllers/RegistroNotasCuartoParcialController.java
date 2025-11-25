@@ -36,7 +36,6 @@ import org.malbino.orion.enums.Condicion;
 import org.malbino.orion.enums.EntidadLog;
 import org.malbino.orion.enums.EventoLog;
 import org.malbino.orion.enums.ModalidadEvaluacion;
-import org.malbino.orion.enums.Regimen;
 import org.malbino.orion.facades.ActividadFacade;
 import org.malbino.orion.facades.GrupoFacade;
 import org.malbino.orion.facades.NotaFacade;
@@ -146,7 +145,7 @@ public class RegistroNotasCuartoParcialController extends AbstractController imp
     public XSSFWorkbook leerArchivo(String pathname) {
         XSSFWorkbook workbook = null;
 
-        try (FileInputStream file = new FileInputStream(this.realPath() + pathname)) {
+        try ( FileInputStream file = new FileInputStream(this.realPath() + pathname)) {
             workbook = new XSSFWorkbook(file);
         } catch (IOException e) {
             this.mensajeDeError("Error: No se pudo leer el archivo.");
@@ -196,7 +195,7 @@ public class RegistroNotasCuartoParcialController extends AbstractController imp
                         } else if (cell.getStringCellValue().contains("<<CARRERA>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<CARRERA>>", seleccionGrupo.getMateria().getCarrera().toString()));
                         } else if (cell.getStringCellValue().contains("<<NIVEL>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL>>", seleccionGrupo.getMateria().getNivel().toString()));
+                            cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL>>", " "));
                         } else if (cell.getStringCellValue().contains("<<GA>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<GA>>", seleccionGrupo.getGestionAcademica().toString()));
                         } else if (cell.getStringCellValue().contains("<<DOCENTE>>")) {
@@ -355,7 +354,7 @@ public class RegistroNotasCuartoParcialController extends AbstractController imp
                         } else if (cell.getStringCellValue().contains("<<CARRERA>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<CARRERA>>", seleccionGrupo.getMateria().getCarrera().toString()));
                         } else if (cell.getStringCellValue().contains("<<NIVEL>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL>>", seleccionGrupo.getMateria().getNivel().toString()));
+                            cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL>>", ""));
                         } else if (cell.getStringCellValue().contains("<<GA>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<GA>>", seleccionGrupo.getGestionAcademica().toString()));
                         } else if (cell.getStringCellValue().contains("<<DOCENTE>>")) {
@@ -367,7 +366,7 @@ public class RegistroNotasCuartoParcialController extends AbstractController imp
                         } else if (cell.getStringCellValue().contains("<<NIVEL_ACADEMICO>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL_ACADEMICO>>", seleccionGrupo.getMateria().getCarrera().getNivelAcademico().getNombre()));
                         } else if (cell.getStringCellValue().contains("<<NIVEL>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL>>", seleccionGrupo.getMateria().getNivel().getNombre()));
+                            cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL>>", ""));
                         } else if (cell.getStringCellValue().contains("<<GRUPO>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<GRUPO>>", seleccionGrupo.getCodigo()));
                         } else if (cell.getStringCellValue().contains("<<NA>>")) {

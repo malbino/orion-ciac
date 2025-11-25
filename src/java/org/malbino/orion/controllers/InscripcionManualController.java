@@ -17,12 +17,11 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.malbino.moodle.webservices.CopiarInscrito;
-import org.malbino.orion.entities.CarreraEstudiante;
 import org.malbino.orion.entities.Estudiante;
 import org.malbino.orion.entities.Grupo;
 import org.malbino.orion.entities.Inscrito;
 import org.malbino.orion.entities.Log;
-import org.malbino.orion.entities.Materia;
+import org.malbino.orion.entities.Modulo;
 import org.malbino.orion.entities.Nota;
 import org.malbino.orion.entities.Pago;
 import org.malbino.orion.enums.Condicion;
@@ -72,8 +71,8 @@ public class InscripcionManualController extends AbstractController implements S
     private Estudiante seleccionEstudiante;
     private Inscrito seleccionInscrito;
 
-    private List<Materia> ofertaMaterias;
-    private List<Materia> materias;
+    private List<Modulo> ofertaMaterias;
+    private List<Modulo> materias;
     private List<Nota> estadoInscripcion;
     private Nota seleccionNota;
 
@@ -107,10 +106,10 @@ public class InscripcionManualController extends AbstractController implements S
         return l;
     }
 
-    public List<Grupo> listaGruposAbiertos(Materia materia) {
+    public List<Grupo> listaGruposAbiertos(Modulo materia) {
         List<Grupo> l = new ArrayList();
         if (seleccionInscrito != null && materia != null) {
-            l = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), seleccionInscrito.getCarrera().getId_carrera(), materia.getId_materia());
+            l = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), seleccionInscrito.getCarrera().getId_carrera(), materia.getId_modulo());
         }
         return l;
     }
@@ -119,8 +118,8 @@ public class InscripcionManualController extends AbstractController implements S
         if (seleccionInscrito != null) {
             ofertaMaterias = inscripcionesFacade.ofertaTomaMaterias(seleccionInscrito);
 
-            for (Materia materia : ofertaMaterias) {
-                List<Grupo> listaGruposAbiertos = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), materia.getId_materia(), grupo);
+            for (Modulo materia : ofertaMaterias) {
+                List<Grupo> listaGruposAbiertos = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), materia.getId_modulo(), grupo);
                 Iterator<Grupo> iterator = listaGruposAbiertos.iterator();
                 if (iterator.hasNext()) {
                     materia.setGrupo(iterator.next());
@@ -133,12 +132,7 @@ public class InscripcionManualController extends AbstractController implements S
 
     public void actualizarMaterias() {
         if (seleccionInscrito != null) {
-            CarreraEstudiante carreraEstudiante = carreraEstudianteFacade.find(seleccionInscrito.carreraEstudianteId());
-            if (carreraEstudiante != null) {
-                materias = materiaFacade.listaMaterias(seleccionInscrito.getCarrera());
-            } else {
-                materias = materiaFacade.listaMaterias(seleccionInscrito.getCarrera(), null);
-            }
+            materias = materiaFacade.listaMaterias(seleccionInscrito.getCarrera());
         }
     }
 
@@ -150,7 +144,7 @@ public class InscripcionManualController extends AbstractController implements S
 
     public boolean verificarGrupos() {
         boolean b = true;
-        for (Materia m : ofertaMaterias) {
+        for (Modulo m : ofertaMaterias) {
             if (m.getGrupo() == null) {
                 b = false;
                 break;
@@ -159,7 +153,7 @@ public class InscripcionManualController extends AbstractController implements S
         return b;
     }
 
-    public boolean materiaRepetida(Materia materia) {
+    public boolean materiaRepetida(Modulo materia) {
         boolean b = false;
         for (Nota n : estadoInscripcion) {
             if (n.getMateria().equals(materia)) {
@@ -195,7 +189,7 @@ public class InscripcionManualController extends AbstractController implements S
                 if (!ofertaMaterias.isEmpty()) {
                     if (verificarGrupos()) {
                         List<Nota> aux = new ArrayList();
-                        for (Materia materia : ofertaMaterias) {
+                        for (Modulo materia : ofertaMaterias) {
                             Nota nota = new Nota(0, Modalidad.REGULAR, Condicion.ABANDONO, seleccionInscrito.getGestionAcademica(), materia, seleccionInscrito.getEstudiante(), seleccionInscrito, materia.getGrupo());
                             aux.add(nota);
                         }
@@ -235,7 +229,7 @@ public class InscripcionManualController extends AbstractController implements S
             if (!listaPagosPagados.isEmpty()) {
                 if (!materias.isEmpty()) {
                     List<Nota> aux = new ArrayList();
-                    for (Materia materia : materias) {
+                    for (Modulo materia : materias) {
                         if (materia.getGrupo() != null && !materiaRepetida(materia)) {
                             Nota nota = new Nota(0, Modalidad.REGULAR, Condicion.ABANDONO, seleccionInscrito.getGestionAcademica(), materia, seleccionInscrito.getEstudiante(), seleccionInscrito, materia.getGrupo());
                             aux.add(nota);
@@ -303,14 +297,14 @@ public class InscripcionManualController extends AbstractController implements S
     /**
      * @return the ofertaMaterias
      */
-    public List<Materia> getOfertaMaterias() {
+    public List<Modulo> getOfertaMaterias() {
         return ofertaMaterias;
     }
 
     /**
      * @param ofertaMaterias the ofertaMaterias to set
      */
-    public void setOfertaMaterias(List<Materia> ofertaMaterias) {
+    public void setOfertaMaterias(List<Modulo> ofertaMaterias) {
         this.ofertaMaterias = ofertaMaterias;
     }
 
@@ -359,14 +353,14 @@ public class InscripcionManualController extends AbstractController implements S
     /**
      * @return the materias
      */
-    public List<Materia> getMaterias() {
+    public List<Modulo> getMaterias() {
         return materias;
     }
 
     /**
      * @param materias the materias to set
      */
-    public void setMaterias(List<Materia> materias) {
+    public void setMaterias(List<Modulo> materias) {
         this.materias = materias;
     }
 

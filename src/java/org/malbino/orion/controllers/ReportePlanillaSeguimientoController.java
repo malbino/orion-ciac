@@ -33,7 +33,6 @@ import org.malbino.orion.entities.Log;
 import org.malbino.orion.entities.Nota;
 import org.malbino.orion.enums.Condicion;
 import org.malbino.orion.enums.EventoLog;
-import org.malbino.orion.enums.Nivel;
 import org.malbino.orion.enums.Turno;
 import org.malbino.orion.facades.GrupoFacade;
 import org.malbino.orion.facades.NotaFacade;
@@ -63,7 +62,6 @@ public class ReportePlanillaSeguimientoController extends AbstractController imp
 
     private GestionAcademica seleccionGestionAcademica;
     private Carrera seleccionCarrera;
-    private Nivel seleccionNivel;
     private Turno seleccionTurno;
     private Grupo seleccionGrupo;
 
@@ -73,7 +71,6 @@ public class ReportePlanillaSeguimientoController extends AbstractController imp
     public void init() {
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
-        seleccionNivel = null;
         seleccionTurno = null;
         seleccionGrupo = null;
     }
@@ -81,7 +78,6 @@ public class ReportePlanillaSeguimientoController extends AbstractController imp
     public void reinit() {
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
-        seleccionNivel = null;
         seleccionTurno = null;
         seleccionGrupo = null;
     }
@@ -95,28 +91,18 @@ public class ReportePlanillaSeguimientoController extends AbstractController imp
         return l;
     }
 
-    public Nivel[] listaNiveles() {
-        Nivel[] niveles = new Nivel[0];
-        if (seleccionCarrera != null) {
-            niveles = Nivel.values(seleccionCarrera.getRegimen());
-        }
-        return niveles;
-    }
-
     @Override
     public Turno[] listaTurnos() {
         Turno[] turnos = new Turno[0];
-        if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionNivel != null) {
+        if (seleccionGestionAcademica != null && seleccionCarrera != null) {
             turnos = Turno.values();
         }
         return turnos;
     }
 
     public List<Grupo> listaGrupos() {
-        List<Grupo> grupos = new ArrayList<>();
-        if (seleccionNivel != null) {
-            grupos = grupoFacade.listaGrupos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionNivel, seleccionTurno);
-        }
+        List<Grupo> grupos = grupoFacade.listaGrupos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionTurno);
+
         return grupos;
     }
 
@@ -179,7 +165,7 @@ public class ReportePlanillaSeguimientoController extends AbstractController imp
                         } else if (cell.getStringCellValue().contains("<<CARRERA>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<CARRERA>>", seleccionGrupo.getMateria().getCarrera().toString()));
                         } else if (cell.getStringCellValue().contains("<<NIVEL>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL>>", seleccionGrupo.getMateria().getNivel().toString()));
+                            cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL>>", ""));
                         } else if (cell.getStringCellValue().contains("<<GA>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<GA>>", seleccionGrupo.getGestionAcademica().toString()));
                         } else if (cell.getStringCellValue().contains("<<DOCENTE>>")) {
@@ -191,7 +177,7 @@ public class ReportePlanillaSeguimientoController extends AbstractController imp
                         } else if (cell.getStringCellValue().contains("<<NIVEL_ACADEMICO>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL_ACADEMICO>>", seleccionGrupo.getMateria().getCarrera().getNivelAcademico().getNombre()));
                         } else if (cell.getStringCellValue().contains("<<NIVEL>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL>>", seleccionGrupo.getMateria().getNivel().getNombre()));
+                            cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL>>", ""));
                         } else if (cell.getStringCellValue().contains("<<GRUPO>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<GRUPO>>", seleccionGrupo.toString()));
                         } else if (cell.getStringCellValue().contains("<<NA>>")) {
@@ -398,20 +384,6 @@ public class ReportePlanillaSeguimientoController extends AbstractController imp
      */
     public void setSeleccionCarrera(Carrera seleccionCarrera) {
         this.seleccionCarrera = seleccionCarrera;
-    }
-
-    /**
-     * @return the seleccionNivel
-     */
-    public Nivel getSeleccionNivel() {
-        return seleccionNivel;
-    }
-
-    /**
-     * @param seleccionNivel the seleccionNivel to set
-     */
-    public void setSeleccionNivel(Nivel seleccionNivel) {
-        this.seleccionNivel = seleccionNivel;
     }
 
     /**

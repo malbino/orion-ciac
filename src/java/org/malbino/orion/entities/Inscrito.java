@@ -6,7 +6,6 @@
 package org.malbino.orion.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -23,7 +22,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import org.malbino.orion.enums.Condicion;
-import org.malbino.orion.enums.Nivel;
 import org.malbino.orion.enums.Tipo;
 import org.malbino.orion.util.Fecha;
 
@@ -261,24 +259,6 @@ public class Inscrito implements Serializable {
         return carreraEstudianteId;
     }
 
-    public Boolean conArrastre() {
-        Boolean b = Boolean.FALSE;
-
-        List<Nivel> niveles = new ArrayList<>();
-        for (Nota nota : notas) {
-            Nivel nivel = nota.getMateria().getNivel();
-            if (!niveles.contains(nivel)) {
-                niveles.add(nivel);
-            }
-        }
-
-        if (niveles.size() > 1) {
-            b = Boolean.TRUE;
-        }
-
-        return b;
-    }
-
     public String observaciones() {
         String s = "";
 
@@ -286,28 +266,7 @@ public class Inscrito implements Serializable {
             s += "SIN DIPLOMA DE BACHILLER";
         }
 
-        if (conArrastre()) {
-            if (s.isEmpty()) {
-                s += "CON ARRASTRE";
-            } else {
-                s += ", CON ARRASTRE";
-            }
-        }
-
         return s;
-    }
-
-    public Nivel nivel() {
-        Nivel nivel = null;
-
-        if (!notas.isEmpty()) {
-            Nota nota = notas.stream()
-                    .collect(Collectors.maxBy((x, y) -> x.getMateria().getNivel().getNivel() - y.getMateria().getNivel().getNivel()))
-                    .get();
-            nivel = nota.getMateria().getNivel();
-        }
-
-        return nivel;
     }
 
     public Condicion condicion() {

@@ -16,7 +16,6 @@ import org.malbino.orion.entities.Clase;
 import org.malbino.orion.entities.Empleado;
 import org.malbino.orion.entities.Periodo;
 import org.malbino.orion.enums.Dia;
-import org.malbino.orion.enums.Nivel;
 import org.malbino.orion.enums.Turno;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,36 +27,35 @@ import org.slf4j.LoggerFactory;
 @Stateless
 @LocalBean
 public class ClaseFacade extends AbstractFacade<Clase> {
-    
+
     private static final Logger log = LoggerFactory.getLogger(ClaseFacade.class);
-    
+
     @PersistenceContext(unitName = "orionPU")
     private EntityManager em;
-    
+
     public ClaseFacade() {
         super(Clase.class);
     }
-    
+
     @Override
     public EntityManager getEntityManager() {
         return em;
     }
-    
-    public Clase buscar(int id_gestionacademica, int id_carrera, Nivel nivel, Turno turno, String paralelo, Periodo periodo, Dia dia) {
+
+    public Clase buscar(int id_gestionacademica, int id_carrera, Turno turno, String paralelo, Periodo periodo, Dia dia) {
         Clase c = null;
-        
+
         try {
-            Query q = em.createQuery("SELECT c FROM Clase c JOIN c.grupo g JOIN g.gestionAcademica ga JOIN g.materia m JOIN m.carrera a WHERE ga.id_gestionacademica=:id_gestionacademica AND a.id_carrera=:id_carrera AND m.nivel=:nivel AND g.turno=:turno AND g.codigo=:paralelo AND c.periodo=:periodo AND c.dia=:dia");
+            Query q = em.createQuery("SELECT c FROM Clase c JOIN c.grupo g JOIN g.gestionAcademica ga JOIN g.materia m JOIN m.carrera a WHERE ga.id_gestionacademica=:id_gestionacademica AND a.id_carrera=:id_carrera AND g.turno=:turno AND g.codigo=:paralelo AND c.periodo=:periodo AND c.dia=:dia");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_carrera", id_carrera);
-            q.setParameter("nivel", nivel);
             q.setParameter("turno", turno);
             q.setParameter("paralelo", paralelo);
             q.setParameter("periodo", periodo);
             q.setParameter("dia", dia);
-            
+
             q.setMaxResults(1);
-            
+
             List<Clase> l = q.getResultList();
             Iterator<Clase> i = l.iterator();
             if (i.hasNext()) {
@@ -66,22 +64,22 @@ public class ClaseFacade extends AbstractFacade<Clase> {
         } catch (Exception e) {
             log.error(e.toString());
         }
-        
+
         return c;
     }
-    
+
     public Clase buscar(Periodo periodo, Dia dia, Aula aula) {
         Clase c = null;
-        
+
         try {
             Query q = em.createQuery("SELECT c FROM Clase c JOIN c.grupo g JOIN g.gestionAcademica ga WHERE ga.vigente=:vigente AND c.periodo=:periodo AND c.dia=:dia AND c.aula=:aula");
             q.setParameter("vigente", Boolean.TRUE);
             q.setParameter("periodo", periodo);
             q.setParameter("dia", dia);
             q.setParameter("aula", aula);
-            
+
             q.setMaxResults(1);
-            
+
             List<Clase> l = q.getResultList();
             Iterator<Clase> i = l.iterator();
             if (i.hasNext()) {
@@ -90,22 +88,22 @@ public class ClaseFacade extends AbstractFacade<Clase> {
         } catch (Exception e) {
             log.error(e.toString());
         }
-        
+
         return c;
     }
-    
+
     public Clase buscar(Periodo periodo, Dia dia, Empleado empleado) {
         Clase c = null;
-        
+
         try {
             Query q = em.createQuery("SELECT c FROM Clase c JOIN c.grupo g JOIN g.gestionAcademica ga WHERE ga.vigente=:vigente AND c.periodo=:periodo AND c.dia=:dia AND g.empleado=:empleado");
             q.setParameter("vigente", Boolean.TRUE);
             q.setParameter("periodo", periodo);
             q.setParameter("dia", dia);
             q.setParameter("empleado", empleado);
-            
+
             q.setMaxResults(1);
-            
+
             List<Clase> l = q.getResultList();
             Iterator<Clase> i = l.iterator();
             if (i.hasNext()) {
@@ -114,13 +112,13 @@ public class ClaseFacade extends AbstractFacade<Clase> {
         } catch (Exception e) {
             log.error(e.toString());
         }
-        
+
         return c;
     }
-    
+
     public Clase buscar(Periodo periodo, Dia dia, Aula aula, int id_clase) {
         Clase c = null;
-        
+
         try {
             Query q = em.createQuery("SELECT c FROM Clase c JOIN c.grupo g JOIN g.gestionAcademica ga WHERE ga.vigente=:vigente AND c.periodo=:periodo AND c.dia=:dia AND c.aula=:aula AND c.id_clase!=:id_clase");
             q.setParameter("vigente", Boolean.TRUE);
@@ -128,9 +126,9 @@ public class ClaseFacade extends AbstractFacade<Clase> {
             q.setParameter("dia", dia);
             q.setParameter("aula", aula);
             q.setParameter("id_clase", id_clase);
-            
+
             q.setMaxResults(1);
-            
+
             List<Clase> l = q.getResultList();
             Iterator<Clase> i = l.iterator();
             if (i.hasNext()) {
@@ -139,13 +137,13 @@ public class ClaseFacade extends AbstractFacade<Clase> {
         } catch (Exception e) {
             log.error(e.toString());
         }
-        
+
         return c;
     }
-    
+
     public Clase buscar(Periodo periodo, Dia dia, Empleado empleado, int id_clase) {
         Clase c = null;
-        
+
         try {
             Query q = em.createQuery("SELECT c FROM Clase c JOIN c.grupo g JOIN g.gestionAcademica ga WHERE ga.vigente=:vigente AND c.periodo=:periodo AND c.dia=:dia AND g.empleado=:empleado AND c.id_clase!=:id_clase");
             q.setParameter("vigente", Boolean.TRUE);
@@ -153,9 +151,9 @@ public class ClaseFacade extends AbstractFacade<Clase> {
             q.setParameter("dia", dia);
             q.setParameter("empleado", empleado);
             q.setParameter("id_clase", id_clase);
-            
+
             q.setMaxResults(1);
-            
+
             List<Clase> l = q.getResultList();
             Iterator<Clase> i = l.iterator();
             if (i.hasNext()) {
@@ -164,7 +162,7 @@ public class ClaseFacade extends AbstractFacade<Clase> {
         } catch (Exception e) {
             log.error(e.toString());
         }
-        
+
         return c;
     }
 }

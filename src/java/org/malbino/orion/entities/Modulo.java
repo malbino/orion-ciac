@@ -20,24 +20,22 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
-import org.malbino.orion.enums.Nivel;
 
 /**
  *
  * @author malbino
  */
 @Entity
-@Table(name = "materia", uniqueConstraints = @UniqueConstraint(columnNames = {"codigo", "id_carrera"}))
-public class Materia implements Serializable {
+@Table(name = "modulo", uniqueConstraints = @UniqueConstraint(columnNames = {"codigo", "id_carrera"}))
+public class Modulo implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_materia;
+    private Integer id_modulo;
 
     private Integer numero;
     private String codigo;
     private String nombre;
-    private Nivel nivel;
     private Integer horas;
     private Integer creditajeMateria;
     private Boolean curricular;
@@ -46,7 +44,7 @@ public class Materia implements Serializable {
         @JoinColumn(name = "id_materia", referencedColumnName = "id_materia")}, inverseJoinColumns = {
         @JoinColumn(name = "id_prerequisito", referencedColumnName = "id_materia")})
     @ManyToMany
-    private List<Materia> prerequisitos;
+    private List<Modulo> prerequisitos;
 
     @JoinColumn(name = "id_carrera")
     @ManyToOne
@@ -61,21 +59,21 @@ public class Materia implements Serializable {
     @Transient
     private Grupo grupo;
 
-    public Materia() {
+    public Modulo() {
     }
 
     /**
-     * @return the id_materia
+     * @return the id_modulo
      */
-    public Integer getId_materia() {
-        return id_materia;
+    public Integer getId_modulo() {
+        return id_modulo;
     }
 
     /**
-     * @param id_materia the id_materia to set
+     * @param id_modulo the id_modulo to set
      */
-    public void setId_materia(Integer id_materia) {
-        this.id_materia = id_materia;
+    public void setId_modulo(Integer id_modulo) {
+        this.id_modulo = id_modulo;
     }
 
     /**
@@ -118,20 +116,6 @@ public class Materia implements Serializable {
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    /**
-     * @return the nivel
-     */
-    public Nivel getNivel() {
-        return nivel;
-    }
-
-    /**
-     * @param nivel the nivel to set
-     */
-    public void setNivel(Nivel nivel) {
-        this.nivel = nivel;
     }
 
     /**
@@ -179,14 +163,14 @@ public class Materia implements Serializable {
     /**
      * @return the prerequisitos
      */
-    public List<Materia> getPrerequisitos() {
+    public List<Modulo> getPrerequisitos() {
         return prerequisitos;
     }
 
     /**
      * @param prerequisitos the prerequisitos to set
      */
-    public void setPrerequisitos(List<Materia> prerequisitos) {
+    public void setPrerequisitos(List<Modulo> prerequisitos) {
         this.prerequisitos = prerequisitos;
     }
 
@@ -224,7 +208,7 @@ public class Materia implements Serializable {
 
     public String prerequisitosToString() {
         String s = " ";
-        for (Materia m : prerequisitos) {
+        for (Modulo m : prerequisitos) {
             if (s.compareTo(" ") == 0) {
                 s = m.getCodigo();
             } else {
@@ -237,7 +221,7 @@ public class Materia implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.id_materia);
+        hash = 97 * hash + Objects.hashCode(this.id_modulo);
         return hash;
     }
 
@@ -252,8 +236,8 @@ public class Materia implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Materia other = (Materia) obj;
-        if (!Objects.equals(this.id_materia, other.id_materia)) {
+        final Modulo other = (Modulo) obj;
+        if (!Objects.equals(this.id_modulo, other.id_modulo)) {
             return false;
         }
         return true;

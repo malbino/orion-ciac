@@ -22,7 +22,6 @@ import org.malbino.orion.entities.Periodo;
 import org.malbino.orion.enums.Dia;
 import org.malbino.orion.enums.EntidadLog;
 import org.malbino.orion.enums.EventoLog;
-import org.malbino.orion.enums.Nivel;
 import org.malbino.orion.enums.Turno;
 import org.malbino.orion.facades.AulaFacade;
 import org.malbino.orion.facades.ClaseFacade;
@@ -56,7 +55,6 @@ public class HorarioParaleloController extends AbstractController implements Ser
 
     private GestionAcademica seleccionGestionAcademica;
     private Carrera seleccionCarrera;
-    private Nivel seleccionNivel;
     private Turno seleccionTurno;
     private String seleccionParalelo;
 
@@ -67,7 +65,6 @@ public class HorarioParaleloController extends AbstractController implements Ser
     public void init() {
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
-        seleccionNivel = null;
         seleccionParalelo = null;
 
         horario = new ArrayList();
@@ -77,7 +74,6 @@ public class HorarioParaleloController extends AbstractController implements Ser
     public void reinit() {
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
-        seleccionNivel = null;
         seleccionParalelo = null;
 
         horario = new ArrayList();
@@ -93,18 +89,10 @@ public class HorarioParaleloController extends AbstractController implements Ser
         return l;
     }
 
-    public Nivel[] listaNiveles() {
-        Nivel[] niveles = new Nivel[0];
-        if (seleccionGestionAcademica != null && seleccionCarrera != null) {
-            niveles = Nivel.values(seleccionCarrera.getRegimen());
-        }
-        return niveles;
-    }
-
     @Override
     public Turno[] listaTurnos() {
         Turno[] turnos = new Turno[0];
-        if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionNivel != null) {
+        if (seleccionGestionAcademica != null && seleccionCarrera != null) {
             turnos = Turno.values();
         }
         return turnos;
@@ -112,16 +100,16 @@ public class HorarioParaleloController extends AbstractController implements Ser
 
     public List<String> listaParalelos() {
         List<String> paralelos = new ArrayList<>();
-        if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionNivel != null && seleccionTurno != null) {
-            paralelos = grupoFacade.listaParalelos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionNivel, seleccionTurno);
+        if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionTurno != null) {
+            paralelos = grupoFacade.listaParalelos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionTurno);
         }
         return paralelos;
     }
 
     public List<Grupo> listaGrupos() {
         List<Grupo> grupos = new ArrayList<>();
-        if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionNivel != null && seleccionTurno != null && seleccionParalelo != null) {
-            grupos = grupoFacade.listaGrupos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionNivel, seleccionTurno, seleccionParalelo);
+        if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionTurno != null && seleccionParalelo != null) {
+            grupos = grupoFacade.listaGrupos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionTurno, seleccionParalelo);
         }
         return grupos;
     }
@@ -158,7 +146,7 @@ public class HorarioParaleloController extends AbstractController implements Ser
             for (int j = 0; j < dias.length; j++) {
                 Dia dia = dias[j];
 
-                Clase clase = claseFacade.buscar(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionNivel, seleccionTurno, seleccionParalelo, periodo, dia);
+                Clase clase = claseFacade.buscar(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionTurno, seleccionParalelo, periodo, dia);
                 if (clase != null) {
                     horario.add(clase);
                 } else {
@@ -172,7 +160,7 @@ public class HorarioParaleloController extends AbstractController implements Ser
     public void copiarClase() {
         Periodo periodoAnterior = periodoFacade.buscar(seleccionClase.getPeriodo().getInicio());
         if (periodoAnterior != null) {
-            Clase claseAnterior = claseFacade.buscar(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionNivel, seleccionTurno, seleccionParalelo, periodoAnterior, seleccionClase.getDia());
+            Clase claseAnterior = claseFacade.buscar(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionTurno, seleccionParalelo, periodoAnterior, seleccionClase.getDia());
             if (claseAnterior != null) {
                 seleccionClase.setAula(claseAnterior.getAula());
                 seleccionClase.setGrupo(claseAnterior.getGrupo());
@@ -333,20 +321,6 @@ public class HorarioParaleloController extends AbstractController implements Ser
      */
     public void setSeleccionCarrera(Carrera seleccionCarrera) {
         this.seleccionCarrera = seleccionCarrera;
-    }
-
-    /**
-     * @return the seleccionNivel
-     */
-    public Nivel getSeleccionNivel() {
-        return seleccionNivel;
-    }
-
-    /**
-     * @param seleccionNivel the seleccionNivel to set
-     */
-    public void setSeleccionNivel(Nivel seleccionNivel) {
-        this.seleccionNivel = seleccionNivel;
     }
 
     /**

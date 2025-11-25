@@ -7,7 +7,6 @@ package org.malbino.orion.facades.negocio;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.ListIterator;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.LocalBean;
@@ -21,10 +20,10 @@ import org.malbino.orion.entities.Estudiante;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Grupo;
 import org.malbino.orion.entities.Inscrito;
-import org.malbino.orion.entities.Materia;
+import org.malbino.orion.entities.Modulo;
 import org.malbino.orion.entities.Nota;
 import org.malbino.orion.entities.Rol;
-import org.malbino.orion.enums.Nivel;
+
 import org.malbino.orion.enums.Tipo;
 import org.malbino.orion.facades.CarreraEstudianteFacade;
 import org.malbino.orion.facades.ComprobanteFacade;
@@ -198,14 +197,8 @@ public class InscripcionesFacade {
     public Long creditajeOferta(Inscrito inscrito) {
         Long l = 0L;
 
-        CarreraEstudiante carreraEstudiante = carreraEstudianteFacade.find(inscrito.carreraEstudianteId());
-        List<Materia> oferta;
-        if (carreraEstudiante != null) {
-            oferta = oferta(inscrito);
-        } else {
-            oferta = oferta(inscrito, null);
-        }
-        for (Materia materia : oferta) {
+        List<Modulo> oferta = oferta(inscrito);
+        for (Modulo materia : oferta) {
             l += materia.getCreditajeMateria();
         }
 
@@ -213,91 +206,18 @@ public class InscripcionesFacade {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public List<Materia> oferta(Inscrito inscrito) {
-        List<Materia> oferta = new ArrayList();
+    public List<Modulo> oferta(Inscrito inscrito) {
+        List<Modulo> oferta = new ArrayList();
 
-        List<Materia> listaMateriaAprobadas = materiaFacade.listaMateriaAprobadas(inscrito.getEstudiante().getId_persona(), inscrito.getCarrera().getId_carrera());
-        List<Nivel> nivelesPendientes = materiaFacade.nivelesPendientes(inscrito.getEstudiante(), inscrito.getCarrera());
+        List<Modulo> listaMateriaAprobadas = materiaFacade.listaMateriaAprobadas(inscrito.getEstudiante().getId_persona(), inscrito.getCarrera().getId_carrera());
 
-        ListIterator<Nivel> listIterator = nivelesPendientes.listIterator();
-        List<Materia> listaMaterias;
-        if (listIterator.hasNext()) {
-            listaMaterias = materiaFacade.listaMaterias(inscrito.getCarrera(), listIterator.next());
-            listaMaterias.removeAll(listaMateriaAprobadas);
+        List<Modulo> listaMaterias = materiaFacade.listaMaterias(inscrito.getCarrera());
+        listaMaterias.removeAll(listaMateriaAprobadas);
 
-            for (Materia materia : listaMaterias) {
-                List<Materia> prerequisitos = materia.getPrerequisitos();
-                if (listaMateriaAprobadas.containsAll(prerequisitos)) {
-                    oferta.add(materia);
-                }
-            }
-        }
-        if (inscrito.getTipo().equals(Tipo.REGULAR) && listIterator.hasNext() && oferta.size() <= inscrito.getGestionAcademica().getModalidadEvaluacion().getCantidadMaximaReprobaciones()) {
-            listaMaterias = materiaFacade.listaMaterias(inscrito.getCarrera(), listIterator.next());
-            listaMaterias.removeAll(listaMateriaAprobadas);
-
-            for (Materia materia : listaMaterias) {
-                List<Materia> prerequisitos = materia.getPrerequisitos();
-                if (listaMateriaAprobadas.containsAll(prerequisitos)) {
-                    oferta.add(materia);
-                }
-            }
-        }
-
-        return oferta;
-    }
-
-    public List<Materia> oferta(Inscrito inscrito, Nivel nivelInicio) {
-        List<Materia> oferta = new ArrayList();
-
-        List<Materia> listaMateriaAprobadas = materiaFacade.listaMateriaAprobadas(inscrito.getEstudiante().getId_persona(), inscrito.getCarrera().getId_carrera());
-        List<Nivel> nivelesPendientes = materiaFacade.nivelesPendientes(inscrito.getEstudiante(), inscrito.getCarrera());
-
-        List<Nivel> nivelesPendientesNivelInicio = new ArrayList<>();
-        for (Nivel nivelPendiente : nivelesPendientes) {
-            if (nivelPendiente.getNivel() >= nivelInicio.getNivel()) {
-                nivelesPendientesNivelInicio.add(nivelPendiente);
-            }
-        }
-
-        ListIterator<Nivel> listIterator = nivelesPendientesNivelInicio.listIterator();
-        List<Materia> listaMaterias;
-        if (listIterator.hasNext()) {
-            listaMaterias = materiaFacade.listaMaterias(inscrito.getCarrera(), listIterator.next());
-            listaMaterias.removeAll(listaMateriaAprobadas);
-
-            for (Materia materia : listaMaterias) {
-                List<Materia> prerequisitos = materia.getPrerequisitos();
-
-                List<Materia> prerequisitosNivelInicio = new ArrayList<>();
-                for (Materia prerequisito : prerequisitos) {
-                    if (prerequisito.getNivel().getNivel() >= nivelInicio.getNivel()) {
-                        prerequisitosNivelInicio.add(prerequisito);
-                    }
-                }
-
-                if (listaMateriaAprobadas.containsAll(prerequisitosNivelInicio)) {
-                    oferta.add(materia);
-                }
-            }
-        }
-        if (inscrito.getTipo().equals(Tipo.REGULAR) && listIterator.hasNext() && oferta.size() <= inscrito.getGestionAcademica().getModalidadEvaluacion().getCantidadMaximaReprobaciones()) {
-            listaMaterias = materiaFacade.listaMaterias(inscrito.getCarrera(), listIterator.next());
-            listaMaterias.removeAll(listaMateriaAprobadas);
-
-            for (Materia materia : listaMaterias) {
-                List<Materia> prerequisitos = materia.getPrerequisitos();
-
-                List<Materia> prerequisitosNivelInicio = new ArrayList<>();
-                for (Materia prerequisito : prerequisitos) {
-                    if (prerequisito.getNivel().getNivel() >= nivelInicio.getNivel()) {
-                        prerequisitosNivelInicio.add(prerequisito);
-                    }
-                }
-
-                if (listaMateriaAprobadas.containsAll(prerequisitosNivelInicio)) {
-                    oferta.add(materia);
-                }
+        for (Modulo materia : listaMaterias) {
+            List<Modulo> prerequisitos = materia.getPrerequisitos();
+            if (listaMateriaAprobadas.containsAll(prerequisitos)) {
+                oferta.add(materia);
             }
         }
 
@@ -342,18 +262,8 @@ public class InscripcionesFacade {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public List<Materia> ofertaTomaMaterias(Inscrito inscrito) {
-        CarreraEstudiante carreraEstudiante = carreraEstudianteFacade.find(inscrito.carreraEstudianteId());
-        List<Materia> ofertaTomaMaterias;
-        if (carreraEstudiante != null) {
-            if (carreraEstudiante.getNivelInicio() != null) {
-                ofertaTomaMaterias = oferta(inscrito, carreraEstudiante.getNivelInicio());
-            } else {
-                ofertaTomaMaterias = oferta(inscrito);
-            }
-        } else {
-            ofertaTomaMaterias = oferta(inscrito, null);
-        }
+    public List<Modulo> ofertaTomaMaterias(Inscrito inscrito) {
+        List<Modulo> ofertaTomaMaterias = oferta(inscrito);
 
         List<Nota> estadoInscripcion = notaFacade.listaNotas(inscrito.getId_inscrito());
         for (Nota nota : estadoInscripcion) {
@@ -361,22 +271,11 @@ public class InscripcionesFacade {
         }
 
         return ofertaTomaMaterias;
-
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public List<Materia> ofertaBoletinNotas(Inscrito inscrito) {
-        CarreraEstudiante carreraEstudiante = carreraEstudianteFacade.find(inscrito.carreraEstudianteId());
-        List<Materia> ofertaTomaMaterias;
-        if (carreraEstudiante != null) {
-            if (carreraEstudiante.getNivelInicio() != null) {
-                ofertaTomaMaterias = oferta(inscrito, carreraEstudiante.getNivelInicio());
-            } else {
-                ofertaTomaMaterias = oferta(inscrito);
-            }
-        } else {
-            ofertaTomaMaterias = oferta(inscrito, null);
-        }
+    public List<Modulo> ofertaBoletinNotas(Inscrito inscrito) {
+        List<Modulo> ofertaTomaMaterias = oferta(inscrito);
 
         return ofertaTomaMaterias;
     }

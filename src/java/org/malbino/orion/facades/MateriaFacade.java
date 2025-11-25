@@ -13,9 +13,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.Estudiante;
-import org.malbino.orion.entities.Materia;
+import org.malbino.orion.entities.Modulo;
 import org.malbino.orion.enums.Condicion;
-import org.malbino.orion.enums.Nivel;
 
 /**
  *
@@ -23,13 +22,13 @@ import org.malbino.orion.enums.Nivel;
  */
 @Stateless
 @LocalBean
-public class MateriaFacade extends AbstractFacade<Materia> {
+public class MateriaFacade extends AbstractFacade<Modulo> {
 
     @PersistenceContext(unitName = "orionPU")
     private EntityManager em;
 
     public MateriaFacade() {
-        super(Materia.class);
+        super(Modulo.class);
     }
 
     @Override
@@ -37,8 +36,8 @@ public class MateriaFacade extends AbstractFacade<Materia> {
         return em;
     }
 
-    public List<Materia> buscarPorCodigo(String codigo, Carrera carrera) {
-        List<Materia> l = new ArrayList<>();
+    public List<Modulo> buscarPorCodigo(String codigo, Carrera carrera) {
+        List<Modulo> l = new ArrayList<>();
 
         try {
             Query q = em.createQuery("SELECT m FROM Materia m WHERE m.codigo=:codigo AND m.carrera=:carrera");
@@ -53,8 +52,8 @@ public class MateriaFacade extends AbstractFacade<Materia> {
         return l;
     }
 
-    public List<Materia> buscarPorCodigo(String codigo, int id_materia, Carrera carrera) {
-        List<Materia> l = new ArrayList<>();
+    public List<Modulo> buscarPorCodigo(String codigo, int id_materia, Carrera carrera) {
+        List<Modulo> l = new ArrayList<>();
 
         try {
             Query q = em.createQuery("SELECT m FROM Materia m WHERE m.codigo=:codigo AND m.id_materia!=:id_materia AND m.carrera=:carrera");
@@ -70,8 +69,8 @@ public class MateriaFacade extends AbstractFacade<Materia> {
         return l;
     }
 
-    public List<Materia> listaMaterias(Carrera carrera) {
-        List<Materia> l = new ArrayList();
+    public List<Modulo> listaMaterias(Carrera carrera) {
+        List<Modulo> l = new ArrayList();
 
         try {
             Query q = em.createQuery("SELECT m FROM Materia m WHERE m.carrera=:carrera ORDER BY m.nivel, m.numero");
@@ -85,8 +84,8 @@ public class MateriaFacade extends AbstractFacade<Materia> {
         return l;
     }
 
-    public List<Materia> listaMaterias(Carrera carrera, int id_materia) {
-        List<Materia> l = new ArrayList();
+    public List<Modulo> listaMaterias(Carrera carrera, int id_materia) {
+        List<Modulo> l = new ArrayList();
 
         try {
             Query q = em.createQuery("SELECT m FROM Materia m WHERE m.carrera=:carrera AND m.id_materia!=:id_materia ORDER BY m.nivel, m.numero");
@@ -101,24 +100,8 @@ public class MateriaFacade extends AbstractFacade<Materia> {
         return l;
     }
 
-    public List<Materia> listaMaterias(Carrera carrera, Nivel nivel) {
-        List<Materia> l = new ArrayList();
-
-        try {
-            Query q = em.createQuery("SELECT m FROM Materia m WHERE m.carrera=:carrera AND m.nivel=:nivel ORDER BY m.numero");
-            q.setParameter("carrera", carrera);
-            q.setParameter("nivel", nivel);
-
-            l = q.getResultList();
-        } catch (Exception e) {
-
-        }
-
-        return l;
-    }
-
-    public List<Materia> buscar(String keyword, int id_carrera) {
-        List<Materia> l = new ArrayList();
+    public List<Modulo> buscar(String keyword, int id_carrera) {
+        List<Modulo> l = new ArrayList();
 
         try {
             Query q = em.createQuery("SELECT m FROM Materia m JOIN m.carrera c WHERE c.id_carrera=:id_carrera AND "
@@ -135,25 +118,8 @@ public class MateriaFacade extends AbstractFacade<Materia> {
         return l;
     }
 
-    public List<Nivel> nivelesPendientes(Estudiante estudiante, Carrera carrera) {
-        List<Nivel> l = new ArrayList();
-
-        try {
-            Query q = em.createQuery("SELECT DISTINCT m.nivel FROM Materia m WHERE m.carrera=:carrera AND m.id_materia NOT IN (SELECT m.id_materia FROM Nota n JOIN n.materia m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND n.condicion=:condicion) ORDER BY m.nivel, m.numero");
-            q.setParameter("estudiante", estudiante);
-            q.setParameter("carrera", carrera);
-            q.setParameter("condicion", Condicion.APROBADO);
-
-            l = q.getResultList();
-        } catch (Exception e) {
-
-        }
-
-        return l;
-    }
-
-    public List<Materia> listaMateriaAprobadas(int id_persona, int id_carrera) {
-        List<Materia> l = new ArrayList();
+    public List<Modulo> listaMateriaAprobadas(int id_persona, int id_carrera) {
+        List<Modulo> l = new ArrayList();
 
         try {
             Query q = em.createQuery("SELECT m FROM Nota n JOIN n.estudiante e JOIN n.materia m JOIN m.carrera c WHERE e.id_persona=:id_persona AND c.id_carrera=:id_carrera AND n.condicion=:condicion ORDER BY m.numero");
@@ -169,8 +135,8 @@ public class MateriaFacade extends AbstractFacade<Materia> {
         return l;
     }
 
-    public List<Materia> listaMateriaAprobadas(Estudiante estudiante, Carrera carrera) {
-        List<Materia> l = new ArrayList();
+    public List<Modulo> listaMateriaAprobadas(Estudiante estudiante, Carrera carrera) {
+        List<Modulo> l = new ArrayList();
 
         try {
             Query q = em.createQuery("SELECT m FROM Nota n JOIN n.materia m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND n.condicion=:condicion ORDER BY m.nivel, m.numero");
@@ -217,8 +183,8 @@ public class MateriaFacade extends AbstractFacade<Materia> {
         return l;
     }
 
-    public List<Materia> listaMaterias(int id_prerequisito) {
-        List<Materia> l = new ArrayList();
+    public List<Modulo> listaMaterias(int id_prerequisito) {
+        List<Modulo> l = new ArrayList();
 
         try {
             Query q = em.createQuery("SELECT m FROM Materia m JOIN m.prerequisitos p WHERE p.id_materia=:id_prerequisito");

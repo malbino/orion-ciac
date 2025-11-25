@@ -15,7 +15,7 @@ import javax.transaction.Transactional;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.CarreraEstudiante;
 import org.malbino.orion.entities.Estudiante;
-import org.malbino.orion.entities.Materia;
+import org.malbino.orion.entities.Modulo;
 import org.malbino.orion.entities.Nota;
 import org.malbino.orion.entities.Pago;
 import org.malbino.orion.entities.Rol;
@@ -290,8 +290,8 @@ public class FileEstudianteFacade {
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
-    public List<Materia> oferta(Carrera carrera, Estudiante estudiante) {
-        List<Materia> oferta = new ArrayList();
+    public List<Modulo> oferta(Carrera carrera, Estudiante estudiante) {
+        List<Modulo> oferta = new ArrayList();
 
         CarreraEstudiante.CarreraEstudianteId carreraEstudianteId = new CarreraEstudiante.CarreraEstudianteId();
         carreraEstudianteId.setId_carrera(carrera.getId_carrera());
@@ -299,46 +299,17 @@ public class FileEstudianteFacade {
         CarreraEstudiante carreraEstudiante = carreraEstudianteFacade.find(carreraEstudianteId);
         if (carreraEstudiante != null) {
             // materias carrera
-            List<Materia> listaMateriasCarrera;
-            if (carreraEstudiante.getNivelInicio() != null) {
-                List<Materia> listaMaterias = materiaFacade.listaMaterias(carrera);
-
-                listaMateriasCarrera = new ArrayList<>();
-                for (Materia materia : listaMaterias) {
-                    if (materia.getNivel().getNivel() >= carreraEstudiante.getNivelInicio().getNivel()) {
-                        listaMateriasCarrera.add(materia);
-                    }
-                }
-            } else {
-                listaMateriasCarrera = materiaFacade.listaMaterias(carrera);
-            }
+            List<Modulo> listaMateriasCarrera = materiaFacade.listaMaterias(carrera);
 
             // quitando materias aprobadas
-            List<Materia> listaMateriaAprobadas = materiaFacade.listaMateriaAprobadas(estudiante.getId_persona(), carrera.getId_carrera());
+            List<Modulo> listaMateriaAprobadas = materiaFacade.listaMateriaAprobadas(estudiante.getId_persona(), carrera.getId_carrera());
             listaMateriasCarrera.removeAll(listaMateriaAprobadas);
 
             // control de prerequisitos
-            if (carreraEstudiante.getNivelInicio() != null) {
-                for (Materia materia : listaMateriasCarrera) {
-                    List<Materia> prerequisitos = materia.getPrerequisitos();
-
-                    List<Materia> prerequisitosNivelInicio = new ArrayList<>();
-                    for (Materia prerequisito : prerequisitos) {
-                        if (prerequisito.getNivel().getNivel() >= carreraEstudiante.getNivelInicio().getNivel()) {
-                            prerequisitosNivelInicio.add(prerequisito);
-                        }
-                    }
-
-                    if (listaMateriaAprobadas.containsAll(prerequisitosNivelInicio)) {
-                        oferta.add(materia);
-                    }
-                }
-            } else {
-                for (Materia materia : listaMateriasCarrera) {
-                    List<Materia> prerequisitos = materia.getPrerequisitos();
-                    if (listaMateriaAprobadas.containsAll(prerequisitos)) {
-                        oferta.add(materia);
-                    }
+            for (Modulo materia : listaMateriasCarrera) {
+                List<Modulo> prerequisitos = materia.getPrerequisitos();
+                if (listaMateriaAprobadas.containsAll(prerequisitos)) {
+                    oferta.add(materia);
                 }
             }
         }

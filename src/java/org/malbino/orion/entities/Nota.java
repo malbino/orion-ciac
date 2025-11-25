@@ -60,7 +60,7 @@ public class Nota implements Serializable {
 
     @JoinColumn(name = "id_materia")
     @ManyToOne
-    private Materia materia;
+    private Modulo materia;
 
     @JoinColumn(name = "id_estudiante")
     @ManyToOne
@@ -77,7 +77,7 @@ public class Nota implements Serializable {
     public Nota() {
     }
 
-    public Nota(Integer notaFinal, Modalidad modalidad, Condicion condicion, GestionAcademica gestionAcademica, Materia materia, Estudiante estudiante, Inscrito inscrito, Grupo grupo) {
+    public Nota(Integer notaFinal, Modalidad modalidad, Condicion condicion, GestionAcademica gestionAcademica, Modulo materia, Estudiante estudiante, Inscrito inscrito, Grupo grupo) {
         this.notaFinal = notaFinal;
         this.modalidad = modalidad;
         this.condicion = condicion;
@@ -343,14 +343,14 @@ public class Nota implements Serializable {
     /**
      * @return the materia
      */
-    public Materia getMateria() {
+    public Modulo getMateria() {
         return materia;
     }
 
     /**
      * @param materia the materia to set
      */
-    public void setMateria(Materia materia) {
+    public void setMateria(Modulo materia) {
         this.materia = materia;
     }
 

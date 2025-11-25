@@ -40,7 +40,7 @@ public class Grupo implements Serializable {
 
     @JoinColumn(name = "id_materia")
     @ManyToOne
-    private Materia materia;
+    private Modulo materia;
 
     @JoinColumn(name = "id_persona")
     @ManyToOne
@@ -49,7 +49,7 @@ public class Grupo implements Serializable {
     public Grupo() {
     }
 
-    public Grupo(String codigo, Integer capacidad, Turno turno, Boolean abierto, GestionAcademica gestionAcademica, Materia materia) {
+    public Grupo(String codigo, Integer capacidad, Turno turno, Boolean abierto, GestionAcademica gestionAcademica, Modulo materia) {
         this.codigo = codigo;
         this.capacidad = capacidad;
         this.turno = turno;
@@ -65,7 +65,6 @@ public class Grupo implements Serializable {
     public String fullNameMoodle() {
         return this.getMateria().getNombre() + " - "
                 + this.getTurno().getInicial() + this.codigo + " - "
-                + this.getMateria().getNivel().getAbreviatura() + " - "
                 + this.getMateria().getCarrera().getNombre() + " - "
                 + this.getGestionAcademica().toString();
     }
@@ -73,7 +72,6 @@ public class Grupo implements Serializable {
     public String shortNameMoodle() {
         return this.getMateria().getCodigo() + " - "
                 + this.getTurno().getInicial() + this.codigo + " - "
-                + this.getMateria().getNivel().getAbreviatura() + " - "
                 + this.getMateria().getCarrera().getCodigo() + " - "
                 + this.getGestionAcademica().toString();
     }
@@ -87,7 +85,7 @@ public class Grupo implements Serializable {
     }
 
     public String summaryMoodle() {
-        return "Curso de " + this.getMateria().getNombre() + " del " + this.getMateria().getNivel().getNombre() + " de la carrera de " + this.getMateria().getCarrera().getNombre() + ".";
+        return "Curso de " + this.getMateria().getNombre() + " de la carrera de " + this.getMateria().getCarrera().getNombre() + ".";
     }
 
     /**
@@ -177,14 +175,14 @@ public class Grupo implements Serializable {
     /**
      * @return the materia
      */
-    public Materia getMateria() {
+    public Modulo getMateria() {
         return materia;
     }
 
     /**
      * @param materia the materia to set
      */
-    public void setMateria(Materia materia) {
+    public void setMateria(Modulo materia) {
         this.materia = materia;
     }
 

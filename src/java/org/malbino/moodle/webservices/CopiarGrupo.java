@@ -575,21 +575,11 @@ public class CopiarGrupo implements Runnable {
             JSONObject c_category = c_categories.getJSONObject(0);
             System.out.println("category -> " + c_category.getString("name"));
 
-            //nivel
-            JSONArray p_categories = getCategory(token, grupo.getGestionAcademica().idnumberMoodle() + grupo.getMateria().getCarrera().idnumberMoodle() + grupo.getMateria().getNivel().getAbreviatura());
-            System.out.println("get categories -> " + p_categories.length());
-            if (p_categories.isEmpty()) {
-                p_categories = createCategory(token, c_category.getInt("id"), grupo.getMateria().getNivel().getNombre(), grupo.getGestionAcademica().idnumberMoodle() + grupo.getMateria().getCarrera().idnumberMoodle() + grupo.getMateria().getNivel().getAbreviatura());
-                System.out.println("create category -> ");
-            }
-            JSONObject p_category = p_categories.getJSONObject(0);
-            System.out.println("category -> " + p_category.getString("name"));
-
             //curso
             JSONArray courses = getCourse(token, grupo);
             System.out.println("get courses -> " + courses.length());
             if (courses.isEmpty()) {
-                courses = createCourse(token, p_category.getInt("id"), grupo);
+                courses = createCourse(token, c_category.getInt("id"), grupo);
                 System.out.println("create course -> ");
             }
             JSONObject course = courses.getJSONObject(0);

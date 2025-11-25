@@ -19,7 +19,6 @@ import org.malbino.orion.entities.Grupo;
 import org.malbino.orion.entities.Log;
 import org.malbino.orion.enums.EntidadLog;
 import org.malbino.orion.enums.EventoLog;
-import org.malbino.orion.enums.Nivel;
 import org.malbino.orion.enums.Turno;
 import org.malbino.orion.facades.GrupoFacade;
 import org.malbino.orion.facades.negocio.ProgramacionGruposFacade;
@@ -45,7 +44,6 @@ public class GrupoController extends AbstractController implements Serializable 
 
     private GestionAcademica seleccionGestionAcademica;
     private Carrera seleccionCarrera;
-    private Nivel seleccionNivel;
     private Turno seleccionTurno;
     private Integer capacidad;
 
@@ -58,7 +56,6 @@ public class GrupoController extends AbstractController implements Serializable 
 
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
-        seleccionNivel = null;
         seleccionTurno = null;
         capacidad = null;
 
@@ -71,7 +68,6 @@ public class GrupoController extends AbstractController implements Serializable 
         }
         seleccionGrupo = null;
 
-        seleccionNivel = null;
         seleccionTurno = null;
         capacidad = null;
 
@@ -87,10 +83,6 @@ public class GrupoController extends AbstractController implements Serializable 
         return l;
     }
 
-    public Nivel[] listaNiveles() {
-        return Nivel.values(seleccionCarrera.getRegimen());
-    }
-
     public void buscar() {
         if (seleccionGestionAcademica != null && seleccionCarrera != null) {
             grupos = grupoFacade.buscar(keyword, seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera());
@@ -102,7 +94,7 @@ public class GrupoController extends AbstractController implements Serializable 
     }
 
     public void programarGrupos() throws IOException {
-        List<Grupo> grupos = programacionGruposFacade.programarGrupos(seleccionGestionAcademica, seleccionCarrera, seleccionNivel, seleccionTurno, capacidad);
+        List<Grupo> grupos = programacionGruposFacade.programarGrupos(seleccionGestionAcademica, seleccionCarrera, null, seleccionTurno, capacidad);
         if (!grupos.isEmpty()) {
             //log
             for (Grupo grupo : grupos) {
@@ -204,20 +196,6 @@ public class GrupoController extends AbstractController implements Serializable 
      */
     public void setSeleccionCarrera(Carrera seleccionCarrera) {
         this.seleccionCarrera = seleccionCarrera;
-    }
-
-    /**
-     * @return the seleccionNivel
-     */
-    public Nivel getSeleccionNivel() {
-        return seleccionNivel;
-    }
-
-    /**
-     * @param seleccionNivel the seleccionNivel to set
-     */
-    public void setSeleccionNivel(Nivel seleccionNivel) {
-        this.seleccionNivel = seleccionNivel;
     }
 
     /**

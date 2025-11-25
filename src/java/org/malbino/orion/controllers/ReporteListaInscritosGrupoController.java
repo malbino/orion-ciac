@@ -18,7 +18,6 @@ import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Grupo;
 import org.malbino.orion.entities.Log;
 import org.malbino.orion.enums.EventoLog;
-import org.malbino.orion.enums.Nivel;
 import org.malbino.orion.facades.GrupoFacade;
 import org.malbino.orion.util.Fecha;
 
@@ -37,21 +36,18 @@ public class ReporteListaInscritosGrupoController extends AbstractController imp
 
     private GestionAcademica seleccionGestionAcademica;
     private Carrera seleccionCarrera;
-    private Nivel seleccionNivel;
     private Grupo seleccionGrupo;
 
     @PostConstruct
     public void init() {
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
-        seleccionNivel = null;
         seleccionGrupo = null;
     }
 
     public void reinit() {
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
-        seleccionNivel = null;
         seleccionGrupo = null;
     }
 
@@ -64,18 +60,10 @@ public class ReporteListaInscritosGrupoController extends AbstractController imp
         return l;
     }
 
-    public Nivel[] listaNiveles() {
-        Nivel[] niveles = new Nivel[0];
-        if (seleccionGestionAcademica != null && seleccionCarrera != null) {
-            niveles = Nivel.values(seleccionCarrera.getRegimen());
-        }
-        return niveles;
-    }
-
     public List<Grupo> listaGrupos() {
         List<Grupo> grupos = new ArrayList<>();
-        if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionNivel != null) {
-            grupos = grupoFacade.listaGrupos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionNivel);
+        if (seleccionGestionAcademica != null && seleccionCarrera != null) {
+            grupos = grupoFacade.listaGrupos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera());
         }
         return grupos;
     }
@@ -127,20 +115,6 @@ public class ReporteListaInscritosGrupoController extends AbstractController imp
      */
     public void setSeleccionCarrera(Carrera seleccionCarrera) {
         this.seleccionCarrera = seleccionCarrera;
-    }
-
-    /**
-     * @return the seleccionNivel
-     */
-    public Nivel getSeleccionNivel() {
-        return seleccionNivel;
-    }
-
-    /**
-     * @param seleccionNivel the seleccionNivel to set
-     */
-    public void setSeleccionNivel(Nivel seleccionNivel) {
-        this.seleccionNivel = seleccionNivel;
     }
 
     /**

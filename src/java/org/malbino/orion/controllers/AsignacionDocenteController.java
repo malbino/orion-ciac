@@ -21,7 +21,6 @@ import org.malbino.orion.entities.Log;
 import org.malbino.orion.entities.Nota;
 import org.malbino.orion.enums.EntidadLog;
 import org.malbino.orion.enums.EventoLog;
-import org.malbino.orion.enums.Nivel;
 import org.malbino.orion.facades.GrupoFacade;
 import org.malbino.orion.facades.NotaFacade;
 import org.malbino.orion.util.Fecha;
@@ -77,10 +76,6 @@ public class AsignacionDocenteController extends AbstractController implements S
             l = carreraFacade.listaCarreras(seleccionGestionAcademica.getRegimen());
         }
         return l;
-    }
-
-    public Nivel[] listaNiveles() {
-        return Nivel.values(seleccionCarrera.getRegimen());
     }
 
     public void buscar() {

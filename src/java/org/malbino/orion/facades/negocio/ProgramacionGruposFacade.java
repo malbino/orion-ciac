@@ -15,8 +15,7 @@ import javax.transaction.Transactional;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Grupo;
-import org.malbino.orion.entities.Materia;
-import org.malbino.orion.enums.Nivel;
+import org.malbino.orion.entities.Modulo;
 import org.malbino.orion.enums.Turno;
 import org.malbino.orion.facades.GrupoFacade;
 import org.malbino.orion.facades.MateriaFacade;
@@ -39,19 +38,16 @@ public class ProgramacionGruposFacade {
     GrupoFacade grupoFacade;
 
     @Transactional(Transactional.TxType.REQUIRES_NEW)
-    public List<Grupo> programarGrupos(GestionAcademica gestionAcademica, Carrera carrera, Nivel nivel, Turno turno, Integer capacidad) {
+    public List<Grupo> programarGrupos(GestionAcademica gestionAcademica, Carrera carrera, Modulo modulo, Turno turno, Integer capacidad) {
         List<Grupo> grupos = new ArrayList<>();
 
-        List<Materia> materias = materiaFacade.listaMaterias(carrera, nivel);
-        for (Materia materia : materias) {
-            Integer c1 = grupoFacade.cantidadGrupos(gestionAcademica.getId_gestionacademica(), materia.getId_materia(), turno).intValue();
-            String codigo = Constantes.ABECEDARIO[c1];
+        Integer c1 = grupoFacade.cantidadGrupos(gestionAcademica.getId_gestionacademica(), modulo.getId_modulo(), turno).intValue();
+        String codigo = Constantes.ABECEDARIO[c1];
 
-            Grupo grupo = new Grupo(codigo, capacidad, turno, true, gestionAcademica, materia);
-            em.persist(grupo);
+        Grupo grupo = new Grupo(codigo, capacidad, turno, true, gestionAcademica, modulo);
+        em.persist(grupo);
 
-            grupos.add(grupo);
-        }
+        grupos.add(grupo);
 
         return grupos;
     }

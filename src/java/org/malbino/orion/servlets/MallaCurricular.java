@@ -30,8 +30,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.malbino.orion.entities.Carrera;
-import org.malbino.orion.entities.Materia;
-import org.malbino.orion.enums.Nivel;
+import org.malbino.orion.entities.Modulo;
 import org.malbino.orion.facades.MateriaFacade;
 
 /**
@@ -128,75 +127,71 @@ public class MallaCurricular extends HttpServlet {
     }
 
     public PdfPTable contenido(Carrera carrera) throws BadElementException, IOException {
-        Nivel[] niveles = Nivel.values(carrera.getRegimen());
-
-        PdfPTable table = new PdfPTable(niveles.length);
+        PdfPTable table = new PdfPTable(1);
 
         PdfPCell cell = new PdfPCell(new Phrase(" ", NEGRITA));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         cell.setBorder(Rectangle.NO_BORDER);
-        cell.setColspan(niveles.length);
+        cell.setColspan(1);
         table.addCell(cell);
 
-        for (Nivel nivel : niveles) {
-            PdfPTable subtable = new PdfPTable(1);
+        PdfPTable subtable = new PdfPTable(1);
 
-            cell = new PdfPCell(new Phrase(nivel.getNombre(), NEGRITA));
-            cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-            cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
-            subtable.addCell(cell);
+        cell = new PdfPCell(new Phrase("", NEGRITA));
+        cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+        cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+        subtable.addCell(cell);
 
-            cell = new PdfPCell(new Phrase(" ", NEGRITA));
-            cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-            cell.setBorder(Rectangle.NO_BORDER);
-            subtable.addCell(cell);
+        cell = new PdfPCell(new Phrase(" ", NEGRITA));
+        cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+        cell.setBorder(Rectangle.NO_BORDER);
+        subtable.addCell(cell);
 
-            Long cantidadMaximaMateriasNivel = materiaFacade.cantidadMaximaMateriasNivel(carrera);
+        Long cantidadMaximaMateriasNivel = materiaFacade.cantidadMaximaMateriasNivel(carrera);
 
-            List<Materia> materias = materiaFacade.listaMaterias(carrera, nivel);
-            Iterator<Materia> iterator = materias.iterator();
-            for (int i = 0; i < cantidadMaximaMateriasNivel; i++) {
-                if (iterator.hasNext()) {
-                    Materia materia = iterator.next();
+        List<Modulo> materias = materiaFacade.listaMaterias(carrera);
+        Iterator<Modulo> iterator = materias.iterator();
+        for (int i = 0; i < cantidadMaximaMateriasNivel; i++) {
+            if (iterator.hasNext()) {
+                Modulo materia = iterator.next();
 
-                    cell = new PdfPCell(new Phrase(materia.getCodigo(), NEGRITA));
-                    cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-                    cell.setBorder(Rectangle.LEFT | Rectangle.TOP | Rectangle.RIGHT);
-                    subtable.addCell(cell);
+                cell = new PdfPCell(new Phrase(materia.getCodigo(), NEGRITA));
+                cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+                cell.setBorder(Rectangle.LEFT | Rectangle.TOP | Rectangle.RIGHT);
+                subtable.addCell(cell);
 
-                    cell = new PdfPCell(new Phrase(materia.getNombre(), NORMAL));
-                    cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-                    cell.setBorder(Rectangle.LEFT | Rectangle.RIGHT);
-                    cell.setFixedHeight(25);
-                    subtable.addCell(cell);
+                cell = new PdfPCell(new Phrase(materia.getNombre(), NORMAL));
+                cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+                cell.setBorder(Rectangle.LEFT | Rectangle.RIGHT);
+                cell.setFixedHeight(25);
+                subtable.addCell(cell);
 
-                    cell = new PdfPCell(new Phrase(materia.prerequisitosToString(), NEGRITA));
-                    cell.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT);
-                    cell.setBorder(Rectangle.LEFT | Rectangle.BOTTOM | Rectangle.RIGHT);
-                    subtable.addCell(cell);
-                } else {
-                    cell = new PdfPCell(new Phrase(" ", NEGRITA));
-                    cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-                    cell.setBorder(Rectangle.LEFT | Rectangle.TOP | Rectangle.RIGHT);
-                    subtable.addCell(cell);
+                cell = new PdfPCell(new Phrase(materia.prerequisitosToString(), NEGRITA));
+                cell.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT);
+                cell.setBorder(Rectangle.LEFT | Rectangle.BOTTOM | Rectangle.RIGHT);
+                subtable.addCell(cell);
+            } else {
+                cell = new PdfPCell(new Phrase(" ", NEGRITA));
+                cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+                cell.setBorder(Rectangle.LEFT | Rectangle.TOP | Rectangle.RIGHT);
+                subtable.addCell(cell);
 
-                    cell = new PdfPCell(new Phrase(" ", NORMAL));
-                    cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-                    cell.setBorder(Rectangle.LEFT | Rectangle.RIGHT);
-                    cell.setFixedHeight(25);
-                    subtable.addCell(cell);
+                cell = new PdfPCell(new Phrase(" ", NORMAL));
+                cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+                cell.setBorder(Rectangle.LEFT | Rectangle.RIGHT);
+                cell.setFixedHeight(25);
+                subtable.addCell(cell);
 
-                    cell = new PdfPCell(new Phrase(" ", NEGRITA));
-                    cell.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT);
-                    cell.setBorder(Rectangle.LEFT | Rectangle.BOTTOM | Rectangle.RIGHT);
-                    subtable.addCell(cell);
-                }
+                cell = new PdfPCell(new Phrase(" ", NEGRITA));
+                cell.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT);
+                cell.setBorder(Rectangle.LEFT | Rectangle.BOTTOM | Rectangle.RIGHT);
+                subtable.addCell(cell);
             }
-
-            cell = new PdfPCell(subtable);
-            cell.setBorder(Rectangle.NO_BORDER);
-            table.addCell(cell);
         }
+
+        cell = new PdfPCell(subtable);
+        cell.setBorder(Rectangle.NO_BORDER);
+        table.addCell(cell);
 
         return table;
     }

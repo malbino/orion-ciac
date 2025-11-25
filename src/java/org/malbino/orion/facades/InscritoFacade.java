@@ -15,7 +15,6 @@ import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Inscrito;
 import org.malbino.orion.enums.Condicion;
-import org.malbino.orion.enums.Nivel;
 import org.malbino.orion.enums.Periodo;
 import org.malbino.orion.enums.Sexo;
 import org.malbino.orion.enums.Turno;
@@ -139,31 +138,13 @@ public class InscritoFacade extends AbstractFacade<Inscrito> {
         return l;
     }
 
-    public List<Inscrito> listaInscritos(int id_gestionacademica, int id_carrera, Nivel nivel) {
+    public List<Inscrito> listaInscritos(int id_gestionacademica, int id_carrera, Turno turno) {
         List<Inscrito> l = new ArrayList<>();
 
         try {
-            Query q = em.createQuery("SELECT DISTINCT i FROM Nota n JOIN n.grupo g JOIN g.materia m JOIN m.carrera c JOIN g.gestionAcademica ga JOIN n.inscrito i JOIN i.estudiante e WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND m.nivel=:nivel ORDER BY e.primerApellido, e.segundoApellido, e.nombre");
+            Query q = em.createQuery("SELECT DISTINCT i FROM Nota n JOIN n.grupo g JOIN g.materia m JOIN m.carrera c JOIN g.gestionAcademica ga JOIN n.inscrito i JOIN i.estudiante e WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND g.turno=:turno ORDER BY e.primerApellido, e.segundoApellido, e.nombre");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_carrera", id_carrera);
-            q.setParameter("nivel", nivel);
-
-            l = q.getResultList();
-        } catch (Exception e) {
-
-        }
-
-        return l;
-    }
-
-    public List<Inscrito> listaInscritos(int id_gestionacademica, int id_carrera, Nivel nivel, Turno turno) {
-        List<Inscrito> l = new ArrayList<>();
-
-        try {
-            Query q = em.createQuery("SELECT DISTINCT i FROM Nota n JOIN n.grupo g JOIN g.materia m JOIN m.carrera c JOIN g.gestionAcademica ga JOIN n.inscrito i JOIN i.estudiante e WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND m.nivel=:nivel AND g.turno=:turno ORDER BY e.primerApellido, e.segundoApellido, e.nombre");
-            q.setParameter("id_gestionacademica", id_gestionacademica);
-            q.setParameter("id_carrera", id_carrera);
-            q.setParameter("nivel", nivel);
             q.setParameter("turno", turno);
 
             l = q.getResultList();
@@ -174,14 +155,13 @@ public class InscritoFacade extends AbstractFacade<Inscrito> {
         return l;
     }
 
-    public List<Inscrito> listaInscritos(int id_gestionacademica, int id_carrera, Nivel nivel, Turno turno, String paralelo) {
+    public List<Inscrito> listaInscritos(int id_gestionacademica, int id_carrera, Turno turno, String paralelo) {
         List<Inscrito> l = new ArrayList<>();
 
         try {
-            Query q = em.createQuery("SELECT DISTINCT i FROM Nota n JOIN n.grupo g JOIN g.materia m JOIN m.carrera c JOIN g.gestionAcademica ga JOIN n.inscrito i JOIN i.estudiante e WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND m.nivel=:nivel AND g.turno=:turno AND g.codigo=:paralelo ORDER BY e.primerApellido, e.segundoApellido, e.nombre");
+            Query q = em.createQuery("SELECT DISTINCT i FROM Nota n JOIN n.grupo g JOIN g.materia m JOIN m.carrera c JOIN g.gestionAcademica ga JOIN n.inscrito i JOIN i.estudiante e WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND g.turno=:turno AND g.codigo=:paralelo ORDER BY e.primerApellido, e.segundoApellido, e.nombre");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_carrera", id_carrera);
-            q.setParameter("nivel", nivel);
             q.setParameter("turno", turno);
             q.setParameter("paralelo", paralelo);
 
@@ -368,37 +348,16 @@ public class InscritoFacade extends AbstractFacade<Inscrito> {
         return l;
     }
 
-    public List<Inscrito> buscar(int id_gestionacademica, int id_carrera, Nivel nivel, String keyword) {
+    public List<Inscrito> buscar(int id_gestionacademica, int id_carrera, Turno turno, String keyword) {
         List<Inscrito> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT DISTINCT i FROM Inscrito i JOIN i.estudiante e JOIN i.gestionAcademica ga JOIN i.carrera c JOIN i.notas n JOIN n.grupo g JOIN g.materia m  WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND m.nivel=:nivel AND "
+            Query q = em.createQuery("SELECT DISTINCT i FROM Inscrito i JOIN i.estudiante e JOIN i.gestionAcademica ga JOIN i.carrera c JOIN i.notas n JOIN n.grupo g JOIN g.materia m  WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND g.turno=:turno AND "
                     + "(CAST(i.codigo AS CHAR) LIKE :keyword OR "
                     + "LOWER(FUNCTION('REPLACE', CONCAT(e.primerApellido, e.segundoApellido, e.nombre), ' ', '')) LIKE :keyword) "
                     + "ORDER BY e.primerApellido, e.segundoApellido, e.nombre");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_carrera", id_carrera);
-            q.setParameter("nivel", nivel);
-            q.setParameter("keyword", "%" + keyword.replace(" ", "").toLowerCase() + "%");
-
-            l = q.getResultList();
-        } catch (Exception e) {
-        }
-
-        return l;
-    }
-
-    public List<Inscrito> buscar(int id_gestionacademica, int id_carrera, Nivel nivel, Turno turno, String keyword) {
-        List<Inscrito> l = new ArrayList();
-
-        try {
-            Query q = em.createQuery("SELECT DISTINCT i FROM Inscrito i JOIN i.estudiante e JOIN i.gestionAcademica ga JOIN i.carrera c JOIN i.notas n JOIN n.grupo g JOIN g.materia m  WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND m.nivel=:nivel AND g.turno=:turno AND "
-                    + "(CAST(i.codigo AS CHAR) LIKE :keyword OR "
-                    + "LOWER(FUNCTION('REPLACE', CONCAT(e.primerApellido, e.segundoApellido, e.nombre), ' ', '')) LIKE :keyword) "
-                    + "ORDER BY e.primerApellido, e.segundoApellido, e.nombre");
-            q.setParameter("id_gestionacademica", id_gestionacademica);
-            q.setParameter("id_carrera", id_carrera);
-            q.setParameter("nivel", nivel);
             q.setParameter("turno", turno);
             q.setParameter("keyword", "%" + keyword.replace(" ", "").toLowerCase() + "%");
 
@@ -409,17 +368,16 @@ public class InscritoFacade extends AbstractFacade<Inscrito> {
         return l;
     }
 
-    public List<Inscrito> buscar(int id_gestionacademica, int id_carrera, Nivel nivel, Turno turno, String paralelo, String keyword) {
+    public List<Inscrito> buscar(int id_gestionacademica, int id_carrera, Turno turno, String paralelo, String keyword) {
         List<Inscrito> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT DISTINCT i FROM Inscrito i JOIN i.estudiante e JOIN i.gestionAcademica ga JOIN i.carrera c JOIN i.notas n JOIN n.grupo g JOIN g.materia m  WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND m.nivel=:nivel AND g.turno=:turno AND g.codigo=:paralelo AND "
+            Query q = em.createQuery("SELECT DISTINCT i FROM Inscrito i JOIN i.estudiante e JOIN i.gestionAcademica ga JOIN i.carrera c JOIN i.notas n JOIN n.grupo g JOIN g.materia m  WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND g.turno=:turno AND g.codigo=:paralelo AND "
                     + "(CAST(i.codigo AS CHAR) LIKE :keyword OR "
                     + "LOWER(FUNCTION('REPLACE', CONCAT(e.primerApellido, e.segundoApellido, e.nombre), ' ', '')) LIKE :keyword) "
                     + "ORDER BY e.primerApellido, e.segundoApellido, e.nombre");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_carrera", id_carrera);
-            q.setParameter("nivel", nivel);
             q.setParameter("turno", turno);
             q.setParameter("paralelo", paralelo);
             q.setParameter("keyword", "%" + keyword.replace(" ", "").toLowerCase() + "%");
@@ -460,30 +418,13 @@ public class InscritoFacade extends AbstractFacade<Inscrito> {
         return l;
     }
 
-    public List<Inscrito> listaInscritos(int id_carrera, Nivel nivel) {
+    public List<Inscrito> listaInscritos(int id_gestionacademica, int id_carrera, String paralelo) {
         List<Inscrito> l = new ArrayList<>();
 
         try {
-            Query q = em.createQuery("SELECT DISTINCT(i) FROM Nota n JOIN n.inscrito i JOIN i.gestionAcademica ga JOIN i.carrera c JOIN n.materia m JOIN i.estudiante e WHERE ga.vigente=TRUE AND c.id_carrera=:id_carrera AND m.nivel=:nivel");
-            q.setParameter("id_carrera", id_carrera);
-            q.setParameter("nivel", nivel);
-
-            l = q.getResultList();
-        } catch (Exception e) {
-
-        }
-
-        return l;
-    }
-
-    public List<Inscrito> listaInscritos(int id_gestionacademica, int id_carrera, Nivel nivel, String paralelo) {
-        List<Inscrito> l = new ArrayList<>();
-
-        try {
-            Query q = em.createQuery("SELECT DISTINCT i FROM Nota n JOIN n.grupo g JOIN g.materia m JOIN m.carrera c JOIN g.gestionAcademica ga JOIN n.inscrito i JOIN i.estudiante e WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND m.nivel=:nivel AND g.codigo=:paralelo ORDER BY e.primerApellido, e.segundoApellido, e.nombre");
+            Query q = em.createQuery("SELECT DISTINCT i FROM Nota n JOIN n.grupo g JOIN g.materia m JOIN m.carrera c JOIN g.gestionAcademica ga JOIN n.inscrito i JOIN i.estudiante e WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND g.codigo=:paralelo ORDER BY e.primerApellido, e.segundoApellido, e.nombre");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_carrera", id_carrera);
-            q.setParameter("nivel", nivel);
             q.setParameter("paralelo", paralelo);
 
             l = q.getResultList();
@@ -493,7 +434,7 @@ public class InscritoFacade extends AbstractFacade<Inscrito> {
 
         return l;
     }
-    
+
     public List<Inscrito> listaInscritos(Integer gestion, Periodo periodo) {
         List<Inscrito> l = new ArrayList();
 
