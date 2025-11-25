@@ -17,7 +17,6 @@ import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.enums.Condicion;
 import org.malbino.orion.enums.ModalidadEvaluacion;
 import org.malbino.orion.enums.Periodo;
-import org.malbino.orion.enums.Regimen;
 
 /**
  *
@@ -39,14 +38,13 @@ public class GestionAcademicaFacade extends AbstractFacade<GestionAcademica> {
         return em;
     }
 
-    public GestionAcademica buscarPorCodigoRegimen(Integer gestion, Periodo periodo, Regimen regimen) {
+    public GestionAcademica buscarPorCodigoRegimen(Integer gestion, Periodo periodo) {
         GestionAcademica ga = null;
 
         try {
-            Query q = em.createQuery("SELECT ga FROM GestionAcademica ga WHERE ga.gestion=:gestion AND ga.periodo=:periodo AND ga.regimen=:regimen");
+            Query q = em.createQuery("SELECT ga FROM GestionAcademica ga WHERE ga.gestion=:gestion AND ga.periodo=:periodo");
             q.setParameter("gestion", gestion);
             q.setParameter("periodo", periodo);
-            q.setParameter("regimen", regimen);
 
             ga = (GestionAcademica) q.getSingleResult();
         } catch (Exception e) {
@@ -56,14 +54,13 @@ public class GestionAcademicaFacade extends AbstractFacade<GestionAcademica> {
         return ga;
     }
 
-    public GestionAcademica buscarPorCodigoRegimen(Integer gestion, Periodo periodo, Regimen regimen, int id_gestionacademica) {
+    public GestionAcademica buscarPorCodigoRegimen(Integer gestion, Periodo periodo, int id_gestionacademica) {
         GestionAcademica ga = null;
 
         try {
-            Query q = em.createQuery("SELECT ga FROM GestionAcademica ga WHERE ga.gestion=:gestion AND ga.periodo=:periodo AND ga.regimen=:regimen AND ga.id_gestionacademica!=:id_gestionacademica");
+            Query q = em.createQuery("SELECT ga FROM GestionAcademica ga WHERE ga.gestion=:gestion AND ga.periodo=:periodo AND ga.id_gestionacademica!=:id_gestionacademica");
             q.setParameter("gestion", gestion);
             q.setParameter("periodo", periodo);
-            q.setParameter("regimen", regimen);
             q.setParameter("id_gestionacademica", id_gestionacademica);
 
             ga = (GestionAcademica) q.getSingleResult();
@@ -74,27 +71,11 @@ public class GestionAcademicaFacade extends AbstractFacade<GestionAcademica> {
         return ga;
     }
 
-    public List<GestionAcademica> listaGestionAcademica(Regimen regimen) {
+    public List<GestionAcademica> listaGestionAcademica(boolean vigente) {
         List<GestionAcademica> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT ga FROM GestionAcademica ga WHERE ga.regimen=:regimen ORDER BY ga.gestion, ga.periodo");
-            q.setParameter("regimen", regimen);
-
-            l = q.getResultList();
-        } catch (Exception e) {
-
-        }
-
-        return l;
-    }
-
-    public List<GestionAcademica> listaGestionAcademica(Regimen regimen, boolean vigente) {
-        List<GestionAcademica> l = new ArrayList();
-
-        try {
-            Query q = em.createQuery("SELECT ga FROM GestionAcademica ga WHERE ga.regimen=:regimen AND ga.vigente=:vigente ORDER BY ga.gestion, ga.periodo");
-            q.setParameter("regimen", regimen);
+            Query q = em.createQuery("SELECT ga FROM GestionAcademica ga WHERE ga.vigente=:vigente ORDER BY ga.gestion, ga.periodo");
             q.setParameter("vigente", vigente);
 
             l = q.getResultList();
@@ -119,14 +100,13 @@ public class GestionAcademicaFacade extends AbstractFacade<GestionAcademica> {
         return l;
     }
 
-    public List<GestionAcademica> buscar(String keyword, Regimen regimen) {
+    public List<GestionAcademica> buscar(String keyword) {
         List<GestionAcademica> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT ga FROM GestionAcademica ga WHERE ga.regimen=:regimen AND "
+            Query q = em.createQuery("SELECT ga FROM GestionAcademica ga WHERE "
                     + "LOWER(CAST(ga.gestion AS CHAR)) LIKE LOWER(:keyword) "
                     + "ORDER BY ga.gestion, ga.periodo");
-            q.setParameter("regimen", regimen);
             q.setParameter("keyword", "%" + keyword + "%");
 
             l = q.getResultList();

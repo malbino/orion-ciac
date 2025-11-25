@@ -16,7 +16,6 @@ import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Log;
 import org.malbino.orion.enums.EntidadLog;
 import org.malbino.orion.enums.EventoLog;
-import org.malbino.orion.enums.Regimen;
 import org.malbino.orion.util.Fecha;
 
 /**
@@ -33,7 +32,6 @@ public class GestionAcademicaController extends AbstractController implements Se
     private List<GestionAcademica> gestionesAcademicas;
     private GestionAcademica nuevaGestionAcademica;
     private GestionAcademica seleccionGestionAcademica;
-    private Regimen seleccionRegimen;
 
     private String keyword;
 
@@ -47,9 +45,7 @@ public class GestionAcademicaController extends AbstractController implements Se
     }
 
     public void reinit() {
-        if (seleccionRegimen != null) {
-            gestionesAcademicas = gestionAcademicaFacade.listaGestionAcademica(seleccionRegimen);
-        }
+        gestionesAcademicas = gestionAcademicaFacade.listaGestionAcademica();
         nuevaGestionAcademica = new GestionAcademica();
         seleccionGestionAcademica = null;
 
@@ -57,14 +53,11 @@ public class GestionAcademicaController extends AbstractController implements Se
     }
 
     public void buscar() {
-        if (seleccionRegimen != null) {
-            gestionesAcademicas = gestionAcademicaFacade.buscar(keyword, seleccionRegimen);
-        }
+        gestionesAcademicas = gestionAcademicaFacade.buscar(keyword);
     }
 
     public void crearGestionAcademica() throws IOException {
-        nuevaGestionAcademica.setRegimen(seleccionRegimen);
-        if (gestionAcademicaFacade.buscarPorCodigoRegimen(nuevaGestionAcademica.getGestion(), nuevaGestionAcademica.getPeriodo(), seleccionRegimen) == null) {
+        if (gestionAcademicaFacade.buscarPorCodigoRegimen(nuevaGestionAcademica.getGestion(), nuevaGestionAcademica.getPeriodo()) == null) {
             if (gestionAcademicaFacade.create(nuevaGestionAcademica)) {
                 //log
                 logFacade.create(new Log(Fecha.getDate(), EventoLog.CREATE, EntidadLog.GESTION_ACADEMICA, nuevaGestionAcademica.getId_gestionacademica(), "Creación gestión académica", loginController.getUsr().toString()));
@@ -77,7 +70,7 @@ public class GestionAcademicaController extends AbstractController implements Se
     }
 
     public void editarGestionAcademica() throws IOException {
-        if (gestionAcademicaFacade.buscarPorCodigoRegimen(seleccionGestionAcademica.getGestion(), seleccionGestionAcademica.getPeriodo(), seleccionRegimen, seleccionGestionAcademica.getId_gestionacademica()) == null) {
+        if (gestionAcademicaFacade.buscarPorCodigoRegimen(seleccionGestionAcademica.getGestion(), seleccionGestionAcademica.getPeriodo(), seleccionGestionAcademica.getId_gestionacademica()) == null) {
             if (gestionAcademicaFacade.edit(seleccionGestionAcademica)) {
                 //log
                 logFacade.create(new Log(Fecha.getDate(), EventoLog.UPDATE, EntidadLog.GESTION_ACADEMICA, seleccionGestionAcademica.getId_gestionacademica(), "Actualización gestión académica", loginController.getUsr().toString()));
@@ -143,20 +136,6 @@ public class GestionAcademicaController extends AbstractController implements Se
      */
     public void setSeleccionGestionAcademica(GestionAcademica seleccionGestionAcademica) {
         this.seleccionGestionAcademica = seleccionGestionAcademica;
-    }
-
-    /**
-     * @return the seleccionRegimen
-     */
-    public Regimen getSeleccionRegimen() {
-        return seleccionRegimen;
-    }
-
-    /**
-     * @param seleccionRegimen the seleccionRegimen to set
-     */
-    public void setSeleccionRegimen(Regimen seleccionRegimen) {
-        this.seleccionRegimen = seleccionRegimen;
     }
 
     /**

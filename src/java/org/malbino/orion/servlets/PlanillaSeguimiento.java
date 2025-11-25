@@ -30,7 +30,6 @@ import org.malbino.orion.entities.Grupo;
 import org.malbino.orion.entities.Nota;
 import org.malbino.orion.enums.Condicion;
 import org.malbino.orion.enums.ModalidadEvaluacion;
-import org.malbino.orion.enums.Regimen;
 import org.malbino.orion.facades.GrupoFacade;
 import org.malbino.orion.facades.NotaFacade;
 import org.malbino.orion.util.NumberToLetterConverter;

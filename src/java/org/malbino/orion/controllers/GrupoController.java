@@ -78,7 +78,7 @@ public class GrupoController extends AbstractController implements Serializable 
     public List<Carrera> listaCarreras() {
         List<Carrera> l = new ArrayList();
         if (seleccionGestionAcademica != null) {
-            l = carreraFacade.listaCarreras(seleccionGestionAcademica.getRegimen());
+            l = carreraFacade.listaCarreras();
         }
         return l;
     }

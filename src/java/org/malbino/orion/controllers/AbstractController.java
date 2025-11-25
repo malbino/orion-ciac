@@ -35,7 +35,6 @@ import org.malbino.orion.enums.Modalidad;
 import org.malbino.orion.enums.ModalidadEvaluacion;
 import org.malbino.orion.enums.NivelAcademico;
 import org.malbino.orion.enums.Periodo;
-import org.malbino.orion.enums.Regimen;
 import org.malbino.orion.enums.Sexo;
 import org.malbino.orion.enums.Turno;
 import org.malbino.orion.facades.CampusFacade;
@@ -184,10 +183,6 @@ public abstract class AbstractController implements Serializable {
 
     public List<Carrera> listaCarreras() {
         return carreraFacade.listaCarreras();
-    }
-
-    public Regimen[] listaRegimenes() {
-        return Regimen.values();
     }
 
     public NivelAcademico[] listaNivelesAcademicos() {

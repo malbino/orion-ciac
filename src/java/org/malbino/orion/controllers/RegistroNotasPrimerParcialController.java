@@ -36,7 +36,6 @@ import org.malbino.orion.enums.Condicion;
 import org.malbino.orion.enums.EntidadLog;
 import org.malbino.orion.enums.EventoLog;
 import org.malbino.orion.enums.ModalidadEvaluacion;
-import org.malbino.orion.enums.Regimen;
 import org.malbino.orion.facades.ActividadFacade;
 import org.malbino.orion.facades.GrupoFacade;
 import org.malbino.orion.facades.NotaFacade;
@@ -111,7 +110,7 @@ public class RegistroNotasPrimerParcialController extends AbstractController imp
     public List<Carrera> listaCarreras() {
         List<Carrera> l = new ArrayList();
         if (seleccionGestionAcademica != null) {
-            l = carreraFacade.listaCarreras(seleccionGestionAcademica.getRegimen());
+            l = carreraFacade.listaCarreras();
         }
         return l;
     }

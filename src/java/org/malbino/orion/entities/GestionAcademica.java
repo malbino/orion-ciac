@@ -18,7 +18,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import org.malbino.orion.enums.ModalidadEvaluacion;
 import org.malbino.orion.enums.Periodo;
-import org.malbino.orion.enums.Regimen;
 import org.malbino.orion.util.Fecha;
 
 /**
@@ -35,7 +34,6 @@ public class GestionAcademica implements Serializable {
 
     private Integer gestion;
     private Periodo periodo;
-    private Regimen regimen;
     @Temporal(TemporalType.DATE)
     private Date inicio;
     @Temporal(TemporalType.DATE)
@@ -51,7 +49,7 @@ public class GestionAcademica implements Serializable {
     }
 
     public String nameMoodle() {
-        return periodo.getPeriodoRomano() + gestion + " " + regimen.getNombre();
+        return periodo.getPeriodoRomano() + gestion;
     }
 
     public String fullNameMoodle() {
@@ -110,20 +108,6 @@ public class GestionAcademica implements Serializable {
      */
     public void setPeriodo(Periodo periodo) {
         this.periodo = periodo;
-    }
-
-    /**
-     * @return the regimen
-     */
-    public Regimen getRegimen() {
-        return regimen;
-    }
-
-    /**
-     * @param regimen the regimen to set
-     */
-    public void setRegimen(Regimen regimen) {
-        this.regimen = regimen;
     }
 
     /**
@@ -207,16 +191,11 @@ public class GestionAcademica implements Serializable {
 
     @Override
     public String toString() {
-        return periodo.getPeriodoRomano() + gestion + regimen.getInicial();
+        return periodo.getPeriodoRomano() + gestion;
     }
 
     public String codigo() {
-        String s = "";
-        if (this.getRegimen() == Regimen.SEMESTRAL) {
-            s = periodo.getPeriodoRomano() + "/" + gestion;
-        } else if (this.getRegimen() == Regimen.ANUAL) {
-            s = gestion + " ";
-        }
+        String s = periodo.getPeriodoRomano() + "/" + gestion;
         return s;
     }
 

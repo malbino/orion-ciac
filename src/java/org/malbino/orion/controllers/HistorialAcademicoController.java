@@ -132,7 +132,7 @@ public class HistorialAcademicoController extends AbstractController implements 
     public List<GestionAcademica> listaGestionesAcademicas() {
         List<GestionAcademica> l = new ArrayList();
         if (seleccionCarreraEstudiante != null) {
-            l = gestionAcademicaFacade.listaGestionAcademica(seleccionCarreraEstudiante.getCarrera().getRegimen());
+            l = gestionAcademicaFacade.listaGestionAcademica();
         }
         return l;
     }

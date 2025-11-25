@@ -10,19 +10,17 @@ package org.malbino.orion.enums;
  * @author Martin
  */
 public enum ModalidadEvaluacion {
-    MODULAR_2P(Regimen.MODULAR, 1, 2, 80, 40),
-    SEMESTRAL_2P(Regimen.SEMESTRAL, 2, 2, 61, 40),
-    SEMESTRAL_3P(Regimen.SEMESTRAL, 2, 3, 61, 40),
-    ANUAL_4P(Regimen.ANUAL, 3, 4, 61, 40);
+    MODULAR_2P(1, 2, 80, 40),
+    SEMESTRAL_2P(2, 2, 61, 40),
+    SEMESTRAL_3P(2, 3, 61, 40),
+    ANUAL_4P(3, 4, 61, 40);
 
-    private Regimen regimen;
     private Integer cantidadMaximaReprobaciones;
     private Integer cantidadParciales;
     private Integer notaMinimaAprobacion;
     private Integer notaMinimmaPruebaRecuperacion;
 
-    private ModalidadEvaluacion(Regimen regimen, Integer cantidadMaximaReprobaciones, Integer cantidadParciales, Integer notaMinimaAprobacion, Integer notaMinimmaPruebaRecuperacion) {
-        this.regimen = regimen;
+    private ModalidadEvaluacion(Integer cantidadMaximaReprobaciones, Integer cantidadParciales, Integer notaMinimaAprobacion, Integer notaMinimmaPruebaRecuperacion) {
         this.cantidadMaximaReprobaciones = cantidadMaximaReprobaciones;
         this.cantidadParciales = cantidadParciales;
         this.notaMinimaAprobacion = notaMinimaAprobacion;
@@ -31,15 +29,7 @@ public enum ModalidadEvaluacion {
 
     @Override
     public String toString() {
-        return regimen.toString() + " [" + cantidadParciales + " PARCIALES]";
-    }
-
-    public Regimen getRegimen() {
-        return regimen;
-    }
-
-    public void setRegimen(Regimen regimen) {
-        this.regimen = regimen;
+        return " [" + cantidadParciales + " PARCIALES]";
     }
 
     public Integer getCantidadMaximaReprobaciones() {

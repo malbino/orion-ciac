@@ -33,7 +33,6 @@ import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Inscrito;
 import org.malbino.orion.entities.Nota;
 import org.malbino.orion.enums.ModalidadEvaluacion;
-import org.malbino.orion.enums.Regimen;
 import org.malbino.orion.enums.TipoNota;
 import org.malbino.orion.facades.CarreraFacade;
 import org.malbino.orion.facades.GestionAcademicaFacade;

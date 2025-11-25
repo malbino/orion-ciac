@@ -55,13 +55,13 @@ public class ReporteListaCobrosController extends AbstractController implements 
     public List<Carrera> listaCarreras() {
         List<Carrera> l = new ArrayList();
         if (seleccionGestionAcademica != null) {
-            l = carreraFacade.listaCarreras(seleccionGestionAcademica.getRegimen());
+            l = carreraFacade.listaCarreras();
         }
         return l;
     }
     
     public Concepto[] listaConceptos() {
-        return Concepto.valuesSinRegimen();
+        return Concepto.values();
     }
 
     public void generarReporte() throws IOException {

@@ -86,7 +86,7 @@ public class CambioCarreraController extends AbstractController implements Seria
     public List<GestionAcademica> listaGestionesAcademicas() {
         List<GestionAcademica> l = new ArrayList();
         if (seleccionCarreraEstudiante != null) {
-            l = gestionAcademicaFacade.listaGestionAcademica(seleccionCarreraEstudiante.getCarrera().getRegimen(), true);
+            l = gestionAcademicaFacade.listaGestionAcademica(true);
         }
         return l;
     }

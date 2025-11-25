@@ -68,7 +68,7 @@ public class EstudianteNuevoController extends AbstractController implements Ser
     public List<CarreraEstudiante> listaCarrerasEstudiante() {
         List<CarreraEstudiante> l = new ArrayList<>();
         if (seleccionGestionAcademica != null) {
-            List<Carrera> carreras = carreraFacade.listaCarreras(seleccionGestionAcademica.getRegimen());
+            List<Carrera> carreras = carreraFacade.listaCarreras();
             for (Carrera carrera : carreras) {
                 CarreraEstudiante.CarreraEstudianteId carreraEstudianteId = new CarreraEstudiante.CarreraEstudianteId();
                 carreraEstudianteId.setId_carrera(carrera.getId_carrera());

@@ -31,7 +31,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Nota;
-import org.malbino.orion.enums.Regimen;
 import org.malbino.orion.facades.CarreraFacade;
 import org.malbino.orion.facades.GestionAcademicaFacade;
 import org.malbino.orion.facades.NotaFacade;
@@ -89,12 +88,7 @@ public class NotasFaltantes extends HttpServlet {
 
                 document.add(titulo(gestionAcademica, carrera));
 
-                if (carrera.getRegimen().equals(Regimen.SEMESTRAL)) {
-                    document.add(contenidoSemestral(gestionAcademica, carrera));
-                }
-                if (carrera.getRegimen().equals(Regimen.ANUAL)) {
-                    document.add(contenidoAnual(gestionAcademica, carrera));
-                }
+                document.add(contenidoSemestral(gestionAcademica, carrera));
 
                 document.close();
             } catch (IOException | DocumentException ex) {
@@ -182,75 +176,6 @@ public class NotasFaltantes extends HttpServlet {
         table.addCell(cell);
 
         List<Nota> notasFaltantes = notaFacade.listaNotasFaltantesSemestral(gestionAcademica, carrera.getId_carrera());
-        for (int i = 0; i < notasFaltantes.size(); i++) {
-            Nota nota = notasFaltantes.get(i);
-
-            cell = new PdfPCell(new Phrase(String.valueOf(i + 1), NORMAL));
-            cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-            cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
-            cell.setColspan(5);
-            table.addCell(cell);
-
-            cell = new PdfPCell(new Phrase(String.valueOf(nota.getEstudiante().toString()), NORMAL));
-            cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
-            cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
-            cell.setColspan(30);
-            table.addCell(cell);
-
-            cell = new PdfPCell(new Phrase(String.valueOf(nota.getMateria().toString()), NORMAL));
-            cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
-            cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
-            cell.setColspan(35);
-            table.addCell(cell);
-
-            if (nota.getGrupo().getEmpleado() != null) {
-                cell = new PdfPCell(new Phrase(nota.getGrupo().getEmpleado().toString(), NORMAL));
-            } else {
-                cell = new PdfPCell(new Phrase(" ", NORMAL));
-            }
-            cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
-            cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
-            cell.setColspan(30);
-            table.addCell(cell);
-        }
-
-        return table;
-    }
-
-    public PdfPTable contenidoAnual(GestionAcademica gestionAcademica, Carrera carrera) throws BadElementException, IOException {
-        PdfPTable table = new PdfPTable(100);
-
-        PdfPCell cell = new PdfPCell(new Phrase(" ", NEGRITA));
-        cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
-        cell.setColspan(100);
-        cell.setBorder(Rectangle.NO_BORDER);
-        table.addCell(cell);
-
-        cell = new PdfPCell(new Phrase("Nro", NEGRITA));
-        cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-        cell.setColspan(5);
-        cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
-        table.addCell(cell);
-
-        cell = new PdfPCell(new Phrase("Estudiante", NEGRITA));
-        cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-        cell.setColspan(30);
-        cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
-        table.addCell(cell);
-
-        cell = new PdfPCell(new Phrase("Materia", NEGRITA));
-        cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-        cell.setColspan(35);
-        cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
-        table.addCell(cell);
-
-        cell = new PdfPCell(new Phrase("Docente", NEGRITA));
-        cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-        cell.setColspan(30);
-        cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
-        table.addCell(cell);
-
-        List<Nota> notasFaltantes = notaFacade.listaNotasFaltantesAnual(gestionAcademica.getId_gestionacademica(), carrera.getId_carrera());
         for (int i = 0; i < notasFaltantes.size(); i++) {
             Nota nota = notasFaltantes.get(i);
 

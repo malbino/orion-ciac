@@ -194,7 +194,7 @@ public class DashboardController extends AbstractController implements Serializa
 
         List<Carrera> carreras = new ArrayList<>();
         if (seleccionGestionAcademica != null) {
-            carreras = carreraFacade.listaCarreras(seleccionGestionAcademica.getRegimen());
+            carreras = carreraFacade.listaCarreras();
         }
 
         List<Number> values = new ArrayList<>();
@@ -251,7 +251,7 @@ public class DashboardController extends AbstractController implements Serializa
 
         List<Carrera> carreras = new ArrayList<>();
         if (seleccionGestionAcademica != null) {
-            carreras = carreraFacade.listaCarreras(seleccionGestionAcademica.getRegimen());
+            carreras = carreraFacade.listaCarreras();
         }
 
         List<Number> values = new ArrayList<>();
@@ -376,7 +376,7 @@ public class DashboardController extends AbstractController implements Serializa
             Integer totalReprobadosVarones = 0;
             Integer totalReprobadosMujeres = 0;
 
-            List<Carrera> carreras = carreraFacade.listaCarreras(seleccionGestionAcademica.getRegimen());
+            List<Carrera> carreras = carreraFacade.listaCarreras();
             for (Carrera carrera : carreras) {
 
                 Integer subtotalInscritos = 0;

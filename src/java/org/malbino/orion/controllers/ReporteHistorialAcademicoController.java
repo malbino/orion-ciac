@@ -179,7 +179,7 @@ public class ReporteHistorialAcademicoController extends AbstractController impl
                         } else if (cell.getStringCellValue().contains("<<NIVEL_ACADEMICO>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL_ACADEMICO>>", carrera.getNivelAcademico().getNombre()));
                         } else if (cell.getStringCellValue().contains("<<REGIMEN>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<REGIMEN>>", carrera.getRegimen().getNombre()));
+                            cell.setCellValue(cell.getStringCellValue().replace("<<REGIMEN>>", ""));
                         } else if (cell.getStringCellValue().contains("<<LUGAR_FECHA>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<LUGAR_FECHA>>", "Cochabamba, " + Fecha.formatearFecha_ddMMMMyyyy(fecha)));
                         } else if (cell.getStringCellValue().contains("<<RM_1>>")) {

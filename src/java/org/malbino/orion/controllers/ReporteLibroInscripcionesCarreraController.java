@@ -47,7 +47,7 @@ public class ReporteLibroInscripcionesCarreraController extends AbstractControll
     public List<Carrera> listaCarreras() {
         List<Carrera> l = new ArrayList();
         if (seleccionGestionAcademica != null) {
-            l = carreraFacade.listaCarreras(seleccionGestionAcademica.getRegimen());
+            l = carreraFacade.listaCarreras();
         }
         return l;
     }
