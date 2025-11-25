@@ -41,11 +41,6 @@
                                         </div>
 
                                         <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="descripcion" value="Descripcion:" style="font-size: small"/>
-                                            <p:inputText id="descripcion" value="#{CalendarioAcademicoController.seleccionActividad.descripcion}" required="true" requiredMessage="* Nombre requerido." />
-                                        </div>
-
-                                        <div class="ui-g-12 ui-md-4">
                                             <p:outputLabel for="funcionalidad" value="Funcionalidad:" style="font-size: small"/>
                                             <p:selectOneMenu id="funcionalidad" value="#{CalendarioAcademicoController.seleccionActividad.funcionalidad}" converter="#{FuncionalidadConverter}" autoWidth="false"> 
                                                 <f:selectItem itemLabel="" itemValue="" />

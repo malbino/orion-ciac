@@ -37,7 +37,6 @@ public class Actividad implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fin;
     private String nombre;
-    private String descripcion;
     private Funcionalidad funcionalidad;
 
     @JoinColumn(name = "id_gestionAcademica")
@@ -101,20 +100,6 @@ public class Actividad implements Serializable {
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    /**
-     * @return the descripcion
-     */
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    /**
-     * @param descripcion the descripcion to set
-     */
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
     }
 
     /**

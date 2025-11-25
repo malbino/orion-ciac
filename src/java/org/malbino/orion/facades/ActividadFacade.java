@@ -55,8 +55,7 @@ public class ActividadFacade extends AbstractFacade<Actividad> {
 
         try {
             Query q = em.createQuery("SELECT a FROM Actividad a JOIN a.gestionAcademica ga WHERE ga.id_gestionacademica=:id_gestionacademica AND "
-                    + "(LOWER(a.nombre) LIKE LOWER(:keyword) OR "
-                    + "LOWER(a.descripcion) LIKE LOWER(:keyword)) "
+                    + "LOWER(a.nombre) LIKE LOWER(:keyword) "
                     + "ORDER BY a.inicio, a.nombre");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("keyword", "%" + keyword + "%");

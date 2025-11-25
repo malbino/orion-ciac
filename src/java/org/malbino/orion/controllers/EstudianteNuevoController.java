@@ -47,21 +47,18 @@ public class EstudianteNuevoController extends AbstractController implements Ser
 
     private Estudiante nuevoEstudiante;
     private GestionAcademica seleccionGestionAcademica;
-    private Boolean traspasoConvalidacion;
     private CarreraEstudiante seleccionCarreraEstudiante;
 
     @PostConstruct
     public void init() {
         nuevoEstudiante = new Estudiante();
         seleccionGestionAcademica = null;
-        traspasoConvalidacion = Boolean.FALSE;
         seleccionCarreraEstudiante = null;
     }
 
     public void reinit() {
         nuevoEstudiante = new Estudiante();
         seleccionGestionAcademica = null;
-        traspasoConvalidacion = Boolean.FALSE;
         seleccionCarreraEstudiante = null;
     }
 
@@ -177,19 +174,5 @@ public class EstudianteNuevoController extends AbstractController implements Ser
      */
     public void setSeleccionCarreraEstudiante(CarreraEstudiante seleccionCarreraEstudiante) {
         this.seleccionCarreraEstudiante = seleccionCarreraEstudiante;
-    }
-
-    /**
-     * @return the traspasoConvalidacion
-     */
-    public Boolean getTraspasoConvalidacion() {
-        return traspasoConvalidacion;
-    }
-
-    /**
-     * @param traspasoConvalidacion the traspasoConvalidacion to set
-     */
-    public void setTraspasoConvalidacion(Boolean traspasoConvalidacion) {
-        this.traspasoConvalidacion = traspasoConvalidacion;
     }
 }
