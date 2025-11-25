@@ -79,7 +79,7 @@ public class EstudianteRegularController extends AbstractController implements S
     public List<GestionAcademica> listaGestionesAcademicas() {
         List<GestionAcademica> l = new ArrayList();
         if (seleccionCarreraEstudiante != null) {
-            l = gestionAcademicaFacade.listaGestionAcademica(true);
+            l = listaGestionesAcademicas();
         }
         return l;
     }

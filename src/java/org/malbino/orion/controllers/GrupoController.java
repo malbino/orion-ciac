@@ -17,10 +17,12 @@ import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Grupo;
 import org.malbino.orion.entities.Log;
+import org.malbino.orion.entities.Modulo;
 import org.malbino.orion.enums.EntidadLog;
 import org.malbino.orion.enums.EventoLog;
 import org.malbino.orion.enums.Turno;
 import org.malbino.orion.facades.GrupoFacade;
+import org.malbino.orion.facades.ModuloFacade;
 import org.malbino.orion.facades.negocio.ProgramacionGruposFacade;
 import org.malbino.orion.util.Fecha;
 
@@ -35,6 +37,8 @@ public class GrupoController extends AbstractController implements Serializable 
     @EJB
     GrupoFacade grupoFacade;
     @EJB
+    ModuloFacade moduloFacade;
+    @EJB
     ProgramacionGruposFacade programacionGruposFacade;
     @Inject
     LoginController loginController;
@@ -44,6 +48,7 @@ public class GrupoController extends AbstractController implements Serializable 
 
     private GestionAcademica seleccionGestionAcademica;
     private Carrera seleccionCarrera;
+    private Modulo seleccionModulo;
     private Turno seleccionTurno;
     private Integer capacidad;
 
@@ -56,6 +61,7 @@ public class GrupoController extends AbstractController implements Serializable 
 
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
+        seleccionModulo = null;
         seleccionTurno = null;
         capacidad = null;
 
@@ -68,6 +74,7 @@ public class GrupoController extends AbstractController implements Serializable 
         }
         seleccionGrupo = null;
 
+        seleccionModulo = null;
         seleccionTurno = null;
         capacidad = null;
 
@@ -83,6 +90,14 @@ public class GrupoController extends AbstractController implements Serializable 
         return l;
     }
 
+    public List<Modulo> listaModulos() {
+        List<Modulo> l = new ArrayList();
+        if (seleccionCarrera != null) {
+            l = moduloFacade.listaModulos(seleccionCarrera);
+        }
+        return l;
+    }
+
     public void buscar() {
         if (seleccionGestionAcademica != null && seleccionCarrera != null) {
             grupos = grupoFacade.buscar(keyword, seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera());
@@ -94,7 +109,7 @@ public class GrupoController extends AbstractController implements Serializable 
     }
 
     public void programarGrupos() throws IOException {
-        List<Grupo> grupos = programacionGruposFacade.programarGrupos(seleccionGestionAcademica, seleccionCarrera, null, seleccionTurno, capacidad);
+        List<Grupo> grupos = programacionGruposFacade.programarGrupos(seleccionGestionAcademica, seleccionCarrera, seleccionModulo, seleccionTurno, capacidad);
         if (!grupos.isEmpty()) {
             //log
             for (Grupo grupo : grupos) {
@@ -238,5 +253,19 @@ public class GrupoController extends AbstractController implements Serializable 
      */
     public void setKeyword(String keyword) {
         this.keyword = keyword;
+    }
+
+    /**
+     * @return the seleccionModulo
+     */
+    public Modulo getSeleccionModulo() {
+        return seleccionModulo;
+    }
+
+    /**
+     * @param seleccionModulo the seleccionModulo to set
+     */
+    public void setSeleccionModulo(Modulo seleccionModulo) {
+        this.seleccionModulo = seleccionModulo;
     }
 }

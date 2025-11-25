@@ -26,10 +26,10 @@
 
                                     <div class="ui-g ui-fluid">
                                         <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="nivel" value="Nivel:" style="font-size: small"/>
-                                            <p:selectOneMenu id="nivel" value="#{GrupoController.seleccionNivel}" converter="#{NivelConverter}" autoWidth="false" required="true" requiredMessage="* Nivel requerido."> 
+                                            <p:outputLabel for="modulo" value="Modulo:" style="font-size: small"/>
+                                            <p:selectOneMenu id="modulo" value="#{GrupoController.seleccionModulo}" converter="#{ModuloConverter}" autoWidth="false" required="true" requiredMessage="* Modulo requerido."> 
                                                 <f:selectItem itemLabel="" itemValue="" />
-                                                <f:selectItems value="#{GrupoController.listaNiveles()}" var="nivel" itemLabel="#{nivel.toString()}" itemValue="#{nivel}"/>  
+                                                <f:selectItems value="#{GrupoController.listaModulos()}" var="nivel" itemLabel="#{modulo.toString()}" itemValue="#{modulo}"/>  
                                             </p:selectOneMenu> 
                                         </div>
 

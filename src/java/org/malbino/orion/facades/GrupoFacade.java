@@ -13,6 +13,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.malbino.orion.entities.Grupo;
 import org.malbino.orion.enums.Turno;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -21,6 +23,8 @@ import org.malbino.orion.enums.Turno;
 @Stateless
 @LocalBean
 public class GrupoFacade extends AbstractFacade<Grupo> {
+
+    private static final Logger log = LoggerFactory.getLogger(GrupoFacade.class);
 
     @PersistenceContext(unitName = "orionPU")
     private EntityManager em;
@@ -38,7 +42,7 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
         List<Grupo> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT g FROM Grupo g JOIN g.gestionAcademica ga JOIN g.modulo m JOIN m.carrera c WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera ORDER BY m.nivel, g.turno, g.codigo, m.numero");
+            Query q = em.createQuery("SELECT g FROM Grupo g JOIN g.gestionAcademica ga JOIN g.modulo m JOIN m.carrera c WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera ORDER BY m.numero, g.turno, g.codigo");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_carrera", id_carrera);
 
@@ -61,7 +65,7 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
 
             l = (Long) q.getSingleResult();
         } catch (Exception e) {
-
+            log.error(e.toString());
         }
 
         return l;
@@ -74,7 +78,7 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
             Query q = em.createQuery("SELECT g FROM Grupo g JOIN g.gestionAcademica ga JOIN g.modulo m JOIN m.carrera c WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND "
                     + "(LOWER(g.codigo) LIKE LOWER(:keyword) OR "
                     + "LOWER(m.nombre) LIKE LOWER(:keyword)) "
-                    + "ORDER BY m.nivel, g.turno, g.codigo, m.numero");
+                    + "ORDER BY g.turno, g.codigo, m.numero");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_carrera", id_carrera);
             q.setParameter("keyword", "%" + keyword + "%");
@@ -204,7 +208,7 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
         List<String> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT DISTINCT g.codigo FROM Grupo g JOIN g.gestionAcademica ga JOIN g.modulo m JOIN m.carrera c WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND m.nivel=:nivel AND g.turno=:turno ORDER BY g.codigo");
+            Query q = em.createQuery("SELECT DISTINCT g.codigo FROM Grupo g JOIN g.gestionAcademica ga JOIN g.modulo m JOIN m.carrera c WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND g.turno=:turno ORDER BY g.codigo");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_carrera", id_carrera);
             q.setParameter("turno", turno);

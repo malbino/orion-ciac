@@ -80,7 +80,7 @@ public class NuevoPagoController extends AbstractController implements Serializa
     public List<GestionAcademica> listaGestionesAcademicas() {
         List<GestionAcademica> l = new ArrayList();
         if (seleccionCarreraEstudiante != null) {
-            l = gestionAcademicaFacade.listaGestionAcademica( true);
+            l = listaGestionesAcademicas();
         }
         return l;
     }

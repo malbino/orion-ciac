@@ -6,7 +6,6 @@ package org.malbino.orion.controllers;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -16,7 +15,6 @@ import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Log;
 import org.malbino.orion.enums.EntidadLog;
 import org.malbino.orion.enums.EventoLog;
-import org.malbino.orion.facades.GestionAcademicaFacade;
 import org.malbino.orion.util.Fecha;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +28,7 @@ import org.slf4j.LoggerFactory;
 public class GestionAcademicaController extends AbstractController implements Serializable {
 
     private static final Logger log = LoggerFactory.getLogger(GestionAcademicaController.class);
-    
+
     @Inject
     LoginController loginController;
 

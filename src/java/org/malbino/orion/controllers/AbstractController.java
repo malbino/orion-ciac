@@ -190,7 +190,7 @@ public abstract class AbstractController implements Serializable {
     }
 
     public List<GestionAcademica> listaGestionesAcademicas() {
-        return gestionAcademicaFacade.listaGestionAcademica();
+        return gestionAcademicaFacade.listaGestionAcademica(Boolean.TRUE);
     }
 
     public Turno[] listaTurnos() {

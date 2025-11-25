@@ -20,6 +20,8 @@ import org.malbino.orion.enums.Turno;
 import org.malbino.orion.facades.GrupoFacade;
 import org.malbino.orion.facades.ModuloFacade;
 import org.malbino.orion.util.Constantes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -28,6 +30,8 @@ import org.malbino.orion.util.Constantes;
 @Stateless
 @LocalBean
 public class ProgramacionGruposFacade {
+    
+    private static final Logger log = LoggerFactory.getLogger(ProgramacionGruposFacade.class);
 
     @PersistenceContext(unitName = "orionPU")
     private EntityManager em;
@@ -41,6 +45,12 @@ public class ProgramacionGruposFacade {
     public List<Grupo> programarGrupos(GestionAcademica gestionAcademica, Carrera carrera, Modulo modulo, Turno turno, Integer capacidad) {
         List<Grupo> grupos = new ArrayList<>();
 
+        log.info("gestionAcademica=" + gestionAcademica);
+        log.info("carrera=" + carrera);
+        log.info("modulo=" + modulo);
+        log.info("turno=" + turno);
+        log.info("capacidad=" + capacidad);
+        
         Integer c1 = grupoFacade.cantidadGrupos(gestionAcademica.getId_gestionacademica(), modulo.getId_modulo(), turno).intValue();
         String codigo = Constantes.ABECEDARIO[c1];
 
