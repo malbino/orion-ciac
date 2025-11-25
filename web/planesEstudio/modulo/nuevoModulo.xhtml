@@ -15,7 +15,7 @@
                     <div class="col-md-12 col-sm-12 ">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>Nueva Modulo <small>registrar nueva materia</small></h2>
+                                <h2>Nuevo Modulo <small>registrar nuevo modulo</small></h2>
 
                                 <div class="clearfix"></div>
                             </div>
@@ -25,14 +25,6 @@
                                     <p:messages/>
 
                                     <div class="ui-g ui-fluid">
-                                        <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="nivel" value="Nivel:" style="font-size: small"/>
-                                            <p:selectOneMenu id="nivel" value="#{ModuloController.nuevaModulo.nivel}" converter="#{NivelModuloConverter}" autoWidth="false" required="true" requiredMessage="* Nivel requerido."> 
-                                                <f:selectItem itemLabel="" itemValue="" />
-                                                <f:selectItems value="#{ModuloController.listaNiveles()}" var="nivel" itemLabel="#{nivel.toString()}" itemValue="#{nivel}"/>  
-                                            </p:selectOneMenu> 
-                                        </div>
-
                                         <div class="ui-g-12 ui-md-4">
                                             <p:outputLabel for="numero" value="Numero:" style="font-size: small"/>
                                             <p:inputText id="numero" value="#{ModuloController.nuevaModulo.numero}" required="true" requiredMessage="* Numero requerido." />
@@ -54,19 +46,14 @@
                                         </div>
 
                                         <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="creditajeModulo" value="Creditaje materia" style="font-size: small"/>
-                                            <p:inputText id="creditajeModulo" value="#{ModuloController.nuevaModulo.creditajeModulo}" required="true" requiredMessage="* Creditaje materia requerido." />
-                                        </div>
-
-                                        <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="curricular" value="Curricular:" style="font-size: small"/>
-                                            <p:selectBooleanButton id="curricular" value="#{ModuloController.nuevaModulo.curricular}" onLabel="Sí" offLabel="No" onIcon="fa fa-check" offIcon="fa fa-ban"/>
+                                            <p:outputLabel for="creditajeModulo" value="Creditaje modulo" style="font-size: small"/>
+                                            <p:inputText id="creditajeModulo" value="#{ModuloController.nuevaModulo.creditajeModulo}" required="true" requiredMessage="* Creditaje modulo requerido." />
                                         </div>
 
                                         <div class="ui-g-12 ui-md-4">
                                             <p:outputLabel for="prerequisitos" value="Prerequisitos:" style="font-size: small"/>
                                             <p:selectCheckboxMenu id="prerequisitos" value="#{ModuloController.nuevaModulo.prerequisitos}" converter="#{ModuloConverter}" label="Prerequisitos" filter="true" filterMatchMode="contains" style="height: 30px">  
-                                                <f:selectItems value="#{ModuloController.listaModulosCrear()}" var="materia" itemLabel="#{materia.toString()}" itemValue="#{materia}"/>  
+                                                <f:selectItems value="#{ModuloController.listaModulosCrear()}" var="modulo" itemLabel="#{modulo.toString()}" itemValue="#{modulo}"/>  
                                             </p:selectCheckboxMenu> 
                                         </div>
                                     </div>

@@ -38,7 +38,6 @@ public class Modulo implements Serializable {
     private String nombre;
     private Integer horas;
     private Integer creditajeModulo;
-    private Boolean curricular;
 
     @JoinTable(name = "prerequisito", joinColumns = {
         @JoinColumn(name = "id_modulo", referencedColumnName = "id_modulo")}, inverseJoinColumns = {
@@ -147,20 +146,6 @@ public class Modulo implements Serializable {
     }
 
     /**
-     * @return the curricular
-     */
-    public Boolean getCurricular() {
-        return curricular;
-    }
-
-    /**
-     * @param curricular the curricular to set
-     */
-    public void setCurricular(Boolean curricular) {
-        this.curricular = curricular;
-    }
-
-    /**
      * @return the prerequisitos
      */
     public List<Modulo> getPrerequisitos() {
@@ -200,10 +185,6 @@ public class Modulo implements Serializable {
      */
     public void setGrupo(Grupo grupo) {
         this.grupo = grupo;
-    }
-
-    public String curricularToString() {
-        return curricular ? "Sí" : "No";
     }
 
     public String prerequisitosToString() {

@@ -18,7 +18,7 @@
 
                             <div class="x_panel">
                                 <div class="x_title">
-                                    <h2>Modulo <small>gestión de materias</small></h2> 
+                                    <h2>Modulo <small>gestión de modulos</small></h2> 
 
                                     <div class="clearfix"></div>
                                 </div>
@@ -31,7 +31,7 @@
                                                 <f:selectItem itemLabel="" itemValue=""/>
                                                 <f:selectItems value="#{ModuloController.listaCarreras()}" var="carrera" itemLabel="#{carrera.toString()}" itemValue="#{carrera}"/>
 
-                                                <p:ajax listener="#{ModuloController.reinit()}" update="materias"/>
+                                                <p:ajax listener="#{ModuloController.reinit()}" update="modulos"/>
                                             </p:selectOneMenu>
                                         </div>
                                     </div>
@@ -48,7 +48,7 @@
                                         <f:facet name="right">
                                             <p:menuButton icon="fa fa-gear" title="Opciones">
                                                 <p:menuitem value="Exportar" icon="fa fa-file-excel-o" ajax="false">
-                                                    <p:dataExporter type="xls" target="materias" fileName="materias" />
+                                                    <p:dataExporter type="xls" target="modulos" fileName="modulos" />
                                                 </p:menuitem>
                                             </p:menuButton>
                                         </f:facet>
@@ -60,55 +60,47 @@
                                         <div class="ui-g-12 ui-md-12">
                                             <div class="ui-inputgroup">
                                                 <p:inputText value="#{ModuloController.keyword}" style="height: 100%"/>
-                                                <p:commandButton id="buscar" icon="fa fa-search" actionListener="#{ModuloController.buscar()}" update="materias"/>           
+                                                <p:commandButton id="buscar" icon="fa fa-search" actionListener="#{ModuloController.buscar()}" update="modulos"/>           
                                             </div>
                                         </div>
                                     </div>
                                     <p:defaultCommand target="buscar"/>
 
-                                    <p:dataTable id="materias" var="materia" value="#{ModuloController.materias}" reflow="true" emptyMessage="Ningún registro encontrado." tableStyle="width:auto; min-width:100%">
-                                        <p:column headerText="Nivel" groupRow="true">
-                                            <h:outputText value="#{materia.nivel.toString()}"/>
-                                        </p:column>
-
+                                    <p:dataTable id="modulos" var="modulo" value="#{ModuloController.modulos}" reflow="true" emptyMessage="Ningún registro encontrado." tableStyle="width:auto; min-width:100%">
                                         <p:column headerText="Nº" >  
-                                            <h:outputText value="#{materia.numero}"/>
+                                            <h:outputText value="#{modulo.numero}"/>
                                         </p:column>
 
                                         <p:column headerText="Codigo" >  
-                                            <h:outputText value="#{materia.codigo}"/>
+                                            <h:outputText value="#{modulo.codigo}"/>
                                         </p:column>
 
                                         <p:column headerText="Nombre" >  
-                                            <h:outputText value="#{materia.nombre}"/>
+                                            <h:outputText value="#{modulo.nombre}"/>
                                         </p:column>
 
                                         <p:column headerText="Horas" >  
-                                            <h:outputText value="#{materia.horas}"/>
+                                            <h:outputText value="#{modulo.horas}"/>
                                         </p:column>
 
-                                        <p:column headerText="Creditaje materia" >  
-                                            <h:outputText value="#{materia.creditajeModulo}"/> 
-                                        </p:column>
-
-                                        <p:column headerText="Curricular" >  
-                                            <h:outputText value="#{materia.curricularToString()}"/> 
+                                        <p:column headerText="Creditaje modulo" >  
+                                            <h:outputText value="#{modulo.creditajeModulo}"/> 
                                         </p:column>
 
                                         <p:column headerText="Prerequisitos" >  
-                                            <h:outputText value="#{materia.prerequisitosToString()}"/> 
+                                            <h:outputText value="#{modulo.prerequisitosToString()}"/> 
                                         </p:column>
 
                                         <p:column exportable="false"> 
                                             <h:panelGroup id="group" >
                                                 <p:commandButton id="editar" process="@this" icon="fa fa-edit" title="Editar">  
-                                                    <f:setPropertyActionListener value="#{materia}" target="#{ModuloController.seleccionModulo}" />
+                                                    <f:setPropertyActionListener value="#{modulo}" target="#{ModuloController.seleccionModulo}" />
 
                                                     <f:actionListener binding="#{ModuloController.toEditarModulo()}"/>
                                                 </p:commandButton>
 
                                                 <p:commandButton id="eliminar" process="@this" icon="fa fa-remove" title="Eliminar" update="form">  
-                                                    <f:setPropertyActionListener value="#{materia}" target="#{ModuloController.seleccionModulo}" />
+                                                    <f:setPropertyActionListener value="#{modulo}" target="#{ModuloController.seleccionModulo}" />
 
                                                     <f:actionListener binding="#{ModuloController.eliminarModulo()}"/>
                                                     <p:confirm header="Confirmación" icon="fa fa-exclamation-triangle" />
@@ -122,7 +114,7 @@
                                             ¡ADVERTENCIA!
                                             <br />
                                             <br />
-                                            Al eliminar la materia también se eliminaran todos los
+                                            Al eliminar el modulo también se eliminaran todos los
                                             <br />
                                             grupos y notas asociadas a la misma. Recuerde que el proceso
                                             <br />

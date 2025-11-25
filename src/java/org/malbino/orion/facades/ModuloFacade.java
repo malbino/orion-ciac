@@ -73,7 +73,7 @@ public class ModuloFacade extends AbstractFacade<Modulo> {
         List<Modulo> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT m FROM Modulo m WHERE m.carrera=:carrera ORDER BY m.nivel, m.numero");
+            Query q = em.createQuery("SELECT m FROM Modulo m WHERE m.carrera=:carrera ORDER BY m.numero");
             q.setParameter("carrera", carrera);
 
             l = q.getResultList();
@@ -88,7 +88,7 @@ public class ModuloFacade extends AbstractFacade<Modulo> {
         List<Modulo> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT m FROM Modulo m WHERE m.carrera=:carrera AND m.id_modulo!=:id_modulo ORDER BY m.nivel, m.numero");
+            Query q = em.createQuery("SELECT m FROM Modulo m WHERE m.carrera=:carrera AND m.id_modulo!=:id_modulo ORDER BY m.numero");
             q.setParameter("carrera", carrera);
             q.setParameter("id_modulo", id_modulo);
 
@@ -107,7 +107,7 @@ public class ModuloFacade extends AbstractFacade<Modulo> {
             Query q = em.createQuery("SELECT m FROM Modulo m JOIN m.carrera c WHERE c.id_carrera=:id_carrera AND "
                     + "(LOWER(m.codigo) LIKE LOWER(:keyword) OR "
                     + "LOWER(m.nombre) LIKE LOWER(:keyword)) "
-                    + "ORDER BY m.nivel, m.numero");
+                    + "ORDER BY m.numero");
             q.setParameter("id_carrera", id_carrera);
             q.setParameter("keyword", "%" + keyword + "%");
 
@@ -139,7 +139,7 @@ public class ModuloFacade extends AbstractFacade<Modulo> {
         List<Modulo> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT m FROM Nota n JOIN n.modulo m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND n.condicion=:condicion ORDER BY m.nivel, m.numero");
+            Query q = em.createQuery("SELECT m FROM Nota n JOIN n.modulo m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND n.condicion=:condicion ORDER BY m.numero");
             q.setParameter("estudiante", estudiante);
             q.setParameter("carrera", carrera);
             q.setParameter("condicion", Condicion.APROBADO);
@@ -156,7 +156,7 @@ public class ModuloFacade extends AbstractFacade<Modulo> {
         Long l = 0l;
 
         try {
-            Query q = em.createQuery("SELECT COUNT(m) AS cantidad FROM Modulo m WHERE m.carrera=:carrera GROUP BY m.nivel ORDER BY cantidad DESC");
+            Query q = em.createQuery("SELECT COUNT(m) AS cantidad FROM Modulo m WHERE m.carrera=:carrera ORDER BY cantidad DESC");
             q.setParameter("carrera", carrera);
             q.setMaxResults(1);
 

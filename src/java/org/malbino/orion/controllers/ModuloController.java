@@ -82,7 +82,7 @@ public class ModuloController extends AbstractController implements Serializable
         if (moduloFacade.buscarPorCodigo(nuevaModulo.getCodigo(), nuevaModulo.getCarrera()).isEmpty()) {
             if (moduloFacade.create(nuevaModulo)) {
                 //log
-                logFacade.create(new Log(Fecha.getDate(), EventoLog.CREATE, EntidadLog.MATERIA, nuevaModulo.getId_modulo(), "Creación modulo", loginController.getUsr().toString()));
+                logFacade.create(new Log(Fecha.getDate(), EventoLog.CREATE, EntidadLog.MODULO, nuevaModulo.getId_modulo(), "Creación modulo", loginController.getUsr().toString()));
 
                 this.toModulos();
             }
@@ -95,7 +95,7 @@ public class ModuloController extends AbstractController implements Serializable
         if (moduloFacade.buscarPorCodigo(seleccionModulo.getCodigo(), seleccionModulo.getId_modulo(), seleccionModulo.getCarrera()).isEmpty()) {
             if (moduloFacade.edit(seleccionModulo)) {
                 //log
-                logFacade.create(new Log(Fecha.getDate(), EventoLog.UPDATE, EntidadLog.MATERIA, seleccionModulo.getId_modulo(), "Actualización modulo", loginController.getUsr().toString()));
+                logFacade.create(new Log(Fecha.getDate(), EventoLog.UPDATE, EntidadLog.MODULO, seleccionModulo.getId_modulo(), "Actualización modulo", loginController.getUsr().toString()));
 
                 this.toModulos();
             }
@@ -107,14 +107,14 @@ public class ModuloController extends AbstractController implements Serializable
     public void eliminarModulo() throws IOException {
         if (planEstudioFacade.eliminarModulo(seleccionModulo)) {
             //log
-            logFacade.create(new Log(Fecha.getDate(), EventoLog.DELETE, EntidadLog.MATERIA, seleccionModulo.getId_modulo(), "Borrado modulo", loginController.getUsr().toString()));
+            logFacade.create(new Log(Fecha.getDate(), EventoLog.DELETE, EntidadLog.MODULO, seleccionModulo.getId_modulo(), "Borrado modulo", loginController.getUsr().toString()));
 
             this.toModulos();
         }
     }
 
     public void toNuevaModulo() throws IOException {
-        this.redireccionarViewId("/planesEstudio/modulo/nuevaModulo");
+        this.redireccionarViewId("/planesEstudio/modulo/nuevoModulo");
     }
 
     public void toEditarModulo() throws IOException {

@@ -1263,7 +1263,7 @@ public class BoletinNotasCarrera extends HttpServlet {
         PdfPTable table = new PdfPTable(100);
 
         //notas
-        PdfPCell cell = new PdfPCell(new Phrase("OFERTA DE MATERIAS", NEGRITA));
+        PdfPCell cell = new PdfPCell(new Phrase("OFERTA DE MODULOS", NEGRITA));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         cell.setBorder(Rectangle.NO_BORDER);
