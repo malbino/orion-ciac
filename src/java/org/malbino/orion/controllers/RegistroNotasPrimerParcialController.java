@@ -103,7 +103,7 @@ public class RegistroNotasPrimerParcialController extends AbstractController imp
     
     @Override
     public List<GestionAcademica> listaGestionesAcademicas() {
-        return gestionAcademicaFacade.listaGestionAcademica(ModalidadEvaluacion.SEMESTRAL_2P, ModalidadEvaluacion.SEMESTRAL_3P, ModalidadEvaluacion.ANUAL_4P, true);
+        return gestionAcademicaFacade.listaGestionAcademica(ModalidadEvaluacion.MODULAR_2P, true);
     }
 
     @Override

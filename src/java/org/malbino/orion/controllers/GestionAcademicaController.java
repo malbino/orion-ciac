@@ -16,7 +16,10 @@ import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Log;
 import org.malbino.orion.enums.EntidadLog;
 import org.malbino.orion.enums.EventoLog;
+import org.malbino.orion.facades.GestionAcademicaFacade;
 import org.malbino.orion.util.Fecha;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -26,6 +29,8 @@ import org.malbino.orion.util.Fecha;
 @SessionScoped
 public class GestionAcademicaController extends AbstractController implements Serializable {
 
+    private static final Logger log = LoggerFactory.getLogger(GestionAcademicaController.class);
+    
     @Inject
     LoginController loginController;
 
@@ -37,7 +42,7 @@ public class GestionAcademicaController extends AbstractController implements Se
 
     @PostConstruct
     public void init() {
-        gestionesAcademicas = new ArrayList();
+        gestionesAcademicas = gestionAcademicaFacade.listaGestionAcademica();
         nuevaGestionAcademica = new GestionAcademica();
         seleccionGestionAcademica = null;
 
@@ -46,6 +51,7 @@ public class GestionAcademicaController extends AbstractController implements Se
 
     public void reinit() {
         gestionesAcademicas = gestionAcademicaFacade.listaGestionAcademica();
+        log.info("gestionesAcademicas=" + gestionesAcademicas.size());
         nuevaGestionAcademica = new GestionAcademica();
         seleccionGestionAcademica = null;
 

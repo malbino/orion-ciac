@@ -11,17 +11,7 @@ package org.malbino.orion.enums;
  */
 public enum Periodo {
     I("I", 1),
-    II("II", 2),
-    III("III", 3),
-    IV("IV", 4),
-    V("V", 5),
-    VI("VI", 6),
-    VII("VII", 7),
-    VIII("VIII", 8),
-    IX("IX", 9),
-    X("X", 10),
-    XI("XI", 11),
-    XII("XII", 12);
+    II("II", 2);
 
     private String periodoRomano;
     private Integer periodoEntero;

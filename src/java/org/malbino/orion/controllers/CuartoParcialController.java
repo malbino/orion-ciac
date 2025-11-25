@@ -98,7 +98,7 @@ public class CuartoParcialController extends AbstractController implements Seria
 
     @Override
     public List<GestionAcademica> listaGestionesAcademicas() {
-        return gestionAcademicaFacade.listaGestionAcademica(ModalidadEvaluacion.ANUAL_4P, true);
+        return gestionAcademicaFacade.listaGestionAcademica(ModalidadEvaluacion.MODULAR_2P, true);
     }
 
     @Override

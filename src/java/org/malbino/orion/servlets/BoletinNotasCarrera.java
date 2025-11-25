@@ -106,32 +106,10 @@ public class BoletinNotasCarrera extends HttpServlet {
 
                 List<Inscrito> inscritos = inscritoFacade.listaInscritosCarrera(gestionAcademica.getId_gestionacademica(), carrera.getId_carrera());
 
-                if (gestionAcademica.getModalidadEvaluacion().equals(ModalidadEvaluacion.SEMESTRAL_2P)) {
+                if (gestionAcademica.getModalidadEvaluacion().equals(ModalidadEvaluacion.MODULAR_2P)) {
                     for (Inscrito inscrito : inscritos) {
                         document.add(cabecera(inscrito));
                         document.add(cuerpoSemestral2P(inscrito));
-                        document.add(oferta(inscrito));
-                        document.add(pie(inscrito));
-
-                        document.newPage();
-                    }
-                }
-
-                if (gestionAcademica.getModalidadEvaluacion().equals(ModalidadEvaluacion.SEMESTRAL_3P)) {
-                    for (Inscrito inscrito : inscritos) {
-                        document.add(cabecera(inscrito));
-                        document.add(cuerpoSemestral(inscrito));
-                        document.add(oferta(inscrito));
-                        document.add(pie(inscrito));
-
-                        document.newPage();
-                    }
-                }
-
-                if (gestionAcademica.getModalidadEvaluacion().equals(ModalidadEvaluacion.ANUAL_4P)) {
-                    for (Inscrito inscrito : inscritos) {
-                        document.add(cabecera(inscrito));
-                        document.add(cuerpoAnual(inscrito));
                         document.add(oferta(inscrito));
                         document.add(pie(inscrito));
 

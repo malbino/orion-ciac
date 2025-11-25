@@ -84,15 +84,9 @@ public class PlanillaSeguimiento extends HttpServlet {
                 document.open();
 
                 document.add(cabecera(grupo));
-                if (grupo.getGestionAcademica().getModalidadEvaluacion().equals(ModalidadEvaluacion.SEMESTRAL_2P)) {
+                if (grupo.getGestionAcademica().getModalidadEvaluacion().equals(ModalidadEvaluacion.MODULAR_2P)) {
                     document.add(contenidoSemestral2P(grupo));
                     document.add(pieSemestral2P(grupo));
-                } else if (grupo.getGestionAcademica().getModalidadEvaluacion().equals(ModalidadEvaluacion.SEMESTRAL_3P)) {
-                    document.add(contenidoSemestral(grupo));
-                    document.add(pieSemestral(grupo));
-                } else if (grupo.getGestionAcademica().getModalidadEvaluacion().equals(ModalidadEvaluacion.ANUAL_4P)) {
-                    document.add(contenidoAnual(grupo));
-                    document.add(pieAnual(grupo));
                 }
 
                 document.close();

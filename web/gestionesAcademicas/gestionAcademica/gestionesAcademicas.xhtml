@@ -24,18 +24,6 @@
                                 <div class="x_content">
                                     <p:messages/>
 
-                                    <div class="ui-g ui-fluid">
-                                        <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="regimen" value="Regimen: " style="font-size: small"/>
-                                            <p:selectOneMenu id="regimen" value="#{GestionAcademicaController.seleccionRegimen}" converter="#{RegimenConverter}" autoWidth="false" required="true" requiredMessage="* Regimen requerido."> 
-                                                <f:selectItem itemLabel="" itemValue="" />
-                                                <f:selectItems value="#{GestionAcademicaController.listaRegimenes()}" var="regimen" itemLabel="#{regimen.toString()}" itemValue="#{regimen}"/>  
-
-                                                <p:ajax listener="#{GestionAcademicaController.reinit()}" update="gestionesAcademicas"/>
-                                            </p:selectOneMenu> 
-                                        </div>
-                                    </div>
-
                                     <p:toolbar>
                                         <f:facet name="left">
                                             <p:commandButton icon="fa fa-plus" value="Nuevo" actionListener="#{GestionAcademicaController.toNuevaGestionAcademica()}" update="form"/>
@@ -83,10 +71,6 @@
                                             <h:outputText value="#{gestionAcademica.periodo.toString()}"/>
                                         </p:column>
 
-                                        <p:column headerText="Regimen" >  
-                                            <h:outputText value="#{gestionAcademica.regimen.toString()}"/>
-                                        </p:column>
-                                        
                                         <p:column headerText="Modalidad Evaluación" >  
                                             <h:outputText value="#{gestionAcademica.modalidadEvaluacion.toString()}"/>
                                         </p:column>

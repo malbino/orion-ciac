@@ -17,6 +17,8 @@ import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.enums.Condicion;
 import org.malbino.orion.enums.ModalidadEvaluacion;
 import org.malbino.orion.enums.Periodo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -25,6 +27,8 @@ import org.malbino.orion.enums.Periodo;
 @Stateless
 @LocalBean
 public class GestionAcademicaFacade extends AbstractFacade<GestionAcademica> {
+
+    private static final Logger log = LoggerFactory.getLogger(GestionAcademicaFacade.class);
 
     @PersistenceContext(unitName = "orionPU")
     private EntityManager em;
@@ -90,11 +94,11 @@ public class GestionAcademicaFacade extends AbstractFacade<GestionAcademica> {
         List<GestionAcademica> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT ga FROM GestionAcademica ga WHERE ga.vigente=TRUE ORDER BY ga.gestion, ga.periodo");
+            Query q = em.createQuery("SELECT ga FROM GestionAcademica ga ORDER BY ga.gestion, ga.periodo");
 
             l = q.getResultList();
         } catch (Exception e) {
-
+            log.error(e.toString());
         }
 
         return l;
