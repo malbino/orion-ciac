@@ -14,6 +14,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.malbino.moodle.webservices.CopiarGrupo;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Grupo;
@@ -46,6 +47,7 @@ public class AsignacionDocenteController extends AbstractController implements S
 
     private GestionAcademica seleccionGestionAcademica;
     private Carrera seleccionCarrera;
+    private Campus seleccionCampus;
 
     private String keyword;
 
@@ -61,26 +63,17 @@ public class AsignacionDocenteController extends AbstractController implements S
     }
 
     public void reinit() {
-        if (seleccionGestionAcademica != null && seleccionCarrera != null) {
-            grupos = grupoFacade.listaGrupos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), 0);
+        if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionCampus != null) {
+            grupos = grupoFacade.listaGrupos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionCampus.getId_campus());
         }
         seleccionGrupo = null;
 
         keyword = null;
     }
 
-    @Override
-    public List<Carrera> listaCarreras() {
-        List<Carrera> l = new ArrayList();
-        if (seleccionGestionAcademica != null) {
-            l = carreraFacade.listaCarreras();
-        }
-        return l;
-    }
-
     public void buscar() {
-        if (seleccionGestionAcademica != null && seleccionCarrera != null) {
-            grupos = grupoFacade.buscar(keyword, seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(),0);
+        if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionCampus != null) {
+            grupos = grupoFacade.buscar(keyword, seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionCampus.getId_campus());
         }
     }
 
@@ -197,6 +190,20 @@ public class AsignacionDocenteController extends AbstractController implements S
      */
     public void setKeyword(String keyword) {
         this.keyword = keyword;
+    }
+
+    /**
+     * @return the seleccionCampus
+     */
+    public Campus getSeleccionCampus() {
+        return seleccionCampus;
+    }
+
+    /**
+     * @param seleccionCampus the seleccionCampus to set
+     */
+    public void setSeleccionCampus(Campus seleccionCampus) {
+        this.seleccionCampus = seleccionCampus;
     }
 
 }

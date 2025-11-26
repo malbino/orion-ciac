@@ -31,7 +31,7 @@
                                                 <f:selectItem itemLabel="" itemValue="" />
                                                 <f:selectItems value="#{AsignacionDocenteController.listaGestionesAcademicas()}" var="gestionAcademica" itemLabel="#{gestionAcademica.toString()}" itemValue="#{gestionAcademica}"/>  
 
-                                                <p:ajax listener="#{AsignacionDocenteController.reinit()}" update="carrera grupos"/>
+                                                <p:ajax listener="#{AsignacionDocenteController.reinit()}" update="grupos"/>
                                             </p:selectOneMenu>
                                         </div>
 
@@ -40,6 +40,16 @@
                                             <p:selectOneMenu id="carrera" value="#{AsignacionDocenteController.seleccionCarrera}" converter="#{CarreraConverter}" autoWidth="false" required="true" requiredMessage="* Carrera requerida."> 
                                                 <f:selectItem itemLabel="" itemValue="" />
                                                 <f:selectItems value="#{AsignacionDocenteController.listaCarreras()}" var="carrera" itemLabel="#{carrera.toString()}" itemValue="#{carrera}"/>  
+
+                                                <p:ajax listener="#{AsignacionDocenteController.reinit()}" update="grupos"/>
+                                            </p:selectOneMenu>
+                                        </div>
+                                        
+                                        <div class="ui-g-12 ui-md-4">
+                                            <p:outputLabel for="campus" value="Campus: " style="font-size: small"/>
+                                            <p:selectOneMenu id="campus" value="#{AsignacionDocenteController.seleccionCampus}" converter="#{CampusConverter}" autoWidth="false">
+                                                <f:selectItem itemLabel="" itemValue=""/>
+                                                <f:selectItems value="#{AsignacionDocenteController.listaCampus()}" var="campus" itemLabel="#{campus.toString()}" itemValue="#{campus}"/>
 
                                                 <p:ajax listener="#{AsignacionDocenteController.reinit()}" update="grupos"/>
                                             </p:selectOneMenu>
