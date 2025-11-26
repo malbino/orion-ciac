@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Inscrito;
@@ -23,6 +24,8 @@ import org.malbino.orion.enums.Turno;
 import org.malbino.orion.facades.GrupoFacade;
 import org.malbino.orion.facades.InscritoFacade;
 import org.malbino.orion.util.Fecha;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -31,6 +34,8 @@ import org.malbino.orion.util.Fecha;
 @Named("InscritosController")
 @SessionScoped
 public class InscritosController extends AbstractController implements Serializable {
+
+    private static final Logger log = LoggerFactory.getLogger(InscritosController.class);
 
     @EJB
     GrupoFacade grupoFacade;
@@ -41,6 +46,7 @@ public class InscritosController extends AbstractController implements Serializa
 
     private GestionAcademica seleccionGestionAcademica;
     private Carrera seleccionCarrera;
+    private Campus seleccionCampus;
     private Turno seleccionTurno;
     private String seleccionParalelo;
 
@@ -53,6 +59,7 @@ public class InscritosController extends AbstractController implements Serializa
     public void init() {
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
+        seleccionCampus = null;
         seleccionTurno = null;
         seleccionParalelo = null;
 
@@ -63,17 +70,29 @@ public class InscritosController extends AbstractController implements Serializa
     }
 
     public void reinit() {
-        if (seleccionGestionAcademica != null && seleccionCarrera == null && seleccionTurno == null && seleccionParalelo == null) {
+        if (seleccionGestionAcademica != null && seleccionCarrera == null && seleccionCampus == null && seleccionTurno == null && seleccionParalelo == null) {
+
             inscritos = inscritoFacade.listaInscritos(seleccionGestionAcademica.getId_gestionacademica());
-        } else if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionTurno == null && seleccionParalelo == null) {
+
+        } else if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionCampus == null && seleccionTurno == null && seleccionParalelo == null) {
+
             inscritos = inscritoFacade.listaInscritos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera());
-        } else if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionTurno == null && seleccionParalelo == null) {
-            inscritos = inscritoFacade.listaInscritos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera());
-        } else if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionTurno != null && seleccionParalelo == null) {
-            inscritos = inscritoFacade.listaInscritos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionTurno);
-        } else if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionTurno != null && seleccionParalelo != null) {
-            inscritos = inscritoFacade.listaInscritos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionTurno, seleccionParalelo);
+
+        } else if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionCampus != null && seleccionTurno == null && seleccionParalelo == null) {
+
+            inscritos = inscritoFacade.listaInscritos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionCampus.getId_campus());
+
+        } else if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionCampus != null && seleccionTurno != null && seleccionParalelo == null) {
+
+            inscritos = inscritoFacade.listaInscritos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionCampus.getId_campus(), seleccionTurno);
+            log.info("inscritos=" + inscritos.size());
+
+        } else if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionCampus != null && seleccionTurno != null && seleccionParalelo != null) {
+
+            inscritos = inscritoFacade.listaInscritos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionCampus.getId_campus(), seleccionTurno, seleccionParalelo);
+
         } else {
+
             inscritos = new ArrayList<>();
         }
         seleccionInscrito = null;
@@ -101,8 +120,8 @@ public class InscritosController extends AbstractController implements Serializa
 
     public List<String> listaParalelos() {
         List<String> paralelos = new ArrayList<>();
-        if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionTurno != null) {
-            paralelos = grupoFacade.listaParalelos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), 0,seleccionTurno);
+        if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionCampus != null && seleccionTurno != null) {
+            paralelos = grupoFacade.listaParalelos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionCampus.getId_campus(), seleccionTurno);
         }
         return paralelos;
     }
@@ -226,6 +245,20 @@ public class InscritosController extends AbstractController implements Serializa
      */
     public void setKeyword(String keyword) {
         this.keyword = keyword;
+    }
+
+    /**
+     * @return the seleccionCampus
+     */
+    public Campus getSeleccionCampus() {
+        return seleccionCampus;
+    }
+
+    /**
+     * @param seleccionCampus the seleccionCampus to set
+     */
+    public void setSeleccionCampus(Campus seleccionCampus) {
+        this.seleccionCampus = seleccionCampus;
     }
 
 }

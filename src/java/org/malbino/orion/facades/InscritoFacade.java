@@ -18,6 +18,8 @@ import org.malbino.orion.enums.Condicion;
 import org.malbino.orion.enums.Periodo;
 import org.malbino.orion.enums.Sexo;
 import org.malbino.orion.enums.Turno;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -26,6 +28,8 @@ import org.malbino.orion.enums.Turno;
 @Stateless
 @LocalBean
 public class InscritoFacade extends AbstractFacade<Inscrito> {
+
+    private static final Logger log = LoggerFactory.getLogger(InscritoFacade.class);
 
     @PersistenceContext(unitName = "orionPU")
     private EntityManager em;
@@ -111,7 +115,7 @@ public class InscritoFacade extends AbstractFacade<Inscrito> {
         List<Inscrito> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT i FROM Inscrito i JOIN i.gestionAcademica ga WHERE ga.id_gestionacademica=:id_gestionacademica ORDER BY i.numero");
+            Query q = em.createQuery("SELECT i FROM Inscrito i JOIN i.gestionAcademica ga JOIN i.estudiante e WHERE ga.id_gestionacademica=:id_gestionacademica ORDER BY e.primerApellido, e.segundoApellido, e.nombre");
             q.setParameter("id_gestionacademica", id_gestionacademica);
 
             l = q.getResultList();
@@ -126,7 +130,7 @@ public class InscritoFacade extends AbstractFacade<Inscrito> {
         List<Inscrito> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT i FROM Inscrito i JOIN i.gestionAcademica ga JOIN i.carrera c WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera ORDER BY i.numero");
+            Query q = em.createQuery("SELECT i FROM Inscrito i JOIN i.gestionAcademica ga JOIN i.carrera c JOIN i.estudiante e WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera ORDER BY e.primerApellido, e.segundoApellido, e.nombre");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_carrera", id_carrera);
 
@@ -138,30 +142,49 @@ public class InscritoFacade extends AbstractFacade<Inscrito> {
         return l;
     }
 
-    public List<Inscrito> listaInscritos(int id_gestionacademica, int id_carrera, Turno turno) {
+    public List<Inscrito> listaInscritos(int id_gestionacademica, int id_carrera, int id_campus) {
+        List<Inscrito> l = new ArrayList();
+
+        try {
+            Query q = em.createQuery("SELECT i FROM Inscrito i JOIN i.gestionAcademica ga JOIN i.carrera c JOIN i.estudiante e JOIN i.campus a WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND a.id_campus=:id_campus ORDER BY e.primerApellido, e.segundoApellido, e.nombre");
+            q.setParameter("id_gestionacademica", id_gestionacademica);
+            q.setParameter("id_carrera", id_carrera);
+            q.setParameter("id_campus", id_campus);
+
+            l = q.getResultList();
+        } catch (Exception e) {
+
+        }
+
+        return l;
+    }
+
+    public List<Inscrito> listaInscritos(int id_gestionacademica, int id_carrera, int id_campus, Turno turno) {
         List<Inscrito> l = new ArrayList<>();
 
         try {
-            Query q = em.createQuery("SELECT DISTINCT i FROM Nota n JOIN n.grupo g JOIN g.modulo m JOIN m.carrera c JOIN g.gestionAcademica ga JOIN n.inscrito i JOIN i.estudiante e WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND g.turno=:turno ORDER BY e.primerApellido, e.segundoApellido, e.nombre");
+            Query q = em.createQuery("SELECT DISTINCT i FROM Nota n JOIN n.grupo g JOIN g.modulo m JOIN m.carrera c JOIN g.gestionAcademica ga JOIN n.inscrito i JOIN i.estudiante e JOIN i.campus a WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND a.id_campus=:id_campus AND g.turno=:turno ORDER BY e.primerApellido, e.segundoApellido, e.nombre");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_carrera", id_carrera);
+            q.setParameter("id_campus", id_campus);
             q.setParameter("turno", turno);
 
             l = q.getResultList();
         } catch (Exception e) {
-
+            log.error(e.toString());
         }
 
         return l;
     }
 
-    public List<Inscrito> listaInscritos(int id_gestionacademica, int id_carrera, Turno turno, String paralelo) {
+    public List<Inscrito> listaInscritos(int id_gestionacademica, int id_carrera, int id_campus, Turno turno, String paralelo) {
         List<Inscrito> l = new ArrayList<>();
 
         try {
-            Query q = em.createQuery("SELECT DISTINCT i FROM Nota n JOIN n.grupo g JOIN g.modulo m JOIN m.carrera c JOIN g.gestionAcademica ga JOIN n.inscrito i JOIN i.estudiante e WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND g.turno=:turno AND g.codigo=:paralelo ORDER BY e.primerApellido, e.segundoApellido, e.nombre");
+            Query q = em.createQuery("SELECT DISTINCT i FROM Nota n JOIN n.grupo g JOIN g.modulo m JOIN m.carrera c JOIN g.gestionAcademica ga JOIN n.inscrito i JOIN i.estudiante e JOIN i.campus a WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND a.id_campus=:id_campus AND g.turno=:turno AND g.codigo=:paralelo ORDER BY e.primerApellido, e.segundoApellido, e.nombre");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_carrera", id_carrera);
+            q.setParameter("id_campus", id_campus);
             q.setParameter("turno", turno);
             q.setParameter("paralelo", paralelo);
 

@@ -27,8 +27,8 @@
                                             <p:selectOneMenu id="gestionAcademica" value="#{InscritosController.seleccionGestionAcademica}" converter="#{GestionAcademicaConverter}" autoWidth="false"> 
                                                 <f:selectItem itemLabel="" itemValue="" />
                                                 <f:selectItems value="#{InscritosController.listaGestionesAcademicas()}" var="gestionAcademica" itemLabel="#{gestionAcademica.toString()}" itemValue="#{gestionAcademica}"/>  
-
-                                                <p:ajax update="carrera nivel turno paralelo"/>
+                                                
+                                                <p:ajax update="paralelo"/>
                                             </p:selectOneMenu>
                                         </div>
 
@@ -36,20 +36,20 @@
                                             <p:outputLabel for="carrera" value="Carrera: " style="font-size: small"/>
                                             <p:selectOneMenu id="carrera" value="#{InscritosController.seleccionCarrera}" converter="#{CarreraConverter}" autoWidth="false"> 
                                                 <f:selectItem itemLabel="" itemValue="" />
-                                                <f:selectItems value="#{InscritosController.listaCarreras()}" var="carrera" itemLabel="#{carrera.toString()}" itemValue="#{carrera}"/>  
-
-                                                <p:ajax update="nivel turno paralelo"/>
+                                                <f:selectItems value="#{InscritosController.listaCarreras()}" var="carrera" itemLabel="#{carrera.toString()}" itemValue="#{carrera}"/>
+                                                
+                                                <p:ajax update="paralelo"/>
                                             </p:selectOneMenu>
                                         </div>
-
+                                        
                                         <div class="ui-g-12 ui-md-3">
-                                            <p:outputLabel for="nivel" value="Nivel:" style="font-size: small"/>
-                                            <p:selectOneMenu id="nivel" value="#{InscritosController.seleccionNivel}" converter="#{NivelConverter}" autoWidth="false"> 
-                                                <f:selectItem itemLabel="" itemValue="" />
-                                                <f:selectItems value="#{InscritosController.listaNiveles()}" var="nivel" itemLabel="#{nivel.toString()}" itemValue="#{nivel}"/>  
-
-                                                <p:ajax update="turno paralelo"/>
-                                            </p:selectOneMenu> 
+                                            <p:outputLabel for="campus" value="Campus: " style="font-size: small"/>
+                                            <p:selectOneMenu id="campus" value="#{InscritosController.seleccionCampus}" converter="#{CampusConverter}" autoWidth="false">
+                                                <f:selectItem itemLabel="" itemValue=""/>
+                                                <f:selectItems value="#{InscritosController.listaCampus()}" var="campus" itemLabel="#{campus.toString()}" itemValue="#{campus}"/>
+                                                
+                                                <p:ajax update="paralelo"/>
+                                            </p:selectOneMenu>
                                         </div>
 
                                         <div class="ui-g-12 ui-md-3">
