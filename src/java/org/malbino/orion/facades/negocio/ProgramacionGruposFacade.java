@@ -12,6 +12,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Grupo;
@@ -30,7 +31,7 @@ import org.slf4j.LoggerFactory;
 @Stateless
 @LocalBean
 public class ProgramacionGruposFacade {
-    
+
     private static final Logger log = LoggerFactory.getLogger(ProgramacionGruposFacade.class);
 
     @PersistenceContext(unitName = "orionPU")
@@ -42,7 +43,7 @@ public class ProgramacionGruposFacade {
     GrupoFacade grupoFacade;
 
     @Transactional(Transactional.TxType.REQUIRES_NEW)
-    public List<Grupo> programarGrupos(GestionAcademica gestionAcademica, Carrera carrera, Modulo modulo, Turno turno, Integer capacidad) {
+    public List<Grupo> programarGrupos(GestionAcademica gestionAcademica, Carrera carrera, Campus campus, Modulo modulo, Turno turno, Integer capacidad) {
         List<Grupo> grupos = new ArrayList<>();
 
         log.info("gestionAcademica=" + gestionAcademica);
@@ -50,11 +51,11 @@ public class ProgramacionGruposFacade {
         log.info("modulo=" + modulo);
         log.info("turno=" + turno);
         log.info("capacidad=" + capacidad);
-        
-        Integer c1 = grupoFacade.cantidadGrupos(gestionAcademica.getId_gestionacademica(), modulo.getId_modulo(), turno).intValue();
+
+        Integer c1 = grupoFacade.cantidadGrupos(gestionAcademica.getId_gestionacademica(), modulo.getId_modulo(), campus.getId_campus(), turno).intValue();
         String codigo = Constantes.ABECEDARIO[c1];
 
-        Grupo grupo = new Grupo(codigo, capacidad, turno, true, gestionAcademica, modulo);
+        Grupo grupo = new Grupo(codigo, capacidad, turno, true, gestionAcademica, modulo, campus);
         em.persist(grupo);
 
         grupos.add(grupo);

@@ -63,7 +63,7 @@ public class ReporteListaInscritosGrupoController extends AbstractController imp
     public List<Grupo> listaGrupos() {
         List<Grupo> grupos = new ArrayList<>();
         if (seleccionGestionAcademica != null && seleccionCarrera != null) {
-            grupos = grupoFacade.listaGrupos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera());
+            grupos = grupoFacade.listaGrupos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), 0);
         }
         return grupos;
     }

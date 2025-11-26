@@ -62,7 +62,7 @@ public class AsignacionDocenteController extends AbstractController implements S
 
     public void reinit() {
         if (seleccionGestionAcademica != null && seleccionCarrera != null) {
-            grupos = grupoFacade.listaGrupos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera());
+            grupos = grupoFacade.listaGrupos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), 0);
         }
         seleccionGrupo = null;
 
@@ -80,7 +80,7 @@ public class AsignacionDocenteController extends AbstractController implements S
 
     public void buscar() {
         if (seleccionGestionAcademica != null && seleccionCarrera != null) {
-            grupos = grupoFacade.buscar(keyword, seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera());
+            grupos = grupoFacade.buscar(keyword, seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(),0);
         }
     }
 

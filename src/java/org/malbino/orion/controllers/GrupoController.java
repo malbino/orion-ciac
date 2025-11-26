@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Grupo;
@@ -48,6 +49,7 @@ public class GrupoController extends AbstractController implements Serializable 
 
     private GestionAcademica seleccionGestionAcademica;
     private Carrera seleccionCarrera;
+    private Campus seleccionCampus;
     private Modulo seleccionModulo;
     private Turno seleccionTurno;
     private Integer capacidad;
@@ -61,6 +63,7 @@ public class GrupoController extends AbstractController implements Serializable 
 
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
+        seleccionCampus = null;
         seleccionModulo = null;
         seleccionTurno = null;
         capacidad = null;
@@ -69,8 +72,8 @@ public class GrupoController extends AbstractController implements Serializable 
     }
 
     public void reinit() {
-        if (seleccionGestionAcademica != null && seleccionCarrera != null) {
-            grupos = grupoFacade.listaGrupos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera());
+        if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionCampus != null) {
+            grupos = grupoFacade.listaGrupos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionCampus.getId_campus());
         }
         seleccionGrupo = null;
 
@@ -79,15 +82,6 @@ public class GrupoController extends AbstractController implements Serializable 
         capacidad = null;
 
         keyword = null;
-    }
-
-    @Override
-    public List<Carrera> listaCarreras() {
-        List<Carrera> l = new ArrayList();
-        if (seleccionGestionAcademica != null) {
-            l = carreraFacade.listaCarreras();
-        }
-        return l;
     }
 
     public List<Modulo> listaModulos() {
@@ -99,8 +93,8 @@ public class GrupoController extends AbstractController implements Serializable 
     }
 
     public void buscar() {
-        if (seleccionGestionAcademica != null && seleccionCarrera != null) {
-            grupos = grupoFacade.buscar(keyword, seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera());
+        if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionCampus != null) {
+            grupos = grupoFacade.buscar(keyword, seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionCampus.getId_campus());
         }
     }
 
@@ -109,7 +103,7 @@ public class GrupoController extends AbstractController implements Serializable 
     }
 
     public void programarGrupos() throws IOException {
-        List<Grupo> grupos = programacionGruposFacade.programarGrupos(seleccionGestionAcademica, seleccionCarrera, seleccionModulo, seleccionTurno, capacidad);
+        List<Grupo> grupos = programacionGruposFacade.programarGrupos(seleccionGestionAcademica, seleccionCarrera, seleccionCampus, seleccionModulo, seleccionTurno, capacidad);
         if (!grupos.isEmpty()) {
             //log
             for (Grupo grupo : grupos) {
@@ -267,5 +261,19 @@ public class GrupoController extends AbstractController implements Serializable 
      */
     public void setSeleccionModulo(Modulo seleccionModulo) {
         this.seleccionModulo = seleccionModulo;
+    }
+
+    /**
+     * @return the seleccionCampus
+     */
+    public Campus getSeleccionCampus() {
+        return seleccionCampus;
+    }
+
+    /**
+     * @param seleccionCampus the seleccionCampus to set
+     */
+    public void setSeleccionCampus(Campus seleccionCampus) {
+        this.seleccionCampus = seleccionCampus;
     }
 }

@@ -22,7 +22,7 @@ import org.malbino.orion.enums.Turno;
  * @author malbino
  */
 @Entity
-@Table(name = "grupo", uniqueConstraints = @UniqueConstraint(columnNames = {"codigo", "turno", "id_gestionacademica", "id_modulo"}))
+@Table(name = "grupo", uniqueConstraints = @UniqueConstraint(columnNames = {"codigo", "turno", "id_gestionacademica", "id_modulo", "id_campus"}))
 public class Grupo implements Serializable {
 
     @Id
@@ -46,16 +46,21 @@ public class Grupo implements Serializable {
     @ManyToOne
     private Empleado empleado;
 
+    @JoinColumn(name = "id_campus")
+    @ManyToOne
+    private Campus campus;
+
     public Grupo() {
     }
 
-    public Grupo(String codigo, Integer capacidad, Turno turno, Boolean abierto, GestionAcademica gestionAcademica, Modulo modulo) {
+    public Grupo(String codigo, Integer capacidad, Turno turno, Boolean abierto, GestionAcademica gestionAcademica, Modulo modulo, Campus campus) {
         this.codigo = codigo;
         this.capacidad = capacidad;
         this.turno = turno;
         this.abierto = abierto;
         this.gestionAcademica = gestionAcademica;
         this.modulo = modulo;
+        this.campus = campus;
     }
 
     public String idnumberMoodle() {
@@ -266,5 +271,19 @@ public class Grupo implements Serializable {
         s += e + "<br/>";
 
         return s;
+    }
+
+    /**
+     * @return the campus
+     */
+    public Campus getCampus() {
+        return campus;
+    }
+
+    /**
+     * @param campus the campus to set
+     */
+    public void setCampus(Campus campus) {
+        this.campus = campus;
     }
 }

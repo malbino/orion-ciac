@@ -35,7 +35,7 @@
                                                 <f:selectItem itemLabel="" itemValue="" />
                                                 <f:selectItems value="#{HorarioParaleloController.listaGestionesAcademicas()}" var="gestionAcademica" itemLabel="#{gestionAcademica.toString()}" itemValue="#{gestionAcademica}"/>  
 
-                                                <p:ajax  update="carrera nivel turno paralelo"/>
+                                                <p:ajax  update="carrera turno paralelo"/>
                                             </p:selectOneMenu>
                                         </div>
 
@@ -45,18 +45,8 @@
                                                 <f:selectItem itemLabel="" itemValue="" />
                                                 <f:selectItems value="#{HorarioParaleloController.listaCarreras()}" var="carrera" itemLabel="#{carrera.toString()}" itemValue="#{carrera}"/>  
 
-                                                <p:ajax update="nivel turno paralelo"/>
-                                            </p:selectOneMenu>
-                                        </div>
-
-                                        <div class="ui-g-12 ui-md-3">
-                                            <p:outputLabel for="nivel" value="Nivel:" style="font-size: small"/>
-                                            <p:selectOneMenu id="nivel" value="#{HorarioParaleloController.seleccionNivel}" converter="#{NivelConverter}" autoWidth="false" required="true" requiredMessage="* Nivel requerido."> 
-                                                <f:selectItem itemLabel="" itemValue="" />
-                                                <f:selectItems value="#{HorarioParaleloController.listaNiveles()}" var="nivel" itemLabel="#{nivel.toString()}" itemValue="#{nivel}"/>  
-
                                                 <p:ajax update="turno paralelo"/>
-                                            </p:selectOneMenu> 
+                                            </p:selectOneMenu>
                                         </div>
 
                                         <div class="ui-g-12 ui-md-3">

@@ -38,13 +38,14 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
         return em;
     }
 
-    public List<Grupo> listaGrupos(int id_gestionacademica, int id_carrera) {
+    public List<Grupo> listaGrupos(int id_gestionacademica, int id_carrera, int id_campus) {
         List<Grupo> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT g FROM Grupo g JOIN g.gestionAcademica ga JOIN g.modulo m JOIN m.carrera c WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera ORDER BY m.numero, g.turno, g.codigo");
+            Query q = em.createQuery("SELECT g FROM Grupo g JOIN g.gestionAcademica ga JOIN g.modulo m JOIN m.carrera c JOIN g.campus a WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND a.id_campus=:id_campus ORDER BY m.numero, g.turno, g.codigo");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_carrera", id_carrera);
+            q.setParameter("id_campus", id_campus);
 
             l = q.getResultList();
         } catch (Exception e) {
@@ -54,13 +55,14 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
         return l;
     }
 
-    public Long cantidadGrupos(int id_gestionacademica, int id_modulo, Turno turno) {
+    public Long cantidadGrupos(int id_gestionacademica, int id_modulo, int id_campus, Turno turno) {
         Long l = 0l;
 
         try {
-            Query q = em.createQuery("SELECT COUNT(g) FROM Grupo g JOIN g.gestionAcademica ga JOIN g.modulo m WHERE ga.id_gestionacademica=:id_gestionacademica AND m.id_modulo=:id_modulo AND g.turno=:turno");
+            Query q = em.createQuery("SELECT COUNT(g) FROM Grupo g JOIN g.gestionAcademica ga JOIN g.modulo m JOIN g.campus a WHERE ga.id_gestionacademica=:id_gestionacademica AND m.id_modulo=:id_modulo AND a.id_campus=:id_campus AND g.turno=:turno");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_modulo", id_modulo);
+            q.setParameter("id_campus", id_campus);
             q.setParameter("turno", turno);
 
             l = (Long) q.getSingleResult();
@@ -71,37 +73,21 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
         return l;
     }
 
-    public List<Grupo> buscar(String keyword, int id_gestionacademica, int id_carrera) {
+    public List<Grupo> buscar(String keyword, int id_gestionacademica, int id_carrera, int id_campus) {
         List<Grupo> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT g FROM Grupo g JOIN g.gestionAcademica ga JOIN g.modulo m JOIN m.carrera c WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND "
+            Query q = em.createQuery("SELECT g FROM Grupo g JOIN g.gestionAcademica ga JOIN g.modulo m JOIN m.carrera c JOIN g.campus a WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND a.id_campus=:id_campus AND "
                     + "(LOWER(g.codigo) LIKE LOWER(:keyword) OR "
                     + "LOWER(m.nombre) LIKE LOWER(:keyword)) "
-                    + "ORDER BY g.turno, g.codigo, m.numero");
+                    + "ORDER BY m.numero, g.turno, g.codigo");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_carrera", id_carrera);
+            q.setParameter("id_campus", id_campus);
             q.setParameter("keyword", "%" + keyword + "%");
 
             l = q.getResultList();
         } catch (Exception e) {
-        }
-
-        return l;
-    }
-
-    public List<Grupo> listaGrupos(int id_gestionacademica, int id_carrera, int id_modulo) {
-        List<Grupo> l = new ArrayList();
-
-        try {
-            Query q = em.createQuery("SELECT g FROM Grupo g JOIN g.gestionAcademica ga JOIN g.modulo m JOIN m.carrera c WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND m.id_modulo=:id_modulo ORDER BY g.turno, g.codigo");
-            q.setParameter("id_gestionacademica", id_gestionacademica);
-            q.setParameter("id_carrera", id_carrera);
-            q.setParameter("id_modulo", id_modulo);
-
-            l = q.getResultList();
-        } catch (Exception e) {
-
         }
 
         return l;

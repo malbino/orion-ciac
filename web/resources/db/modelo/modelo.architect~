@@ -2275,7 +2275,7 @@
     <column id="COL850" populated="true" UUID="1c2198df-3138-4039-a44f-94032250c9bc" autoIncrement="false" defaultValue="NULL" name="HORAS" nullable="1" physicalName="HORAS" precision="0" referenceCount="1" scale="0" source-column-ref="COL307" sourceDataTypeName="INT" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL851" populated="true" UUID="ee8c7e26-6a14-4a03-a737-62e9331a1ec4" autoIncrement="false" autoIncrementSequenceName="modulo_CREDITAJEMODULO_seq" defaultValue="" name="CREDITAJEMODULO" nullable="0" physicalName="CREDITAJEMODULO" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL851" populated="true" UUID="ee8c7e26-6a14-4a03-a737-62e9331a1ec4" autoIncrement="false" autoIncrementSequenceName="modulo_CREDITAJEMODULO_seq" defaultValue="" name="CREDITAJEMODULO" nullable="1" physicalName="CREDITAJEMODULO" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
     <column id="COL852" populated="true" UUID="60c83d01-d141-4bc0-b253-13d8964460be" autoIncrement="false" defaultValue="NULL" name="id_carrera" nullable="1" physicalName="id_carrera" precision="0" referenceCount="2" scale="0" source-column-ref="COL311" sourceDataTypeName="INT" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
@@ -2739,7 +2739,7 @@
   <table-pane table-ref="TAB793" x="1142" y="513" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB817" x="1926" y="1070" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB835" x="2340" y="568" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
-  <table-pane table-ref="TAB845" x="1552" y="820" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB845" x="1581" y="823" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB860" x="2314" y="36" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB897" x="1975" y="532" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB916" x="1510" y="1101" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
