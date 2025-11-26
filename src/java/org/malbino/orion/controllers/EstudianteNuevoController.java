@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.CarreraEstudiante;
 import org.malbino.orion.entities.Estudiante;
@@ -48,18 +49,21 @@ public class EstudianteNuevoController extends AbstractController implements Ser
     private Estudiante nuevoEstudiante;
     private GestionAcademica seleccionGestionAcademica;
     private CarreraEstudiante seleccionCarreraEstudiante;
+    private Campus seleccionCampus;
 
     @PostConstruct
     public void init() {
         nuevoEstudiante = new Estudiante();
         seleccionGestionAcademica = null;
         seleccionCarreraEstudiante = null;
+        seleccionCampus = null;
     }
 
     public void reinit() {
         nuevoEstudiante = new Estudiante();
         seleccionGestionAcademica = null;
         seleccionCarreraEstudiante = null;
+        seleccionCampus = null;
     }
 
     public List<CarreraEstudiante> listaCarrerasEstudiante() {
@@ -103,7 +107,7 @@ public class EstudianteNuevoController extends AbstractController implements Ser
                 nuevoEstudiante.setContrasena(Encriptador.encriptar(contrasena));
                 nuevoEstudiante.setContrasenaSinEncriptar(contrasena);
 
-                if (inscripcionesFacade.registrarEstudianteNuevo(nuevoEstudiante, seleccionCarreraEstudiante, seleccionGestionAcademica)) {
+                if (inscripcionesFacade.registrarEstudianteNuevo(nuevoEstudiante, seleccionCarreraEstudiante, seleccionGestionAcademica, seleccionCampus)) {
                     copiarUsuario(nuevoEstudiante);
 
                     //logF
@@ -174,5 +178,19 @@ public class EstudianteNuevoController extends AbstractController implements Ser
      */
     public void setSeleccionCarreraEstudiante(CarreraEstudiante seleccionCarreraEstudiante) {
         this.seleccionCarreraEstudiante = seleccionCarreraEstudiante;
+    }
+
+    /**
+     * @return the seleccionCampus
+     */
+    public Campus getSeleccionCampus() {
+        return seleccionCampus;
+    }
+
+    /**
+     * @param seleccionCampus the seleccionCampus to set
+     */
+    public void setSeleccionCampus(Campus seleccionCampus) {
+        this.seleccionCampus = seleccionCampus;
     }
 }

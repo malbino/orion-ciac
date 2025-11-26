@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.CarreraEstudiante;
 import org.malbino.orion.entities.Estudiante;
@@ -51,18 +52,21 @@ public class CambioCarreraController extends AbstractController implements Seria
     private Estudiante seleccionEstudiante;
     private CarreraEstudiante seleccionCarreraEstudiante;
     private GestionAcademica seleccionGestionAcademica;
+    private Campus seleccionCampus;
 
     @PostConstruct
     public void init() {
         seleccionEstudiante = null;
         seleccionCarreraEstudiante = null;
         seleccionGestionAcademica = null;
+        seleccionCampus = null;
     }
 
     public void reinit() {
         seleccionEstudiante = null;
         seleccionCarreraEstudiante = null;
         seleccionGestionAcademica = null;
+        seleccionCampus = null;
     }
 
     public List<CarreraEstudiante> listaCarrerasEstudiante() {
@@ -78,15 +82,6 @@ public class CambioCarreraController extends AbstractController implements Seria
             carreraEstudiante.setCarrera(carrera);
 
             l.add(carreraEstudiante);
-        }
-        return l;
-    }
-
-    @Override
-    public List<GestionAcademica> listaGestionesAcademicas() {
-        List<GestionAcademica> l = new ArrayList();
-        if (seleccionCarreraEstudiante != null) {
-            l = listaGestionesAcademicas();
         }
         return l;
     }
@@ -114,7 +109,7 @@ public class CambioCarreraController extends AbstractController implements Seria
                     String contrasena = Generador.generarContrasena();
                     seleccionEstudiante.setContrasena(Encriptador.encriptar(contrasena));
                     seleccionEstudiante.setContrasenaSinEncriptar(contrasena);
-                    if (inscripcionesFacade.cambioCarrera(seleccionEstudiante, seleccionCarreraEstudiante, seleccionGestionAcademica)) {
+                    if (inscripcionesFacade.cambioCarrera(seleccionEstudiante, seleccionCarreraEstudiante, seleccionGestionAcademica, seleccionCampus)) {
                         copiarUsuario(seleccionEstudiante);
 
                         //log
@@ -188,5 +183,19 @@ public class CambioCarreraController extends AbstractController implements Seria
      */
     public void setSeleccionGestionAcademica(GestionAcademica seleccionGestionAcademica) {
         this.seleccionGestionAcademica = seleccionGestionAcademica;
+    }
+
+    /**
+     * @return the seleccionCampus
+     */
+    public Campus getSeleccionCampus() {
+        return seleccionCampus;
+    }
+
+    /**
+     * @param seleccionCampus the seleccionCampus to set
+     */
+    public void setSeleccionCampus(Campus seleccionCampus) {
+        this.seleccionCampus = seleccionCampus;
     }
 }

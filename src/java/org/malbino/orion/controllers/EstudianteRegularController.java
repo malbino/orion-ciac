@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.CarreraEstudiante;
 import org.malbino.orion.entities.Estudiante;
 import org.malbino.orion.entities.GestionAcademica;
@@ -53,18 +54,21 @@ public class EstudianteRegularController extends AbstractController implements S
     private Estudiante seleccionEstudiante;
     private CarreraEstudiante seleccionCarreraEstudiante;
     private GestionAcademica seleccionGestionAcademica;
+    private Campus seleccionCampus;
 
     @PostConstruct
     public void init() {
         seleccionEstudiante = null;
         seleccionCarreraEstudiante = null;
         seleccionGestionAcademica = null;
+        seleccionCampus = null;
     }
 
     public void reinit() {
         seleccionEstudiante = null;
         seleccionCarreraEstudiante = null;
         seleccionGestionAcademica = null;
+        seleccionCampus = null;
     }
 
     public List<CarreraEstudiante> listaCarrerasEstudiante() {
@@ -99,7 +103,7 @@ public class EstudianteRegularController extends AbstractController implements S
                     seleccionEstudiante.setContrasena(Encriptador.encriptar(contrasena));
                     seleccionEstudiante.setContrasenaSinEncriptar(contrasena);
 
-                    if (inscripcionesFacade.registrarEstudianteRegular(seleccionEstudiante, seleccionCarreraEstudiante.getCarrera(), seleccionGestionAcademica)) {
+                    if (inscripcionesFacade.registrarEstudianteRegular(seleccionEstudiante, seleccionCarreraEstudiante.getCarrera(), seleccionGestionAcademica, seleccionCampus)) {
                         copiarUsuario(seleccionEstudiante);
 
                         //log
@@ -173,6 +177,20 @@ public class EstudianteRegularController extends AbstractController implements S
      */
     public void setSeleccionGestionAcademica(GestionAcademica seleccionGestionAcademica) {
         this.seleccionGestionAcademica = seleccionGestionAcademica;
+    }
+
+    /**
+     * @return the seleccionCampus
+     */
+    public Campus getSeleccionCampus() {
+        return seleccionCampus;
+    }
+
+    /**
+     * @param seleccionCampus the seleccionCampus to set
+     */
+    public void setSeleccionCampus(Campus seleccionCampus) {
+        this.seleccionCampus = seleccionCampus;
     }
 
 }

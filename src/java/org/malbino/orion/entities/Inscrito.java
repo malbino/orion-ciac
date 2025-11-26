@@ -30,7 +30,7 @@ import org.malbino.orion.util.Fecha;
  * @author malbino
  */
 @Entity
-@Table(name = "inscrito", uniqueConstraints = @UniqueConstraint(columnNames = {"codigo", "numero", "id_persona", "id_carrera", "id_gestionacademica"}))
+@Table(name = "inscrito", uniqueConstraints = @UniqueConstraint(columnNames = {"codigo", "numero", "id_persona", "id_carrera", "id_gestionacademica", "id_campus"}))
 public class Inscrito implements Serializable {
 
     @Id
@@ -55,6 +55,10 @@ public class Inscrito implements Serializable {
     @JoinColumn(name = "id_gestionacademica")
     @ManyToOne
     private GestionAcademica gestionAcademica;
+    
+    @JoinColumn(name = "id_campus")
+    @ManyToOne
+    private Campus campus;
 
     @OneToMany(mappedBy = "inscrito", orphanRemoval = true)
     private List<Nota> notas;
@@ -65,7 +69,7 @@ public class Inscrito implements Serializable {
     public Inscrito() {
     }
 
-    public Inscrito(Date fecha, Tipo tipo, Long codigo, Integer numero, Estudiante estudiante, Carrera carrera, GestionAcademica gestionAcademica) {
+    public Inscrito(Date fecha, Tipo tipo, Long codigo, Integer numero, Estudiante estudiante, Carrera carrera, GestionAcademica gestionAcademica, Campus campus) {
         this.fecha = fecha;
         this.tipo = tipo;
         this.codigo = codigo;
@@ -73,6 +77,7 @@ public class Inscrito implements Serializable {
         this.estudiante = estudiante;
         this.carrera = carrera;
         this.gestionAcademica = gestionAcademica;
+        this.campus = campus;
     }
 
     /**
@@ -283,5 +288,19 @@ public class Inscrito implements Serializable {
         }
 
         return condicion;
+    }
+
+    /**
+     * @return the campus
+     */
+    public Campus getCampus() {
+        return campus;
+    }
+
+    /**
+     * @param campus the campus to set
+     */
+    public void setCampus(Campus campus) {
+        this.campus = campus;
     }
 }
