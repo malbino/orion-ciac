@@ -207,7 +207,7 @@ public class ListaInscritosParalelo extends HttpServlet {
         cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
         table.addCell(cell);
 
-        List<Inscrito> listaInscritos = inscritoFacade.listaInscritos(gestionAcademica.getId_gestionacademica(), carrera.getId_carrera(), turno, paralelo);
+        List<Inscrito> listaInscritos = inscritoFacade.listaInscritos(gestionAcademica.getId_gestionacademica(), carrera.getId_carrera(), 0, turno, paralelo);
         for (int i = 0; i < listaInscritos.size(); i++) {
             Inscrito inscrito = listaInscritos.get(i);
 
