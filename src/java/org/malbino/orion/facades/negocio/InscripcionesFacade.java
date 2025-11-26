@@ -26,7 +26,6 @@ import org.malbino.orion.entities.Rol;
 
 import org.malbino.orion.enums.Tipo;
 import org.malbino.orion.facades.CarreraEstudianteFacade;
-import org.malbino.orion.facades.ComprobanteFacade;
 import org.malbino.orion.facades.EstudianteFacade;
 import org.malbino.orion.facades.GrupoFacade;
 import org.malbino.orion.facades.InscritoFacade;
@@ -35,6 +34,8 @@ import org.malbino.orion.facades.NotaFacade;
 import org.malbino.orion.facades.RolFacade;
 import org.malbino.orion.util.Constantes;
 import org.malbino.orion.util.Fecha;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -43,6 +44,8 @@ import org.malbino.orion.util.Fecha;
 @Stateless
 @LocalBean
 public class InscripcionesFacade {
+
+    private static final Logger log = LoggerFactory.getLogger(InscripcionesFacade.class);
 
     @PersistenceContext(unitName = "orionPU")
     private EntityManager em;
@@ -60,13 +63,12 @@ public class InscripcionesFacade {
     @EJB
     EstudianteFacade estudianteFacade;
     @EJB
-    ComprobanteFacade comprobanteFacade;
-    @EJB
     CarreraEstudianteFacade carreraEstudianteFacade;
 
     @Transactional(Transactional.TxType.REQUIRES_NEW)
     public boolean registrarEstudianteNuevo(Estudiante estudiante, CarreraEstudiante carreraEstudiante, GestionAcademica gestionAcademica) {
         // estudiante
+        log.info("estudiante=" + estudiante);
         Integer maximaMatricula = estudianteFacade.maximaMatricula(estudiante.getFecha());
         Integer matricula;
         if (maximaMatricula == null) {
@@ -83,10 +85,12 @@ public class InscripcionesFacade {
         em.flush();
 
         // carreraestudiante
+        log.info("carreraEstudiante=" + carreraEstudiante);
         carreraEstudiante.getCarreraEstudianteId().setId_persona(estudiante.getId_persona());
         carreraEstudianteFacade.create(carreraEstudiante);
 
         // inscrito
+        log.info("gestionAcademica=" + gestionAcademica);
         Date fecha = estudiante.getFecha();
         Integer maximoNumero = inscritoFacade.maximoNumero(gestionAcademica.getId_gestionacademica(), carreraEstudiante.getCarrera().getId_carrera());
         Long maximoCodigo = inscritoFacade.maximoCodigo(gestionAcademica.getId_gestionacademica(), carreraEstudiante.getCarrera().getId_carrera());

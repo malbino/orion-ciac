@@ -75,15 +75,6 @@ public class EstudianteRegularController extends AbstractController implements S
         return l;
     }
 
-    @Override
-    public List<GestionAcademica> listaGestionesAcademicas() {
-        List<GestionAcademica> l = new ArrayList();
-        if (seleccionCarreraEstudiante != null) {
-            l = listaGestionesAcademicas();
-        }
-        return l;
-    }
-
     public void copiarUsuario(Usuario usuario) {
         String[] properties = Propiedades.pfsenseProperties();
 
