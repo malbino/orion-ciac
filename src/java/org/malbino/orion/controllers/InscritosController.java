@@ -102,7 +102,7 @@ public class InscritosController extends AbstractController implements Serializa
     public List<String> listaParalelos() {
         List<String> paralelos = new ArrayList<>();
         if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionTurno != null) {
-            paralelos = grupoFacade.listaParalelos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionTurno);
+            paralelos = grupoFacade.listaParalelos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), 0,seleccionTurno);
         }
         return paralelos;
     }

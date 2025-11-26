@@ -197,7 +197,7 @@ public class HorarioParalelo extends HttpServlet {
             for (int j = 0; j < dias.length; j++) {
                 Dia dia = dias[j];
 
-                Clase clase = claseFacade.buscar(gestionAcademica.getId_gestionacademica(), carrera.getId_carrera(), turno, paralelo, periodo, dia);
+                Clase clase = claseFacade.buscar(gestionAcademica.getId_gestionacademica(), carrera.getId_carrera(), 0, turno, paralelo, periodo, dia);
                 if (clase != null) {
                     cell = new PdfPCell(new Phrase(clase.toString_Paralelo(), NORMAL));
                     cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);

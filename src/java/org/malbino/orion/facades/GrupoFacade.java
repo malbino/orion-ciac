@@ -190,13 +190,14 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
         return l;
     }
 
-    public List<String> listaParalelos(int id_gestionacademica, int id_carrera, Turno turno) {
+    public List<String> listaParalelos(int id_gestionacademica, int id_carrera, int id_campus, Turno turno) {
         List<String> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT DISTINCT g.codigo FROM Grupo g JOIN g.gestionAcademica ga JOIN g.modulo m JOIN m.carrera c WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND g.turno=:turno ORDER BY g.codigo");
+            Query q = em.createQuery("SELECT DISTINCT g.codigo FROM Grupo g JOIN g.gestionAcademica ga JOIN g.modulo m JOIN m.carrera c JOIN g.campus a WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND a.id_campus=:id_campus AND g.turno=:turno ORDER BY g.codigo");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_carrera", id_carrera);
+            q.setParameter("id_campus", id_campus);
             q.setParameter("turno", turno);
 
             l = q.getResultList();
@@ -224,13 +225,14 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
         return l;
     }
 
-    public List<Grupo> listaGrupos(int id_gestionacademica, int id_carrera, Turno turno, String paralelo) {
+    public List<Grupo> listaGrupos(int id_gestionacademica, int id_carrera, int id_campus, Turno turno, String paralelo) {
         List<Grupo> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT g FROM Grupo g JOIN g.gestionAcademica ga JOIN g.modulo m JOIN m.carrera c WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND g.turno=:turno AND g.codigo=:paralelo ORDER BY m.nombre, g.codigo");
+            Query q = em.createQuery("SELECT g FROM Grupo g JOIN g.gestionAcademica ga JOIN g.modulo m JOIN m.carrera c JOIN g.campus a WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND a.id_campus=:id_campus AND g.turno=:turno AND g.codigo=:paralelo ORDER BY m.nombre, g.codigo");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_carrera", id_carrera);
+            q.setParameter("id_campus", id_campus);
             q.setParameter("turno", turno);
             q.setParameter("paralelo", paralelo);
 
