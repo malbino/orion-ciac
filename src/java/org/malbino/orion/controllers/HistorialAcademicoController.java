@@ -128,15 +128,6 @@ public class HistorialAcademicoController extends AbstractController implements 
         return l;
     }
 
-    @Override
-    public List<GestionAcademica> listaGestionesAcademicas() {
-        List<GestionAcademica> l = new ArrayList();
-        if (seleccionCarreraEstudiante != null) {
-            l = listaGestionesAcademicas();
-        }
-        return l;
-    }
-
     public List<Modulo> listaModulos() {
         List<Modulo> l = new ArrayList();
         if (seleccionCarreraEstudiante != null && seleccionEstudiante != null) {

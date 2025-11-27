@@ -386,23 +386,6 @@ public class NotaFacade extends AbstractFacade<Nota> {
         return l;
     }
 
-    public List<Nota> listaNotasFaltantesPRAE(int id_gestionacademica, int id_carrera) {
-        List<Nota> l = new ArrayList();
-        try {
-            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.gestionAcademica ga JOIN n.modulo m JOIN m.carrera c JOIN n.estudiante e WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND m.curricular=:curricular AND n.modalidad=:modalidad AND n.nf IS NULL ORDER BY e.primerApellido, e.segundoApellido, e.nombre");
-            q.setParameter("id_gestionacademica", id_gestionacademica);
-            q.setParameter("id_carrera", id_carrera);
-            q.setParameter("curricular", Boolean.TRUE);
-            q.setParameter("modalidad", Modalidad.PRUEBA_RECUPERATORIA_ADICIONAL_EXCEPCIONAL);
-
-            l = q.getResultList();
-        } catch (Exception e) {
-
-        }
-
-        return l;
-    }
-
     public List<Nota> listaRegistroNotasSemestral2P(int id_gestionacademica, int id_carrera, TipoNota tipoNota) {
         List<Nota> l = new ArrayList();
         try {

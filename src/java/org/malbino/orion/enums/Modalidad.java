@@ -15,9 +15,7 @@ public enum Modalidad {
     REGULAR("REGULAR", "R", true),
     CONVALIDACION("CONVALIDACIÓN", "C", false),
     TRASPASO("TRASPASO", "T", false),
-    MIGRACION("MIGRACIÓN", "M", false),
-    PRUEBA_RECUPERATORIA_ADICIONAL_EXCEPCIONAL("PRUEBA RECUPERATORIA ADICIONAL EXCEPCIONAL", "PRAE", false ),
-    HOMOLOGACION("HOMOLOGACIÓN", "H", false );
+    MIGRACION("MIGRACIÓN", "M", false);
 
     private String nombre;
     private String abreviatura;
