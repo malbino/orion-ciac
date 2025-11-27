@@ -105,18 +105,9 @@ public class SegundoParcialController extends AbstractController implements Seri
         return gestionAcademicaFacade.listaGestionAcademica(ModalidadEvaluacion.MODULAR_2P, true);
     }
 
-    @Override
-    public List<Carrera> listaCarreras() {
-        List<Carrera> l = new ArrayList();
-        if (seleccionGestionAcademica != null) {
-            l = carreraFacade.listaCarreras();
-        }
-        return l;
-    }
-
     public List<Grupo> listaGrupos() {
         List<Grupo> l = new ArrayList();
-        if (seleccionGestionAcademica != null && seleccionCarrera != null && loginController.getUsr() != null) {
+        if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionCampus != null && loginController.getUsr() != null) {
             l = grupoFacade.listaGruposEmpleado(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionCampus.getId_campus(), loginController.getUsr().getId_persona());
         }
         return l;

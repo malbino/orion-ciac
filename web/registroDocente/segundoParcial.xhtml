@@ -25,17 +25,17 @@
                                     <p:messages id="messages"/>
 
                                     <div class="ui-g ui-fluid">
-                                        <div class="ui-g-12 ui-md-4">
+                                        <div class="ui-g-12 ui-md-3">
                                             <p:outputLabel for="gestionAcademica" value="Gestión Académica: " style="font-size: small"/>
                                             <p:selectOneMenu id="gestionAcademica" value="#{SegundoParcialController.seleccionGestionAcademica}" converter="#{GestionAcademicaConverter}" autoWidth="false" required="true" requiredMessage="* Gestion academica requerida."> 
                                                 <f:selectItem itemLabel="" itemValue="" />
                                                 <f:selectItems value="#{SegundoParcialController.listaGestionesAcademicas()}" var="gestionAcademica" itemLabel="#{gestionAcademica.toString()}" itemValue="#{gestionAcademica}"/>  
 
-                                                <p:ajax update="carrera grupo"/>
+                                                <p:ajax update="grupo"/>
                                             </p:selectOneMenu>
                                         </div>
 
-                                        <div class="ui-g-12 ui-md-4">
+                                        <div class="ui-g-12 ui-md-3">
                                             <p:outputLabel for="carrera" value="Carrera: " style="font-size: small"/>
                                             <p:selectOneMenu id="carrera" value="#{SegundoParcialController.seleccionCarrera}" converter="#{CarreraConverter}" autoWidth="false" required="true" requiredMessage="* Carrera requerida."> 
                                                 <f:selectItem itemLabel="" itemValue="" />
@@ -44,8 +44,18 @@
                                                 <p:ajax update="grupo"/>
                                             </p:selectOneMenu>
                                         </div>
+                                        
+                                        <div class="ui-g-12 ui-md-3">
+                                            <p:outputLabel for="campus" value="Campus: " style="font-size: small"/>
+                                            <p:selectOneMenu id="campus" value="#{SegundoParcialController.seleccionCampus}" converter="#{CampusConverter}" autoWidth="false">
+                                                <f:selectItem itemLabel="" itemValue=""/>
+                                                <f:selectItems value="#{SegundoParcialController.listaCampus()}" var="campus" itemLabel="#{campus.toString()}" itemValue="#{campus}"/>
 
-                                        <div class="ui-g-12 ui-md-4">
+                                                <p:ajax update="grupo"/>
+                                            </p:selectOneMenu>
+                                        </div>
+
+                                        <div class="ui-g-12 ui-md-3">
                                             <p:outputLabel for="grupo" value="Grupo: " style="font-size: small"/>
                                             <p:selectOneMenu id="grupo" value="#{SegundoParcialController.seleccionGrupo}" converter="#{GrupoConverter}" autoWidth="false" required="true" requiredMessage="* Grupo requerido."> 
                                                 <f:selectItem itemLabel="" itemValue="" />
