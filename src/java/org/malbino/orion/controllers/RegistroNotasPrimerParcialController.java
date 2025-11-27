@@ -26,6 +26,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.Empleado;
 import org.malbino.orion.entities.GestionAcademica;
@@ -59,8 +60,7 @@ public class RegistroNotasPrimerParcialController extends AbstractController imp
     private static final String PATHNAME = File.separator + "resources" + File.separator + "uploads" + File.separator + "registro_pedagogico.xlsx";
     private static final String PARCIAL = "PRIMER PARCIAL";
 
-    private static final String PATHNAME_SEMESTRAL = File.separator + "resources" + File.separator + "uploads" + File.separator + "planilla_seguimiento_semestral.xlsx";
-    private static final String PATHNAME_ANUAL = File.separator + "resources" + File.separator + "uploads" + File.separator + "planilla_seguimiento_anual.xlsx";
+    private static final String PATHNAME_MODULAR = File.separator + "resources" + File.separator + "uploads" + File.separator + "planilla_seguimiento_modular.xlsx";
 
     @EJB
     GrupoFacade grupoFacade;
@@ -77,6 +77,7 @@ public class RegistroNotasPrimerParcialController extends AbstractController imp
 
     private GestionAcademica seleccionGestionAcademica;
     private Carrera seleccionCarrera;
+    private Campus seleccionCampus;
     private Empleado seleccionEmpleado;
     private Grupo seleccionGrupo;
     private List<Nota> notas;
@@ -88,6 +89,7 @@ public class RegistroNotasPrimerParcialController extends AbstractController imp
     public void init() {
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
+        seleccionCampus = null;
         seleccionEmpleado = null;
         seleccionGrupo = null;
         notas = new ArrayList();
@@ -96,29 +98,21 @@ public class RegistroNotasPrimerParcialController extends AbstractController imp
     public void reinit() {
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
+        seleccionCampus = null;
         seleccionEmpleado = null;
         seleccionGrupo = null;
         notas = new ArrayList();
     }
-    
+
     @Override
     public List<GestionAcademica> listaGestionesAcademicas() {
         return gestionAcademicaFacade.listaGestionAcademica(ModalidadEvaluacion.MODULAR_2P, true);
     }
 
-    @Override
-    public List<Carrera> listaCarreras() {
-        List<Carrera> l = new ArrayList();
-        if (seleccionGestionAcademica != null) {
-            l = carreraFacade.listaCarreras();
-        }
-        return l;
-    }
-
     public List<Grupo> listaGrupos() {
         List<Grupo> l = new ArrayList();
         if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionEmpleado != null) {
-            l = grupoFacade.listaGruposEmpleado(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionEmpleado.getId_persona());
+            l = grupoFacade.listaGruposEmpleado(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionCampus.getId_campus(), seleccionEmpleado.getId_persona());
         }
         return l;
     }
@@ -145,7 +139,7 @@ public class RegistroNotasPrimerParcialController extends AbstractController imp
     public XSSFWorkbook leerArchivo(String pathname) {
         XSSFWorkbook workbook = null;
 
-        try (FileInputStream file = new FileInputStream(this.realPath() + pathname)) {
+        try ( FileInputStream file = new FileInputStream(this.realPath() + pathname)) {
             workbook = new XSSFWorkbook(file);
         } catch (IOException e) {
             this.mensajeDeError("Error: No se pudo leer el archivo.");
@@ -328,13 +322,7 @@ public class RegistroNotasPrimerParcialController extends AbstractController imp
     }
 
     public void bajarPlanilla() {
-        XSSFWorkbook workbook = null;
-
-        if (seleccionGestionAcademica.getModalidadEvaluacion().getCantidadParciales() == 3) {
-            workbook = leerArchivo(PATHNAME_SEMESTRAL);
-        } else if (seleccionGestionAcademica.getModalidadEvaluacion().getCantidadParciales() == 4) {
-            workbook = leerArchivo(PATHNAME_ANUAL);
-        }
+        XSSFWorkbook workbook = leerArchivo(PATHNAME_MODULAR);
 
         XSSFSheet sheet = workbook.getSheetAt(0);
         if (sheet != null) {
@@ -624,5 +612,19 @@ public class RegistroNotasPrimerParcialController extends AbstractController imp
      */
     public void setSeleccionEmpleado(Empleado seleccionEmpleado) {
         this.seleccionEmpleado = seleccionEmpleado;
+    }
+
+    /**
+     * @return the seleccionCampus
+     */
+    public Campus getSeleccionCampus() {
+        return seleccionCampus;
+    }
+
+    /**
+     * @param seleccionCampus the seleccionCampus to set
+     */
+    public void setSeleccionCampus(Campus seleccionCampus) {
+        this.seleccionCampus = seleccionCampus;
     }
 }

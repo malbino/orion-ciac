@@ -26,6 +26,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.Empleado;
 import org.malbino.orion.entities.GestionAcademica;
@@ -78,6 +79,7 @@ public class RegistroNotasSegundoParcialController extends AbstractController im
 
     private GestionAcademica seleccionGestionAcademica;
     private Carrera seleccionCarrera;
+    private Campus seleccionCampus;
     private Empleado seleccionEmpleado;
     private Grupo seleccionGrupo;
     private List<Nota> notas;
@@ -89,6 +91,7 @@ public class RegistroNotasSegundoParcialController extends AbstractController im
     public void init() {
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
+        seleccionCampus = null;
         seleccionEmpleado = null;
         seleccionGrupo = null;
         notas = new ArrayList();
@@ -97,6 +100,7 @@ public class RegistroNotasSegundoParcialController extends AbstractController im
     public void reinit() {
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
+        seleccionCampus = null;
         seleccionEmpleado = null;
         seleccionGrupo = null;
         notas = new ArrayList();
@@ -119,7 +123,7 @@ public class RegistroNotasSegundoParcialController extends AbstractController im
     public List<Grupo> listaGrupos() {
         List<Grupo> l = new ArrayList();
         if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionEmpleado != null) {
-            l = grupoFacade.listaGruposEmpleado(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionEmpleado.getId_persona());
+            l = grupoFacade.listaGruposEmpleado(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionCampus.getId_campus(), seleccionEmpleado.getId_persona());
         }
         return l;
     }
@@ -146,7 +150,7 @@ public class RegistroNotasSegundoParcialController extends AbstractController im
     public XSSFWorkbook leerArchivo(String pathname) {
         XSSFWorkbook workbook = null;
 
-        try (FileInputStream file = new FileInputStream(this.realPath() + pathname)) {
+        try ( FileInputStream file = new FileInputStream(this.realPath() + pathname)) {
             workbook = new XSSFWorkbook(file);
         } catch (IOException e) {
             this.mensajeDeError("Error: No se pudo leer el archivo.");
@@ -627,5 +631,19 @@ public class RegistroNotasSegundoParcialController extends AbstractController im
      */
     public void setSeleccionEmpleado(Empleado seleccionEmpleado) {
         this.seleccionEmpleado = seleccionEmpleado;
+    }
+
+    /**
+     * @return the seleccionCampus
+     */
+    public Campus getSeleccionCampus() {
+        return seleccionCampus;
+    }
+
+    /**
+     * @param seleccionCampus the seleccionCampus to set
+     */
+    public void setSeleccionCampus(Campus seleccionCampus) {
+        this.seleccionCampus = seleccionCampus;
     }
 }

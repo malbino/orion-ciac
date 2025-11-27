@@ -26,6 +26,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Grupo;
@@ -75,6 +76,7 @@ public class SegundoParcialController extends AbstractController implements Seri
 
     private GestionAcademica seleccionGestionAcademica;
     private Carrera seleccionCarrera;
+    private Campus seleccionCampus;
     private Grupo seleccionGrupo;
     private List<Nota> notas;
 
@@ -85,6 +87,7 @@ public class SegundoParcialController extends AbstractController implements Seri
     public void init() {
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
+        seleccionCampus = null;
         seleccionGrupo = null;
         notas = new ArrayList();
     }
@@ -92,6 +95,7 @@ public class SegundoParcialController extends AbstractController implements Seri
     public void reinit() {
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
+        seleccionCampus = null;
         seleccionGrupo = null;
         notas = new ArrayList();
     }
@@ -113,7 +117,7 @@ public class SegundoParcialController extends AbstractController implements Seri
     public List<Grupo> listaGrupos() {
         List<Grupo> l = new ArrayList();
         if (seleccionGestionAcademica != null && seleccionCarrera != null && loginController.getUsr() != null) {
-            l = grupoFacade.listaGruposEmpleado(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), loginController.getUsr().getId_persona());
+            l = grupoFacade.listaGruposEmpleado(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionCampus.getId_campus(), loginController.getUsr().getId_persona());
         }
         return l;
     }
@@ -146,7 +150,7 @@ public class SegundoParcialController extends AbstractController implements Seri
     public XSSFWorkbook leerArchivo(String pathname) {
         XSSFWorkbook workbook = null;
 
-        try (FileInputStream file = new FileInputStream(this.realPath() + pathname)) {
+        try ( FileInputStream file = new FileInputStream(this.realPath() + pathname)) {
             workbook = new XSSFWorkbook(file);
         } catch (IOException e) {
             this.mensajeDeError("Error: No se pudo leer el archivo.");
@@ -425,5 +429,19 @@ public class SegundoParcialController extends AbstractController implements Seri
      */
     public void setUpload(UploadedFile upload) {
         this.upload = upload;
+    }
+
+    /**
+     * @return the seleccionCampus
+     */
+    public Campus getSeleccionCampus() {
+        return seleccionCampus;
+    }
+
+    /**
+     * @param seleccionCampus the seleccionCampus to set
+     */
+    public void setSeleccionCampus(Campus seleccionCampus) {
+        this.seleccionCampus = seleccionCampus;
     }
 }
