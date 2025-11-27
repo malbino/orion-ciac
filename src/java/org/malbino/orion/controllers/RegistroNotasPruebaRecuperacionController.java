@@ -12,6 +12,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Empleado;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Log;
@@ -19,7 +20,6 @@ import org.malbino.orion.entities.Nota;
 import org.malbino.orion.enums.Condicion;
 import org.malbino.orion.enums.EntidadLog;
 import org.malbino.orion.enums.EventoLog;
-import org.malbino.orion.facades.ActividadFacade;
 import org.malbino.orion.facades.negocio.RegistroDocenteFacade;
 import org.malbino.orion.util.Fecha;
 
@@ -33,31 +33,32 @@ public class RegistroNotasPruebaRecuperacionController extends AbstractControlle
 
     @EJB
     RegistroDocenteFacade registroDocenteFacade;
-    @EJB
-    ActividadFacade actividadFacade;
     @Inject
     LoginController loginController;
 
     private GestionAcademica seleccionGestionAcademica;
+    private Campus seleccionCampus;
     private Empleado seleccionEmpleado;
     private List<Nota> notas;
 
     @PostConstruct
     public void init() {
         seleccionGestionAcademica = null;
+        seleccionCampus = null;
         seleccionEmpleado = null;
         notas = new ArrayList();
     }
 
     public void reinit() {
         seleccionGestionAcademica = null;
+        seleccionCampus = null;
         seleccionEmpleado = null;
         notas = new ArrayList();
     }
 
     public void actualizarNotas() {
-        if (seleccionGestionAcademica != null && seleccionEmpleado != null) {
-            notas = registroDocenteFacade.listaRecuperatorios(seleccionGestionAcademica, seleccionEmpleado.getId_persona());
+        if (seleccionGestionAcademica != null && seleccionCampus != null && seleccionEmpleado != null) {
+            notas = registroDocenteFacade.listaRecuperatorios(seleccionGestionAcademica, seleccionCampus, seleccionEmpleado.getId_persona());
         }
     }
 
@@ -131,5 +132,19 @@ public class RegistroNotasPruebaRecuperacionController extends AbstractControlle
      */
     public void setSeleccionEmpleado(Empleado seleccionEmpleado) {
         this.seleccionEmpleado = seleccionEmpleado;
+    }
+
+    /**
+     * @return the seleccionCampus
+     */
+    public Campus getSeleccionCampus() {
+        return seleccionCampus;
+    }
+
+    /**
+     * @param seleccionCampus the seleccionCampus to set
+     */
+    public void setSeleccionCampus(Campus seleccionCampus) {
+        this.seleccionCampus = seleccionCampus;
     }
 }

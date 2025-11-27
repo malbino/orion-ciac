@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Inscrito;
@@ -75,12 +76,13 @@ public class InscritoFacade extends AbstractFacade<Inscrito> {
         return i;
     }
 
-    public List<Inscrito> listaInscritosPruebaRecuperacion(GestionAcademica gestionAcademica, int id_persona) {
+    public List<Inscrito> listaInscritosPruebaRecuperacion(GestionAcademica gestionAcademica, Campus campus, int id_persona) {
         List<Inscrito> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT DISTINCT i FROM Nota n JOIN n.inscrito i JOIN i.gestionAcademica ga JOIN n.grupo g JOIN g.empleado e JOIN i.estudiante s WHERE ga.id_gestionacademica=:id_gestionacademica AND e.id_persona=:id_persona AND i.id_inscrito IN (SELECT i.id_inscrito FROM Nota n JOIN n.inscrito i JOIN i.gestionAcademica ga WHERE ga.id_gestionacademica=:id_gestionacademica AND n.notaFinal<:notaMinimaAprobacion GROUP BY i.id_inscrito HAVING COUNT(n) >= 1 AND COUNT(n) <=:cantidadMaximaReprobaciones) ORDER BY s.primerApellido, s.segundoApellido, s.nombre");
+            Query q = em.createQuery("SELECT DISTINCT i FROM Nota n JOIN n.inscrito i JOIN i.gestionAcademica ga JOIN n.grupo g JOIN g.empleado e JOIN i.estudiante s JOIN g.campus a WHERE ga.id_gestionacademica=:id_gestionacademica AND a.id_campus=:id_campus AND e.id_persona=:id_persona AND i.id_inscrito IN (SELECT i.id_inscrito FROM Nota n JOIN n.inscrito i JOIN i.gestionAcademica ga WHERE ga.id_gestionacademica=:id_gestionacademica AND n.notaFinal<:notaMinimaAprobacion GROUP BY i.id_inscrito HAVING COUNT(n) >= 1 AND COUNT(n) <=:cantidadMaximaReprobaciones) ORDER BY s.primerApellido, s.segundoApellido, s.nombre");
             q.setParameter("id_gestionacademica", gestionAcademica.getId_gestionacademica());
+            q.setParameter("id_campus", campus.getId_campus());
             q.setParameter("id_persona", id_persona);
             q.setParameter("notaMinimaAprobacion", gestionAcademica.getModalidadEvaluacion().getNotaMinimaAprobacion());
             q.setParameter("cantidadMaximaReprobaciones", gestionAcademica.getModalidadEvaluacion().getCantidadMaximaReprobaciones());

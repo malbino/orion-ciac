@@ -12,6 +12,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Inscrito;
 import org.malbino.orion.entities.Nota;
@@ -44,10 +45,10 @@ public class RegistroDocenteFacade {
     }
 
     @Transactional(Transactional.TxType.REQUIRES_NEW)
-    public List<Nota> listaRecuperatorios(GestionAcademica gestionacademica, int id_persona) {
+    public List<Nota> listaRecuperatorios(GestionAcademica gestionacademica, Campus campus, int id_persona) {
         List<Nota> l = new ArrayList();
 
-        List<Inscrito> inscritos = inscritoFacade.listaInscritosPruebaRecuperacion(gestionacademica, id_persona);
+        List<Inscrito> inscritos = inscritoFacade.listaInscritosPruebaRecuperacion(gestionacademica, campus, id_persona);
         for (Inscrito inscrito : inscritos) {
             List<Nota> notas = notaFacade.listaNotasPruebaRecuperacion(inscrito, id_persona);
             l.addAll(notas);
