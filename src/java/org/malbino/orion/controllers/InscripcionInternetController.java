@@ -123,7 +123,7 @@ public class InscripcionInternetController extends AbstractController implements
             ofertaModulos = inscripcionesFacade.ofertaTomaModulos(seleccionInscrito);
 
             for (Modulo modulo : ofertaModulos) {
-                List<Grupo> listaGruposAbiertos = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), modulo.getId_modulo(), grupo);
+                List<Grupo> listaGruposAbiertos = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), 0,modulo.getId_modulo(), grupo);
                 Iterator<Grupo> iterator = listaGruposAbiertos.iterator();
                 if (iterator.hasNext()) {
                     modulo.setGrupo(iterator.next());
