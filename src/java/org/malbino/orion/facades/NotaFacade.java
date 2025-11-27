@@ -44,7 +44,7 @@ public class NotaFacade extends AbstractFacade<Nota> {
     public List<Nota> listaNotas(int id_inscrito) {
         List<Nota> l = new ArrayList();
         try {
-            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.inscrito i JOIN n.modulo m WHERE i.id_inscrito=:id_inscrito ORDER BY m.nivel, m.numero");
+            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.inscrito i JOIN n.modulo m WHERE i.id_inscrito=:id_inscrito ORDER BY m.numero");
             q.setParameter("id_inscrito", id_inscrito);
 
             l = q.getResultList();
@@ -59,7 +59,7 @@ public class NotaFacade extends AbstractFacade<Nota> {
         List<Nota> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.gestionAcademica ga JOIN n.modulo m WHERE n.estudiante=:estudiante AND m.carrera=:carrera ORDER BY ga.gestion, ga.periodo, m.nivel, m.numero");
+            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.gestionAcademica ga JOIN n.modulo m WHERE n.estudiante=:estudiante AND m.carrera=:carrera ORDER BY ga.gestion, ga.periodo, m.numero");
             q.setParameter("estudiante", estudiante);
             q.setParameter("carrera", carrera);
 
@@ -110,7 +110,7 @@ public class NotaFacade extends AbstractFacade<Nota> {
         List<Nota> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.inscrito i JOIN n.grupo g JOIN g.empleado e JOIN n.modulo m WHERE i.id_inscrito=:id_inscrito AND e.id_persona=:id_persona AND n.notaFinal>=:notaMinimaPruebaRecuperacion AND n.notaFinal<:notaMinimaAprobacion ORDER BY m.nivel, m.numero");
+            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.inscrito i JOIN n.grupo g JOIN g.empleado e JOIN n.modulo m WHERE i.id_inscrito=:id_inscrito AND e.id_persona=:id_persona AND n.notaFinal>=:notaMinimaPruebaRecuperacion AND n.notaFinal<:notaMinimaAprobacion ORDER BY m.numero");
             q.setParameter("id_inscrito", inscrito.getId_inscrito());
             q.setParameter("id_persona", id_persona);
             q.setParameter("notaMinimaPruebaRecuperacion", inscrito.getGestionAcademica().getModalidadEvaluacion().getNotaMinimmaPruebaRecuperacion());
@@ -128,7 +128,7 @@ public class NotaFacade extends AbstractFacade<Nota> {
         List<Nota> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.inscrito i JOIN n.modulo m WHERE i.id_inscrito=:id_inscrito AND n.notaFinal>=:notaMinimaPruebaRecuperacion AND n.notaFinal<:notaMinimaAprobacion ORDER BY m.nivel, m.numero");
+            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.inscrito i JOIN n.modulo m WHERE i.id_inscrito=:id_inscrito AND n.notaFinal>=:notaMinimaPruebaRecuperacion AND n.notaFinal<:notaMinimaAprobacion ORDER BY m.numero");
             q.setParameter("id_inscrito", inscrito.getId_inscrito());
             q.setParameter("notaMinimaPruebaRecuperacion", inscrito.getGestionAcademica().getModalidadEvaluacion().getNotaMinimmaPruebaRecuperacion());
             q.setParameter("notaMinimaAprobacion", inscrito.getGestionAcademica().getModalidadEvaluacion().getNotaMinimaAprobacion());
@@ -180,7 +180,7 @@ public class NotaFacade extends AbstractFacade<Nota> {
         List<Nota> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.gestionAcademica ga JOIN n.modulo m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND m.curricular=TRUE AND n.condicion=:condicion ORDER BY ga.gestion, ga.periodo, m.nivel, m.numero");
+            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.gestionAcademica ga JOIN n.modulo m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND m.curricular=TRUE AND n.condicion=:condicion ORDER BY ga.gestion, ga.periodo, m.numero");
             q.setParameter("estudiante", estudiante);
             q.setParameter("carrera", carrera);
             q.setParameter("condicion", Condicion.APROBADO);
@@ -431,7 +431,7 @@ public class NotaFacade extends AbstractFacade<Nota> {
         List<Nota> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.inscrito i JOIN n.modulo m WHERE i.id_inscrito=:id_inscrito AND n.notaFinal>=:notaMinimaPruebaRecuperacion AND n.notaFinal<:notaMinimaAprobacion AND n.recuperatorio IS NULL ORDER BY m.nivel, m.numero");
+            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.inscrito i JOIN n.modulo m WHERE i.id_inscrito=:id_inscrito AND n.notaFinal>=:notaMinimaPruebaRecuperacion AND n.notaFinal<:notaMinimaAprobacion AND n.recuperatorio IS NULL ORDER BY m.numero");
             q.setParameter("id_inscrito", inscrito.getId_inscrito());
             q.setParameter("notaMinimaPruebaRecuperacion", inscrito.getGestionAcademica().getModalidadEvaluacion().getNotaMinimmaPruebaRecuperacion());
             q.setParameter("notaMinimaAprobacion", inscrito.getGestionAcademica().getModalidadEvaluacion().getNotaMinimaAprobacion());

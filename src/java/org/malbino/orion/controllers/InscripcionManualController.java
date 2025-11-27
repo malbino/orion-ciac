@@ -23,7 +23,6 @@ import org.malbino.orion.entities.Inscrito;
 import org.malbino.orion.entities.Log;
 import org.malbino.orion.entities.Modulo;
 import org.malbino.orion.entities.Nota;
-import org.malbino.orion.entities.Pago;
 import org.malbino.orion.enums.Condicion;
 import org.malbino.orion.enums.EntidadLog;
 import org.malbino.orion.enums.EventoLog;
@@ -109,7 +108,7 @@ public class InscripcionManualController extends AbstractController implements S
     public List<Grupo> listaGruposAbiertos(Modulo modulo) {
         List<Grupo> l = new ArrayList();
         if (seleccionInscrito != null && modulo != null) {
-            l = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), seleccionInscrito.getCarrera().getId_carrera(), modulo.getId_modulo());
+            l = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), seleccionInscrito.getCarrera().getId_carrera(), seleccionInscrito.getCampus().getId_campus(), modulo.getId_modulo());
         }
         return l;
     }
@@ -184,61 +183,24 @@ public class InscripcionManualController extends AbstractController implements S
 
     public void tomarModulos() throws IOException {
         if (!actividadFacade.listaActividades(Fecha.getDate(), Funcionalidad.INSCRIPCION, seleccionInscrito.getGestionAcademica().getId_gestionacademica()).isEmpty()) {
-            List<Pago> listaPagosPagados = pagoFacade.listaPagosPagados(seleccionInscrito.getId_inscrito());
-            if (!listaPagosPagados.isEmpty()) {
-                if (!ofertaModulos.isEmpty()) {
-                    if (verificarGrupos()) {
-                        List<Nota> aux = new ArrayList();
-                        for (Modulo modulo : ofertaModulos) {
-                            Nota nota = new Nota(0, Modalidad.REGULAR, Condicion.ABANDONO, seleccionInscrito.getGestionAcademica(), modulo, seleccionInscrito.getEstudiante(), seleccionInscrito, modulo.getGrupo());
-                            aux.add(nota);
-                        }
 
-                        try {
-                            if (inscripcionesFacade.tomarModulos(aux)) {
-                                copiarInscrito(seleccionInscrito.getEstudiante(), aux);
-
-                                //log
-                                for (Nota nota : aux) {
-                                    //log
-                                    logFacade.create(new Log(Fecha.getDate(), EventoLog.CREATE, EntidadLog.NOTA, nota.getId_nota(), "Creación de nota por inscripción manual", loginController.getUsr().toString()));
-                                }
-
-                                toEstadoInscripcion();
-                            }
-                        } catch (EJBException e) {
-                            this.mensajeDeError(e.getMessage());
-                        }
-                    } else {
-                        this.mensajeDeError("Existen modulos sin grupos.");
-                    }
-                } else {
-                    this.mensajeDeError("No existen modulos.");
-                }
-            } else {
-                this.mensajeDeError("Matricula/Cuota pendiente.");
-            }
-        } else {
-            this.mensajeDeError("Fuera de fecha.");
-        }
-    }
-
-    public void inscripcionManual() throws IOException {
-        if (!actividadFacade.listaActividades(Fecha.getDate(), Funcionalidad.INSCRIPCION, seleccionInscrito.getGestionAcademica().getId_gestionacademica()).isEmpty()) {
-            List<Pago> listaPagosPagados = pagoFacade.listaPagosPagados(seleccionInscrito.getId_inscrito());
-            if (!listaPagosPagados.isEmpty()) {
-                if (!modulos.isEmpty()) {
+            if (!ofertaModulos.isEmpty()) {
+                if (verificarGrupos()) {
                     List<Nota> aux = new ArrayList();
-                    for (Modulo modulo : modulos) {
-                        if (modulo.getGrupo() != null && !moduloRepetida(modulo)) {
-                            Nota nota = new Nota(0, Modalidad.REGULAR, Condicion.ABANDONO, seleccionInscrito.getGestionAcademica(), modulo, seleccionInscrito.getEstudiante(), seleccionInscrito, modulo.getGrupo());
-                            aux.add(nota);
-                        }
+                    for (Modulo modulo : ofertaModulos) {
+                        Nota nota = new Nota(0, Modalidad.REGULAR, Condicion.ABANDONO, seleccionInscrito.getGestionAcademica(), modulo, seleccionInscrito.getEstudiante(), seleccionInscrito, modulo.getGrupo());
+                        aux.add(nota);
                     }
 
                     try {
                         if (inscripcionesFacade.tomarModulos(aux)) {
                             copiarInscrito(seleccionInscrito.getEstudiante(), aux);
+
+                            //log
+                            for (Nota nota : aux) {
+                                //log
+                                logFacade.create(new Log(Fecha.getDate(), EventoLog.CREATE, EntidadLog.NOTA, nota.getId_nota(), "Creación de nota por inscripción manual", loginController.getUsr().toString()));
+                            }
 
                             toEstadoInscripcion();
                         }
@@ -246,11 +208,42 @@ public class InscripcionManualController extends AbstractController implements S
                         this.mensajeDeError(e.getMessage());
                     }
                 } else {
-                    this.mensajeDeError("No existen modulos.");
+                    this.mensajeDeError("Existen modulos sin grupos.");
                 }
             } else {
-                this.mensajeDeError("Matricula/Cuota pendiente.");
+                this.mensajeDeError("No existen modulos.");
             }
+
+        } else {
+            this.mensajeDeError("Fuera de fecha.");
+        }
+    }
+
+    public void inscripcionManual() throws IOException {
+        if (!actividadFacade.listaActividades(Fecha.getDate(), Funcionalidad.INSCRIPCION, seleccionInscrito.getGestionAcademica().getId_gestionacademica()).isEmpty()) {
+
+            if (!modulos.isEmpty()) {
+                List<Nota> aux = new ArrayList();
+                for (Modulo modulo : modulos) {
+                    if (modulo.getGrupo() != null && !moduloRepetida(modulo)) {
+                        Nota nota = new Nota(0, Modalidad.REGULAR, Condicion.ABANDONO, seleccionInscrito.getGestionAcademica(), modulo, seleccionInscrito.getEstudiante(), seleccionInscrito, modulo.getGrupo());
+                        aux.add(nota);
+                    }
+                }
+
+                try {
+                    if (inscripcionesFacade.tomarModulos(aux)) {
+                        copiarInscrito(seleccionInscrito.getEstudiante(), aux);
+
+                        toEstadoInscripcion();
+                    }
+                } catch (EJBException e) {
+                    this.mensajeDeError(e.getMessage());
+                }
+            } else {
+                this.mensajeDeError("No existen modulos.");
+            }
+
         } else {
             this.mensajeDeError("Fuera de fecha.");
         }

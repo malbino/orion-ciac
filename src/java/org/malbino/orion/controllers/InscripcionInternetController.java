@@ -113,7 +113,7 @@ public class InscripcionInternetController extends AbstractController implements
     public List<Grupo> listaGruposAbiertos(Modulo modulo) {
         List<Grupo> l = new ArrayList();
         if (seleccionInscrito != null && modulo != null) {
-            l = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), seleccionInscrito.getCarrera().getId_carrera(), modulo.getId_modulo());
+            l = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), seleccionInscrito.getCarrera().getId_carrera(), seleccionInscrito.getCampus().getId_campus(), modulo.getId_modulo());
         }
         return l;
     }

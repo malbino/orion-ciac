@@ -247,7 +247,7 @@ public class Inscrito implements Serializable {
 
     @Override
     public String toString() {
-        String s = carrera.toString() + " - " + gestionAcademica.toString();
+        String s = carrera.toString() + " - " + campus.toString() + " - " + gestionAcademica.toString();
 
         return s;
     }

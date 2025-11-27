@@ -52,9 +52,9 @@
                                     <p:toolbar>
                                         <f:facet name="left">
                                             <p:commandButton icon="fa fa-list-alt" value="Oferta de Modulos" actionListener="#{InscripcionManualController.toOfertaModulos()}" update="form"/>
-                                            
+
                                             <p:spacer width="10"/>
-                                            
+
                                             <p:commandButton icon="fa fa-asterisk" value="Todas las Modulos" actionListener="#{InscripcionManualController.toModulos()}" update="form"/>
                                         </f:facet>
 
@@ -67,11 +67,7 @@
 
                                     <p:dataTable id="notas" var="nota" value="#{InscripcionManualController.estadoInscripcion}"
                                                  rowIndexVar="rowIndex" reflow="true" emptyMessage="Ningún registro encontrado." tableStyle="width:auto; min-width:100%">
-                                        <p:column headerText="Nivel" groupRow="true">  
-                                            <h:outputText value="#{nota.modulo.nivel.toString()}"/>
-                                        </p:column>
-
-                                        <p:column headerText="Nº">
+                                        <p:column headerText="Nº" groupRow="true">
                                             <h:outputText value="#{rowIndex + 1}"/>
                                         </p:column>
 
