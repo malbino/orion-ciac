@@ -123,7 +123,7 @@ public class InscripcionInternetController extends AbstractController implements
             ofertaModulos = inscripcionesFacade.ofertaTomaModulos(seleccionInscrito);
 
             for (Modulo modulo : ofertaModulos) {
-                List<Grupo> listaGruposAbiertos = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), 0,modulo.getId_modulo(), grupo);
+                List<Grupo> listaGruposAbiertos = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), seleccionInscrito.getCampus().getId_campus(), modulo.getId_modulo(), grupo);
                 Iterator<Grupo> iterator = listaGruposAbiertos.iterator();
                 if (iterator.hasNext()) {
                     modulo.setGrupo(iterator.next());
@@ -171,40 +171,37 @@ public class InscripcionInternetController extends AbstractController implements
 
     public void tomarModulos() throws IOException {
         if (!actividadFacade.listaActividades(Fecha.getDate(), Funcionalidad.INSCRIPCION_INTERNET, seleccionInscrito.getGestionAcademica().getId_gestionacademica()).isEmpty()) {
-            List<Pago> listaPagosPagados = pagoFacade.listaPagosPagados(seleccionInscrito.getId_inscrito());
-            if (!listaPagosPagados.isEmpty()) {
-                if (!ofertaModulos.isEmpty()) {
-                    if (verificarGrupos()) {
-                        List<Nota> aux = new ArrayList();
-                        for (Modulo modulo : ofertaModulos) {
-                            Nota nota = new Nota(0, Modalidad.REGULAR, Condicion.ABANDONO, seleccionInscrito.getGestionAcademica(), modulo, seleccionInscrito.getEstudiante(), seleccionInscrito, modulo.getGrupo());
-                            aux.add(nota);
-                        }
 
-                        try {
-                            if (inscripcionesFacade.tomarModulos(aux)) {
-                                copiarInscrito(seleccionInscrito.getEstudiante(), aux);
+            if (!ofertaModulos.isEmpty()) {
+                if (verificarGrupos()) {
+                    List<Nota> aux = new ArrayList();
+                    for (Modulo modulo : ofertaModulos) {
+                        Nota nota = new Nota(0, Modalidad.REGULAR, Condicion.ABANDONO, seleccionInscrito.getGestionAcademica(), modulo, seleccionInscrito.getEstudiante(), seleccionInscrito, modulo.getGrupo());
+                        aux.add(nota);
+                    }
 
+                    try {
+                        if (inscripcionesFacade.tomarModulos(aux)) {
+                            copiarInscrito(seleccionInscrito.getEstudiante(), aux);
+
+                            //log
+                            for (Nota nota : aux) {
                                 //log
-                                for (Nota nota : aux) {
-                                    //log
-                                    logFacade.create(new Log(Fecha.getDate(), EventoLog.CREATE, EntidadLog.NOTA, nota.getId_nota(), "Creación de nota por toma de modulos por internet", loginController.getUsr().toString()));
-                                }
-
-                                toEstadoInscripcion();
+                                logFacade.create(new Log(Fecha.getDate(), EventoLog.CREATE, EntidadLog.NOTA, nota.getId_nota(), "Creación de nota por toma de modulos por internet", loginController.getUsr().toString()));
                             }
-                        } catch (EJBException e) {
-                            this.mensajeDeError(e.getMessage());
+
+                            toEstadoInscripcion();
                         }
-                    } else {
-                        this.mensajeDeError("Existen modulos sin grupos.");
+                    } catch (EJBException e) {
+                        this.mensajeDeError(e.getMessage());
                     }
                 } else {
-                    this.mensajeDeError("No existen modulos.");
+                    this.mensajeDeError("Existen modulos sin grupos.");
                 }
             } else {
-                this.mensajeDeError("Matricula/Cuota pendiente.");
+                this.mensajeDeError("No existen modulos.");
             }
+
         } else {
             this.mensajeDeError("Fuera de fecha.");
         }
