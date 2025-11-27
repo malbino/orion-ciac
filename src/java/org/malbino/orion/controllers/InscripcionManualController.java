@@ -118,7 +118,7 @@ public class InscripcionManualController extends AbstractController implements S
             ofertaModulos = inscripcionesFacade.ofertaTomaModulos(seleccionInscrito);
 
             for (Modulo modulo : ofertaModulos) {
-                List<Grupo> listaGruposAbiertos = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), modulo.getId_modulo(), grupo);
+                List<Grupo> listaGruposAbiertos = grupoFacade.listaGruposAbiertos(seleccionInscrito.getGestionAcademica().getId_gestionacademica(), seleccionInscrito.getCampus().getId_campus(), modulo.getId_modulo(), grupo);
                 Iterator<Grupo> iterator = listaGruposAbiertos.iterator();
                 if (iterator.hasNext()) {
                     modulo.setGrupo(iterator.next());

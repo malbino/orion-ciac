@@ -143,12 +143,13 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
         return l;
     }
 
-    public List<Grupo> listaGruposAbiertos(int id_gestionacademica, int id_modulo, String codigo) {
+    public List<Grupo> listaGruposAbiertos(int id_gestionacademica, int id_campus, int id_modulo, String codigo) {
         List<Grupo> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT g FROM Grupo g JOIN g.gestionAcademica ga JOIN g.modulo m WHERE ga.id_gestionacademica=:id_gestionacademica AND m.id_modulo=:id_modulo AND g.codigo=:codigo AND g.abierto=TRUE ORDER BY g.codigo");
+            Query q = em.createQuery("SELECT g FROM Grupo g JOIN g.gestionAcademica ga JOIN g.modulo m JOIN g.campus a WHERE ga.id_gestionacademica=:id_gestionacademica AND a.id_campus=:id_campus AND m.id_modulo=:id_modulo AND g.codigo=:codigo AND g.abierto=TRUE ORDER BY g.codigo");
             q.setParameter("id_gestionacademica", id_gestionacademica);
+            q.setParameter("id_campus", id_campus);
             q.setParameter("id_modulo", id_modulo);
             q.setParameter("codigo", codigo);
 
