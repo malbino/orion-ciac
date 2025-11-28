@@ -26,6 +26,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.CarreraEstudiante;
 import org.malbino.orion.entities.CarreraEstudiante.CarreraEstudianteId;
@@ -34,6 +35,7 @@ import org.malbino.orion.entities.Inscrito;
 import org.malbino.orion.entities.Modulo;
 import org.malbino.orion.entities.Nota;
 import org.malbino.orion.enums.ModalidadEvaluacion;
+import org.malbino.orion.facades.CampusFacade;
 import org.malbino.orion.facades.CarreraEstudianteFacade;
 import org.malbino.orion.facades.CarreraFacade;
 import org.malbino.orion.facades.GestionAcademicaFacade;
@@ -70,6 +72,8 @@ public class BoletinNotasCarrera extends HttpServlet {
     @EJB
     CarreraFacade carreraFacade;
     @EJB
+    CampusFacade campusFacade;
+    @EJB
     InscritoFacade inscritoFacade;
     @EJB
     CarreraEstudianteFacade carreraEstudianteFacade;
@@ -91,10 +95,12 @@ public class BoletinNotasCarrera extends HttpServlet {
     public void generarPDF(HttpServletRequest request, HttpServletResponse response) {
         Integer id_gestionacademica = (Integer) request.getSession().getAttribute("id_gestionacademica");
         Integer id_carrera = (Integer) request.getSession().getAttribute("id_carrera");
+        Integer id_campus = (Integer) request.getSession().getAttribute("id_campus");
 
-        if (id_gestionacademica != null && id_carrera != null) {
+        if (id_gestionacademica != null && id_carrera != null && id_campus != null) {
             GestionAcademica gestionAcademica = gestionAcademicaFacade.find(id_gestionacademica);
             Carrera carrera = carreraFacade.find(id_carrera);
+            Campus campus = campusFacade.find(id_campus);
 
             try {
                 response.setContentType(CONTENIDO_PDF);
@@ -104,12 +110,12 @@ public class BoletinNotasCarrera extends HttpServlet {
 
                 document.open();
 
-                List<Inscrito> inscritos = inscritoFacade.listaInscritos(gestionAcademica.getId_gestionacademica(), carrera.getId_carrera(), 0);
+                List<Inscrito> inscritos = inscritoFacade.listaInscritos(gestionAcademica.getId_gestionacademica(), carrera.getId_carrera(), campus.getId_campus());
 
                 if (gestionAcademica.getModalidadEvaluacion().equals(ModalidadEvaluacion.MODULAR_2P)) {
                     for (Inscrito inscrito : inscritos) {
                         document.add(cabecera(inscrito));
-                        document.add(cuerpoSemestral2P(inscrito));
+                        document.add(cuerpoModular(inscrito));
                         document.add(oferta(inscrito));
                         document.add(pie(inscrito));
 
@@ -163,7 +169,7 @@ public class BoletinNotasCarrera extends HttpServlet {
         return table;
     }
 
-    public PdfPTable cuerpoSemestral2P(Inscrito inscrito) throws BadElementException, IOException {
+    public PdfPTable cuerpoModular(Inscrito inscrito) throws BadElementException, IOException {
         PdfPTable table = new PdfPTable(100);
 
         //fila 1
@@ -207,7 +213,7 @@ public class BoletinNotasCarrera extends HttpServlet {
         table.addCell(cell);
 
         //fial 2
-        cell = new PdfPCell(new Phrase("Mención:", NEGRITA));
+        cell = new PdfPCell(new Phrase("Campus:", NEGRITA));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setBorder(Rectangle.NO_BORDER);
         cell.setColspan(33);
@@ -219,13 +225,13 @@ public class BoletinNotasCarrera extends HttpServlet {
         cell.setColspan(34);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase("Régimen:", NEGRITA));
+        cell = new PdfPCell(new Phrase("", NEGRITA));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setBorder(Rectangle.NO_BORDER);
         cell.setColspan(33);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase(" ", NORMAL));
+        cell = new PdfPCell(new Phrase(inscrito.getCampus().toString(), NORMAL));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setVerticalAlignment(PdfPCell.ALIGN_TOP);
         cell.setBorder(Rectangle.NO_BORDER);
