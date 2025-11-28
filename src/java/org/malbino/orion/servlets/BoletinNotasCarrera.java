@@ -104,7 +104,7 @@ public class BoletinNotasCarrera extends HttpServlet {
 
                 document.open();
 
-                List<Inscrito> inscritos = inscritoFacade.listaInscritosCarrera(gestionAcademica.getId_gestionacademica(), carrera.getId_carrera());
+                List<Inscrito> inscritos = inscritoFacade.listaInscritos(gestionAcademica.getId_gestionacademica(), carrera.getId_carrera(), 0);
 
                 if (gestionAcademica.getModalidadEvaluacion().equals(ModalidadEvaluacion.MODULAR_2P)) {
                     for (Inscrito inscrito : inscritos) {

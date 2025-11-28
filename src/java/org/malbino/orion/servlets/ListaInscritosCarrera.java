@@ -28,9 +28,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Inscrito;
+import org.malbino.orion.facades.CampusFacade;
 import org.malbino.orion.facades.CarreraFacade;
 import org.malbino.orion.facades.GestionAcademicaFacade;
 import org.malbino.orion.facades.InscritoFacade;
@@ -59,6 +61,8 @@ public class ListaInscritosCarrera extends HttpServlet {
     @EJB
     CarreraFacade carreraFacade;
     @EJB
+    CampusFacade campusFacade;
+    @EJB
     InscritoFacade inscritoFacade;
 
     @Override
@@ -74,10 +78,12 @@ public class ListaInscritosCarrera extends HttpServlet {
     public void generarPDF(HttpServletRequest request, HttpServletResponse response) {
         Integer id_gestionacademica = (Integer) request.getSession().getAttribute("id_gestionacademica");
         Integer id_carrera = (Integer) request.getSession().getAttribute("id_carrera");
+        Integer id_campus = (Integer) request.getSession().getAttribute("id_campus");
 
-        if (id_gestionacademica != null && id_carrera != null) {
+        if (id_gestionacademica != null && id_carrera != null && id_campus != null) {
             GestionAcademica gestionAcademica = gestionAcademicaFacade.find(id_gestionacademica);
             Carrera carrera = carreraFacade.find(id_carrera);
+            Campus campus = campusFacade.find(id_campus);
             try {
                 response.setContentType(CONTENIDO_PDF);
 
@@ -86,8 +92,8 @@ public class ListaInscritosCarrera extends HttpServlet {
 
                 document.open();
 
-                document.add(titulo(gestionAcademica, carrera));
-                document.add(contenido(gestionAcademica, carrera));
+                document.add(titulo(gestionAcademica, carrera, campus));
+                document.add(contenido(gestionAcademica, carrera, campus));
 
                 document.close();
             } catch (IOException | DocumentException ex) {
@@ -97,7 +103,7 @@ public class ListaInscritosCarrera extends HttpServlet {
         }
     }
 
-    public PdfPTable titulo(GestionAcademica gestionAcademica, Carrera carrera) throws BadElementException, IOException {
+    public PdfPTable titulo(GestionAcademica gestionAcademica, Carrera carrera, Campus campus) throws BadElementException, IOException {
         PdfPTable table = new PdfPTable(100);
 
         //cabecera
@@ -131,11 +137,17 @@ public class ListaInscritosCarrera extends HttpServlet {
         cell.setColspan(80);
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
+        
+        cell = new PdfPCell(new Phrase(campus.toString(), SUBTITULO));
+        cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+        cell.setColspan(80);
+        cell.setBorder(Rectangle.NO_BORDER);
+        table.addCell(cell);
 
         return table;
     }
 
-    public PdfPTable contenido(GestionAcademica gestionAcademica, Carrera carrera) throws BadElementException, IOException {
+    public PdfPTable contenido(GestionAcademica gestionAcademica, Carrera carrera, Campus campus) throws BadElementException, IOException {
         PdfPTable table = new PdfPTable(100);
 
         PdfPCell cell = new PdfPCell(new Phrase(" ", NEGRITA));
@@ -179,14 +191,14 @@ public class ListaInscritosCarrera extends HttpServlet {
         cell.setColspan(20);
         cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
         table.addCell(cell);
-        
+
         cell = new PdfPCell(new Phrase("Observaciones", NEGRITA));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         cell.setColspan(20);
         cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
         table.addCell(cell);
 
-        List<Inscrito> listaInscritos = inscritoFacade.listaInscritosCarrera(gestionAcademica.getId_gestionacademica(), carrera.getId_carrera());
+        List<Inscrito> listaInscritos = inscritoFacade.listaInscritos(gestionAcademica.getId_gestionacademica(), carrera.getId_carrera(), campus.getId_campus());
         for (int i = 0; i < listaInscritos.size(); i++) {
             Inscrito inscrito = listaInscritos.get(i);
 
@@ -233,7 +245,7 @@ public class ListaInscritosCarrera extends HttpServlet {
             cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
             cell.setColspan(20);
             table.addCell(cell);
-            
+
             cell = new PdfPCell(new Phrase(inscrito.observaciones(), NORMAL));
             cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
             cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);

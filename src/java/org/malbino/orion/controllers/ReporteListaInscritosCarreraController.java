@@ -6,13 +6,12 @@ package org.malbino.orion.controllers;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Log;
@@ -32,37 +31,32 @@ public class ReporteListaInscritosCarreraController extends AbstractController i
     GrupoFacade grupoFacade;
     @Inject
     LoginController loginController;
-    
+
     private GestionAcademica seleccionGestionAcademica;
     private Carrera seleccionCarrera;
+    private Campus seleccionCampus;
 
     @PostConstruct
     public void init() {
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
+        seleccionCampus = null;
     }
 
     public void reinit() {
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
-    }
-
-    @Override
-    public List<Carrera> listaCarreras() {
-        List<Carrera> l = new ArrayList();
-        if (seleccionGestionAcademica != null) {
-            l = carreraFacade.listaCarreras();
-        }
-        return l;
+        seleccionCampus = null;
     }
 
     public void generarReporte() throws IOException {
         if (seleccionGestionAcademica != null && seleccionCarrera != null) {
             this.insertarParametro("id_gestionacademica", seleccionGestionAcademica.getId_gestionacademica());
             this.insertarParametro("id_carrera", seleccionCarrera.getId_carrera());
+            this.insertarParametro("id_campus", seleccionCampus.getId_campus());
 
             toListaInscritosCarrera();
-            
+
             //log
             logFacade.create(new Log(Fecha.getDate(), EventoLog.READ, "Generación reporte lista de inscritos por carrera", loginController.getUsr().toString()));
         }
@@ -104,5 +98,19 @@ public class ReporteListaInscritosCarreraController extends AbstractController i
      */
     public void setSeleccionCarrera(Carrera seleccionCarrera) {
         this.seleccionCarrera = seleccionCarrera;
+    }
+
+    /**
+     * @return the seleccionCampus
+     */
+    public Campus getSeleccionCampus() {
+        return seleccionCampus;
+    }
+
+    /**
+     * @param seleccionCampus the seleccionCampus to set
+     */
+    public void setSeleccionCampus(Campus seleccionCampus) {
+        this.seleccionCampus = seleccionCampus;
     }
 }

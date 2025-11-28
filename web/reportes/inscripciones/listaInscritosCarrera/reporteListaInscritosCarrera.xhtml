@@ -34,8 +34,6 @@
                                             <p:selectOneMenu id="gestionAcademica" value="#{ReporteListaInscritosCarreraController.seleccionGestionAcademica}" converter="#{GestionAcademicaConverter}" autoWidth="false" required="true" requiredMessage="* Gestion academica requerida."> 
                                                 <f:selectItem itemLabel="" itemValue="" />
                                                 <f:selectItems value="#{ReporteListaInscritosCarreraController.listaGestionesAcademicas()}" var="gestionAcademica" itemLabel="#{gestionAcademica.toString()}" itemValue="#{gestionAcademica}"/>  
-
-                                                <p:ajax  update="carrera"/>
                                             </p:selectOneMenu>
                                         </div>
 
@@ -44,6 +42,14 @@
                                             <p:selectOneMenu id="carrera" value="#{ReporteListaInscritosCarreraController.seleccionCarrera}" converter="#{CarreraConverter}" autoWidth="false" required="true" requiredMessage="* Carrera requerida."> 
                                                 <f:selectItem itemLabel="" itemValue="" />
                                                 <f:selectItems value="#{ReporteListaInscritosCarreraController.listaCarreras()}" var="carrera" itemLabel="#{carrera.toString()}" itemValue="#{carrera}"/>  
+                                            </p:selectOneMenu>
+                                        </div>
+                                        
+                                        <div class="ui-g-12 ui-md-4">
+                                            <p:outputLabel for="campus" value="Campus: " style="font-size: small"/>
+                                            <p:selectOneMenu id="campus" value="#{ReporteListaInscritosCarreraController.seleccionCampus}" converter="#{CampusConverter}" autoWidth="false">
+                                                <f:selectItem itemLabel="" itemValue=""/>
+                                                <f:selectItems value="#{ReporteListaInscritosCarreraController.listaCampus()}" var="campus" itemLabel="#{campus.toString()}" itemValue="#{campus}"/>
                                             </p:selectOneMenu>
                                         </div>
                                     </div>
