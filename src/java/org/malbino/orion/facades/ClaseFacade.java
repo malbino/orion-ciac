@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.malbino.orion.entities.Aula;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Clase;
 import org.malbino.orion.entities.Empleado;
 import org.malbino.orion.entities.Periodo;
@@ -101,6 +102,31 @@ public class ClaseFacade extends AbstractFacade<Clase> {
             q.setParameter("vigente", Boolean.TRUE);
             q.setParameter("periodo", periodo);
             q.setParameter("dia", dia);
+            q.setParameter("empleado", empleado);
+
+            q.setMaxResults(1);
+
+            List<Clase> l = q.getResultList();
+            Iterator<Clase> i = l.iterator();
+            if (i.hasNext()) {
+                c = i.next();
+            }
+        } catch (Exception e) {
+            log.error(e.toString());
+        }
+
+        return c;
+    }
+
+    public Clase buscar(Periodo periodo, Dia dia, Campus campus, Empleado empleado) {
+        Clase c = null;
+
+        try {
+            Query q = em.createQuery("SELECT c FROM Clase c JOIN c.grupo g JOIN g.gestionAcademica ga WHERE ga.vigente=:vigente AND c.periodo=:periodo AND c.dia=:dia AND g.campus=:campus AND g.empleado=:empleado");
+            q.setParameter("vigente", Boolean.TRUE);
+            q.setParameter("periodo", periodo);
+            q.setParameter("dia", dia);
+            q.setParameter("campus", campus);
             q.setParameter("empleado", empleado);
 
             q.setMaxResults(1);

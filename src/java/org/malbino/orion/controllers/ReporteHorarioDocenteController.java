@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Empleado;
 import org.malbino.orion.entities.Log;
 import org.malbino.orion.enums.EventoLog;
@@ -26,19 +27,23 @@ public class ReporteHorarioDocenteController extends AbstractController implemen
     @Inject
     LoginController loginController;
 
+    private Campus seleccionCampus;
     private Empleado seleccionEmpleado;
 
     @PostConstruct
     public void init() {
+        seleccionCampus = null;
         seleccionEmpleado = null;
     }
 
     public void reinit() {
+        seleccionCampus = null;
         seleccionEmpleado = null;
     }
 
     public void generarReporte() throws IOException {
         if (seleccionEmpleado != null) {
+            this.insertarParametro("id_campus", seleccionCampus.getId_campus());
             this.insertarParametro("id_persona", seleccionEmpleado.getId_persona());
 
             toHorarioDocente();
@@ -70,5 +75,19 @@ public class ReporteHorarioDocenteController extends AbstractController implemen
      */
     public void setSeleccionEmpleado(Empleado seleccionEmpleado) {
         this.seleccionEmpleado = seleccionEmpleado;
+    }
+
+    /**
+     * @return the seleccionCampus
+     */
+    public Campus getSeleccionCampus() {
+        return seleccionCampus;
+    }
+
+    /**
+     * @param seleccionCampus the seleccionCampus to set
+     */
+    public void setSeleccionCampus(Campus seleccionCampus) {
+        this.seleccionCampus = seleccionCampus;
     }
 }

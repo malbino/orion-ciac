@@ -51,7 +51,7 @@
 
                                         <div class="ui-g-12 ui-md-3">
                                             <p:outputLabel for="campus" value="Campus: " style="font-size: small"/>
-                                            <p:selectOneMenu id="campus" value="#{HorarioParaleloController.seleccionCampus}" converter="#{CampusConverter}" autoWidth="false">
+                                            <p:selectOneMenu id="campus" value="#{HorarioParaleloController.seleccionCampus}" converter="#{CampusConverter}" autoWidth="false" required="true" requiredMessage="* Campus requerido.">
                                                 <f:selectItem itemLabel="" itemValue=""/>
                                                 <f:selectItems value="#{HorarioParaleloController.listaCampus()}" var="campus" itemLabel="#{campus.toString()}" itemValue="#{campus}"/>
 

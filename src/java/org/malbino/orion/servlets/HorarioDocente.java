@@ -28,11 +28,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Clase;
 import org.malbino.orion.entities.Empleado;
 import org.malbino.orion.entities.Instituto;
 import org.malbino.orion.entities.Periodo;
 import org.malbino.orion.enums.Dia;
+import org.malbino.orion.facades.CampusFacade;
 import org.malbino.orion.facades.ClaseFacade;
 import org.malbino.orion.facades.EmpleadoFacade;
 import org.malbino.orion.facades.InstitutoFacade;
@@ -59,6 +61,8 @@ public class HorarioDocente extends HttpServlet {
     private static final int MARGEN_INFERIOR = 30;
 
     @EJB
+    CampusFacade campusFacade;
+    @EJB
     EmpleadoFacade empleadoFacade;
     @EJB
     InstitutoFacade institutoFacade;
@@ -78,9 +82,11 @@ public class HorarioDocente extends HttpServlet {
     }
 
     public void generarPDF(HttpServletRequest request, HttpServletResponse response) {
+        Integer id_campus = (Integer) request.getSession().getAttribute("id_campus");
         Integer id_persona = (Integer) request.getSession().getAttribute("id_persona");
 
-        if (id_persona != null) {
+        if (id_campus != null && id_persona != null) {
+            Campus campus = campusFacade.find(id_campus);
             Empleado empleado = empleadoFacade.find(id_persona);
 
             try {
@@ -91,8 +97,8 @@ public class HorarioDocente extends HttpServlet {
 
                 document.open();
 
-                document.add(titulo(empleado));
-                document.add(contenido(empleado));
+                document.add(titulo(campus, empleado));
+                document.add(contenido(campus, empleado));
 
                 document.close();
             } catch (IOException | DocumentException ex) {
@@ -102,7 +108,7 @@ public class HorarioDocente extends HttpServlet {
         }
     }
 
-    public PdfPTable titulo(Empleado empleado) throws BadElementException, IOException {
+    public PdfPTable titulo(Campus campus, Empleado empleado) throws BadElementException, IOException {
         PdfPTable table = new PdfPTable(100);
 
         //cabecera
@@ -124,6 +130,12 @@ public class HorarioDocente extends HttpServlet {
         cell.setColspan(80);
         cell.setBorder(Rectangle.NO_BORDER);
         cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+        table.addCell(cell);
+
+        cell = new PdfPCell(new Phrase(campus.toString(), SUBTITULO));
+        cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+        cell.setColspan(80);
+        cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
 
         cell = new PdfPCell(new Phrase(empleado.toString(), SUBTITULO));
@@ -150,16 +162,10 @@ public class HorarioDocente extends HttpServlet {
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase(" ", SUBTITULO));
-        cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
-        cell.setColspan(80);
-        cell.setBorder(Rectangle.NO_BORDER);
-        table.addCell(cell);
-
         return table;
     }
 
-    public PdfPTable contenido(Empleado empleado) throws BadElementException, IOException {
+    public PdfPTable contenido(Campus campus, Empleado empleado) throws BadElementException, IOException {
         PdfPTable table = new PdfPTable(80);
 
         PdfPCell cell = new PdfPCell(new Phrase(" ", NEGRITA));
@@ -195,7 +201,7 @@ public class HorarioDocente extends HttpServlet {
             for (int j = 0; j < dias.length; j++) {
                 Dia dia = dias[j];
 
-                Clase clase = claseFacade.buscar(periodo, dia, empleado);
+                Clase clase = claseFacade.buscar(periodo, dia, campus, empleado);
                 if (clase != null) {
                     cell = new PdfPCell(new Phrase(clase.toString_Paralelo(), NORMAL));
                     cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
