@@ -14,20 +14,20 @@
                     <div class="col-md-12 col-sm-12 ">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>Malla Curricular <small>descargar/imprimir malla curricular</small></h2>
+                                <h2>Plan de Estudios <small>descargar/imprimir plan de estudios</small></h2>
 
                                 <div class="clearfix"></div>
                             </div>
 
                             <div class="x_content">
                                 <h:form>
-                                    <object type="application/pdf" data="#{request.contextPath}/reportes/mallaCurricular/MallaCurricular?pfdrid_c=true" width="100%" height="900px">
-                                        Su navegador no puede mostrar pdf, <a href="#{request.contextPath}/reportes/mallaCurricular/MallaCurricular">click</a> para descargar el pdf.
+                                    <object type="application/pdf" data="#{request.contextPath}/reportes/planEstudios/PlanEstudios?pfdrid_c=true" width="100%" height="900px">
+                                        Su navegador no puede mostrar pdf, <a href="#{request.contextPath}/reportes/planEstudios/PlanEstudios">click</a> para descargar el pdf.
                                     </object>
 
                                     <div class="ui-g ui-fluid">
                                         <div class="ui-g-12 ui-md-2">
-                                            <p:commandButton value="Volver" icon="fa fa-arrow-left" process="@this" actionListener="#{ReporteMallaCurricularController.toReporteMallaCurricular()}"/>
+                                            <p:commandButton value="Volver" icon="fa fa-arrow-left" process="@this" actionListener="#{ReportePlanEstudiosController.toReportePlanEstudios()}"/>
                                         </div>
                                     </div>
                                 </h:form>

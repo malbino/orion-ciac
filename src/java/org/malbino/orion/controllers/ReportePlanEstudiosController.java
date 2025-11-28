@@ -19,9 +19,9 @@ import org.malbino.orion.util.Fecha;
  *
  * @author Tincho
  */
-@Named("ReporteMallaCurricularController")
+@Named("ReportePlanEstudiosController")
 @SessionScoped
-public class ReporteMallaCurricularController extends AbstractController implements Serializable {
+public class ReportePlanEstudiosController extends AbstractController implements Serializable {
 
     @Inject
     LoginController loginController;
@@ -41,21 +41,21 @@ public class ReporteMallaCurricularController extends AbstractController impleme
         if (seleccionCarrera != null) {
             this.insertarParametro("carrera", seleccionCarrera);
 
-            toMallaCurricular();
+            toPlanEstudios();
 
             //log
             logFacade.create(new Log(Fecha.getDate(), EventoLog.READ, "Generación reporte malla curricular", loginController.getUsr().toString()));
         }
     }
 
-    public void toReporteMallaCurricular() throws IOException {
+    public void toReportePlanEstudios() throws IOException {
         reinit();
 
-        this.redireccionarViewId("/reportes/mallaCurricular/reporteMallaCurricular");
+        this.redireccionarViewId("/reportes/planEstudios/reportePlanEstudios");
     }
 
-    public void toMallaCurricular() throws IOException {
-        this.redireccionarViewId("/reportes/mallaCurricular/mallaCurricular");
+    public void toPlanEstudios() throws IOException {
+        this.redireccionarViewId("/reportes/planEstudios/planEstudios");
     }
 
     /**
