@@ -85,8 +85,8 @@ public class PlanillaSeguimiento extends HttpServlet {
 
                 document.add(cabecera(grupo));
                 if (grupo.getGestionAcademica().getModalidadEvaluacion().equals(ModalidadEvaluacion.MODULAR_2P)) {
-                    document.add(contenidoSemestral2P(grupo));
-                    document.add(pieSemestral2P(grupo));
+                    document.add(contenidoModular(grupo));
+                    document.add(pie(grupo));
                 }
 
                 document.close();
@@ -153,13 +153,13 @@ public class PlanillaSeguimiento extends HttpServlet {
         table.addCell(cell);
 
         // fila 1
-        cell = new PdfPCell(new Phrase("NIVEL:", NEGRITA));
+        cell = new PdfPCell(new Phrase("CAMPUS:", NEGRITA));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         cell.setColspan(12);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase("", NEGRITA));
+        cell = new PdfPCell(new Phrase(grupo.getCampus().toString(), NEGRITA));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         cell.setColspan(28);
@@ -213,7 +213,7 @@ public class PlanillaSeguimiento extends HttpServlet {
         return table;
     }
 
-    public PdfPTable contenidoSemestral2P(Grupo grupo) throws BadElementException, IOException {
+    public PdfPTable contenidoModular(Grupo grupo) throws BadElementException, IOException {
         PdfPTable table = new PdfPTable(100);
 
         // fila 0
@@ -365,7 +365,7 @@ public class PlanillaSeguimiento extends HttpServlet {
         return table;
     }
 
-    public PdfPTable pieSemestral2P(Grupo grupo) throws BadElementException, IOException {
+    public PdfPTable pie(Grupo grupo) throws BadElementException, IOException {
         PdfPTable table = new PdfPTable(100);
 
         // fila 0

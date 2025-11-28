@@ -188,8 +188,8 @@ public class RegistroNotasPrimerParcialController extends AbstractController imp
                             cell.setCellValue(cell.getStringCellValue().replace("<<MODULO>>", seleccionGrupo.getModulo().toString()));
                         } else if (cell.getStringCellValue().contains("<<CARRERA>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<CARRERA>>", seleccionGrupo.getModulo().getCarrera().toString()));
-                        } else if (cell.getStringCellValue().contains("<<NIVEL>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL>>", ""));
+                        } else if (cell.getStringCellValue().contains("<<CAMPUS>>")) {
+                            cell.setCellValue(cell.getStringCellValue().replace("<<CAMPUS>>", seleccionGrupo.getCampus().toString()));
                         } else if (cell.getStringCellValue().contains("<<GA>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<GA>>", seleccionGrupo.getGestionAcademica().toString()));
                         } else if (cell.getStringCellValue().contains("<<DOCENTE>>")) {

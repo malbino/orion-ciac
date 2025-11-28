@@ -35,7 +35,7 @@
                                                 <f:selectItem itemLabel="" itemValue="" />
                                                 <f:selectItems value="#{ReportePlanillaSeguimientoController.listaGestionesAcademicas()}" var="gestionAcademica" itemLabel="#{gestionAcademica.toString()}" itemValue="#{gestionAcademica}"/>  
 
-                                                <p:ajax  update="carrera mencion nivel turno grupo"/>
+                                                <p:ajax  update="grupo"/>
                                             </p:selectOneMenu>
                                         </div>
 
@@ -45,18 +45,18 @@
                                                 <f:selectItem itemLabel="" itemValue="" />
                                                 <f:selectItems value="#{ReportePlanillaSeguimientoController.listaCarreras()}" var="carrera" itemLabel="#{carrera.toString()}" itemValue="#{carrera}"/>  
 
-                                                <p:ajax update="mencion nivel turno grupo"/>
+                                                <p:ajax update="grupo"/>
                                             </p:selectOneMenu>
                                         </div>
 
                                         <div class="ui-g-12 ui-md-4">
-                                            <p:outputLabel for="nivel" value="Nivel:" style="font-size: small"/>
-                                            <p:selectOneMenu id="nivel" value="#{ReportePlanillaSeguimientoController.seleccionNivel}" converter="#{NivelConverter}" autoWidth="false" required="true" requiredMessage="* Nivel requerido."> 
-                                                <f:selectItem itemLabel="" itemValue="" />
-                                                <f:selectItems value="#{ReportePlanillaSeguimientoController.listaNiveles()}" var="nivel" itemLabel="#{nivel.toString()}" itemValue="#{nivel}"/>  
-
-                                                <p:ajax update="turno grupo"/>
-                                            </p:selectOneMenu> 
+                                            <p:outputLabel for="campus" value="Campus: " style="font-size: small"/>
+                                            <p:selectOneMenu id="campus" value="#{ReportePlanillaSeguimientoController.seleccionCampus}" converter="#{CampusConverter}" autoWidth="false" required="true" requiredMessage="* Campus requerido.">
+                                                <f:selectItem itemLabel="" itemValue=""/>
+                                                <f:selectItems value="#{ReportePlanillaSeguimientoController.listaCampus()}" var="campus" itemLabel="#{campus.toString()}" itemValue="#{campus}"/>
+                                                
+                                                <p:ajax update="grupo"/>
+                                            </p:selectOneMenu>
                                         </div>
 
                                         <div class="ui-g-12 ui-md-4">

@@ -26,6 +26,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Grupo;
@@ -49,9 +50,7 @@ import org.primefaces.model.StreamedContent;
 @SessionScoped
 public class ReportePlanillaSeguimientoController extends AbstractController implements Serializable {
 
-    private static final String PATHNAME_SEMESTRAL2P = File.separator + "resources" + File.separator + "uploads" + File.separator + "planilla_seguimiento_semestral2p.xlsx";
-    private static final String PATHNAME_SEMESTRAL = File.separator + "resources" + File.separator + "uploads" + File.separator + "planilla_seguimiento_semestral.xlsx";
-    private static final String PATHNAME_ANUAL = File.separator + "resources" + File.separator + "uploads" + File.separator + "planilla_seguimiento_anual.xlsx";
+    private static final String PATHNAME_MODULAR = File.separator + "resources" + File.separator + "uploads" + File.separator + "planilla_seguimiento_modular.xlsx";
 
     @EJB
     GrupoFacade grupoFacade;
@@ -62,6 +61,7 @@ public class ReportePlanillaSeguimientoController extends AbstractController imp
 
     private GestionAcademica seleccionGestionAcademica;
     private Carrera seleccionCarrera;
+    private Campus seleccionCampus;
     private Turno seleccionTurno;
     private Grupo seleccionGrupo;
 
@@ -78,31 +78,16 @@ public class ReportePlanillaSeguimientoController extends AbstractController imp
     public void reinit() {
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
+        seleccionCampus = null;
         seleccionTurno = null;
         seleccionGrupo = null;
     }
 
-    @Override
-    public List<Carrera> listaCarreras() {
-        List<Carrera> l = new ArrayList();
-        if (seleccionGestionAcademica != null) {
-            l = carreraFacade.listaCarreras();
-        }
-        return l;
-    }
-
-    @Override
-    public Turno[] listaTurnos() {
-        Turno[] turnos = new Turno[0];
-        if (seleccionGestionAcademica != null && seleccionCarrera != null) {
-            turnos = Turno.values();
-        }
-        return turnos;
-    }
-
     public List<Grupo> listaGrupos() {
-        List<Grupo> grupos = grupoFacade.listaGrupos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionTurno);
-
+        List<Grupo> grupos = new ArrayList<>();
+        if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionCampus != null && seleccionTurno != null) {
+            grupos = grupoFacade.listaGrupos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionCampus.getId_campus(), seleccionTurno);
+        }
         return grupos;
     }
 
@@ -137,15 +122,7 @@ public class ReportePlanillaSeguimientoController extends AbstractController imp
     }
 
     public void generarXLSX() {
-        XSSFWorkbook workbook = null;
-
-        if (seleccionGestionAcademica.getModalidadEvaluacion().getCantidadParciales() == 2) {
-            workbook = leerArchivo(PATHNAME_SEMESTRAL2P);
-        } else if (seleccionGestionAcademica.getModalidadEvaluacion().getCantidadParciales() == 3) {
-            workbook = leerArchivo(PATHNAME_SEMESTRAL);
-        } else if (seleccionGestionAcademica.getModalidadEvaluacion().getCantidadParciales() == 4) {
-            workbook = leerArchivo(PATHNAME_ANUAL);
-        }
+        XSSFWorkbook workbook = leerArchivo(PATHNAME_MODULAR);
 
         XSSFSheet sheet = workbook.getSheetAt(0);
         if (sheet != null) {
@@ -164,8 +141,8 @@ public class ReportePlanillaSeguimientoController extends AbstractController imp
                             cell.setCellValue(cell.getStringCellValue().replace("<<MODULO>>", seleccionGrupo.getModulo().getNombre()));
                         } else if (cell.getStringCellValue().contains("<<CARRERA>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<CARRERA>>", seleccionGrupo.getModulo().getCarrera().toString()));
-                        } else if (cell.getStringCellValue().contains("<<NIVEL>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL>>", ""));
+                        } else if (cell.getStringCellValue().contains("<<CAMPUS>>")) {
+                            cell.setCellValue(cell.getStringCellValue().replace("<<CAMPUS>>", seleccionGrupo.getCampus().toString()));
                         } else if (cell.getStringCellValue().contains("<<GA>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<GA>>", seleccionGrupo.getGestionAcademica().toString()));
                         } else if (cell.getStringCellValue().contains("<<DOCENTE>>")) {
@@ -419,5 +396,19 @@ public class ReportePlanillaSeguimientoController extends AbstractController imp
      */
     public void setSeleccionTurno(Turno seleccionTurno) {
         this.seleccionTurno = seleccionTurno;
+    }
+
+    /**
+     * @return the seleccionCampus
+     */
+    public Campus getSeleccionCampus() {
+        return seleccionCampus;
+    }
+
+    /**
+     * @param seleccionCampus the seleccionCampus to set
+     */
+    public void setSeleccionCampus(Campus seleccionCampus) {
+        this.seleccionCampus = seleccionCampus;
     }
 }
