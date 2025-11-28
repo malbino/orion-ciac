@@ -28,10 +28,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Inscrito;
 import org.malbino.orion.entities.Instituto;
-import org.malbino.orion.facades.CarreraFacade;
+import org.malbino.orion.facades.CampusFacade;
 import org.malbino.orion.facades.GestionAcademicaFacade;
 import org.malbino.orion.facades.InscritoFacade;
 import org.malbino.orion.facades.InstitutoFacade;
@@ -59,7 +60,7 @@ public class ListaInscritosMulticarrera extends HttpServlet {
     @EJB
     GestionAcademicaFacade gestionAcademicaFacade;
     @EJB
-    CarreraFacade carreraFacade;
+    CampusFacade campusFacade;
     @EJB
     InscritoFacade inscritoFacade;
     @EJB
@@ -77,9 +78,11 @@ public class ListaInscritosMulticarrera extends HttpServlet {
 
     public void generarPDF(HttpServletRequest request, HttpServletResponse response) {
         Integer id_gestionacademica = (Integer) request.getSession().getAttribute("id_gestionacademica");
+        Integer id_campus = (Integer) request.getSession().getAttribute("id_campus");
 
-        if (id_gestionacademica != null) {
+        if (id_gestionacademica != null && id_campus != null) {
             GestionAcademica gestionAcademica = gestionAcademicaFacade.find(id_gestionacademica);
+            Campus campus = campusFacade.find(id_campus);
 
             try {
                 response.setContentType(CONTENIDO_PDF);
@@ -89,8 +92,8 @@ public class ListaInscritosMulticarrera extends HttpServlet {
 
                 document.open();
 
-                document.add(titulo(gestionAcademica));
-                document.add(contenido(gestionAcademica));
+                document.add(titulo(gestionAcademica, campus));
+                document.add(contenido(gestionAcademica, campus));
 
                 document.close();
             } catch (IOException | DocumentException ex) {
@@ -100,7 +103,7 @@ public class ListaInscritosMulticarrera extends HttpServlet {
         }
     }
 
-    public PdfPTable titulo(GestionAcademica gestionAcademica) throws BadElementException, IOException {
+    public PdfPTable titulo(GestionAcademica gestionAcademica, Campus campus) throws BadElementException, IOException {
         PdfPTable table = new PdfPTable(100);
 
         //cabecera
@@ -130,10 +133,16 @@ public class ListaInscritosMulticarrera extends HttpServlet {
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
 
+        cell = new PdfPCell(new Phrase(campus.toString(), SUBTITULO));
+        cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+        cell.setColspan(80);
+        cell.setBorder(Rectangle.NO_BORDER);
+        table.addCell(cell);
+
         return table;
     }
 
-    public PdfPTable contenido(GestionAcademica gestionAcademica) throws BadElementException, IOException {
+    public PdfPTable contenido(GestionAcademica gestionAcademica, Campus campus) throws BadElementException, IOException {
         PdfPTable table = new PdfPTable(100);
 
         PdfPCell cell = new PdfPCell(new Phrase(" ", NEGRITA));
@@ -184,7 +193,7 @@ public class ListaInscritosMulticarrera extends HttpServlet {
         cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
         table.addCell(cell);
 
-        List<Inscrito> listaInscritosMulticarrera = inscritoFacade.listaInscritosMulticarrera(gestionAcademica);
+        List<Inscrito> listaInscritosMulticarrera = inscritoFacade.listaInscritosMulticarrera(gestionAcademica, campus);
         for (int i = 0; i < listaInscritosMulticarrera.size(); i++) {
             Inscrito inscrito = listaInscritosMulticarrera.get(i);
 

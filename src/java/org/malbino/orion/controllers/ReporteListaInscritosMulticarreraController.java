@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Log;
@@ -32,33 +33,28 @@ public class ReporteListaInscritosMulticarreraController extends AbstractControl
     GrupoFacade grupoFacade;
     @Inject
     LoginController loginController;
-    
+
     private GestionAcademica seleccionGestionAcademica;
+    private Campus seleccionCampus;
 
     @PostConstruct
     public void init() {
         seleccionGestionAcademica = null;
+        seleccionCampus = null;
     }
 
     public void reinit() {
         seleccionGestionAcademica = null;
-    }
-
-    @Override
-    public List<Carrera> listaCarreras() {
-        List<Carrera> l = new ArrayList();
-        if (seleccionGestionAcademica != null) {
-            l = carreraFacade.listaCarreras();
-        }
-        return l;
+        seleccionCampus = null;
     }
 
     public void generarReporte() throws IOException {
-        if (seleccionGestionAcademica != null) {
+        if (seleccionGestionAcademica != null && seleccionCampus != null) {
             this.insertarParametro("id_gestionacademica", seleccionGestionAcademica.getId_gestionacademica());
+            this.insertarParametro("id_campus", seleccionCampus.getId_campus());
 
             toListaInscritosMulticarrera();
-            
+
             //log
             logFacade.create(new Log(Fecha.getDate(), EventoLog.READ, "Generación reporte lista inscritos multicarrera", loginController.getUsr().toString()));
         }
@@ -86,5 +82,19 @@ public class ReporteListaInscritosMulticarreraController extends AbstractControl
      */
     public void setSeleccionGestionAcademica(GestionAcademica seleccionGestionAcademica) {
         this.seleccionGestionAcademica = seleccionGestionAcademica;
+    }
+
+    /**
+     * @return the seleccionCampus
+     */
+    public Campus getSeleccionCampus() {
+        return seleccionCampus;
+    }
+
+    /**
+     * @param seleccionCampus the seleccionCampus to set
+     */
+    public void setSeleccionCampus(Campus seleccionCampus) {
+        this.seleccionCampus = seleccionCampus;
     }
 }

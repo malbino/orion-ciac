@@ -398,12 +398,13 @@ public class InscritoFacade extends AbstractFacade<Inscrito> {
         return l;
     }
 
-    public List<Inscrito> listaInscritosMulticarrera(GestionAcademica gestionAcademica) {
+    public List<Inscrito> listaInscritosMulticarrera(GestionAcademica gestionAcademica, Campus campus) {
         List<Inscrito> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT i FROM Inscrito i JOIN i.gestionAcademica ga JOIN i.estudiante e WHERE ga.id_gestionacademica=:id_gestionacademica AND e.id_persona IN (SELECT e.id_persona FROM Inscrito i JOIN i.gestionAcademica ga JOIN i.estudiante e WHERE ga.id_gestionacademica=:id_gestionacademica GROUP BY e.id_persona HAVING COUNT(e) > 1) ORDER BY e.primerApellido, e.segundoApellido, e.nombre");
+            Query q = em.createQuery("SELECT i FROM Inscrito i JOIN i.gestionAcademica ga JOIN i.estudiante e JOIN i.campus a WHERE ga.id_gestionacademica=:id_gestionacademica AND a.id_campus=:id_campus AND e.id_persona IN (SELECT e.id_persona FROM Inscrito i JOIN i.gestionAcademica ga JOIN i.estudiante e JOIN i.campus a WHERE ga.id_gestionacademica=:id_gestionacademica AND a.id_campus=:id_campus GROUP BY e.id_persona HAVING COUNT(e) > 1) ORDER BY e.primerApellido, e.segundoApellido, e.nombre");
             q.setParameter("id_gestionacademica", gestionAcademica.getId_gestionacademica());
+            q.setParameter("id_campus", campus.getId_campus());
 
             l = q.getResultList();
         } catch (Exception e) {
