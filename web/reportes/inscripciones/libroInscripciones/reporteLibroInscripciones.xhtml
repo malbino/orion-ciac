@@ -44,6 +44,14 @@
                                                 <f:selectItems value="#{ReporteLibroInscripcionesController.listaPeriodos()}" var="periodo" itemLabel="#{periodo.toString()}" itemValue="#{periodo}"/>  
                                             </p:selectOneMenu>
                                         </div>
+                                        
+                                        <div class="ui-g-12 ui-md-4">
+                                            <p:outputLabel for="campus" value="Campus: " style="font-size: small"/>
+                                            <p:selectOneMenu id="campus" value="#{ReporteLibroInscripcionesController.seleccionCampus}" converter="#{CampusConverter}" autoWidth="false">
+                                                <f:selectItem itemLabel="" itemValue=""/>
+                                                <f:selectItems value="#{ReporteLibroInscripcionesController.listaCampus()}" var="campus" itemLabel="#{campus.toString()}" itemValue="#{campus}"/>
+                                            </p:selectOneMenu>
+                                        </div>
                                     </div>
 
                                     <div class="ui-g ui-fluid">

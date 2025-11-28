@@ -11,6 +11,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Log;
 import org.malbino.orion.enums.EventoLog;
 import org.malbino.orion.enums.Periodo;
@@ -29,16 +30,19 @@ public class ReporteLibroInscripcionesController extends AbstractController impl
 
     private Integer seleccionGestion;
     private Periodo seleccionPeriodo;
+    private Campus seleccionCampus;
 
     @PostConstruct
     public void init() {
         seleccionGestion = null;
         seleccionPeriodo = null;
+        seleccionCampus = null;
     }
 
     public void reinit() {
         seleccionGestion = null;
         seleccionPeriodo = null;
+        seleccionCampus = null;
     }
 
     public List<Integer> listaGestiones() {
@@ -46,12 +50,13 @@ public class ReporteLibroInscripcionesController extends AbstractController impl
     }
 
     public void generarReporte() throws IOException {
-        if (seleccionGestion != null && seleccionPeriodo != null) {
+        if (seleccionGestion != null && seleccionPeriodo != null && seleccionCampus != null) {
             this.insertarParametro("gestion", seleccionGestion);
             this.insertarParametro("periodo", seleccionPeriodo);
+            this.insertarParametro("campus", seleccionCampus);
 
             toLibroInscripciones();
-            
+
             //log
             logFacade.create(new Log(Fecha.getDate(), EventoLog.READ, "Generación reporte libro de inscripciones", loginController.getUsr().toString()));
         }
@@ -93,5 +98,19 @@ public class ReporteLibroInscripcionesController extends AbstractController impl
      */
     public void setSeleccionPeriodo(Periodo seleccionPeriodo) {
         this.seleccionPeriodo = seleccionPeriodo;
+    }
+
+    /**
+     * @return the seleccionCampus
+     */
+    public Campus getSeleccionCampus() {
+        return seleccionCampus;
+    }
+
+    /**
+     * @param seleccionCampus the seleccionCampus to set
+     */
+    public void setSeleccionCampus(Campus seleccionCampus) {
+        this.seleccionCampus = seleccionCampus;
     }
 }

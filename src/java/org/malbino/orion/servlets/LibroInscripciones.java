@@ -28,6 +28,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Inscrito;
 import org.malbino.orion.entities.Instituto;
 import org.malbino.orion.enums.Periodo;
@@ -72,8 +73,9 @@ public class LibroInscripciones extends HttpServlet {
     public void generarPDF(HttpServletRequest request, HttpServletResponse response) {
         Integer gestion = (Integer) request.getSession().getAttribute("gestion");
         Periodo periodo = (Periodo) request.getSession().getAttribute("periodo");
+        Campus campus = (Campus) request.getSession().getAttribute("campus");
 
-        if (gestion != null && periodo != null) {
+        if (gestion != null && periodo != null && campus != null) {
             try {
                 response.setContentType(CONTENIDO_PDF);
 
@@ -82,8 +84,8 @@ public class LibroInscripciones extends HttpServlet {
 
                 document.open();
 
-                document.add(titulo(gestion, periodo));
-                document.add(contenido(gestion, periodo));
+                document.add(titulo(gestion, periodo, campus));
+                document.add(contenido(gestion, periodo, campus));
 
                 document.close();
             } catch (IOException | DocumentException ex) {
@@ -93,7 +95,7 @@ public class LibroInscripciones extends HttpServlet {
         }
     }
 
-    public PdfPTable titulo(Integer gestion, Periodo periodo) throws BadElementException, IOException {
+    public PdfPTable titulo(Integer gestion, Periodo periodo, Campus campus) throws BadElementException, IOException {
         PdfPTable table = new PdfPTable(100);
 
         //cabecera
@@ -135,10 +137,16 @@ public class LibroInscripciones extends HttpServlet {
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
 
+        cell = new PdfPCell(new Phrase(campus.toString(), SUBTITULO));
+        cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+        cell.setColspan(80);
+        cell.setBorder(Rectangle.NO_BORDER);
+        table.addCell(cell);
+
         return table;
     }
 
-    public PdfPTable contenido(Integer gestion, Periodo periodo) throws BadElementException, IOException {
+    public PdfPTable contenido(Integer gestion, Periodo periodo, Campus campus) throws BadElementException, IOException {
         PdfPTable table = new PdfPTable(140);
 
         PdfPCell cell = new PdfPCell(new Phrase(" ", NEGRITA));
@@ -195,7 +203,7 @@ public class LibroInscripciones extends HttpServlet {
         cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
         table.addCell(cell);
 
-        List<Inscrito> listaInscritos = inscritoFacade.listaInscritos(gestion, periodo);
+        List<Inscrito> listaInscritos = inscritoFacade.listaInscritos(gestion, periodo, campus);
         for (int i = 0; i < listaInscritos.size(); i++) {
             Inscrito inscrito = listaInscritos.get(i);
 

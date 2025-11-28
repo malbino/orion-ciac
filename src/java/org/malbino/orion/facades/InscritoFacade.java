@@ -444,13 +444,14 @@ public class InscritoFacade extends AbstractFacade<Inscrito> {
         return l;
     }
 
-    public List<Inscrito> listaInscritos(Integer gestion, Periodo periodo) {
+    public List<Inscrito> listaInscritos(Integer gestion, Periodo periodo, Campus campus) {
         List<Inscrito> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT i FROM Inscrito i JOIN i.gestionAcademica ga WHERE ga.gestion=:gestion AND ga.periodo=:periodo ORDER BY i.id_inscrito");
+            Query q = em.createQuery("SELECT i FROM Inscrito i JOIN i.gestionAcademica ga WHERE ga.gestion=:gestion AND ga.periodo=:periodo AND i.campus=:campus ORDER BY i.id_inscrito");
             q.setParameter("gestion", gestion);
             q.setParameter("periodo", periodo);
+            q.setParameter("campus", campus);
 
             l = q.getResultList();
         } catch (Exception e) {
