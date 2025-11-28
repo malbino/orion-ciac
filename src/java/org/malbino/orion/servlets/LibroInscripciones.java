@@ -106,7 +106,7 @@ public class LibroInscripciones extends HttpServlet {
         image.setAlignment(Image.ALIGN_CENTER);
         PdfPCell cell = new PdfPCell();
         cell.addElement(image);
-        cell.setRowspan(4);
+        cell.setRowspan(5);
         cell.setColspan(20);
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         cell.setBorder(Rectangle.NO_BORDER);
