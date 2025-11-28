@@ -193,7 +193,7 @@ public class BoletinNotas extends HttpServlet {
         table.addCell(cell);
 
         //fial 2
-        cell = new PdfPCell(new Phrase("Mención:", NEGRITA));
+        cell = new PdfPCell(new Phrase("Campus:", NEGRITA));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setBorder(Rectangle.NO_BORDER);
         cell.setColspan(33);
@@ -205,13 +205,13 @@ public class BoletinNotas extends HttpServlet {
         cell.setColspan(34);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase("Régimen:", NEGRITA));
+        cell = new PdfPCell(new Phrase("", NEGRITA));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setBorder(Rectangle.NO_BORDER);
         cell.setColspan(33);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase(" ", NORMAL));
+        cell = new PdfPCell(new Phrase(inscrito.getCampus().toString(), NORMAL));
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setVerticalAlignment(PdfPCell.ALIGN_TOP);
         cell.setBorder(Rectangle.NO_BORDER);
