@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Log;
@@ -36,6 +37,7 @@ public class ReporteHorarioParaleloController extends AbstractController impleme
 
     private GestionAcademica seleccionGestionAcademica;
     private Carrera seleccionCarrera;
+    private Campus seleccionCampus;
     private Turno seleccionTurno;
     private String seleccionParalelo;
 
@@ -43,37 +45,23 @@ public class ReporteHorarioParaleloController extends AbstractController impleme
     public void init() {
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
+        seleccionCampus = null;
+        seleccionTurno = null;
         seleccionParalelo = null;
     }
 
     public void reinit() {
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
+        seleccionCampus = null;
+        seleccionTurno = null;
         seleccionParalelo = null;
-    }
-
-    @Override
-    public List<Carrera> listaCarreras() {
-        List<Carrera> l = new ArrayList();
-        if (seleccionGestionAcademica != null) {
-            l = carreraFacade.listaCarreras();
-        }
-        return l;
-    }
-
-    @Override
-    public Turno[] listaTurnos() {
-        Turno[] turnos = new Turno[0];
-        if (seleccionGestionAcademica != null && seleccionCarrera != null) {
-            turnos = Turno.values();
-        }
-        return turnos;
     }
 
     public List<String> listaParalelos() {
         List<String> paralelos = new ArrayList<>();
-        if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionTurno != null) {
-            paralelos = grupoFacade.listaParalelos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), 0, seleccionTurno);
+        if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionCampus != null && seleccionTurno != null) {
+            paralelos = grupoFacade.listaParalelos(seleccionGestionAcademica.getId_gestionacademica(), seleccionCarrera.getId_carrera(), seleccionCampus.getId_campus(), seleccionTurno);
         }
         return paralelos;
     }
@@ -82,6 +70,7 @@ public class ReporteHorarioParaleloController extends AbstractController impleme
         if (seleccionGestionAcademica != null && seleccionCarrera != null) {
             this.insertarParametro("id_gestionacademica", seleccionGestionAcademica.getId_gestionacademica());
             this.insertarParametro("id_carrera", seleccionCarrera.getId_carrera());
+            this.insertarParametro("id_campus", seleccionCampus.getId_campus());
             this.insertarParametro("turno", seleccionTurno);
             this.insertarParametro("paralelo", seleccionParalelo);
 
@@ -156,5 +145,19 @@ public class ReporteHorarioParaleloController extends AbstractController impleme
      */
     public void setSeleccionTurno(Turno seleccionTurno) {
         this.seleccionTurno = seleccionTurno;
+    }
+
+    /**
+     * @return the seleccionCampus
+     */
+    public Campus getSeleccionCampus() {
+        return seleccionCampus;
+    }
+
+    /**
+     * @param seleccionCampus the seleccionCampus to set
+     */
+    public void setSeleccionCampus(Campus seleccionCampus) {
+        this.seleccionCampus = seleccionCampus;
     }
 }
