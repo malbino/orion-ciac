@@ -104,7 +104,7 @@ public class ConceptoPagoController extends AbstractController implements Serial
     public void toConceptoPago() throws IOException {
         reinit();
 
-        this.redireccionarViewId("/cajasconceptoPago/conceptoPago");
+        this.redireccionarViewId("/cajas/conceptoPago/conceptoPago");
     }
 
     /**
