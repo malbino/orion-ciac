@@ -601,7 +601,7 @@ public class BoletinNotas extends HttpServlet {
     public PdfPTable pie(Inscrito inscrito) throws BadElementException, IOException {
         PdfPTable table = new PdfPTable(100);
 
-        PdfPCell cell = new PdfPCell(new Phrase("Cochabamba, " + Fecha.getFecha_ddMMMMyyyy(), NORMAL_ITALICA));
+        PdfPCell cell = new PdfPCell(new Phrase(Fecha.getFecha_ddMMMMyyyy(), NORMAL_ITALICA));
         cell.setColspan(100);
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setBorder(Rectangle.NO_BORDER);

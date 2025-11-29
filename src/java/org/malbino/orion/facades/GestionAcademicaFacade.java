@@ -203,7 +203,7 @@ public class GestionAcademicaFacade extends AbstractFacade<GestionAcademica> {
         List<GestionAcademica> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT DISTINCT ga FROM Nota n JOIN n.modulo m JOIN n.gestionAcademica ga WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND m.curricular=TRUE AND n.condicion=:condicion ORDER BY m.numero");
+            Query q = em.createQuery("SELECT DISTINCT ga FROM Nota n JOIN n.modulo m JOIN n.gestionAcademica ga WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND n.condicion=:condicion ORDER BY m.numero");
             q.setParameter("estudiante", estudiante);
             q.setParameter("carrera", carrera);
             q.setParameter("condicion", Condicion.APROBADO);

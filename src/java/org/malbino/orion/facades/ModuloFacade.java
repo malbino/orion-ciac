@@ -168,11 +168,26 @@ public class ModuloFacade extends AbstractFacade<Modulo> {
         return l;
     }
 
-    public Long cantidadModulosCurriculares(Carrera carrera) {
+    public Long cantidadModulos(Carrera carrera) {
         Long l = 0l;
 
         try {
-            Query q = em.createQuery("SELECT COUNT(m) FROM Modulo m WHERE m.carrera=:carrera AND m.curricular = TRUE");
+            Query q = em.createQuery("SELECT COUNT(m) FROM Modulo m WHERE m.carrera=:carrera");
+            q.setParameter("carrera", carrera);
+
+            l = (Long) q.getSingleResult();
+        } catch (Exception e) {
+
+        }
+
+        return l;
+    }
+    
+    public Long cantidadHoras(Carrera carrera) {
+        Long l = 0l;
+
+        try {
+            Query q = em.createQuery("SELECT SUM(m.horas) FROM Modulo m WHERE m.carrera=:carrera");
             q.setParameter("carrera", carrera);
 
             l = (Long) q.getSingleResult();

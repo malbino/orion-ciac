@@ -174,23 +174,13 @@ public class ReporteHistorialAcademicoController extends AbstractController impl
                             } else {
                                 cell.setCellValue(cell.getStringCellValue().replace("<<CONCLUSION>>", " "));
                             }
-                        } else if (cell.getStringCellValue().contains("<<MENCION>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<MENCION>>", " "));
                         } else if (cell.getStringCellValue().contains("<<NIVEL_ACADEMICO>>")) {
                             cell.setCellValue(cell.getStringCellValue().replace("<<NIVEL_ACADEMICO>>", carrera.getNivelAcademico().getNombre()));
-                        } else if (cell.getStringCellValue().contains("<<REGIMEN>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<REGIMEN>>", ""));
-                        } else if (cell.getStringCellValue().contains("<<LUGAR_FECHA>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<LUGAR_FECHA>>", "Cochabamba, " + Fecha.formatearFecha_ddMMMMyyyy(fecha)));
-                        } else if (cell.getStringCellValue().contains("<<RM_1>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<RM_1>>", " "));
-                        } else if (cell.getStringCellValue().contains("<<RM_2>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<RM_2>>", " "));
-                        } else if (cell.getStringCellValue().contains("<<RM_3>>")) {
-                            cell.setCellValue(cell.getStringCellValue().replace("<<RM_3>>", " "));
+                        } else if (cell.getStringCellValue().contains("<<FECHA>>")) {
+                            cell.setCellValue(cell.getStringCellValue().replace("<<FECHA>>", Fecha.formatearFecha_ddMMMMyyyy(fecha)));
                         } else if (cell.getStringCellValue().contains("<<MA_MC>>")) {
                             int modulosAprobadas = notaFacade.cantidadNotasAprobadas(carrera, seleccionEstudiante).intValue();
-                            int modulosCarrera = moduloFacade.cantidadModulosCurriculares(carrera).intValue();
+                            int modulosCarrera = moduloFacade.cantidadModulos(carrera).intValue();
 
                             cell.setCellValue(cell.getStringCellValue().replace("<<MA_MC>>", modulosAprobadas + "/" + modulosCarrera));
                         } else if (cell.getStringCellValue().contains("<<GA>>")) {
@@ -216,6 +206,13 @@ public class ReporteHistorialAcademicoController extends AbstractController impl
                                 cell.setCellValue(" ");
                             }
                         } else if (cell.getNumericCellValue() == -4) {
+                            Long cantidadHoras = moduloFacade.cantidadHoras(carrera);
+                            if (cantidadHoras != null) {
+                                cell.setCellValue(cantidadHoras);
+                            } else {
+                                cell.setCellValue(" ");
+                            }
+                        } else if (cell.getNumericCellValue() == -5) {
                             Double promedioGeneral = notaFacade.promedioReporteHistorialAcademico(seleccionEstudiante, carrera);
                             if (promedioGeneral != null) {
                                 int promedioGeneralRedondeado = Redondeo.redondear_HALFUP(promedioGeneral, 0).intValue();
@@ -247,24 +244,6 @@ public class ReporteHistorialAcademicoController extends AbstractController impl
                     Cell cell = cellIterator.next();
 
                     if (cell.getCellTypeEnum() == CellType.NUMERIC) {
-                        /*
-                        if (cell.getNumericCellValue() == -3) {
-                            cell.setCellValue(i + 1);
-                        } else if (cell.getNumericCellValue() == -50) {
-                            if (nota.getNotaFinal() != null) {
-                                cell.setCellValue(nota.getNotaFinal());
-                            } else {
-                                cell.setCellValue("");
-                            }
-                        } else if (cell.getNumericCellValue() == -51) {
-                            if (nota.getRecuperatorio() != null) {
-                                cell.setCellValue(nota.getRecuperatorio());
-                            } else {
-                                cell.setCellValue("");
-                            }
-                        }
-                         */
-
                         if (nota.getRecuperatorio() == null) {
                             if (cell.getNumericCellValue() == -3) {
                                 cell.setCellValue(i + 1);

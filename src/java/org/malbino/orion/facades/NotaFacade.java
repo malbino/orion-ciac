@@ -184,14 +184,14 @@ public class NotaFacade extends AbstractFacade<Nota> {
         List<Nota> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.gestionAcademica ga JOIN n.modulo m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND m.curricular=TRUE AND n.condicion=:condicion ORDER BY ga.gestion, ga.periodo, m.numero");
+            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.gestionAcademica ga JOIN n.modulo m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND n.condicion=:condicion ORDER BY ga.gestion, ga.periodo, m.numero");
             q.setParameter("estudiante", estudiante);
             q.setParameter("carrera", carrera);
             q.setParameter("condicion", Condicion.APROBADO);
 
             l = q.getResultList();
         } catch (Exception e) {
-
+            log.error(e.toString());
         }
 
         return l;
@@ -201,7 +201,7 @@ public class NotaFacade extends AbstractFacade<Nota> {
         List<Nota> l = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.modulo m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND m.curricular=TRUE AND n.condicion=:condicion AND n.recuperatorio IS NOT NULL ORDER BY m.numero");
+            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.modulo m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND n.condicion=:condicion AND n.recuperatorio IS NOT NULL ORDER BY m.numero");
             q.setParameter("estudiante", estudiante);
             q.setParameter("carrera", carrera);
             q.setParameter("condicion", Condicion.APROBADO);
@@ -218,7 +218,7 @@ public class NotaFacade extends AbstractFacade<Nota> {
         GestionAcademica ga = null;
 
         try {
-            Query q = em.createQuery("SELECT DISTINCT ga FROM Nota n JOIN n.gestionAcademica ga JOIN n.modulo m WHERE m.carrera=:carrera AND n.estudiante=:estudiante AND m.curricular=TRUE AND n.condicion=:condicion ORDER BY ga.gestion, ga.periodo");
+            Query q = em.createQuery("SELECT DISTINCT ga FROM Nota n JOIN n.gestionAcademica ga JOIN n.modulo m WHERE m.carrera=:carrera AND n.estudiante=:estudiante AND n.condicion=:condicion ORDER BY ga.gestion, ga.periodo");
             q.setParameter("carrera", carrera);
             q.setParameter("estudiante", estudiante);
             q.setParameter("condicion", Condicion.APROBADO);
@@ -236,7 +236,7 @@ public class NotaFacade extends AbstractFacade<Nota> {
         GestionAcademica ga = null;
 
         try {
-            Query q = em.createQuery("SELECT DISTINCT ga FROM Nota n JOIN n.gestionAcademica ga JOIN n.modulo m WHERE m.carrera=:carrera AND n.estudiante=:estudiante AND m.curricular=TRUE AND n.condicion=:condicion ORDER BY ga.gestion DESC, ga.periodo DESC");
+            Query q = em.createQuery("SELECT DISTINCT ga FROM Nota n JOIN n.gestionAcademica ga JOIN n.modulo m WHERE m.carrera=:carrera AND n.estudiante=:estudiante AND n.condicion=:condicion ORDER BY ga.gestion DESC, ga.periodo DESC");
             q.setParameter("carrera", carrera);
             q.setParameter("estudiante", estudiante);
             q.setParameter("condicion", Condicion.APROBADO);
@@ -254,7 +254,7 @@ public class NotaFacade extends AbstractFacade<Nota> {
         Long l = 0l;
 
         try {
-            Query q = em.createQuery("SELECT COUNT(n) FROM Nota n JOIN n.modulo m WHERE m.carrera=:carrera AND n.estudiante=:estudiante AND m.curricular=TRUE AND n.condicion=:condicion");
+            Query q = em.createQuery("SELECT COUNT(n) FROM Nota n JOIN n.modulo m WHERE m.carrera=:carrera AND n.estudiante=:estudiante AND n.condicion=:condicion");
             q.setParameter("carrera", carrera);
             q.setParameter("estudiante", estudiante);
             q.setParameter("condicion", Condicion.APROBADO);
@@ -271,7 +271,7 @@ public class NotaFacade extends AbstractFacade<Nota> {
         double d = 0.0;
 
         try {
-            Query q = em.createQuery("SELECT AVG(COALESCE(n.recuperatorio, n.notaFinal)) FROM Nota n JOIN n.modulo m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND m.curricular=TRUE AND n.condicion=:condicion");
+            Query q = em.createQuery("SELECT AVG(COALESCE(n.recuperatorio, n.notaFinal)) FROM Nota n JOIN n.modulo m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND n.condicion=:condicion");
             q.setParameter("estudiante", estudiante);
             q.setParameter("carrera", carrera);
             q.setParameter("condicion", Condicion.APROBADO);
@@ -288,7 +288,7 @@ public class NotaFacade extends AbstractFacade<Nota> {
         double d = 0.0;
 
         try {
-            Query q = em.createQuery("SELECT AVG(COALESCE(n.recuperatorio, n.notaFinal)) FROM Nota n JOIN n.modulo m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND n.gestionAcademica=:gestionAcademica AND m.curricular=TRUE AND n.condicion=:condicion");
+            Query q = em.createQuery("SELECT AVG(COALESCE(n.recuperatorio, n.notaFinal)) FROM Nota n JOIN n.modulo m WHERE n.estudiante=:estudiante AND m.carrera=:carrera AND n.gestionAcademica=:gestionAcademica AND n.condicion=:condicion");
             q.setParameter("estudiante", estudiante);
             q.setParameter("carrera", carrera);
             q.setParameter("gestionAcademica", gestionAcademica);
@@ -376,7 +376,7 @@ public class NotaFacade extends AbstractFacade<Nota> {
     public List<Nota> listaNotasFaltantesAnual(int id_gestionacademica, int id_carrera) {
         List<Nota> l = new ArrayList();
         try {
-            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.gestionAcademica ga JOIN n.modulo m JOIN m.carrera c JOIN n.estudiante e WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND m.curricular=:curricular AND n.modalidad=:modalidad AND (n.nota1 IS NULL OR n.nota2 IS NULL OR n.nota3 IS NULL OR n.nota4 IS NULL) ORDER BY e.primerApellido, e.segundoApellido, e.nombre");
+            Query q = em.createQuery("SELECT n FROM Nota n JOIN n.gestionAcademica ga JOIN n.modulo m JOIN m.carrera c JOIN n.estudiante e WHERE ga.id_gestionacademica=:id_gestionacademica AND c.id_carrera=:id_carrera AND n.modalidad=:modalidad AND (n.nota1 IS NULL OR n.nota2 IS NULL OR n.nota3 IS NULL OR n.nota4 IS NULL) ORDER BY e.primerApellido, e.segundoApellido, e.nombre");
             q.setParameter("id_gestionacademica", id_gestionacademica);
             q.setParameter("id_carrera", id_carrera);
             q.setParameter("curricular", Boolean.TRUE);

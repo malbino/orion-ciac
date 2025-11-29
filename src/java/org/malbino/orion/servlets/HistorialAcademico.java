@@ -238,28 +238,8 @@ public class HistorialAcademico extends HttpServlet {
 
         //fila 4
         phrase = new Phrase();
-        phrase.add(new Chunk("MENCIÓN: ", NEGRITA));
-        phrase.add(new Chunk(" ", NORMAL));
-        cell = new PdfPCell(phrase);
-        cell.setColspan(20);
-        cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
-        cell.setBorder(Rectangle.NO_BORDER);
-        table.addCell(cell);
-
-        //fila 5
-        phrase = new Phrase();
         phrase.add(new Chunk("NIVEL DE FORMACIÓN: ", NEGRITA));
         phrase.add(new Chunk(carrera.getNivelAcademico().getNombre(), NORMAL));
-        cell = new PdfPCell(phrase);
-        cell.setColspan(20);
-        cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
-        cell.setBorder(Rectangle.NO_BORDER);
-        table.addCell(cell);
-
-        //fila 6
-        phrase = new Phrase();
-        phrase.add(new Chunk("RÉGIMEN: ", NEGRITA));
-        phrase.add(new Chunk("", NORMAL));
         cell = new PdfPCell(phrase);
         cell.setColspan(20);
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
@@ -284,29 +264,8 @@ public class HistorialAcademico extends HttpServlet {
         cell.setBackgroundColor(new BaseColor(183, 222, 232));
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase("LIBRO", NEGRITA));
-        cell.setColspan(3);
-        cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-        cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
-        cell.setBackgroundColor(new BaseColor(183, 222, 232));
-        table.addCell(cell);
-
-        cell = new PdfPCell(new Phrase("FOLIO", NEGRITA));
-        cell.setColspan(3);
-        cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-        cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
-        cell.setBackgroundColor(new BaseColor(183, 222, 232));
-        table.addCell(cell);
-
-        cell = new PdfPCell(new Phrase("GEST. ACAD.", NEGRITA));
-        cell.setColspan(4);
-        cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-        cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
-        cell.setBackgroundColor(new BaseColor(183, 222, 232));
-        table.addCell(cell);
-
-        cell = new PdfPCell(new Phrase("SEMESTRE/AÑO", NEGRITA));
-        cell.setColspan(6);
+        cell = new PdfPCell(new Phrase("GESTIÓN ACADÉMICA", NEGRITA));
+        cell.setColspan(8);
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         cell.setBackgroundColor(new BaseColor(183, 222, 232));
@@ -320,14 +279,14 @@ public class HistorialAcademico extends HttpServlet {
         table.addCell(cell);
 
         cell = new PdfPCell(new Phrase("ASIGNATURA", NEGRITA));
-        cell.setColspan(22);
+        cell.setColspan(23);
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         cell.setBackgroundColor(new BaseColor(183, 222, 232));
         table.addCell(cell);
 
         cell = new PdfPCell(new Phrase("PRE REQUISITO", NEGRITA));
-        cell.setColspan(6);
+        cell.setColspan(8);
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         cell.setBackgroundColor(new BaseColor(183, 222, 232));
@@ -340,15 +299,15 @@ public class HistorialAcademico extends HttpServlet {
         cell.setBackgroundColor(new BaseColor(183, 222, 232));
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase("PRUEBA RECUP.", NEGRITA));
-        cell.setColspan(5);
+        cell = new PdfPCell(new Phrase("PRUEBA RECUPERACIÓN", NEGRITA));
+        cell.setColspan(8);
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         cell.setBackgroundColor(new BaseColor(183, 222, 232));
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase("OBS.", NEGRITA));
-        cell.setColspan(6);
+        cell = new PdfPCell(new Phrase("OBSERVACIÓN", NEGRITA));
+        cell.setColspan(8);
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         cell.setBackgroundColor(new BaseColor(183, 222, 232));
@@ -363,31 +322,8 @@ public class HistorialAcademico extends HttpServlet {
             cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
             table.addCell(cell);
 
-            if (nota.getNumeroLibro() != null) {
-                cell = new PdfPCell(new Phrase(nota.getNumeroLibro().toString(), NORMAL));
-            } else {
-                cell = new PdfPCell(new Phrase(" ", NORMAL));
-            }
-            cell.setColspan(3);
-            cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-            table.addCell(cell);
-
-            if (nota.getNumeroFolio() != null) {
-                cell = new PdfPCell(new Phrase(nota.getNumeroFolio().toString(), NORMAL));
-            } else {
-                cell = new PdfPCell(new Phrase(" ", NORMAL));
-            }
-            cell.setColspan(3);
-            cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-            table.addCell(cell);
-
             cell = new PdfPCell(new Phrase(nota.getGestionAcademica().codigo(), NORMAL));
-            cell.setColspan(4);
-            cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-            table.addCell(cell);
-
-            cell = new PdfPCell(new Phrase("", NORMAL));
-            cell.setColspan(6);
+            cell.setColspan(8);
             cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
             table.addCell(cell);
 
@@ -397,37 +333,15 @@ public class HistorialAcademico extends HttpServlet {
             table.addCell(cell);
 
             cell = new PdfPCell(new Phrase(nota.getModulo().getNombre(), NORMAL));
-            cell.setColspan(22);
+            cell.setColspan(23);
             cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
             table.addCell(cell);
 
             cell = new PdfPCell(new Phrase(nota.getModulo().prerequisitosToString(), NORMAL));
-            cell.setColspan(6);
+            cell.setColspan(8);
             cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
             table.addCell(cell);
 
-            /*
-            PdfPCell cellNotaFinal;
-            if (nota.getNotaFinal() != null) {
-                cellNotaFinal = new PdfPCell(new Phrase(String.valueOf(nota.getNotaFinal()), NORMAL));
-            } else {
-                cellNotaFinal = new PdfPCell(new Phrase(" ", NORMAL));
-            }
-            cellNotaFinal.setColspan(4);
-            cellNotaFinal.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-
-            PdfPCell cellNotaIns;
-            if (nota.getRecuperatorio() != null) {
-                cellNotaIns = new PdfPCell(new Phrase(String.valueOf(nota.getRecuperatorio()), NORMAL));
-            } else {
-                cellNotaIns = new PdfPCell(new Phrase(" ", NORMAL));
-            }
-            cellNotaIns.setColspan(5);
-            cellNotaIns.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-
-            table.addCell(cellNotaFinal);
-            table.addCell(cellNotaIns);
-             */
             if (nota.getRecuperatorio() == null) {
                 PdfPCell cellNotaFinal;
                 if (nota.getNotaFinal() != null) {
@@ -445,7 +359,7 @@ public class HistorialAcademico extends HttpServlet {
                 } else {
                     cellNotaIns = new PdfPCell(new Phrase(" ", NORMAL));
                 }
-                cellNotaIns.setColspan(5);
+                cellNotaIns.setColspan(8);
                 cellNotaIns.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
                 table.addCell(cellNotaIns);
             } else {
@@ -465,13 +379,13 @@ public class HistorialAcademico extends HttpServlet {
                 } else {
                     cellNotaIns = new PdfPCell(new Phrase(" ", NORMAL));
                 }
-                cellNotaIns.setColspan(5);
+                cellNotaIns.setColspan(8);
                 cellNotaIns.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
                 table.addCell(cellNotaIns);
             }
 
             cell = new PdfPCell(new Phrase(nota.getCondicion().toString(), NORMAL));
-            cell.setColspan(6);
+            cell.setColspan(8);
             cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
             table.addCell(cell);
         }
@@ -488,23 +402,9 @@ public class HistorialAcademico extends HttpServlet {
         PdfPTable table = new PdfPTable(60);
 
         Phrase phrase = new Phrase();
-        phrase.add(new Chunk("Lugar y fecha: ", NEGRITA_ITALICA));
-        phrase.add(new Chunk("Cochabamba, " + Fecha.formatearFecha_ddMMMMyyyy(fecha), NORMAL_ITALICA));
+        phrase.add(new Chunk("Fecha: ", NEGRITA_ITALICA));
+        phrase.add(new Chunk(Fecha.formatearFecha_ddMMMMyyyy(fecha), NORMAL_ITALICA));
         PdfPCell cell = new PdfPCell(phrase);
-        cell.setColspan(60);
-        cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
-        cell.setBorder(Rectangle.NO_BORDER);
-        table.addCell(cell);
-
-        cell = new PdfPCell(new Phrase(" ", ESPACIO));
-        cell.setColspan(60);
-        cell.setBorder(Rectangle.NO_BORDER);
-        table.addCell(cell);
-
-        phrase = new Phrase();
-        phrase.add(new Chunk("* PLAN DE ESTUDIOS SEGÚN R.M. ", NEGRITA));
-        phrase.add(new Chunk("", NORMAL));
-        cell = new PdfPCell(phrase);
         cell.setColspan(60);
         cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         cell.setBorder(Rectangle.NO_BORDER);
@@ -520,7 +420,7 @@ public class HistorialAcademico extends HttpServlet {
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         cell.setVerticalAlignment(PdfPCell.ALIGN_BOTTOM);
         cell.setBorder(PdfPCell.NO_BORDER);
-        cell.setFixedHeight(30);
+        cell.setFixedHeight(50);
         table.addCell(cell);
 
         cell = new PdfPCell(new Phrase(" ", NEGRITA));
@@ -560,14 +460,15 @@ public class HistorialAcademico extends HttpServlet {
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Phrase("3.600", NORMAL));
+        Long cantidadHoras = moduloFacade.cantidadHoras(carrera);
+        cell = new PdfPCell(new Phrase(cantidadHoras.toString(), NORMAL));
         cell.setColspan(5);
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         table.addCell(cell);
 
         //fila 2
-        cell = new PdfPCell(new Phrase("61 a 100", NORMAL));
+        cell = new PdfPCell(new Phrase("80 a 100", NORMAL));
         cell.setColspan(12);
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         table.addCell(cell);
@@ -583,14 +484,14 @@ public class HistorialAcademico extends HttpServlet {
         table.addCell(cell);
 
         int modulosAprobadas = notaFacade.cantidadNotasAprobadas(carrera, estudiante).intValue();
-        int modulosCarrera = moduloFacade.cantidadModulosCurriculares(carrera).intValue();
+        int modulosCarrera = moduloFacade.cantidadModulos(carrera).intValue();
         cell = new PdfPCell(new Phrase(modulosAprobadas + "/" + modulosCarrera, NORMAL));
         cell.setColspan(5);
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         table.addCell(cell);
 
         //fila 3
-        cell = new PdfPCell(new Phrase("0 a 60", NORMAL));
+        cell = new PdfPCell(new Phrase("0 a 80", NORMAL));
         cell.setColspan(12);
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         table.addCell(cell);
@@ -619,7 +520,7 @@ public class HistorialAcademico extends HttpServlet {
         table.addCell(cell);
 
         //fila 5
-        cell = new PdfPCell(new Phrase("61", NORMAL));
+        cell = new PdfPCell(new Phrase("80", NORMAL));
         cell.setColspan(12);
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         table.addCell(cell);
