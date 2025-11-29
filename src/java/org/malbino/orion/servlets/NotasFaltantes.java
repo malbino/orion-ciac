@@ -28,9 +28,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Nota;
+import org.malbino.orion.facades.CampusFacade;
 import org.malbino.orion.facades.CarreraFacade;
 import org.malbino.orion.facades.GestionAcademicaFacade;
 import org.malbino.orion.facades.NotaFacade;
@@ -59,6 +61,8 @@ public class NotasFaltantes extends HttpServlet {
     @EJB
     CarreraFacade carreraFacade;
     @EJB
+    CampusFacade campusFacade;
+    @EJB
     NotaFacade notaFacade;
 
     @Override
@@ -74,10 +78,12 @@ public class NotasFaltantes extends HttpServlet {
     public void generarPDF(HttpServletRequest request, HttpServletResponse response) {
         Integer id_gestionacademica = (Integer) request.getSession().getAttribute("id_gestionacademica");
         Integer id_carrera = (Integer) request.getSession().getAttribute("id_carrera");
+        Integer id_campus = (Integer) request.getSession().getAttribute("id_campus");
 
         if (id_gestionacademica != null && id_carrera != null) {
             GestionAcademica gestionAcademica = gestionAcademicaFacade.find(id_gestionacademica);
             Carrera carrera = carreraFacade.find(id_carrera);
+            Campus campus = campusFacade.find(id_campus);
             try {
                 response.setContentType(CONTENIDO_PDF);
 
@@ -86,9 +92,9 @@ public class NotasFaltantes extends HttpServlet {
 
                 document.open();
 
-                document.add(titulo(gestionAcademica, carrera));
+                document.add(titulo(gestionAcademica, carrera, campus));
 
-                document.add(contenidoSemestral(gestionAcademica, carrera));
+                document.add(contenidoSemestral(gestionAcademica, carrera, campus));
 
                 document.close();
             } catch (IOException | DocumentException ex) {
@@ -98,7 +104,7 @@ public class NotasFaltantes extends HttpServlet {
         }
     }
 
-    public PdfPTable titulo(GestionAcademica gestionAcademica, Carrera carrera) throws BadElementException, IOException {
+    public PdfPTable titulo(GestionAcademica gestionAcademica, Carrera carrera, Campus campus) throws BadElementException, IOException {
         PdfPTable table = new PdfPTable(100);
 
         //cabecera
@@ -108,7 +114,7 @@ public class NotasFaltantes extends HttpServlet {
         image.setAlignment(Image.ALIGN_CENTER);
         PdfPCell cell = new PdfPCell();
         cell.addElement(image);
-        cell.setRowspan(4);
+        cell.setRowspan(5);
         cell.setColspan(20);
         cell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         cell.setBorder(Rectangle.NO_BORDER);
@@ -139,10 +145,16 @@ public class NotasFaltantes extends HttpServlet {
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
 
+        cell = new PdfPCell(new Phrase(campus.toString(), SUBTITULO));
+        cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+        cell.setColspan(80);
+        cell.setBorder(Rectangle.NO_BORDER);
+        table.addCell(cell);
+
         return table;
     }
 
-    public PdfPTable contenidoSemestral(GestionAcademica gestionAcademica, Carrera carrera) throws BadElementException, IOException {
+    public PdfPTable contenidoSemestral(GestionAcademica gestionAcademica, Carrera carrera, Campus campus) throws BadElementException, IOException {
         PdfPTable table = new PdfPTable(100);
 
         PdfPCell cell = new PdfPCell(new Phrase(" ", NEGRITA));
@@ -175,7 +187,7 @@ public class NotasFaltantes extends HttpServlet {
         cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
         table.addCell(cell);
 
-        List<Nota> notasFaltantes = notaFacade.listaNotasFaltantesSemestral(gestionAcademica, carrera.getId_carrera());
+        List<Nota> notasFaltantes = notaFacade.listaNotasFaltantesSemestral(gestionAcademica, carrera.getId_carrera(), campus.getId_campus());
         for (int i = 0; i < notasFaltantes.size(); i++) {
             Nota nota = notasFaltantes.get(i);
 
