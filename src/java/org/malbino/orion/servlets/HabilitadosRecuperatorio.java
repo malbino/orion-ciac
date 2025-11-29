@@ -184,7 +184,7 @@ public class HabilitadosRecuperatorio extends HttpServlet {
         cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
         table.addCell(cell);
 
-        List<Inscrito> listaInscritosPruebaRecuperacion = inscritoFacade.listaInscritosPruebaRecuperacion(gestionAcademica, carrera);
+        List<Inscrito> listaInscritosPruebaRecuperacion = inscritoFacade.listaInscritosPruebaRecuperacion(gestionAcademica, carrera,null);
         for (int i = 0; i < listaInscritosPruebaRecuperacion.size(); i++) {
             Inscrito inscrito = listaInscritosPruebaRecuperacion.get(i);
 

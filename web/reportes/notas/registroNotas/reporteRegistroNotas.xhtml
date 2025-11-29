@@ -48,6 +48,14 @@
                                         </div>
                                         
                                         <div class="ui-g-12 ui-md-4">
+                                            <p:outputLabel for="campus" value="Campus: " style="font-size: small"/>
+                                            <p:selectOneMenu id="campus" value="#{ReporteRegistroNotasController.seleccionCampus}" converter="#{CampusConverter}" autoWidth="false" required="true" requiredMessage="* Campus requerido.">
+                                                <f:selectItem itemLabel="" itemValue=""/>
+                                                <f:selectItems value="#{ReporteRegistroNotasController.listaCampus()}" var="campus" itemLabel="#{campus.toString()}" itemValue="#{campus}"/>
+                                            </p:selectOneMenu>
+                                        </div>
+                                        
+                                        <div class="ui-g-12 ui-md-4">
                                             <p:outputLabel for="tipoNota" value="Tipo Nota:" style="font-size: small"/>
                                             <p:selectOneMenu id="tipoNota" value="#{ReporteRegistroNotasController.seleccionTipoNota}" converter="#{TipoNotaConverter}" autoWidth="false" required="true" requiredMessage="* Tipo Nota requerido."> 
                                                 <f:selectItem itemLabel="" itemValue="" />

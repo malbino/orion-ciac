@@ -6,12 +6,11 @@ package org.malbino.orion.controllers;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Log;
@@ -29,31 +28,25 @@ public class ReporteRegistroNotasController extends AbstractController implement
 
     @Inject
     LoginController loginController;
-    
+
     private GestionAcademica seleccionGestionAcademica;
     private Carrera seleccionCarrera;
+    private Campus seleccionCampus;
     private TipoNota seleccionTipoNota;
 
     @PostConstruct
     public void init() {
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
+        seleccionCampus = null;
         seleccionTipoNota = null;
     }
 
     public void reinit() {
         seleccionGestionAcademica = null;
         seleccionCarrera = null;
+        seleccionCampus = null;
         seleccionTipoNota = null;
-    }
-
-    @Override
-    public List<Carrera> listaCarreras() {
-        List<Carrera> l = new ArrayList();
-        if (seleccionGestionAcademica != null) {
-            l = carreraFacade.listaCarreras();
-        }
-        return l;
     }
 
     public TipoNota[] listaTiposNota() {
@@ -68,6 +61,7 @@ public class ReporteRegistroNotasController extends AbstractController implement
         if (seleccionGestionAcademica != null && seleccionCarrera != null && seleccionTipoNota != null) {
             this.insertarParametro("id_gestionacademica", seleccionGestionAcademica.getId_gestionacademica());
             this.insertarParametro("id_carrera", seleccionCarrera.getId_carrera());
+            this.insertarParametro("id_campus", seleccionCampus.getId_campus());
             this.insertarParametro("tipoNota", seleccionTipoNota);
 
             toRegistroNotas();
@@ -127,6 +121,20 @@ public class ReporteRegistroNotasController extends AbstractController implement
      */
     public void setSeleccionTipoNota(TipoNota seleccionTipoNota) {
         this.seleccionTipoNota = seleccionTipoNota;
+    }
+
+    /**
+     * @return the seleccionCampus
+     */
+    public Campus getSeleccionCampus() {
+        return seleccionCampus;
+    }
+
+    /**
+     * @param seleccionCampus the seleccionCampus to set
+     */
+    public void setSeleccionCampus(Campus seleccionCampus) {
+        this.seleccionCampus = seleccionCampus;
     }
 
 }

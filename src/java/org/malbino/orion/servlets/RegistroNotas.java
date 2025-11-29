@@ -28,12 +28,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.malbino.orion.entities.Campus;
 import org.malbino.orion.entities.Carrera;
 import org.malbino.orion.entities.GestionAcademica;
 import org.malbino.orion.entities.Inscrito;
 import org.malbino.orion.entities.Nota;
 import org.malbino.orion.enums.ModalidadEvaluacion;
 import org.malbino.orion.enums.TipoNota;
+import org.malbino.orion.facades.CampusFacade;
 import org.malbino.orion.facades.CarreraFacade;
 import org.malbino.orion.facades.GestionAcademicaFacade;
 import org.malbino.orion.facades.InscritoFacade;
@@ -63,6 +65,8 @@ public class RegistroNotas extends HttpServlet {
     @EJB
     CarreraFacade carreraFacade;
     @EJB
+    CampusFacade campusFacade;
+    @EJB
     NotaFacade notaFacade;
     @EJB
     InscritoFacade inscritoFacade;
@@ -80,11 +84,13 @@ public class RegistroNotas extends HttpServlet {
     public void generarPDF(HttpServletRequest request, HttpServletResponse response) {
         Integer id_gestionacademica = (Integer) request.getSession().getAttribute("id_gestionacademica");
         Integer id_carrera = (Integer) request.getSession().getAttribute("id_carrera");
+        Integer id_campus = (Integer) request.getSession().getAttribute("id_campus");
         TipoNota tipoNota = (TipoNota) request.getSession().getAttribute("tipoNota");
 
-        if (id_gestionacademica != null && id_carrera != null && tipoNota != null) {
+        if (id_gestionacademica != null && id_carrera != null && id_campus != null && tipoNota != null) {
             GestionAcademica gestionAcademica = gestionAcademicaFacade.find(id_gestionacademica);
             Carrera carrera = carreraFacade.find(id_carrera);
+            Campus campus = campusFacade.find(id_campus);
             try {
                 response.setContentType(CONTENIDO_PDF);
 
@@ -93,10 +99,10 @@ public class RegistroNotas extends HttpServlet {
 
                 document.open();
 
-                document.add(titulo(gestionAcademica, carrera, tipoNota));
+                document.add(titulo(gestionAcademica, carrera, campus, tipoNota));
 
                 if (gestionAcademica.getModalidadEvaluacion().equals(ModalidadEvaluacion.MODULAR_2P)) {
-                    document.add(contenidoSemestral2P(gestionAcademica, carrera, tipoNota));
+                    document.add(contenidoModular(gestionAcademica, carrera, campus, tipoNota));
                 }
 
                 document.close();
@@ -107,7 +113,7 @@ public class RegistroNotas extends HttpServlet {
         }
     }
 
-    public PdfPTable titulo(GestionAcademica gestionAcademica, Carrera carrera, TipoNota tipoNota) throws BadElementException, IOException {
+    public PdfPTable titulo(GestionAcademica gestionAcademica, Carrera carrera, Campus campus, TipoNota tipoNota) throws BadElementException, IOException {
         PdfPTable table = new PdfPTable(100);
 
         //cabecera
@@ -157,7 +163,7 @@ public class RegistroNotas extends HttpServlet {
         return table;
     }
 
-    public PdfPTable contenidoSemestral2P(GestionAcademica gestionAcademica, Carrera carrera, TipoNota tipoNota) throws BadElementException, IOException {
+    public PdfPTable contenidoModular(GestionAcademica gestionAcademica, Carrera carrera, Campus campus, TipoNota tipoNota) throws BadElementException, IOException {
         PdfPTable table = new PdfPTable(100);
 
         PdfPCell cell = new PdfPCell(new Phrase(" ", NEGRITA));
@@ -193,7 +199,7 @@ public class RegistroNotas extends HttpServlet {
         if (tipoNota.equals(TipoNota.RECUPERATORIO_MODULAR_2P)) {
             int contador = 1;
 
-            List<Inscrito> listaInscritosPruebaRecuperacion = inscritoFacade.listaInscritosPruebaRecuperacion(gestionAcademica, carrera);
+            List<Inscrito> listaInscritosPruebaRecuperacion = inscritoFacade.listaInscritosPruebaRecuperacion(gestionAcademica, carrera, campus);
             for (Inscrito inscrito : listaInscritosPruebaRecuperacion) {
 
                 List<Nota> listaRegistroNotasRecuperatorio = notaFacade.listaRegistroNotasRecuperatorio(inscrito);
@@ -230,7 +236,7 @@ public class RegistroNotas extends HttpServlet {
                 }
             }
         } else {
-            List<Nota> notasFaltantes = notaFacade.listaRegistroNotasSemestral2P(gestionAcademica.getId_gestionacademica(), carrera.getId_carrera(), tipoNota);
+            List<Nota> notasFaltantes = notaFacade.listaRegistroNotasModular(gestionAcademica.getId_gestionacademica(), carrera.getId_carrera(), campus.getId_campus(), tipoNota);
             for (int i = 0; i < notasFaltantes.size(); i++) {
                 Nota nota = notasFaltantes.get(i);
 
